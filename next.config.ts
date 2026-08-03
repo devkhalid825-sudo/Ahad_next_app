@@ -41,6 +41,7 @@ const redirects = [
 ];
 
 const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://pink-toad-569074.hostingersite.com").replace(/\/+$/, "");
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -66,19 +67,19 @@ const nextConfig: NextConfig = {
   // Rewrites to proxy API & Upload requests directly to the backend host.
   // This eliminates CORS issues and preflight errors on client-side fetch.
   async rewrites() {
-    const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
+    const resolvedBackendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || backendUrl).replace(/\/+$/, "");
     return [
       {
         source: `/api/:path*`,
-        destination: `${backendUrl}/api/:path*`,
+        destination: `${resolvedBackendUrl}/api/:path*`,
       },
       {
         source: `/uploads/:path*`,
-        destination: `${backendUrl}/uploads/:path*`,
+        destination: `${resolvedBackendUrl}/uploads/:path*`,
       },
-      { source: "/robots.txt", destination: `${backendUrl}/robots.txt` },
-      { source: "/sitemap.xml", destination: `${backendUrl}/sitemap.xml` },
-      { source: "/:type(pages|projects|blogs|casestudies)_sitemap.xml", destination: `${backendUrl}/:type_sitemap.xml` },
+      { source: "/robots.txt", destination: `${resolvedBackendUrl}/robots.txt` },
+      { source: "/sitemap.xml", destination: `${resolvedBackendUrl}/sitemap.xml` },
+      { source: "/:type(pages|projects|blogs|casestudies)_sitemap.xml", destination: `${resolvedBackendUrl}/:type_sitemap.xml` },
     ];
   },
 

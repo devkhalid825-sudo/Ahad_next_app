@@ -11,6 +11,8 @@ const defaultApiBase = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_B
 
 export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL || LIVE_BACKEND, LIVE_BACKEND);
 export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://elipsestudio.com');
+export const FRONTEND_HOST = 'https://elipsestudio.com';
+export const BACKEND_HOST = 'https://pink-toad-569074.hostingersite.com';
 export const API_BASE_URL = (() => {
   const configured = String(defaultApiBase).trim();
   if (!configured) return '/api';
