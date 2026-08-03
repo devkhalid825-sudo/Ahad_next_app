@@ -9,7 +9,7 @@ import Footer from './Footer';
 import Contact from './Contact';
 import { getImgSrc } from '../utils/api';
 
-import capabilitiesHeroImgRaw from '../assets/About-Page/capabilities.webp';
+import capabilitiesHeroImgRaw from '../assets/About-page/capabilities.webp';
 import capabilitiesSecImgRaw from '../assets/costom-software/xyz.webp';
 
 const capabilitiesHeroImg = getImgSrc(capabilitiesHeroImgRaw);
