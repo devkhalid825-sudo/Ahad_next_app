@@ -1,0 +1,65 @@
+﻿
+> next-app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.2.12 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 8.1s
+  Running TypeScript ...
+  Finished TypeScript in 1593ms ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/89) ...
+  Generating static pages using 11 workers (22/89) 
+  Generating static pages using 11 workers (44/89) 
+  Generating static pages using 11 workers (66/89) 
+Γ£ô Generating static pages using 11 workers (89/89) in 1401ms
+  Finalizing page optimization ...
+
+Route (app)                                Revalidate  Expire
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ Γùï /about
+Γö£ Γùï /admin/dashboard
+Γö£ Γùï /admin/dashboard/authorized
+Γö£ Γùï /admin/dashboard/blogs
+Γö£ Γùï /admin/dashboard/case-studies
+Γö£ Γùï /admin/dashboard/inquiries
+Γö£ Γùï /admin/dashboard/meetings
+Γö£ Γùï /admin/dashboard/projects
+Γö£ Γùï /admin/dashboard/reviews
+Γö£ Γùï /admin/dashboard/settings
+Γö£ Γùï /admin/dashboard/social
+Γö£ Γùï /admin/login
+Γö£ Γùï /blog                                          5m      1y
+Γö£ ΓùÅ /blog/[...slug]                                5m      1y
+Γöé Γö£ /blog/web-based-configurator                   5m      1y
+Γöé Γö£ /blog/immersive-ar-marketing                   5m      1y
+Γöé Γö£ /blog/industrial-animation                     5m      1y
+Γöé Γöö [+11 more paths]
+Γö£ Γùï /capabilities
+Γö£ Γùï /case-studies
+Γö£ ╞Æ /case-study/[slug]
+Γö£ Γùï /contact
+Γö£ Γùï /forgot-password
+Γö£ Γùï /industries
+Γö£ Γùï /portfolio
+Γö£ ΓùÅ /project/[slug]                                5m      1y
+Γöé Γö£ /project/lahore-zoo                            5m      1y
+Γöé Γö£ /project/character-art                         5m      1y
+Γöé Γö£ /project/motion-graphics                       5m      1y
+Γöé Γöö [+34 more paths]
+Γö£ ╞Æ /reset-password/[token]
+Γö£ Γùï /services
+Γöö ΓùÅ /services/[slug]
+  Γö£ /services/architectural-visualization
+  Γö£ /services/3d-product-visualization
+  Γö£ /services/3d-product-configurators
+  Γöö [+12 more paths]
+
+
+Γùï  (Static)   prerendered as static content
+ΓùÅ  (SSG)      prerendered as static HTML (uses generateStaticParams)
+╞Æ  (Dynamic)  server-rendered on demand
+

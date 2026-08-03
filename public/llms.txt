@@ -1,0 +1,149 @@
+# Elipse Studio
+
+> Elipse Studio is an immersive digital agency delivering 3D rendering, architectural visualization, interactive web configurators, animation, and AR/VR/digital-twin experiences for property developers, brands, and enterprises worldwide.
+
+
+Elipse Studio builds real-time 3D product configurators, AR/VR experiences, custom software, and cinematic visualizations that help clients across real estate, automotive, manufacturing, ecommerce, healthcare, and other industries sell more and engage customers more deeply.
+
+
+## Company
+
+
+- [Home](https://elipsestudio.com/): Overview of Elipse Studio's services and capabilities.
+- [About](https://elipsestudio.com/about): Company background and team.
+- [Capabilities](https://elipsestudio.com/capabilities): Overview of technical and creative capabilities.
+- [Contact](https://elipsestudio.com/contact): Get in touch / request a quote.
+
+
+## Services
+
+
+- [Architectural Visualization](https://elipsestudio.com/services/architectural-visualization): Photorealistic 3D renders of buildings, interiors, and exteriors for property marketing.
+- [3D Product Visualization](https://elipsestudio.com/services/3d-product-visualization): Photorealistic 3D renders of products for marketing and ecommerce.
+- [3D Product Configurators](https://elipsestudio.com/services/3d-product-configurators): Real-time interactive configurators letting customers customize products online.
+- [Interactive Web Experiences](https://elipsestudio.com/services/interactive-web-experiences): Web-based interactive 3D and multimedia experiences.
+- [VR Development](https://elipsestudio.com/services/vr-development): Custom virtual reality experiences and training simulations.
+- [AR Development](https://elipsestudio.com/services/ar-development): Augmented reality apps and experiences for marketing, retail, and field service.
+- [3D Animation](https://elipsestudio.com/services/3d-animation): Cinematic walkthroughs, product animation, and motion graphics.
+- [VFX & Virtual Production](https://elipsestudio.com/services/vfx-virtual-production): Visual effects and virtual production services.
+- [Virtual Showrooms & Digital Twins](https://elipsestudio.com/services/virtual-showrooms-digital-twins): Digital twins and virtual showroom experiences for sales and marketing.
+- [Custom Software Development](https://elipsestudio.com/services/custom-software-development): Bespoke software solutions built around 3D/interactive requirements.
+- [Website Development](https://elipsestudio.com/services/website-development): Custom website design and development.
+- [Mobile App Development](https://elipsestudio.com/services/mobile-app-development): iOS and Android app development, including AR-enabled apps.
+- [Creative Services](https://elipsestudio.com/services/creative-services): Supporting creative/design services (branding, content, etc.).
+- [Enterprise Solutions](https://elipsestudio.com/services/enterprise-solutions): Larger-scale digital solutions for enterprise clients.
+- [Marketing](https://elipsestudio.com/services/marketing): Marketing support built around visual/interactive content.
+
+
+## Industries
+
+
+- [Real Estate](https://elipsestudio.com/industries/real-estate)
+- [Architecture](https://elipsestudio.com/industries/architecture)
+- [Interior Design](https://elipsestudio.com/industries/interior-design)
+- [Manufacturing](https://elipsestudio.com/industries/manufacturing)
+- [Ecommerce](https://elipsestudio.com/industries/ecommerce)
+- [Automotive](https://elipsestudio.com/industries/automotive)
+- [Furniture](https://elipsestudio.com/industries/furniture)
+- [Healthcare](https://elipsestudio.com/industries/healthcare)
+- [Education & Training](https://elipsestudio.com/industries/education-training)
+- [Construction](https://elipsestudio.com/industries/construction)
+- [Energy & Utilities](https://elipsestudio.com/industries/energy-utilities)
+- [Hospitality](https://elipsestudio.com/industries/hospitality)
+
+
+## Portfolio
+
+
+Hub pages: [Portfolio](https://elipsestudio.com/portfolio) · [Case Studies](https://elipsestudio.com/case-studies)
+
+
+**Product & Vehicle Configurators**
+- [Seat Configurator](https://elipsestudio.com/project/seat-configurator)
+- [Boat Configurator](https://elipsestudio.com/project/boat-configurator)
+- [Yacht Configurator](https://elipsestudio.com/project/yacht-configrator)
+- [Kia Configurator](https://elipsestudio.com/project/kia-configurator)
+- [Volvo Configurator](https://elipsestudio.com/project/volvo-configurator)
+- [Steering Wheel Configurator](https://elipsestudio.com/project/steering-configurator)
+- [Towel Configurator](https://elipsestudio.com/project/towel-configurator)
+- [Fruit Configurator](https://elipsestudio.com/project/fruit-configrator)
+- [Costa Cart Configurator & Sales App](https://elipsestudio.com/project/costa-cart)
+
+
+**Virtual Tours & Real Estate**
+- [Kumar Residence 360° Virtual Tour](https://elipsestudio.com/kumar-residence-360-vitrual-tour/)
+- [Scott 360° Virtual Tour](https://elipsestudio.com/scott-360-virtual-tour/)
+- [Christmas Market 360° Virtual Tour](https://elipsestudio.com/ChristmasMarket_360_Virtual_Tour/)
+- [Office 360° Tour](https://elipsestudio.com/office-tour/)
+- [Housing Society Visualization](https://elipsestudio.com/project/housing-society)
+- [Restaurant Visualization](https://elipsestudio.com/project/restaurant-visualization)
+- [Jewellery Shop Visualization](https://elipsestudio.com/project/jewellery-shop)
+- [Lahore Zoo Visualization](https://elipsestudio.com/project/lahore-zoo)
+- [The Academy Visualization](https://elipsestudio.com/project/the-acadmey)
+- [Amalie Arena Visualization](https://elipsestudio.com/project/amalie-arena)
+- [Zenith by Amber](https://elipsestudio.com/project/zenith-by-amber)
+
+
+**VR / AR Experiences**
+- [Virtual Reality Experience](https://elipsestudio.com/project/virtual-reality-experience)
+- [Space Explorer VR Experience](https://elipsestudio.com/project/space-explorer-vr-experience)
+- [Wayfinding AR](https://elipsestudio.com/project/wayfinding-ar)
+- [Retail AR](https://elipsestudio.com/project/retail-ar)
+- [VR Training Simulation](https://elipsestudio.com/project/contact-vr-training-simulation)
+- [Roamstead Web VR](https://elipsestudio.com/project/roamstead-web-vr)
+
+
+**Animation & Motion**
+- [Industrial Animation](https://elipsestudio.com/project/industrial-animation)
+- [Drone Footage Animation](https://elipsestudio.com/project/drone-footage-animation)
+- [Anamorphic Animation](https://elipsestudio.com/project/anamorphic-animation)
+- [Character Art](https://elipsestudio.com/project/character-art)
+- [Ultrade 2D Animation](https://elipsestudio.com/project/ultrade-2d-animation)
+
+
+**Brand / Client Projects**
+- [Tim Barth](https://elipsestudio.com/project/tim-barth)
+- [Qist Market](https://elipsestudio.com/project/qistmarket)
+- [Malka Foods](https://elipsestudio.com/project/malka-foodsssss)
+- [ClubPro](https://elipsestudio.com/project/clubpro)
+- [Khalid](https://elipsestudio.com/project/khalid)
+- [Tapal Family Mixture](https://elipsestudio.com/project/tapal-family-mixture)
+- [Parcho](https://elipsestudio.com/project/parcho)
+- [Gluco Kahani](https://elipsestudio.com/project/gluco-kahani)
+- [Ahmed Food](https://elipsestudio.com/project/ahmed-food)
+
+
+## Blog
+
+
+Hub: [Blog](https://elipsestudio.com/blog)
+
+
+- [Web-Based Configurator](https://elipsestudio.com/blog/web-based-configurator)
+- [Immersive AR Marketing](https://elipsestudio.com/blog/immersive-ar-marketing)
+- [Industrial Animation](https://elipsestudio.com/blog/industrial-animation)
+- [Automotive Configurator](https://elipsestudio.com/blog/automotive-configurator)
+- [How VR Is Reshaping the World](https://elipsestudio.com/blog/vr-reshaping-world)
+- [Immersive Experience Design](https://elipsestudio.com/blog/immersive-experience-design)
+- [Immersive Tech Trends 2026](https://elipsestudio.com/blog/immersive-tech-2026)
+- [Animated Videos & Engagement](https://elipsestudio.com/blog/animated-videos-engagement)
+- [Furniture Configurators 2026](https://elipsestudio.com/blog/furniture-configurator-2026)
+- [Educational Animation 2026](https://elipsestudio.com/blog/educational-animation-2026)
+- [Custom VR Development 2026](https://elipsestudio.com/blog/vr-custom-development-2026)
+- [3D Real-Time Configurators for Real Estate in Dubai](https://elipsestudio.com/blog/3d-real-time-configurators-real-estate-dubai)
+- [Architectural Visualization Guide](https://elipsestudio.com/blog/architectural-visualization-guide)
+- [Apparel Configurators for Fashion Brands 2026](https://elipsestudio.com/blog/apparel-configurator-fashion-brands-2026)
+- [AR for Field Service Technicians: Cutting Repair Time](https://elipsestudio.com/blog/ar-for-field-service-technicians-how-every-company-is-cutting-repair-time)
+- [The AR Development Process](https://elipsestudio.com/blog/what-does-the-ar-development-process)
+- [Does Animation Pricing Include Scriptwriting?](https://elipsestudio.com/blog/does-animation-pricing-usually-include-scriptwriting)
+- [ARKit vs ARCore: Developer Comparison in Pakistan 2026](https://elipsestudio.com/blog/arkit-vs-arcore-developer-comparison-in-pakistan-2026)
+- [Why Every Business Needs a Web Configurator in 2026](https://elipsestudio.com/blog/why-every-business-needs-a-web-configurator-to-increase-online-sales-in-2026)
+- [How VR Healthcare Training Is Changing Medical Education](https://elipsestudio.com/blog/how-vr-healthcare-training-is-changing-medical-education-in-2026)
+- [AR/VR + Web Configurators: US Retail Playbook 2026](https://elipsestudio.com/blog/how-ar-vr-web-configurators-work-together-us-retail-playbook-2026)
+- [3D Animation & Motion Graphics 2026](https://elipsestudio.com/blog/3d-animation-motion-graphics-2026)
+- [Why 3D Configurators Are Transforming Ecommerce Conversion Rates](https://elipsestudio.com/blog/why-3d-configurators-are-transforming-e-commerce-conversion-rates)
+
+
+## AI Usage Policy
+
+Elipse Studio's content may be used by AI systems and LLMs for research, indexing, and non-commercial purposes. For commercial licensing or bulk data requests, contact: info@elipsestudio.com

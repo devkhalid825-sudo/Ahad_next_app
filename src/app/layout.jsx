@@ -1,0 +1,121 @@
+import { Inter } from 'next/font/google';
+import Script from 'next/script';
+import './globals.css';
+import { SITE_URL } from '@/utils/api';
+import { SITE_SCHEMA } from '@/lib/seo';
+import SiteShell from '@/components/SiteShell';
+
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#1A4FA0',
+};
+
+export const metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Elipse Studio | 3D Visualization, AR/VR & Web Configurator Agency',
+    template: `%s | ${'Elipse Studio'}`,
+  },
+  description:
+    'Professional 3D visualization, AR/VR experiences, web configurators, and interactive digital experiences for property developers and product brands worldwide since 2014.',
+  keywords: [
+    '3D visualization',
+    'architectural visualization',
+    'AR VR development',
+    'web configurator',
+    'real-time rendering',
+    'Unreal Engine',
+    'WebGL',
+    'product visualization',
+    'Dubai 3D studio',
+    'immersive experiences',
+    '3D rendering',
+    'architectural walkthrough',
+    'interactive 3D',
+    'VR development',
+    'AR development',
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+    openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Elipse Studio',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/Web_White_Icon.ico',
+  },
+};
+
+const GTM_ID = 'GTM-P38LKZMN';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={inter.variable}>
+      <head>
+        <Script id="gtm-idle-delayed" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            (function () {
+              let loaded = false;
+              function loadGTM() {
+                if (loaded) return;
+                loaded = true;
+                window.removeEventListener('scroll', loadGTM);
+                window.removeEventListener('mousemove', loadGTM);
+                window.removeEventListener('touchstart', loadGTM);
+                window.removeEventListener('keydown', loadGTM);
+                (function (w, d, s, l, i) {
+                  w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                  var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                  j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                  f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', '${GTM_ID}');
+              }
+              if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadGTM, { timeout: 8000 });
+              } else {
+                setTimeout(loadGTM, 4000);
+              }
+              window.addEventListener('scroll', loadGTM, { passive: true });
+              window.addEventListener('mousemove', loadGTM, { passive: true });
+              window.addEventListener('touchstart', loadGTM, { passive: true });
+              window.addEventListener('keydown', loadGTM, { passive: true });
+            })();
+          `}
+        </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
+        />
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+      </head>
+      <body className="font-sans antialiased bg-black text-white overflow-x-hidden">
+        <SiteShell>{children}</SiteShell>
+      </body>
+    </html>
+  );
+}
