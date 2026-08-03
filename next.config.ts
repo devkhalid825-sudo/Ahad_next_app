@@ -40,7 +40,7 @@ const redirects = [
   ["/blogs", "/blog"],
 ];
 
-const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
+const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://pink-toad-569074.hostingersite.com").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -88,7 +88,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "mediumseagreen-crocodile-699024.hostingersite.com",
+        hostname: "pink-toad-569074.hostingersite.com",
         pathname: "/uploads/**",
       },
       {

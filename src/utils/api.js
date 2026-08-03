@@ -1,5 +1,5 @@
 // Live backend origin — used for image URLs. Next.js rewrites proxy /api/* and /uploads/* to this host.
-const LIVE_BACKEND = 'https://mediumseagreen-crocodile-699024.hostingersite.com';
+const LIVE_BACKEND = 'https://pink-toad-569074.hostingersite.com';
 
 const normalizeUrl = (value, fallback) => {
   if (!value) return fallback;
@@ -13,10 +13,14 @@ export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL |
 export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://elipsestudio.com');
 export const API_BASE_URL = (() => {
   const configured = String(defaultApiBase).trim();
-  if (!configured) return `${BACKEND_ORIGIN}/api`;
+  if (!configured) return '/api';
   if (/^https?:\/\//i.test(configured)) return normalizeUrl(configured, `${BACKEND_ORIGIN}/api`);
+  if (configured === 'same-origin' || configured === 'relative') {
+    if (typeof window !== 'undefined') return '/api';
+    return `${SITE_URL}/api`;
+  }
   if (typeof window !== 'undefined') return normalizeUrl(configured, '/api');
-  return normalizeUrl(`${BACKEND_ORIGIN}${configured.startsWith('/') ? configured : `/${configured}`}`, `${BACKEND_ORIGIN}/api`);
+  return normalizeUrl(`${SITE_URL}${configured.startsWith('/') ? configured : `/${configured}`}`, `${SITE_URL}/api`);
 })();
 
 export function getImgSrc(img) {
