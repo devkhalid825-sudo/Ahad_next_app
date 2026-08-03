@@ -40,8 +40,8 @@ const redirects = [
   ["/blogs", "/blog"],
 ];
 
-const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://pink-toad-569074.hostingersite.com").replace(/\/+$/, "");
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
+const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://aqua-chinchilla-205103.hostingersite.com").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -89,12 +89,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "pink-toad-569074.hostingersite.com",
+        hostname: "mediumseagreen-crocodile-699024.hostingersite.com",
         pathname: "/uploads/**",
       },
       {
         protocol: "https",
-        hostname: "elipsestudio.com",
+        hostname: "aqua-chinchilla-205103.hostingersite.com",
       },
     ],
   },

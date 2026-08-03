@@ -1,18 +1,18 @@
 // Live backend origin — used for image URLs. Next.js rewrites proxy /api/* and /uploads/* to this host.
-const LIVE_BACKEND = 'https://pink-toad-569074.hostingersite.com';
+const LIVE_BACKEND = 'https://mediumseagreen-crocodile-699024.hostingersite.com';
 
 const normalizeUrl = (value, fallback) => {
   if (!value) return fallback;
   return String(value).replace(/\/+$/, '');
 };
 
-const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || 'https://elipsestudio.com';
+const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || 'https://aqua-chinchilla-205103.hostingersite.com';
 const defaultApiBase = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || '/api';
 
-export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL || LIVE_BACKEND, LIVE_BACKEND);
-export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://elipsestudio.com');
-export const FRONTEND_HOST = 'https://elipsestudio.com';
-export const BACKEND_HOST = 'https://pink-toad-569074.hostingersite.com';
+export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || LIVE_BACKEND, LIVE_BACKEND);
+export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://aqua-chinchilla-205103.hostingersite.com');
+export const FRONTEND_HOST = 'https://aqua-chinchilla-205103.hostingersite.com';
+export const BACKEND_HOST = BACKEND_ORIGIN;
 export const API_BASE_URL = (() => {
   const configured = String(defaultApiBase).trim();
   if (!configured) return '/api';
