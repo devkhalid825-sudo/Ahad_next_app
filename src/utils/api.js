@@ -87,12 +87,18 @@ export const apiCall = async (endpoint, method = 'GET', body = null, token = nul
     const responseText = await response.text();
 
     if (responseText) {
+      const trimmed = responseText.trim();
+      if (trimmed.startsWith('<') || trimmed.startsWith('<!DOCTYPE')) {
+        console.error('API Error: Received HTML instead of JSON', trimmed.slice(0, 400));
+        return { data: { message: 'The server returned an HTML error page. Please check the backend/frontend deployment configuration.' }, status: response.status };
+      }
+
       try {
         const parsed = JSON.parse(responseText);
         const data = fixUrls(parsed);
         return { data, status: response.status };
       } catch {
-        if (ct.includes('application/json') || responseText.trim().startsWith('{') || responseText.trim().startsWith('[')) {
+        if (ct.includes('application/json') || trimmed.startsWith('{') || trimmed.startsWith('[')) {
           console.error('API Error: Invalid JSON response', responseText);
         }
       }

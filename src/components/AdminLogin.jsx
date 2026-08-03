@@ -23,12 +23,12 @@ const AdminLogin = () => {
 
     const { data, status } = await apiCall('/auth/login', 'POST', { email, password });
 
-    if (status === 200) {
+    if (status === 200 && data?.token) {
       localStorage.setItem('adminToken', data.token);
       localStorage.setItem('adminUser', JSON.stringify(data));
       navigate('/admin/dashboard');
     } else {
-      setError(data.message || 'Login failed');
+      setError(data?.message || 'Login failed');
     }
     setLoading(false);
   };
