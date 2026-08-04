@@ -41,7 +41,7 @@ const redirects = [
 ];
 
 const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://aqua-chinchilla-205103.hostingersite.com").replace(/\/+$/, "");
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://palegreen-herring-820088.hostingersite.com").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "aqua-chinchilla-205103.hostingersite.com",
+        hostname: "palegreen-herring-820088.hostingersite.com",
       },
     ],
   },

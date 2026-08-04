@@ -9,11 +9,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
-const fallbackVideos = [
-  { id: 'f1', videoUrl: 'https://www.youtube.com/shorts/dkL3Ouz-0Vo', projectName: 'Client Testimonial', projectLink: '' },
-  { id: 'f2', videoUrl: 'https://www.youtube.com/shorts/dkL3Ouz-0Vo', projectName: '3D Art Showcase', projectLink: '' },
-  { id: 'f3', videoUrl: 'https://www.youtube.com/shorts/dkL3Ouz-0Vo', projectName: 'Animation Reel', projectLink: '' },
-];
+// No static fallback — section is hidden until real backend data loads.
 
 const getYouTubeId = (url) => {
   if (!url) return null;
@@ -147,11 +143,10 @@ const SocialMediaSection = () => {
               projectLink: item.projectLink || '',
             }))
           );
-        } else {
-          setItems(fallbackVideos);
         }
+        // If backend returns no data, keep items empty → section stays hidden
       } catch {
-        setItems(fallbackVideos);
+        // Network error → keep items empty → section stays hidden
       }
     };
     fetchItems();

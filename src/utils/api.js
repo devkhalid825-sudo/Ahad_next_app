@@ -6,27 +6,18 @@ const normalizeUrl = (value, fallback) => {
   return String(value).replace(/\/+$/, '');
 };
 
-const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || 'https://aqua-chinchilla-205103.hostingersite.com';
+const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || 'https://palegreen-herring-820088.hostingersite.com';
 const defaultApiBase = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || '/api';
 
 export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || LIVE_BACKEND, LIVE_BACKEND);
-export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://aqua-chinchilla-205103.hostingersite.com');
-export const FRONTEND_HOST = 'https://aqua-chinchilla-205103.hostingersite.com';
+export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://palegreen-herring-820088.hostingersite.com');
+export const FRONTEND_HOST = 'https://palegreen-herring-820088.hostingersite.com';
 export const BACKEND_HOST = BACKEND_ORIGIN;
-export const API_BASE_URL = (() => {
-  const configured = String(defaultApiBase).trim();
-  if (!configured) return typeof window !== 'undefined' ? '/api' : `${BACKEND_ORIGIN}/api`;
-  if (/^https?:\/\//i.test(configured)) return normalizeUrl(configured, `${BACKEND_ORIGIN}/api`);
-  if (configured === 'same-origin' || configured === 'relative') {
-    if (typeof window !== 'undefined') return '/api';
-    // Server/build time → go directly to backend to avoid fetching the frontend HTML page
-    return `${BACKEND_ORIGIN}/api`;
-  }
-  // Relative path like '/api'
-  if (typeof window !== 'undefined') return normalizeUrl(configured, '/api');
-  // Server/build time → resolve against backend origin, NOT site URL
-  return normalizeUrl(`${BACKEND_ORIGIN}${configured.startsWith('/') ? configured : `/${configured}`}`, `${BACKEND_ORIGIN}/api`);
-})();
+// Browser: use relative /api (proxied by Next.js rewrites → backend, no CORS)
+// Server/build-time: use direct backend origin (no proxy available)
+export const API_BASE_URL = typeof window !== 'undefined'
+  ? '/api'
+  : `${BACKEND_ORIGIN}/api`;
 
 export function getImgSrc(img) {
   if (!img) return '';

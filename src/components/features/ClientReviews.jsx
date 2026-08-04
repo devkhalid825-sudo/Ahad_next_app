@@ -21,35 +21,7 @@ const getYouTubeEmbedUrl = (url, muted = true) => {
   return null;
 };
 
-const staticReviews = [
-  {
-    id: 1,
-    video: 'https://www.youtube.com/shorts/dkL3Ouz-0Vo',
-    clientName: 'Tim Barth',
-    company: 'Virtual Immo',
-    projectName: 'Interactive Virtual Tour',
-    projectLink: '',
-    quote: 'The virtual tour exceeded our expectations — engagement doubled within the first month.',
-  },
-  {
-    id: 2,
-    video: 'https://www.youtube.com/shorts/dkL3Ouz-0Vo',
-    clientName: 'Hyper',
-    company: 'Hyper Co.',
-    projectName: '3D Art & Animations',
-    projectLink: '',
-    quote: 'Elipse delivered stunning 3D visuals that brought our brand story to life.',
-  },
-  {
-    id: 3,
-    video: 'https://www.youtube.com/shorts/dkL3Ouz-0Vo',
-    clientName: 'Aviv',
-    company: 'Aviv Design',
-    projectName: 'Web configurator integration',
-    projectLink: '',
-    quote: 'Our clients love the interactive configurator — it has streamlined the entire selection process.',
-  },
-];
+// No static fallback — section is hidden until real backend data loads.
 
 const mapReviews = (data) =>
   data.map((r) => ({
@@ -163,11 +135,10 @@ const ClientReviews = ({ initialReviews = null }) => {
         const { data, status } = await apiCall('/reviews', 'GET');
         if (status === 200 && Array.isArray(data) && data.length > 0) {
           setReviews(mapReviews(data));
-        } else {
-          setReviews(staticReviews);
         }
+        // If backend returns no data, keep reviews empty → section stays hidden
       } catch {
-        setReviews(staticReviews);
+        // Network error → keep reviews empty → section stays hidden
       }
     };
     fetchReviews();
