@@ -15,14 +15,17 @@ export const FRONTEND_HOST = 'https://aqua-chinchilla-205103.hostingersite.com';
 export const BACKEND_HOST = BACKEND_ORIGIN;
 export const API_BASE_URL = (() => {
   const configured = String(defaultApiBase).trim();
-  if (!configured) return '/api';
+  if (!configured) return typeof window !== 'undefined' ? '/api' : `${BACKEND_ORIGIN}/api`;
   if (/^https?:\/\//i.test(configured)) return normalizeUrl(configured, `${BACKEND_ORIGIN}/api`);
   if (configured === 'same-origin' || configured === 'relative') {
     if (typeof window !== 'undefined') return '/api';
-    return `${SITE_URL}/api`;
+    // Server/build time → go directly to backend to avoid fetching the frontend HTML page
+    return `${BACKEND_ORIGIN}/api`;
   }
+  // Relative path like '/api'
   if (typeof window !== 'undefined') return normalizeUrl(configured, '/api');
-  return normalizeUrl(`${SITE_URL}${configured.startsWith('/') ? configured : `/${configured}`}`, `${SITE_URL}/api`);
+  // Server/build time → resolve against backend origin, NOT site URL
+  return normalizeUrl(`${BACKEND_ORIGIN}${configured.startsWith('/') ? configured : `/${configured}`}`, `${BACKEND_ORIGIN}/api`);
 })();
 
 export function getImgSrc(img) {
