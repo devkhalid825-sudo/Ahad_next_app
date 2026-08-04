@@ -26,8 +26,17 @@ const staticReviews = [
     { id: 5, video: "https://www.youtube.com/shorts/dkL3Ouz-0Vo", clientName: "Abel Cm Marketing", company: "CM Marketing", projectName: "Brand Video Assets", projectLink: "", quote: "Professional, creative, and on time — exactly what we needed for our brand launch." },
 ];
 
-const ClientReviews = () => {
-    const [reviews, setReviews] = useState([]);
+const mapReviews = (data) => data.map(r => ({
+    id: r.id,
+    video: r.video,
+    clientName: r.clientName,
+    company: r.company || '',
+    projectName: r.projectName || '',
+    projectLink: r.projectLink || '',
+}));
+
+const ClientReviews = ({ initialReviews = null }) => {
+    const [reviews, setReviews] = useState(initialReviews ? mapReviews(initialReviews) : []);
     // Default: all muted = true (required for autoplay to work)
     const [mutedStates, setMutedStates] = useState({});
     const mobileSwiperRef = useRef(null);
@@ -118,18 +127,12 @@ const ClientReviews = () => {
     }, []);
 
     useEffect(() => {
+        if (initialReviews !== null) return;
         const fetchReviews = async () => {
             try {
                 const { data, status } = await apiCall('/reviews', 'GET');
                 if (status === 200 && Array.isArray(data) && data.length > 0) {
-                    setReviews(data.map(r => ({
-                        id: r.id,
-                        video: r.video,
-                        clientName: r.clientName,
-                        company: r.company || '',
-                        projectName: r.projectName || '',
-                        projectLink: r.projectLink || '',
-                    })));
+                    setReviews(mapReviews(data));
                 } else {
                     setReviews(staticReviews);
                 }
@@ -138,7 +141,7 @@ const ClientReviews = () => {
             }
         };
         fetchReviews();
-    }, []);
+    }, [initialReviews]);
 
     // For seamless marquee loop, we need enough slides.
     const displayReviews = useMemo(() => {

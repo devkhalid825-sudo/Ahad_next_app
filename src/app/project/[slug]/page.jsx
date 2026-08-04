@@ -80,7 +80,11 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  if (slug === 'ahmed-food') {
+  const safeSlug = String(slug || '').trim();
+
+  if (!safeSlug) notFound();
+
+  if (safeSlug === 'ahmed-food') {
     return (
       <>
         <BreadcrumbJsonLd
@@ -94,8 +98,9 @@ export default async function Page({ params }) {
       </>
     );
   }
-  if (projectMap[slug]) {
-    const project = projectMap[slug];
+
+  if (projectMap[safeSlug]) {
+    const project = projectMap[safeSlug];
     const category = project.meta?.find((m) => m.label === 'Service')?.value || 'Projects';
     return (
       <>
@@ -103,15 +108,15 @@ export default async function Page({ params }) {
           items={[
             { name: 'Home', item: `${SITE_URL}/` },
             { name: category, item: `${SITE_URL}/portfolio` },
-            { name: project.title, item: `${SITE_URL}/project/${slug}` },
+            { name: project.title, item: `${SITE_URL}/project/${safeSlug}` },
           ]}
         />
-        <ProjectPage slug={slug} />
+        <ProjectPage slug={safeSlug} />
       </>
     );
   }
 
-  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + slug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
   if (status !== 200 || !data || !data.title) notFound();
   const category = data.category || data.service || 'Projects';
   return (
@@ -120,10 +125,10 @@ export default async function Page({ params }) {
         items={[
           { name: 'Home', item: `${SITE_URL}/` },
           { name: category, item: `${SITE_URL}/portfolio` },
-          { name: data.title, item: `${SITE_URL}${data.path || '/project/' + slug}` },
+          { name: data.title, item: `${SITE_URL}${data.path || '/project/' + safeSlug}` },
         ]}
       />
-      <ProjectPage slug={slug} initialData={data} />
+      <ProjectPage slug={safeSlug} initialData={data} />
     </>
   );
 }

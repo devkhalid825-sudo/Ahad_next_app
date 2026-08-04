@@ -14,7 +14,7 @@ const safeJson = (val, fallback) => {
 };
 
 const ProjectArticle = ({ slug, initialData }) => {
-  const captured = slug;
+  const captured = String(slug || '').trim();
   const [project, setProject] = useState(initialData || null);
   const [nextProject, setNextProject] = useState(null);
   const [loading, setLoading] = useState(!initialData);
@@ -32,11 +32,15 @@ const ProjectArticle = ({ slug, initialData }) => {
       setError('');
       try {
         const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent(projectPath)}`, 'GET');
-        if (status === 200) {
+        if (status === 200 && data && data.title) {
           setProject(data);
-        } else setError('Project not found');
+        } else {
+          setError('Project not found');
+          setProject(null);
+        }
       } catch {
         setError('Failed to load project');
+        setProject(null);
       } finally {
         setLoading(false);
       }

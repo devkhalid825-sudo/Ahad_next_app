@@ -12,13 +12,14 @@ import 'swiper/css/pagination';
 const DEFAULT_IMAGE = '/assets/og-image.png';
 const DEFAULT_IMAGE_LIGHT = 'https://placehold.co/800x450/222/888?text=Case+Study';
 
-const CaseStudies = ({ isLight = false }) => {
-    const [featured, setFeatured] = useState([]);
-    const [loading, setLoading] = useState(true);
+const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
+    const [featured, setFeatured] = useState(initialFeatured || []);
+    const [loading, setLoading] = useState(initialFeatured === null);
     const topSwiperRef = useRef(null);
     const bottomSwiperRef = useRef(null);
 
     useEffect(() => {
+        if (initialFeatured !== null) return;
         const fetchFeatured = async () => {
             const { data, status } = await apiCall('/case-studies?featured=true', 'GET');
             if (status === 200 && Array.isArray(data)) {
@@ -27,7 +28,7 @@ const CaseStudies = ({ isLight = false }) => {
             setLoading(false);
         };
         fetchFeatured();
-    }, []);
+    }, [initialFeatured]);
 
     const fallback = isLight ? DEFAULT_IMAGE_LIGHT : DEFAULT_IMAGE;
 

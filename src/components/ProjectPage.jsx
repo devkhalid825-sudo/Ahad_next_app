@@ -25,11 +25,12 @@ const SectionRenderer = ({ section }) => {
 };
 
 const ProjectPage = ({ slug, initialData }) => {
-  const project = projectMap[slug];
+  const safeSlug = String(slug || '').trim();
+  const project = projectMap[safeSlug];
 
-  useEffect(() => { window.scrollTo(0, 0); }, [slug]);
+  useEffect(() => { window.scrollTo(0, 0); }, [safeSlug]);
 
-  if (!project) return <ProjectArticle slug={slug} initialData={initialData} />;
+  if (!project) return <ProjectArticle slug={safeSlug} initialData={initialData} />;
 
   return (
 

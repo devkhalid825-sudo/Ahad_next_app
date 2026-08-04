@@ -1,6 +1,22 @@
 import Home from '@/components/Home';
 import { buildMetadata } from '@/lib/seo';
-import { SITE_URL } from '@/utils/api';
+import { SITE_URL, BACKEND_ORIGIN } from '@/utils/api';
+
+const REVALIDATE_SECONDS = 3600;
+
+async function fetchHomeData(path) {
+  try {
+    const res = await fetch(`${BACKEND_ORIGIN}/api${path}`, {
+      next: { revalidate: REVALIDATE_SECONDS },
+      headers: { Accept: 'application/json' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return Array.isArray(data) ? data : null;
+  } catch {
+    return null;
+  }
+}
 
 export function generateMetadata() {
   return buildMetadata({
@@ -38,6 +54,20 @@ export function generateMetadata() {
   });
 }
 
-export default function Page() {
-  return <Home />;
+export default async function Page() {
+  const [featured, projects, reviews, blogs] = await Promise.all([
+    fetchHomeData('/case-studies?featured=true'),
+    fetchHomeData('/projects'),
+    fetchHomeData('/reviews'),
+    fetchHomeData('/blogs'),
+  ]);
+
+  return (
+    <Home
+      initialFeatured={featured}
+      initialProjects={projects}
+      initialReviews={reviews}
+      initialBlogs={blogs}
+    />
+  );
 }

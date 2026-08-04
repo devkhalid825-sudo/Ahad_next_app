@@ -42,9 +42,19 @@ const categories = [
 
 const staticProjects = [];
 
-const LatestWork = ({ isLight = false }) => {
+const mapProjects = (data) => data
+    .filter(p => p.title !== 'Costa Cart' && p.title !== 'Costa Cart Config' && p.path !== '/project/costa-cart')
+    .map(p => ({
+        id: p.id,
+        title: p.title,
+        category: p.category,
+        image: p.image,
+        path: p.path
+    }));
+
+const LatestWork = ({ isLight = false, initialProjects = null }) => {
     const location = useLocation();
-    const [apiProjects, setApiProjects] = useState([]);
+    const [apiProjects, setApiProjects] = useState(initialProjects ? mapProjects(initialProjects) : []);
     const [activeCategory, setActiveCategory] = useState('ALL');
     const [searchTerm, setSearchTerm] = useState('');
     const [visibleCount, setVisibleCount] = useState(6);
@@ -55,22 +65,17 @@ const LatestWork = ({ isLight = false }) => {
     const rightSentinelRef = useRef(null);
 
     useEffect(() => {
+        if (initialProjects !== null) return;
         const fetchProjects = async () => {
             try {
                 const { data, status } = await apiCall('/projects', 'GET');
                 if (status === 200 && Array.isArray(data)) {
-                    setApiProjects(data.filter(p => p.title !== 'Costa Cart' && p.title !== 'Costa Cart Config' && p.path !== '/project/costa-cart').map(p => ({
-                        id: p.id,
-                        title: p.title,
-                        category: p.category,
-                        image: p.image,
-                        path: p.path
-                    })));
+                    setApiProjects(mapProjects(data));
                 }
             } catch { /* ignore */ }
         };
         fetchProjects();
-    }, []);
+    }, [initialProjects]);
 
     const apiPaths = new Set(apiProjects.map(p => p.path));
     const projects = [...apiProjects, ...staticProjects.filter(p => !apiPaths.has(p.path))];

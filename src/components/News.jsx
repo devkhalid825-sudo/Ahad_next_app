@@ -50,28 +50,31 @@ const articleImg6 = getImgSrc(articleImg6Raw);
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-const News = () => {
-  const [apiBlogs, setApiBlogs] = useState([]);
+const mapBlogs = (data) => data.map(b => ({
+  id: b.id,
+  title: b.title,
+  image: b.image,
+  date: b.date || new Date(b.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase(),
+  category: b.category,
+  readTime: Math.max(1, Math.ceil((b.content || '').replace(/<[^>]*>/g, '').split(/\s+/).filter(Boolean).length / 200)) + ' min read',
+  url: '/blog/' + b.slug
+}));
+
+const News = ({ initialBlogs = null }) => {
+  const [apiBlogs, setApiBlogs] = useState(initialBlogs ? mapBlogs(initialBlogs) : []);
 
   useEffect(() => {
+    if (initialBlogs !== null) return;
     const fetchBlogs = async () => {
       try {
         const { data, status } = await apiCall('/blogs', 'GET');
         if (status === 200 && Array.isArray(data)) {
-          setApiBlogs(data.map(b => ({
-            id: b.id,
-            title: b.title,
-            image: b.image,
-            date: b.date || new Date(b.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase(),
-            category: b.category,
-            readTime: Math.max(1, Math.ceil((b.content || '').replace(/<[^>]*>/g, '').split(/\s+/).filter(Boolean).length / 200)) + ' min read',
-            url: '/blog/' + b.slug
-          })));
+          setApiBlogs(mapBlogs(data));
         }
       } catch { /* ignore */ }
     };
     fetchBlogs();
-  }, []);
+  }, [initialBlogs]);
 
   const staticPosts = [
     {

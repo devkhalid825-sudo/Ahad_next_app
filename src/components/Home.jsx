@@ -1,96 +1,41 @@
 'use client';
 
-import React, { Suspense, lazy, useMemo, useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Hero from './Hero';
 import HeroCTA from './HeroCTA';
+import CaseStudies from './CaseStudies';
+import LatestWork from './LatestWork';
+import ClientReviews from './ClientReviews';
+import Solutions from './Solutions';
+import Industries from './Industries';
+import Technology from './Technology';
+import SocialMediaSection from './SocialMediaSection';
+import News from './News';
+import Contact from './Contact';
+import Footer from './Footer';
 
-// Lazy load sections below the fold
-const CaseStudies = lazy(() => import('./CaseStudies'));
-const LatestWork = lazy(() => import('./LatestWork'));
-const ClientReviews = lazy(() => import('./ClientReviews'));
-const Solutions = lazy(() => import('./Solutions'));
-
-const Industries = lazy(() => import('./Industries'));
-const Technology = lazy(() => import('./Technology'));
-const Process = lazy(() => import('./Process'));
-const News = lazy(() => import('./News'));
-const SocialMediaSection = lazy(() => import('./SocialMediaSection'));
-const Contact = lazy(() => import('./Contact'));
-const Footer = lazy(() => import('./Footer'));
-
-const LazySection = ({ children, height = "40vh" }) => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    rootMargin: '200px 0px',
-  });
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        minHeight: inView ? 'auto' : height,
-        contentVisibility: 'auto',
-        containIntrinsicSize: `0 ${height}`
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const Home = () => {
+const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs }) => {
   return (
     <>
       <Hero />
       <HeroCTA />
-      <LazySection height="60vh">
-        <Suspense fallback={<div className="h-[40vh] bg-black animate-pulse" />}>
-          <CaseStudies />
-        </Suspense>
-      </LazySection>
 
-      <LazySection height="60vh">
-        <Suspense fallback={<div className="h-[40vh] bg-black animate-pulse" />}>
-          <LatestWork />
-        </Suspense>
-      </LazySection>
+      <CaseStudies initialFeatured={initialFeatured} />
 
-      <LazySection height="60vh">
-        <Suspense fallback={<div className="h-[40vh] bg-black animate-pulse" />}>
-          <ClientReviews />
-        </Suspense>
-      </LazySection>
+      <LatestWork initialProjects={initialProjects} />
 
-      <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <Solutions />
-        </Suspense>
-      </LazySection>
+      <ClientReviews initialReviews={initialReviews} />
 
-      <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <Industries />
-        </Suspense>
-      </LazySection>
+      <Solutions />
 
-      <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <Technology />
-        </Suspense>
-      </LazySection>
+      <Industries />
 
-      <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <SocialMediaSection />
-        </Suspense>
-      </LazySection>
-      <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <News />
-        </Suspense>
-      </LazySection>
+      <Technology />
+
+      <SocialMediaSection />
+
+      <News initialBlogs={initialBlogs} />
 
       {/* Lead Magnet — lightweight CTA before full form */}
       <section className="bg-black py-14 md:py-20 px-[15px] md:px-[40px] border-t border-zinc-800">
@@ -122,25 +67,10 @@ const Home = () => {
         </div>
       </section>
 
-      <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <Contact />
-        </Suspense>
-      </LazySection>
+      <Contact />
 
-      {/* <LazySection height="30vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <News />
-        </Suspense>
-      </LazySection> */}
-
-      <LazySection height="20vh">
-        <Suspense fallback={<div className="h-[20vh] bg-black" />}>
-          <Footer />
-        </Suspense>
-      </LazySection>
+      <Footer />
     </>
-  
 
   );
 };
