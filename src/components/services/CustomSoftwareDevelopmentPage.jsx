@@ -1,14 +1,14 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from "react";
 import { getImgSrc } from '../../utils/api';
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
-import Contact from "../Contact";
+import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
+import Contact from "../features/Contact";
 import ServiceRelatedLinks from "./ServiceRelatedLinks";
-import LatestWork from "../LatestWork";
-import ClientReviews from "../ClientReviews";
+import LatestWork from "../features/LatestWork";
+import ClientReviews from "../features/ClientReviews";
 
 import heroImgImport from "../../assets/costom-software/costom-software.webp";
 import galleryImgImport from "../../assets/costom-software/large.webp";

@@ -1,11 +1,11 @@
 ﻿'use client';
 
 import React, { useEffect } from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import LatestWork from './LatestWork';
-import Contact from './Contact';
-import CaseStudies from './CaseStudies';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import LatestWork from './features/LatestWork';
+import Contact from './features/Contact';
+import CaseStudies from './features/CaseStudies';
 import { motion } from 'framer-motion';
 
 const PortfolioPage = () => {

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -19,10 +19,10 @@ import {
 } from 'react-icons/hi2';
 import { LuSofa, LuFactory, LuRuler } from "react-icons/lu";
 
-import Header from './Header';
-import LatestWork from "./LatestWork";
-import Footer from './Footer';
-import Contact from './Contact';
+import Header from './layouts/Header';
+import LatestWork from "./features/LatestWork";
+import Footer from './layouts/Footer';
+import Contact from './features/Contact';
 
 const iconMap = {
     HiOutlineBuildingOffice2: <HiOutlineBuildingOffice2 />,

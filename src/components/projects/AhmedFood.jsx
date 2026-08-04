@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import _still2 from '../../assets/Ahmed-food/stills/04.webp';
 const still2 = getImgSrc(_still2);
 const stillImages = [still1, still2];
 
-import Header from "../Header";
+import Header from "../layouts/Header";
 import {
     FaCube,
     FaImage,
@@ -21,10 +21,10 @@ import {
     FaThLarge,
     FaPaperPlane
 } from "react-icons/fa";
-import LatestWork from "../LatestWork";
-import ClientReviews from "../ClientReviews";
-import Footer from '../Footer';
-import Contact from '../Contact';
+import LatestWork from "../features/LatestWork";
+import ClientReviews from "../features/ClientReviews";
+import Footer from '../layouts/Footer';
+import Contact from '../features/Contact';
 
 import _b1 from '../../assets/Ahmed-food/bombay-biryani/01.webp';
 const b1 = getImgSrc(_b1);

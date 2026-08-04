@@ -1,4 +1,4 @@
-const BreadcrumbJsonLd = ({ items }) => {
+﻿const BreadcrumbJsonLd = ({ items }) => {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

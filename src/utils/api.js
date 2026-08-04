@@ -45,7 +45,7 @@ function toRelativeUpload(url) {
   return url;
 }
 
-function fixUrls(obj) {
+export function fixUrls(obj) {
   if (typeof obj === 'string') {
     // Convert absolute upload URLs → relative so Next.js proxy handles them
     const relative = toRelativeUpload(obj);

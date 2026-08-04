@@ -1,12 +1,12 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BACKEND_ORIGIN } from '../utils/api';
-import Header from './Header';
-import Footer from './Footer';
-import LatestWork from './LatestWork';
-import Contact from './Contact';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import LatestWork from './features/LatestWork';
+import Contact from './features/Contact';
 import { motion } from 'framer-motion';
 import { FiEye, FiSearch } from 'react-icons/fi';
 import { Swiper, SwiperSlide } from 'swiper/react';

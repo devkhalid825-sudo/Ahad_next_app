@@ -24,10 +24,10 @@ const DashboardOverview = () => {
           apiCall('/projects', 'GET', null, token),
           apiCall('/blogs', 'GET', null, token),
         ]);
-        if (mRes.status === 200) setMeetings(mRes.data);
-        if (cRes.status === 200) setContacts(cRes.data);
-        if (pRes.status === 200) setProjectCount(pRes.data.length);
-        if (bRes.status === 200) setBlogCount(bRes.data.length);
+        if (mRes.status === 200 && Array.isArray(mRes.data)) setMeetings(mRes.data);
+        if (cRes.status === 200 && Array.isArray(cRes.data)) setContacts(cRes.data);
+        if (pRes.status === 200 && Array.isArray(pRes.data)) setProjectCount(pRes.data.length);
+        if (bRes.status === 200 && Array.isArray(bRes.data)) setBlogCount(bRes.data.length);
       } catch {
         localStorage.removeItem('adminToken');
         navigate('/admin/login');

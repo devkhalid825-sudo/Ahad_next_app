@@ -1,12 +1,12 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect } from 'react';
 import { getImgSrc } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Header from './Header';
-import Footer from './Footer';
-import Contact from './Contact';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import Contact from './features/Contact';
 import _backgroundImage from '../assets/About-page/service.webp';
 import serviceInnerImg from '../assets/About-page/service-inner.webp';
 const backgroundImage = getImgSrc(_backgroundImage);

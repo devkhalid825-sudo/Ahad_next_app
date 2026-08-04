@@ -1,51 +1,82 @@
-import { BACKEND_ORIGIN, SITE_URL } from '@/utils/api';
-
-export const revalidate = 86400;
-
-const SITEMAP_FILES = [
-  'pages_sitemap.xml',
-  'projects_sitemap.xml',
-  'blogs_sitemap.xml',
-  'casestudies_sitemap.xml',
-];
-
-const STATIC_PAGES = [
-  '',
-  'about',
-  'services',
-  'capabilities',
-  'portfolio',
-  'case-studies',
-  'contact',
-  'blog',
-];
+import { SITE_URL } from '@/utils/api';
+import { getBlogs } from '@/services/blogService';
+import { getProjects, getCaseStudies } from '@/services/projectService';
 
 export default async function sitemap() {
-  const urls = [];
+  const staticRoutes = [
+    '',
+    '/about',
+    '/capabilities',
+    '/portfolio',
+    '/industries',
+    '/case-studies',
+    '/blog',
+    '/contact',
+    '/services',
+    '/services/architectural-visualization',
+    '/services/3d-product-visualization',
+    '/services/3d-product-configurators',
+    '/services/interactive-web-experiences',
+    '/services/vr-development',
+    '/services/ar-development',
+    '/services/3d-animation',
+    '/services/vfx-virtual-production',
+    '/services/virtual-showrooms-digital-twins',
+    '/services/custom-software-development',
+    '/services/website-development',
+    '/services/mobile-app-development',
+    '/services/creative-services',
+    '/services/enterprise-solutions',
+    '/services/marketing',
+  ];
 
-  for (const file of SITEMAP_FILES) {
-    try {
-      const res = await fetch(`${BACKEND_ORIGIN}/${file}`, { next: { revalidate: 86400 } });
-      if (!res.ok) continue;
-      const xml = await res.text();
-      const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-      for (const loc of locs) {
-        if (!loc) continue;
-        urls.push({ url: loc, lastModified: new Date() });
-      }
-    } catch {
-      // backend unreachable — fall through to static pages
-    }
+  const currentDate = new Date().toISOString();
+
+  const staticEntries = staticRoutes.map((route) => ({
+    url: `${SITE_URL}${route}`,
+    lastModified: currentDate,
+    changeFrequency: route === '' ? 'daily' : 'weekly',
+    priority: route === '' ? 1.0 : route.startsWith('/services') ? 0.8 : 0.7,
+  }));
+
+  let blogEntries = [];
+  try {
+    const blogs = await getBlogs();
+    blogEntries = blogs.map((blog) => ({
+      url: `${SITE_URL}/blog/${blog.slug}`,
+      lastModified: blog.updatedAt || blog.createdAt || currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }));
+  } catch (error) {
+    console.error('Sitemap blog generation error:', error);
   }
 
-  if (urls.length === 0) {
-    for (const page of STATIC_PAGES) {
-      urls.push({
-        url: `${SITE_URL}/${page}`.replace(/\/$/, ''),
-        lastModified: new Date(),
-      });
-    }
+  let projectEntries = [];
+  try {
+    const projects = await getProjects();
+    projectEntries = projects.map((project) => ({
+      url: `${SITE_URL}${project.path || `/project/${project.slug}`}`,
+      lastModified: project.updatedAt || currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }));
+  } catch (error) {
+    console.error('Sitemap project generation error:', error);
   }
 
-  return urls;
+  let caseStudyEntries = [];
+  try {
+    const caseStudies = await getCaseStudies();
+    caseStudyEntries = caseStudies.map((cs) => ({
+      url: `${SITE_URL}/case-study/${cs.slug}`,
+      lastModified: cs.updatedAt || currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error('Sitemap case study generation error:', error);
+  }
+
+  return [...staticEntries, ...blogEntries, ...projectEntries, ...caseStudyEntries];
 }

@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
-import Contact from "../Contact";
-import LatestWork from "../LatestWork";
+import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
+import Contact from "../features/Contact";
+import LatestWork from "../features/LatestWork";
 import ServiceRelatedLinks from "./ServiceRelatedLinks";
-import ClientReviews from "../ClientReviews";
+import ClientReviews from "../features/ClientReviews";
 
 import _heroImg from "../../assets/ElipseImages/projects/3D-rendering.webp";
 import _solutionsImg from "../../assets/ElipseImages/projects/BOAT-CONFIG-OPT.webp";

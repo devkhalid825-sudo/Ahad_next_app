@@ -18,7 +18,7 @@ const AuthorizedPage = () => {
     if (!token) { navigate('/admin/login'); return; }
     try {
       const res = await apiCall('/meetings', 'GET', null, token);
-      if (res.status === 200) setMeetings(res.data.filter(m => m.status === 'Approved'));
+      if (res.status === 200 && Array.isArray(res.data)) setMeetings(res.data.filter(m => m.status === 'Approved'));
     } catch {
       localStorage.removeItem('adminToken');
       navigate('/admin/login');

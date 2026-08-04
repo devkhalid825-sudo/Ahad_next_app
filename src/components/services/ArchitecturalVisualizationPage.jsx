@@ -1,13 +1,13 @@
-﻿'use client';
+﻿﻿'use client';
 
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
-import Contact from "../Contact";
-import LatestWork from "../LatestWork";
+import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
+import Contact from "../features/Contact";
+import LatestWork from "../features/LatestWork";
 import ServiceRelatedLinks from "./ServiceRelatedLinks";
-import ClientReviews from "../ClientReviews";
+import ClientReviews from "../features/ClientReviews";
 
 // Aap in 3 placeholders ko apni marzi ke mutabik real paths se replace kar sakte hain:
 // Sahi format mein imported images:
@@ -34,7 +34,7 @@ const galleryImages = [emerledBathroom, emerledBedroom, emerledKitchen, emerledL
 const CTA = ({ label, to = "/contact", className = "" }) =>
   !label ? null : (
     <Link to={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>
-      {label} <span aria-hidden="true">→</span>
+      {label} <span aria-hidden="true">?</span>
     </Link>
   );
 
@@ -52,10 +52,10 @@ const ReadText = ({ text }) => (
 
 const SolutionItem = ({ title, desc }) => (
   <li className="flex gap-3 md:gap-4 py-3 md:py-5 border-b border-[#1A1A1A] last:border-0">
-    <span className="text-[#4169E1] mt-1 shrink-0">◆</span>
+    <span className="text-[#4169E1] mt-1 shrink-0">?</span>
     <p className="text-sm md:text-lg font-light leading-relaxed text-white/70">
       <span className="text-[#F2F0EB] font-semibold">{title}</span>
-      {desc ? <span className="text-white/60"> — {desc}</span> : null}
+      {desc ? <span className="text-white/60"> � {desc}</span> : null}
     </p>
   </li>
 );
@@ -132,7 +132,7 @@ return (
     onClick={handleStartProject}
     className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto"
   >
-    Start a Project →
+    Start a Project ?
   </button>
 </div>
         
@@ -155,11 +155,11 @@ return (
           <div className="flex-1">
             <Eyebrow>Architectural Visualization</Eyebrow>
             <SectionTitle>Overview</SectionTitle>
-            <div className="md:hidden"><TextCarousel texts={["Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results.", "Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings — they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy.", "Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2014, our team has produced visualization for real estate developers, architects, and design firms worldwide — including landmark developments like Burj Binghatti."]} /></div>
+            <div className="md:hidden"><TextCarousel texts={["Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results.", "Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy.", "Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2014, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti."]} /></div>
             <div className="hidden md:block">
               <ReadText text="Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results." />
-              <ReadText text="Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings — they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy." />
-              <ReadText text="Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2014, our team has produced visualization for real estate developers, architects, and design firms worldwide — including landmark developments like Burj Binghatti." />
+              <ReadText text="Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy." />
+              <ReadText text="Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2014, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti." />
             </div>
           </div>
           <div className="flex-1 bg-[#111] rounded-lg p-5 md:p-[2rem] text-[#F2F0EB]">
@@ -317,9 +317,9 @@ return (
             {[
               { q: "What are architectural visualization services and how do they help my project?", a: "Architectural visualization services create photorealistic 3D representations of buildings and spaces before physical construction begins. They help by enabling off-plan property sales, winning architectural competitions, securing stakeholder approvals, and marketing developments to international audiences. Elipse Studio has delivered architectural visualization worldwide since 2014." },
               { q: "Can Elipse Studio work directly from Revit, Rhino, or SketchUp files?", a: "Yes. Elipse Studio's architectural visualization pipeline works with all major architectural design formats including Revit, Rhino, SketchUp, AutoCAD, and ArchiCAD. Our team handles file translation and geometry cleanup so architects deliver source files in their native workflow." },
-              { q: "Do you deliver both static renderings and VR walkthroughs?", a: "Yes. Elipse Studio delivers photorealistic renderings, cinematic architectural animation, browser-based virtual tours, immersive VR walkthroughs, and AR mobile experiences — all from an integrated 3D asset pipeline." },
+              { q: "Do you deliver both static renderings and VR walkthroughs?", a: "Yes. Elipse Studio delivers photorealistic renderings, cinematic architectural animation, browser-based virtual tours, immersive VR walkthroughs, and AR mobile experiences � all from an integrated 3D asset pipeline." },
               { q: "How long does a typical architectural visualization project take?", a: "Focused exterior and interior renderings typically deliver in 3-5 weeks. Full presentation packages span 8-14 weeks. VR experiences and interactive presentations require 12-20 weeks." },
-              { q: "How do I start an architectural visualization project with Elipse Studio?", a: "Contact Elipse Studio with a brief description of your development — property type, target audience, timeline, and visualization scope needed. A senior team member responds within one business day with a scoped approach." },
+              { q: "How do I start an architectural visualization project with Elipse Studio?", a: "Contact Elipse Studio with a brief description of your development � property type, target audience, timeline, and visualization scope needed. A senior team member responds within one business day with a scoped approach." },
             ].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}
           </div>
         </div>
@@ -338,10 +338,10 @@ return (
         <div className="flex items-center justify-between flex-wrap gap-[10px] w-full">
           <div className="flex gap-[10px] flex-wrap">
             <button className="inline-flex items-center gap-[8px] text-[13px] font-medium px-[20px] py-[10px] border border-[#333] rounded-[6px] hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-[#888] bg-transparent cursor-pointer" onClick={() => navigate("/")}>
-              <span aria-hidden="true">▦</span> All work
+              <span aria-hidden="true">?</span> All work
             </button>
             <button className="inline-flex items-center gap-[8px] text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer" onClick={handleStartProject}>
-              <span aria-hidden="true">➤</span> Start a project
+              <span aria-hidden="true">?</span> Start a project
             </button>
           </div>
         </div>

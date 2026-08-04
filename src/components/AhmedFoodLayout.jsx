@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaThLarge, FaPaperPlane } from 'react-icons/fa';
-import Header from './Header';
-import LatestWork from './LatestWork';
-import ClientReviews from './ClientReviews';
-import Footer from './Footer';
-import Contact from './Contact';
+import Header from './layouts/Header';
+import LatestWork from './features/LatestWork';
+import ClientReviews from './features/ClientReviews';
+import Footer from './layouts/Footer';
+import Contact from './features/Contact';
 
 const RenderCard = ({ src, title }) => (
   <div className="group relative overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl aspect-[16/9] w-[360px] sm:w-[480px] md:w-[560px] shrink-0 snap-start rounded-lg">

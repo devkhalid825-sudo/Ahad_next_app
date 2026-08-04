@@ -18,7 +18,7 @@ const InquiriesPage = () => {
     if (!token) { navigate('/admin/login'); return; }
     try {
       const res = await apiCall('/contact', 'GET', null, token);
-      if (res.status === 200) setContacts(res.data);
+      if (res.status === 200 && Array.isArray(res.data)) setContacts(res.data);
     } catch {
       localStorage.removeItem('adminToken');
       navigate('/admin/login');

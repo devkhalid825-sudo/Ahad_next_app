@@ -20,7 +20,7 @@ const MeetingsPage = () => {
     if (!token) { navigate('/admin/login'); return; }
     try {
       const res = await apiCall('/meetings', 'GET', null, token);
-      if (res.status === 200) setMeetings(res.data);
+      if (res.status === 200 && Array.isArray(res.data)) setMeetings(res.data);
       else throw new Error('Unauthorized');
     } catch {
       localStorage.removeItem('adminToken');

@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiSearch, FiArrowRight } from 'react-icons/fi';
 import { getImgSrc } from '../utils/api';
-import Header from './Header';
-import Footer from './Footer';
-import Contact from './Contact';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import Contact from './features/Contact';
 import blogImgRaw from '../assets/ElipseImages/blogs/blogs-Ar.webp';
 const blogImg = getImgSrc(blogImgRaw);
 import {

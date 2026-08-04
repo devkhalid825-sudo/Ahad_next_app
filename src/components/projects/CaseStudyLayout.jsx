@@ -1,13 +1,13 @@
-'use client';
+﻿'use client';
 
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import Header from "../Header";
+import Header from "../layouts/Header";
 import { FaThLarge, FaPaperPlane } from "react-icons/fa";
-import LatestWork from "../LatestWork";
-import ClientReviews from "../ClientReviews";
-import Contact from '../Contact';
-import Footer from '../Footer';
+import LatestWork from "../features/LatestWork";
+import ClientReviews from "../features/ClientReviews";
+import Contact from '../features/Contact';
+import Footer from '../layouts/Footer';
 
 const CaseStudyLayout = ({
     title,

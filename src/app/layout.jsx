@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import { SITE_URL } from '@/utils/api';
-import { SITE_SCHEMA } from '@/lib/seo';
+import { SITE_SCHEMA } from '@/seo/schemas';
 import SiteShell from '@/components/SiteShell';
 
 const inter = Inter({
@@ -22,7 +22,7 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: 'Elipse Studio | 3D Visualization, AR/VR & Web Configurator Agency',
-    template: `%s | ${'Elipse Studio'}`,
+    template: `%s | Elipse Studio`,
   },
   description:
     'Professional 3D visualization, AR/VR experiences, web configurators, and interactive digital experiences for property developers and product brands worldwide since 2014.',
@@ -49,9 +49,12 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
-    openGraph: {
+  openGraph: {
     type: 'website',
     locale: 'en_US',
     siteName: 'Elipse Studio',
@@ -104,14 +107,6 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
         />
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
       </head>
       <body className="font-sans antialiased bg-black text-white overflow-x-hidden">
         <SiteShell>{children}</SiteShell>

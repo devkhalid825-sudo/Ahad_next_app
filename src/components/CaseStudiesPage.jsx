@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Hero from './Hero';
-import HeroCTA from './HeroCTA';
-import Footer from './Footer';
-import Contact from './Contact';
-import Solutions from './Solutions';
-import News from './News';
-import SocialMediaSection from './SocialMediaSection';
+import Hero from './features/Hero';
+import HeroCTA from './features/HeroCTA';
+import Footer from './layouts/Footer';
+import Contact from './features/Contact';
+import Solutions from './features/Solutions';
+import News from './features/News';
+import SocialMediaSection from './features/SocialMediaSection';
 import { apiCall, BACKEND_ORIGIN } from '../utils/api';
 
 const CaseStudiesPage = () => {

@@ -1,12 +1,12 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { getImgSrc } from '../utils/api';
-import Header from './Header';
-import Footer from './Footer';
-import Contact from './Contact';
-import ClientReviews from './ClientReviews';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import Contact from './features/Contact';
+import ClientReviews from './features/ClientReviews';
 
 import heroAboutImgRaw from '../assets/About-page/hero-About.jpg';
 import ceoImgRaw from '../assets/ElipseImages/projects/ceo.webp';

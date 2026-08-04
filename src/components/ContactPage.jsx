@@ -1,12 +1,12 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import CaseStudies from './CaseStudies';
-import News from './News';
-import SocialMediaSection from './SocialMediaSection';
-import Industries from './Industries';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import CaseStudies from './features/CaseStudies';
+import News from './features/News';
+import SocialMediaSection from './features/SocialMediaSection';
+import Industries from './features/Industries';
 import Process from './Process';
 import { FaWhatsapp } from 'react-icons/fa';
 import { SiCalendly } from 'react-icons/si';

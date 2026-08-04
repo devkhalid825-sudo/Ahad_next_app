@@ -1,22 +1,9 @@
-import Home from '@/components/Home';
-import { buildMetadata } from '@/lib/seo';
-import { SITE_URL, BACKEND_ORIGIN } from '@/utils/api';
-
-const REVALIDATE_SECONDS = 3600;
-
-async function fetchHomeData(path) {
-  try {
-    const res = await fetch(`${BACKEND_ORIGIN}/api${path}`, {
-      next: { revalidate: REVALIDATE_SECONDS },
-      headers: { Accept: 'application/json' },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return Array.isArray(data) ? data : null;
-  } catch {
-    return null;
-  }
-}
+import Home from '@/components/features/Home';
+import { buildMetadata } from '@/seo/metadata';
+import { SITE_URL } from '@/utils/api';
+import { getFeaturedCaseStudies, getProjects } from '@/services/projectService';
+import { getReviews } from '@/services/reviewService';
+import { getBlogs } from '@/services/blogService';
 
 export function generateMetadata() {
   return buildMetadata({
@@ -25,7 +12,7 @@ export function generateMetadata() {
       'Professional 3D visualization, AR/VR experiences, and web configurators for product-based businesses across Dubai, UAE & worldwide. Transform your ideas into immersive digital experiences.',
     keywords:
       '3D visualization, AR VR development, web configurators, real-time rendering, Unreal Engine, WebGL, product visualization, Dubai 3D studio, immersive experiences',
-    canonical: SITE_URL,
+    canonical: `${SITE_URL}/`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — 3D Visualization, AR/VR & Web Configurator Agency',
     schema: {
@@ -56,10 +43,10 @@ export function generateMetadata() {
 
 export default async function Page() {
   const [featured, projects, reviews, blogs] = await Promise.all([
-    fetchHomeData('/case-studies?featured=true'),
-    fetchHomeData('/projects'),
-    fetchHomeData('/reviews'),
-    fetchHomeData('/blogs'),
+    getFeaturedCaseStudies(),
+    getProjects(),
+    getReviews(),
+    getBlogs(),
   ]);
 
   return (
