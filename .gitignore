@@ -13,29 +13,30 @@
 # testing
 /coverage
 
-# next.js
+# Next.js build artifacts
 /.next/
 /out/
+/build/
 
-# production
+# Production output (if used)
 /build
 
-# misc
+# Miscellaneous
 .DS_Store
 *.pem
 
-# debug
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# Environment files (never commit)
 .env*
 
-# vercel
+# Vercel configuration
 .vercel
 
-# typescript
+# TypeScript artifacts
 *.tsbuildinfo
 next-env.d.ts

@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiCall } from '../utils/api';
 import { FiLock, FiMail, FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi';
 import logoRaw from '../assets/images/logo.webp';
@@ -99,15 +99,6 @@ const AdminLogin = () => {
                   {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </button>
               </div>
-            </div>
-
-            <div className="flex justify-end">
-              <Link
-                to="/forgot-password"
-                className="text-[10px] font-bold uppercase tracking-widest text-[#4169E1] hover:text-[#0D0D0D] transition-colors"
-              >
-                Forgot Password?
-              </Link>
             </div>
 
             <button

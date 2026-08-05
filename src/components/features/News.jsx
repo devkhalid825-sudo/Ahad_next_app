@@ -4,26 +4,27 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode } from 'swiper/modules';
-import { apiCall, SITE_URL, getImgSrc } from '@/utils/api';
+import { apiCall, getImgSrc, BACKEND_ORIGIN } from '@/utils/api';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-const hero = getImgSrc('/assets/ElipseImages/projects/News1.webp');
-const elephantImg = getImgSrc('/assets/ElipseImages/projects/Animation4.webp');
-const hero4 = getImgSrc('/assets/ElipseImages/projects/elipse-artitecture.webp');
-const configuratorHero = getImgSrc('/assets/ElipseImages/blogs/jetour.webp');
-const arThumbnail = getImgSrc('/assets/ElipseImages/projects/AR.webp');
-const volveImg = getImgSrc('/assets/ElipseImages/hero/volve-configrator.webp');
-const questImg = getImgSrc('/assets/ElipseImages/blogs/quest.3.webp');
-const mainHeroImage = getImgSrc('/assets/ElipseImages/blogs/Ar.webp');
-const animationMainImg = getImgSrc('/assets/ElipseImages/projects/Animation.webp');
-const furnitureImg = getImgSrc('/assets/ElipseImages/blogs/alnoor.webp');
-const edu1 = getImgSrc('/assets/images/edu-1.webp');
-const vrHero = getImgSrc('/assets/images/1 (1).webp');
-const techBg = getImgSrc('/assets/ElipseImages/blogs/blogs-Ar.webp');
-const articleImg1 = getImgSrc('/assets/article-img/A (3) .webp');
-const articleImg6 = getImgSrc('/assets/ElipseImages/projects/Artictecture.webp');
+import articleImg1Raw from '../../assets/article-img/A (3) .webp';
+import articleImg6Raw from '../../assets/ElipseImages/projects/Artictecture.webp';
+import vrHeroRaw from '../../assets/images/1 (1).webp';
+
+const articleImg1 = getImgSrc(articleImg1Raw);
+const articleImg6 = getImgSrc(articleImg6Raw);
+const vrHero = getImgSrc(vrHeroRaw);
+
+const getImageSrc = (image) => {
+  if (!image) return '';
+  if (typeof image === 'object') image = image.url || image.src || '';
+  if (typeof image !== 'string') return '';
+  if (image.startsWith('http')) return image;
+  if (image.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${image}`;
+  return image;
+};
 
 const mapBlogs = (data) =>
   data.map((b) => ({
@@ -137,7 +138,7 @@ const News = ({ initialBlogs = null }) => {
                 >
                   <div className="w-full h-[150px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5 group">
                     <img
-                      src={post.image}
+                      src={getImageSrc(post.image)}
                       alt={post.title}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
