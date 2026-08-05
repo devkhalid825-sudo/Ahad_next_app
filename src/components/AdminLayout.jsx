@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fi';
 import logoRaw from '../assets/images/logo.webp';
 import { getImgSrc } from '../utils/api';
+import { getAdminToken, clearAdminAuth } from '../utils/auth';
 const logo = getImgSrc(logoRaw);
 
 const navItems = [
@@ -32,13 +33,12 @@ const AdminLayout = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     if (!token) navigate('/admin/login');
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUser');
+    clearAdminAuth();
     navigate('/admin/login');
   };
 

@@ -1,8 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiCall } from '../../utils/api';
+import { getAdminToken, clearAdminAuth } from '../../utils/auth';
 import {
   FiCheckCircle, FiMail, FiCalendar, FiClock, FiTrash2, FiAlertCircle
 } from 'react-icons/fi';
@@ -14,13 +15,13 @@ const AuthorizedPage = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     if (!token) { navigate('/admin/login'); return; }
     try {
       const res = await apiCall('/meetings', 'GET', null, token);
       if (res.status === 200 && Array.isArray(res.data)) setMeetings(res.data.filter(m => m.status === 'Approved'));
     } catch {
-      localStorage.removeItem('adminToken');
+      clearAdminAuth();
       navigate('/admin/login');
     } finally {
       setLoading(false);
@@ -31,7 +32,7 @@ const AuthorizedPage = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this authorized meeting?')) return;
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { status } = await apiCall(`/meetings/${id}`, 'DELETE', null, token);
     if (status === 200) {
       setMeetings(prev => prev.filter(m => m.id !== id));

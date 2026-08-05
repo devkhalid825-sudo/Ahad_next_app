@@ -1,18 +1,14 @@
-﻿﻿'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { getAdminToken } from '../utils/auth';
 
 const ProtectedRoute = ({ children }) => {
   const [authed, setAuthed] = useState(false);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    let token = null;
-    try {
-      token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null;
-    } catch (e) {
-      token = null;
-    }
+    const token = getAdminToken();
     setAuthed(!!token);
     setChecked(true);
   }, []);

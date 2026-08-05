@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { apiCall } from '../../utils/api';
+import { getAdminToken } from '../../utils/auth';
 import {
   FiLock, FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle
 } from 'react-icons/fi';
@@ -25,7 +26,7 @@ const SettingsPage = () => {
     }
 
     setActionLoading('password');
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { status } = await apiCall('/auth/change-password', 'PUT', { currentPassword, newPassword }, token);
 
     if (status === 200) {

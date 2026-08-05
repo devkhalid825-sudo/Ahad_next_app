@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiCall } from '../utils/api';
+import { setAdminToken, setAdminUser } from '../utils/auth';
 import { FiLock, FiMail, FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi';
 import logoRaw from '../assets/images/logo.webp';
 import { getImgSrc } from '../utils/api';
@@ -24,8 +25,8 @@ const AdminLogin = () => {
     const { data, status } = await apiCall('/auth/login', 'POST', { email, password });
 
     if (status === 200 && data?.token) {
-      localStorage.setItem('adminToken', data.token);
-      localStorage.setItem('adminUser', JSON.stringify(data));
+      setAdminToken(data.token);
+      setAdminUser(data);
       navigate('/admin/dashboard');
     } else {
       setError(data?.message || 'Login failed');

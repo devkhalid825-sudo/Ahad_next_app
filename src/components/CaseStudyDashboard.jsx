@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { apiCall, BACKEND_ORIGIN } from '../utils/api';
+import { getAdminToken } from '../utils/auth';
 import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiMove, FiImage, FiYoutube, FiFolder, FiStar } from 'react-icons/fi';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
@@ -80,7 +81,7 @@ const CaseStudyDashboard = () => {
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [addingFromProject, setAddingFromProject] = useState(false);
   const [addAsFeatured, setAddAsFeatured] = useState(true);
-  const token = localStorage.getItem('adminToken');
+  const token = getAdminToken();
 
   const fetchCaseStudies = async () => {
     setLoading(true);
@@ -263,7 +264,7 @@ const CaseStudyDashboard = () => {
               </SectionCard>
 
               {/* Section 2: Hero Meta */}
-              <SectionCard icon="📋" title="Hero Meta Info">
+              <SectionCard icon="??" title="Hero Meta Info">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-[#888] text-[8px] uppercase tracking-widest font-bold">Client</label>
@@ -365,7 +366,7 @@ const CaseStudyDashboard = () => {
               </SectionCard>
 
               {/* Section 4: Content */}
-              <SectionCard icon="📄" title="Content">
+              <SectionCard icon="??" title="Content">
                 <div className="space-y-2">
                   <label className="text-[#888] text-[8px] uppercase tracking-widest font-bold">HTML Content</label>
                   <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))} rows={10} className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-xs text-[#F2F0EB] font-mono focus:border-[#4169E1] outline-none transition-all resize-none placeholder:text-[#444]" placeholder="<h2>Case Study Content</h2><p>Write your case study here...</p>" />
@@ -373,7 +374,7 @@ const CaseStudyDashboard = () => {
               </SectionCard>
 
               {/* Section 5: SEO */}
-              <SectionCard icon="🔍" title="SEO Settings">
+              <SectionCard icon="??" title="SEO Settings">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-[#888] text-[8px] uppercase tracking-widest font-bold">Meta Title <span className="text-[#555]">(optional)</span></label>
@@ -490,9 +491,9 @@ const CaseStudyDashboard = () => {
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className="text-xs font-bold text-[#F2F0EB] truncate">{p.title}</p>
-                          <p className="text-[8px] text-[#888] mt-0.5">{p.category}{p.client ? ` · ${p.client}` : ''}</p>
+                          <p className="text-[8px] text-[#888] mt-0.5">{p.category}{p.client ? ` — ${p.client}` : ''}</p>
                         </div>
-                        {alreadyExists ? <span className="text-[7px] text-[#555] uppercase tracking-widest font-bold shrink-0">Added</span> : <span className="text-[7px] text-[#4169E1] uppercase tracking-widest font-bold shrink-0">Add →</span>}
+                        {alreadyExists ? <span className="text-[7px] text-[#555] uppercase tracking-widest font-bold shrink-0">Added</span> : <span className="text-[7px] text-[#4169E1] uppercase tracking-widest font-bold shrink-0">Add ?</span>}
                       </button>
                     );
                   })}

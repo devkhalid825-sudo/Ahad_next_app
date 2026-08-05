@@ -1,8 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiCall } from '../../utils/api';
+import { getAdminToken, clearAdminAuth } from '../../utils/auth';
 import { FiCheckCircle, FiAlertCircle, FiMail, FiMessageSquare, FiBriefcase, FiFileText } from 'react-icons/fi';
 
 const DashboardOverview = () => {
@@ -14,7 +15,7 @@ const DashboardOverview = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     if (!token) { navigate('/admin/login'); return; }
     (async () => {
       try {
@@ -29,7 +30,7 @@ const DashboardOverview = () => {
         if (pRes.status === 200 && Array.isArray(pRes.data)) setProjectCount(pRes.data.length);
         if (bRes.status === 200 && Array.isArray(bRes.data)) setBlogCount(bRes.data.length);
       } catch {
-        localStorage.removeItem('adminToken');
+        clearAdminAuth();
         navigate('/admin/login');
       } finally {
         setLoading(false);

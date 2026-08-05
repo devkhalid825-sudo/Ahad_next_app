@@ -1,8 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiCall } from '../utils/api';
+import { getAdminToken, clearAdminAuth } from '../utils/auth';
 import {
   FiUsers, FiCheckCircle, FiLogOut, FiMail,
   FiCalendar, FiClock, FiAlertCircle, FiTrendingUp,
@@ -35,7 +36,7 @@ const MeetingsDashboard = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     if (!token) {
       navigate('/admin/login');
       return;
@@ -68,7 +69,7 @@ const MeetingsDashboard = () => {
       }
     } catch (err) {
       setError('System out of sync. Re-logging...');
-      localStorage.removeItem('adminToken');
+      clearAdminAuth();
       navigate('/admin/login');
     } finally {
       setLoading(false);
@@ -81,7 +82,7 @@ const MeetingsDashboard = () => {
 
   const handleApprove = async (id) => {
     setActionLoading(id);
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { status } = await apiCall(`/meetings/${id}`, 'PUT', { status: 'Approved' }, token);
 
     if (status === 200) {
@@ -100,7 +101,7 @@ const MeetingsDashboard = () => {
   const handleDeleteMeeting = async (id) => {
     if (!window.confirm('Are you sure you want to delete this meeting request?')) return;
 
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { status } = await apiCall(`/meetings/${id}`, 'DELETE', null, token);
 
     if (status === 200) {
@@ -115,7 +116,7 @@ const MeetingsDashboard = () => {
   const handleDeleteContact = async (id) => {
     if (!window.confirm('Are you sure you want to delete this inquiry?')) return;
 
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { status } = await apiCall(`/contact/${id}`, 'DELETE', null, token);
 
     if (status === 200) {
@@ -131,8 +132,8 @@ const MeetingsDashboard = () => {
   const approvedMeetings = meetings.filter(m => m.status === 'Approved');
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUser');
+    clearAdminAuth();
+    ;
     navigate('/admin/login');
   };
 
@@ -148,7 +149,7 @@ const MeetingsDashboard = () => {
     }
 
     setActionLoading('password');
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { data, status } = await apiCall('/auth/change-password', 'PUT', { currentPassword, newPassword }, token);
 
     if (status === 200) {
@@ -165,7 +166,7 @@ const MeetingsDashboard = () => {
     if (!window.confirm('This will import all existing static projects, blogs, and reviews into the database. Continue?')) return;
     setSeeding(true);
     setError('');
-    const token = localStorage.getItem('adminToken');
+    const token = getAdminToken();
     const { data, status } = await apiCall('/seed/static', 'POST', null, token);
     if (status === 200) {
       setSuccessMsg(data.message || 'Static data imported successfully!');
@@ -682,7 +683,7 @@ const MeetingsDashboard = () => {
                         required
                         minLength={field.min}
                         className="w-full bg-[#0D0D0D]/10 border border-[#0D0D0D]/20 rounded-xl px-4 py-3 pr-12 text-[#0D0D0D] focus:border-[#4169E1] outline-none transition-all text-xs placeholder:text-[#0D0D0D]/40"
-                        placeholder="••••••••"
+                        placeholder="————————"
                       />
                       <button type="button" onClick={() => setShowPassword(s => ({ ...s, [field.key]: !s[field.key] }))}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0D0D0D]/80 hover:text-[#4169E1] transition-all"

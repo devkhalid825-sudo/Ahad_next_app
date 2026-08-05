@@ -187,10 +187,18 @@ const staticPosts = [
 
 const getImageSrc = (image) => {
     if (!image) return '';
-    if (typeof image === 'string') return image.startsWith('http') ? image : `${BACKEND_ORIGIN}${image}`;
+    if (typeof image === 'string') {
+        if (image.startsWith('http')) return image;
+        if (image.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${image}`;
+        return image;
+    }
     if (typeof image === 'object') {
         const u = image.url || image.src || image.srcSet;
-        if (typeof u === 'string') return u.startsWith('http') ? u : `${BACKEND_ORIGIN}${u}`;
+        if (typeof u === 'string') {
+            if (u.startsWith('http')) return u;
+            if (u.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${u}`;
+            return u;
+        }
     }
     return '';
 };

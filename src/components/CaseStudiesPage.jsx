@@ -9,6 +9,7 @@ import Contact from './features/Contact';
 import Solutions from './features/Solutions';
 import News from './features/News';
 import SocialMediaSection from './features/SocialMediaSection';
+import CaseStudies from './features/CaseStudies';
 import { apiCall, BACKEND_ORIGIN } from '../utils/api';
 
 const CaseStudiesPage = () => {
@@ -115,6 +116,9 @@ const CaseStudiesPage = () => {
                     )}
                 </div>
             </section>
+
+            {/* FEATURED CASE STUDIES WITH PAGINATION */}
+            <CaseStudies initialFeatured={null} />
 
             {/* SOLUTION & CAPABILITIES */}
             <Solutions isLight={false} />

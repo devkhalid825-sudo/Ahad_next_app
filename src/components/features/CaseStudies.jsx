@@ -61,6 +61,30 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
         isLight ? 'bg-white text-black' : 'bg-black text-white'
       }`}
     >
+      <style>{`
+        .top-pagination.swiper-pagination {
+          position: static;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+        }
+        .top-pagination .swiper-pagination-bullet {
+          background: ${isLight ? 'rgba(0, 0, 0, 0.35)' : 'rgba(255, 255, 255, 0.35)'};
+          width: 8px;
+          height: 8px;
+          border-radius: 9999px;
+          opacity: 1;
+          margin: 0;
+          transition: all 0.3s ease;
+        }
+        .top-pagination .swiper-pagination-bullet-active {
+          background: #4169E1;
+          width: 24px;
+          border-radius: 9999px;
+        }
+      `}</style>
       <div className="mx-auto px-[15px] md:px-[40px] flex justify-between items-center md:items-end mb-4 md:mb-6 gap-4">
         <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1]">
           Featured Case Studies

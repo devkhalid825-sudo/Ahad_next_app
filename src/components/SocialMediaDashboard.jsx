@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { apiCall } from '../utils/api';
+import { getAdminToken } from '../utils/auth';
 import { FiPlus, FiTrash2, FiX, FiSave, FiMove, FiEdit2 } from 'react-icons/fi';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
@@ -39,7 +40,7 @@ const SocialMediaDashboard = () => {
   const [form, setForm] = useState({ videoUrl: '', projectName: '', projectLink: '' });
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
-  const token = localStorage.getItem('adminToken');
+  const token = getAdminToken();
 
   const fetchItems = async () => {
     setLoading(true);

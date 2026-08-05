@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { apiCall, API_BASE_URL } from '../utils/api';
+import { getAdminToken } from '../utils/auth';
 import { FiPlus, FiTrash2, FiX, FiSave, FiMove, FiEdit2 } from 'react-icons/fi';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
@@ -46,7 +47,7 @@ const ReviewDashboard = () => {
   const [form, setForm] = useState({ clientName: '', company: '', projectName: '', projectLink: '', video: '' });
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
-  const token = localStorage.getItem('adminToken');
+  const token = getAdminToken();
   const importedKey = 'reviews_imported';
 
   const fetchReviews = async () => {

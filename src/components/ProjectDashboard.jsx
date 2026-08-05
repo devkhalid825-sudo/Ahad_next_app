@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { apiCall, API_BASE_URL, BACKEND_ORIGIN, getYoutubeEmbed } from '../utils/api';
+import { getAdminToken } from '../utils/auth';
 import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiMove, FiImage } from 'react-icons/fi';
 import HtmlEditor from './ui/HtmlEditor';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -112,7 +113,7 @@ const ProjectDashboard = () => {
   const [selectedHeroFile, setSelectedHeroFile] = useState(null);
   const [galleryFiles, setGalleryFiles] = useState({});
   const [msg, setMsg] = useState('');
-  const token = localStorage.getItem('adminToken');
+  const token = getAdminToken();
 
   const fetchProjects = async () => {
     setLoading(true);
@@ -392,7 +393,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: META INFO (Hero) ===== */}
-              <SectionCard title="2. Hero Meta Info" icon="📋">
+              <SectionCard title="2. Hero Meta Info" icon="??">
                 <p className="text-[#555] text-[7px] uppercase tracking-widest mb-3 -mt-2">This appears in the hero section — Client, Service, Duration, Deliverables</p>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
@@ -415,7 +416,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: MEDIA ===== */}
-              <SectionCard title="3. Media (Card Image + Hero Section)" icon="🎬">
+              <SectionCard title="3. Media (Card Image + Hero Section)" icon="??">
                 <div>
                   <label className="block text-[#888] text-[8px] uppercase tracking-widest mb-2">Card Image <span className="text-[#555]">(thumbnail in dashboard & latest work grid)</span></label>
                   <div className="flex items-center gap-3">
@@ -439,7 +440,7 @@ const ProjectDashboard = () => {
                     {['image', 'video'].map((t) => (
                       <button key={t} type="button" onClick={() => setForm(f => ({ ...f, heroType: t, heroImage: t === 'video' ? '' : f.heroImage, heroVideo: t === 'image' ? '' : f.heroVideo }))}
                         className={`flex-1 text-[9px] font-bold uppercase tracking-widest px-4 py-3 rounded-xl border transition-all ${form.heroType === t ? 'bg-[#4169E1] text-white border-[#4169E1]' : 'bg-[#1A1A1A] text-[#555] border-[#333] hover:border-[#4169E1]/50'}`}>
-                        {t === 'image' ? '🖼 Hero Image' : '🎬 YouTube Video'}
+                        {t === 'image' ? '?? Hero Image' : '?? YouTube Video'}
                       </button>
                     ))}
                   </div>
@@ -478,7 +479,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: OVERVIEW & CHALLENGE ===== */}
-              <SectionCard title="4. Overview & Challenge" icon="📝">
+              <SectionCard title="4. Overview & Challenge" icon="??">
                 <div>
                   <label className="block text-[#888] text-[8px] uppercase tracking-widest mb-2">Overview Heading</label>
                   <input type="text" value={form.overviewHeading} onChange={(e) => setForm(f => ({ ...f, overviewHeading: e.target.value }))} className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-[#F2F0EB] focus:border-[#4169E1] outline-none transition-all text-xs placeholder:text-[#444]" placeholder="e.g. Bringing flavor to the screen" />
@@ -498,7 +499,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: RESULTS ===== */}
-              <SectionCard title="5. Results" icon="📊">
+              <SectionCard title="5. Results" icon="??">
                 <p className="text-[#555] text-[7px] uppercase tracking-widest -mt-2">Add measurable results — each with a stat, label, and description</p>
                 {form.results.map((r, i) => (
                   <div key={i} className="flex items-start gap-2 p-3 bg-[#1A1A1A] rounded-xl border border-[#222]">
@@ -514,7 +515,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: PROCESS ===== */}
-              <SectionCard title="6. Process Steps" icon="⚙️">
+              <SectionCard title="6. Process Steps" icon="??">
                 <p className="text-[#555] text-[7px] uppercase tracking-widest -mt-2">Add process steps — each with step number, phase, title, and description</p>
                 {form.processSteps.map((p, i) => (
                   <div key={i} className="flex items-start gap-2 p-3 bg-[#1A1A1A] rounded-xl border border-[#222]">
@@ -531,7 +532,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: GALLERY ===== */}
-              <SectionCard title="7. Gallery Categories" icon="🖼">
+              <SectionCard title="7. Gallery Categories" icon="??">
                 <p className="text-[#555] text-[7px] uppercase tracking-widest -mt-2">Add category name, then upload images or paste URLs</p>
                 {form.galleryCategories.map((g, i) => (
                   <div key={i} className="p-3 bg-[#1A1A1A] rounded-xl border border-[#222] space-y-2">
@@ -571,13 +572,13 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: DESCRIPTION ===== */}
-              <SectionCard title="8. Description (HTML)" icon="📄">
+              <SectionCard title="8. Description (HTML)" icon="??">
                 <p className="text-[#555] text-[7px] uppercase tracking-widest -mt-2">Full HTML description — used for overview text (HTML tags stripped)</p>
                 <HtmlEditor value={form.description} onChange={(val) => setForm(f => ({ ...f, description: val }))} minHeight={200} />
               </SectionCard>
 
               {/* ===== SECTION: SEO ===== */}
-              <SectionCard title="9. SEO Settings" icon="🔍">
+              <SectionCard title="9. SEO Settings" icon="??">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[#888] text-[8px] uppercase tracking-widest mb-2">Meta Title <span className="text-[#555]">(optional)</span></label>
@@ -591,7 +592,7 @@ const ProjectDashboard = () => {
               </SectionCard>
 
               {/* ===== SECTION: CTA LINK ===== */}
-              <SectionCard title="10. CTA Button" icon="🔗">
+              <SectionCard title="10. CTA Button" icon="??">
                 <p className="text-[#555] text-[7px] uppercase tracking-widest -mt-2">Add a call-to-action button on this project page</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>

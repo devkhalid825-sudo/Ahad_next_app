@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { apiCall, uploadFile, getYoutubeEmbed } from '../utils/api';
+import { getAdminToken } from '../utils/auth';
 import { FiPlus, FiEdit2, FiTrash2, FiX, FiImage, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiMove } from 'react-icons/fi';
 import HtmlEditor from './ui/HtmlEditor';
 import SectionBuilder from './ui/SectionBuilder';
@@ -71,7 +72,7 @@ const BlogDashboard = () => {
   const [uploadingSection, setUploadingSection] = useState(null);
   const [msg, setMsg] = useState('');
 
-  const token = localStorage.getItem('adminToken');
+  const token = getAdminToken();
 
   const fetchBlogs = async () => {
     setLoading(true);

@@ -1,10 +1,19 @@
-﻿﻿'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArticleProgress } from './articles/articleHelpers';
 import { FiArrowLeft } from 'react-icons/fi';
-import { apiCall, getYoutubeEmbed, SITE_URL } from '../utils/api';
+import { apiCall, getYoutubeEmbed, SITE_URL, BACKEND_ORIGIN } from '../utils/api';
+
+const absImage = (img) => {
+  if (!img) return '';
+  if (typeof img === 'object') img = img.url || img.src || '';
+  if (typeof img !== 'string') return '';
+  if (img.startsWith('http')) return img;
+  if (img.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${img}`;
+  return img;
+};
 import AhmedFoodLayout from './AhmedFoodLayout';
 import MobileMenu from './MobileMenu';
 
@@ -89,8 +98,8 @@ const CaseStudyDetail = ({ slug, initialData }) => {
     ...(cs.category ? [{ label: 'Category', value: cs.category }] : []),
   ];
 
-  const heroImage = cs.largeBanner;
-  const smallBanner = cs.smallBanner || undefined;
+  const heroImage = absImage(cs.largeBanner);
+  const smallBanner = absImage(cs.smallBanner) || undefined;
   const heroVideo = cs.videoUrl ? getYoutubeEmbed(cs.videoUrl) : undefined;
 
   return (
