@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { apiCall } from '../utils/api';
 import { setAdminToken, setAdminUser } from '../utils/auth';
 import { FiLock, FiMail, FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi';
@@ -15,7 +15,7 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ const AdminLogin = () => {
     if (status === 200 && data?.token) {
       setAdminToken(data.token);
       setAdminUser(data);
-      navigate('/admin/dashboard');
+      router.push('/admin/dashboard');
     } else {
       setError(data?.message || 'Login failed');
     }

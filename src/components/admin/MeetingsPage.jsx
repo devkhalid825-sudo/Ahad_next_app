@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { apiCall } from '../../utils/api';
 import { getAdminToken, clearAdminAuth } from '../../utils/auth';
 import {
@@ -14,24 +14,24 @@ const MeetingsPage = () => {
   const [actionLoading, setActionLoading] = useState(null);
   const [successMsg, setSuccessMsg] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const fetchData = async () => {
     const token = getAdminToken();
-    if (!token) { navigate('/admin/login'); return; }
+    if (!token) { router.push('/admin/login'); return; }
     try {
       const res = await apiCall('/meetings', 'GET', null, token);
       if (res.status === 200 && Array.isArray(res.data)) setMeetings(res.data);
       else throw new Error('Unauthorized');
     } catch {
       clearAdminAuth();
-      navigate('/admin/login');
+      router.push('/admin/login');
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => { fetchData(); }, [navigate]);
+  useEffect(() => { fetchData(); }, [router]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this meeting request?')) return;

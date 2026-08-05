@@ -1,7 +1,8 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   FiMail, FiCheckCircle, FiLogOut, FiMenu, FiX,
   FiEdit3, FiBriefcase, FiPhone, FiSettings, FiCommand,
@@ -30,21 +31,22 @@ const navItems = [
 
 const AdminLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const token = getAdminToken();
-    if (!token) navigate('/admin/login');
-  }, [navigate]);
+    if (!token) router.push('/admin/login');
+  }, [router]);
 
   const handleLogout = () => {
     clearAdminAuth();
-    navigate('/admin/login');
+    router.push('/admin/login');
   };
 
   const closeMobile = () => setSidebarOpen(false);
 
-  const linkClass = ({ isActive }) =>
+  const getLinkClass = (isActive) =>
     `w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-[10px] uppercase tracking-[0.2em] ${
       isActive
         ? 'bg-[#4169E1] text-white font-bold shadow-lg'
@@ -92,17 +94,17 @@ const AdminLayout = ({ children }) => {
               );
             }
             const Icon = item.icon;
+            const isActive = item.end ? pathname === item.to : pathname?.startsWith(item.to);
             return (
-              <NavLink
+              <Link
                 key={item.to}
-                to={item.to}
-                end={item.end}
+                href={item.to}
                 onClick={closeMobile}
-                className={linkClass}
+                className={getLinkClass(isActive)}
               >
                 <Icon className="text-base" />
                 <span>{item.label}</span>
-              </NavLink>
+              </Link>
             );
           })}
         </nav>

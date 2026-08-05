@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { apiCall } from '../utils/api';
 import { getAdminToken, clearAdminAuth } from '../utils/auth';
 import {
@@ -33,12 +33,12 @@ const MeetingsDashboard = () => {
   const [seeding, setSeeding] = useState(false);
   const [projectCount, setProjectCount] = useState(0);
   const [blogCount, setBlogCount] = useState(0);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const fetchData = async () => {
     const token = getAdminToken();
     if (!token) {
-      navigate('/admin/login');
+      router.push('/admin/login');
       return;
     }
 
@@ -70,7 +70,7 @@ const MeetingsDashboard = () => {
     } catch (err) {
       setError('System out of sync. Re-logging...');
       clearAdminAuth();
-      navigate('/admin/login');
+      router.push('/admin/login');
     } finally {
       setLoading(false);
     }
@@ -78,7 +78,7 @@ const MeetingsDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [navigate]);
+  }, [router]);
 
   const handleApprove = async (id) => {
     setActionLoading(id);
@@ -133,8 +133,7 @@ const MeetingsDashboard = () => {
 
   const handleLogout = () => {
     clearAdminAuth();
-    ;
-    navigate('/admin/login');
+    router.push('/admin/login');
   };
 
   const handleChangePassword = async (e) => {

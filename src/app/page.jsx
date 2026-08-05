@@ -7,14 +7,12 @@ import { getBlogs } from '@/services/blogService';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: '3D Visualization, AR/VR & Web Configurator Agency | Elipse Studio',
+    title: '3D Visualization & Web Configurators',
     description:
-      'Professional 3D visualization, AR/VR experiences, and web configurators for product-based businesses across Dubai, UAE & worldwide. Transform your ideas into immersive digital experiences.',
-    keywords:
-      '3D visualization, AR VR development, web configurators, real-time rendering, Unreal Engine, WebGL, product visualization, Dubai 3D studio, immersive experiences',
+      'Professional 3D visualization, AR/VR, and web configurators for product-based businesses. Transform ideas into immersive digital experiences.',
     canonical: `${SITE_URL}/`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
-    ogImageAlt: 'Elipse Studio — 3D Visualization, AR/VR & Web Configurator Agency',
+    ogImageAlt: 'Elipse Studio — 3D Visualization & AR/VR Studio',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

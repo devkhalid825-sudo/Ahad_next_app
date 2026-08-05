@@ -4,11 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Portfolio — Our Work & Case Studies',
+    title: 'Portfolio & Projects',
     description:
-      'Explore our portfolio of 3D visualization, VR, AR, and interactive configurator projects across real estate, automotive, ecommerce, manufacturing, and healthcare.',
-    keywords:
-      '3D visualization portfolio, VR projects, AR case studies, interactive configurators, Elipse Studio work, creative technology projects',
+      'Explore 3D visualization, VR, AR, and interactive configurator projects across real estate, automotive, ecommerce, and manufacturing.',
     canonical: `${SITE_URL}/portfolio`,
     schema: {
       '@context': 'https://schema.org',

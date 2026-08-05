@@ -60,8 +60,32 @@ export const SITE_SCHEMA = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: SITE_NAME,
     url: `${SITE_URL}/`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}/#webpage`,
+    name: 'Elipse Studio | 3D Visualization & AR/VR Studio',
+    description:
+      'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
+    url: `${SITE_URL}/`,
+    isPartOf: { '@type': 'WebSite', '@id': `${SITE_URL}/#website` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${SITE_URL}/#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${SITE_URL}/`,
+      },
+    ],
   },
 ];
 

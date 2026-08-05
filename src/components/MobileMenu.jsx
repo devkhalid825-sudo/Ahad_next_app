@@ -1,14 +1,14 @@
-﻿'use client';
+'use client';
 
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import logoRaw from '../assets/images/logo.webp';
 import { getImgSrc } from '../utils/api';
 const logo = getImgSrc(logoRaw);
 
 const MobileMenu = ({ isOpen, onClose }) => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [servicesOpen, setServicesOpen] = useState(false);
 
     const menuItemsBefore = [
@@ -45,7 +45,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
     const handleNavigation = (item, e) => {
         e.preventDefault();
         window.scrollTo(0, 0);
-        navigate(item.href);
+        router.push(item.href);
         onClose();
     };
 
@@ -122,7 +122,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                                             href={sub.href}
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                navigate(sub.href);
+                                                router.push(sub.href);
                                                 onClose();
                                                 setServicesOpen(false);
                                             }}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { apiCall } from '../../utils/api';
 import { getAdminToken, clearAdminAuth } from '../../utils/auth';
 import { FiCheckCircle, FiAlertCircle, FiMail, FiMessageSquare, FiBriefcase, FiFileText } from 'react-icons/fi';
@@ -12,11 +12,11 @@ const DashboardOverview = () => {
   const [projectCount, setProjectCount] = useState(0);
   const [blogCount, setBlogCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const token = getAdminToken();
-    if (!token) { navigate('/admin/login'); return; }
+    if (!token) { router.push('/admin/login'); return; }
     (async () => {
       try {
         const [mRes, cRes, pRes, bRes] = await Promise.all([
@@ -31,12 +31,12 @@ const DashboardOverview = () => {
         if (bRes.status === 200 && Array.isArray(bRes.data)) setBlogCount(bRes.data.length);
       } catch {
         clearAdminAuth();
-        navigate('/admin/login');
+        router.push('/admin/login');
       } finally {
         setLoading(false);
       }
     })();
-  }, [navigate]);
+  }, [router]);
 
     if (loading) return (
     <>

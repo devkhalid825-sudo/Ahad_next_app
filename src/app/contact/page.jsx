@@ -4,11 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Contact Us — Transform Your Ideas into Immersive Experiences',
+    title: 'Contact Us',
     description:
       'Ready to start your project? Get in touch with Elipse Studio for 3D visualization, VR, AR, and interactive experiences. We respond within 24 hours.',
-    keywords:
-      'contact Elipse Studio, 3D visualization quote, VR project inquiry, Dubai immersive studio, get a free estimate, creative technology consultation',
     canonical: `${SITE_URL}/contact`,
     schema: {
       '@context': 'https://schema.org',

@@ -7,8 +7,6 @@ export function generateMetadata() {
     title: 'Digital Solutions That Move Markets',
     description:
       'From web and mobile to VR, AR, and animation — we build immersive digital experiences that engage audiences and drive results across every platform.',
-    keywords:
-      '3D visualization services, VR development, AR applications, web configurators, animation studio Dubai, immersive experiences, interactive 3D, WebGL',
     canonical: `${SITE_URL}/services`,
     schema: {
       '@context': 'https://schema.org',

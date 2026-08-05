@@ -13,7 +13,6 @@ export function buildMetadata({
   title,
   description,
   canonical,
-  keywords,
   ogImage = DEFAULT_OG_IMAGE,
   ogImageAlt,
   noIndex = false,
@@ -26,13 +25,12 @@ export function buildMetadata({
   const fullTitle = cleanTitle ? `${cleanTitle} | ${SITE_NAME}` : SITE_NAME;
   const fullDescription =
     description ||
-    'Elipse Studio: photoreal 3D rendering, architectural visualization, interactive 3D configurators, VR/AR, and animation for property developers worldwide.';
+    'Elipse Studio: photoreal 3D rendering, architectural visualization, interactive configurators, and VR/AR for global brands.';
   const url = canonical || SITE_URL;
 
   const metadata = {
     title: fullTitle,
     description: fullDescription,
-    ...(keywords ? { keywords } : {}),
     ...(noIndex
       ? {
           robots: {

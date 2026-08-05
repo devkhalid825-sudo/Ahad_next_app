@@ -5,9 +5,7 @@ export function generateMetadata() {
   return buildMetadata({
     title: 'Industries We Serve',
     description:
-      'Tailored 3D visualization, VR, AR, and interactive solutions for real estate, ecommerce, healthcare, manufacturing, automotive, furniture, construction, education, energy, and hospitality.',
-    keywords:
-      '3D visualization industries, VR for real estate, AR for retail, interactive configurators, industrial 3D solutions, manufacturing visualization, healthcare VR training',
+      '3D visualization, VR, AR, and interactive solutions for real estate, ecommerce, healthcare, manufacturing, automotive, construction, and hospitality.',
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://elipsestudio.com'}/industries`,
     schema: {
       '@context': 'https://schema.org',

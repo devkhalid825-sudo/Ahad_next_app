@@ -21,28 +21,11 @@ export const viewport = {
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Elipse Studio | 3D Visualization, AR/VR & Web Configurator Agency',
+    default: 'Elipse Studio | 3D Visualization & AR/VR Studio',
     template: `%s | Elipse Studio`,
   },
   description:
-    'Professional 3D visualization, AR/VR experiences, web configurators, and interactive digital experiences for property developers and product brands worldwide since 2014.',
-  keywords: [
-    '3D visualization',
-    'architectural visualization',
-    'AR VR development',
-    'web configurator',
-    'real-time rendering',
-    'Unreal Engine',
-    'WebGL',
-    'product visualization',
-    'Dubai 3D studio',
-    'immersive experiences',
-    '3D rendering',
-    'architectural walkthrough',
-    'interactive 3D',
-    'VR development',
-    'AR development',
-  ],
+    'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
   robots: {
     index: true,
     follow: true,
@@ -57,7 +40,28 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
+    url: SITE_URL,
     siteName: 'Elipse Studio',
+    title: 'Elipse Studio | 3D Visualization & AR/VR Studio',
+    description:
+      'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
+    images: [
+      {
+        url: `${SITE_URL}/assets/logo-og.webp`,
+        width: 1200,
+        height: 630,
+        alt: 'Elipse Studio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@ElipseStudio',
+    creator: '@ElipseStudio',
+    title: 'Elipse Studio | 3D Visualization & AR/VR Studio',
+    description:
+      'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
+    images: [`${SITE_URL}/assets/logo-og.webp`],
   },
   icons: {
     icon: '/favicon.ico',

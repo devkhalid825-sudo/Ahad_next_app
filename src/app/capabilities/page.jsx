@@ -4,11 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Our Capabilities | 3D Visualization, Animation & Configurator Development',
+    title: 'Capabilities',
     description:
-      'Explore Elipse Studio\'s full range of capabilities — 3D architectural visualization, interactive configurators, AR/VR experiences, CGI animation, web development, and digital marketing. End-to-end creative technology solutions since 2014.',
-    keywords:
-      '3D visualization capabilities, architectural visualization, interactive configurators, AR VR development, CGI animation, digital marketing, immersive experiences, creative technology',
+      'Explore 3D architectural visualization, interactive configurators, AR/VR, CGI animation, and creative technology solutions from Elipse Studio.',
     canonical: `${SITE_URL}/capabilities`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — Full Range of Creative Technology Capabilities',
