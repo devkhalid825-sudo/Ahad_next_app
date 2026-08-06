@@ -16,7 +16,7 @@ app.prepare().then(() => {
   const server = express();
 
   server.disable("x-powered-by");
-  
+
   // 1. Trust proxy if sitting behind Caddy/Nginx
   server.set('trust proxy', 1);
 
@@ -33,13 +33,29 @@ app.prepare().then(() => {
     const legacyUrl = (process.env.LEGACY_URL || '').replace(/\/$/, '');
 
     const rewriteLocation = (value) => {
-      if (typeof value === 'string' && value.startsWith(legacyUrl)) {
-        const host = req.headers.host;
-        const protocol = req.headers['x-forwarded-proto'] || 'https';
-        return value.replace(legacyUrl, `${protocol}://${host}`);
+    if (typeof value !== "string") return value;
+
+    try {
+      const legacy = new URL(process.env.LEGACY_URL);
+      const incomingHost = req.headers.host;
+      const protocol = req.headers["x-forwarded-proto"] || "https";
+
+      // Absolute redirect from Hostinger
+      if (value.startsWith(legacy.origin)) {
+        const url = new URL(value);
+        return `${protocol}://${incomingHost}${url.pathname}${url.search}${url.hash}`;
       }
+
+      // Relative redirect (e.g. /Steering_Configurator/)
+      if (value.startsWith("/")) {
+        return `${protocol}://${incomingHost}${value}`;
+      }
+
       return value;
-    };
+    } catch (err) {
+      return value;
+    }
+  };
 
     res.setHeader = function (name, value) {
       if (name.toLowerCase() === 'location') {
