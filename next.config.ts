@@ -44,6 +44,8 @@ const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_U
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://darkgray-alpaca-239355.hostingersite.com").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+
   async redirects() {
     return [
       ...redirects.map(([source, destination]) => ({
@@ -68,19 +70,28 @@ const nextConfig: NextConfig = {
   // This eliminates CORS issues and preflight errors on client-side fetch.
   async rewrites() {
     const resolvedBackendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || backendUrl).replace(/\/+$/, "");
-    return [
-      {
-        source: `/api/:path*`,
-        destination: `${resolvedBackendUrl}/api/:path*`,
-      },
-      {
-        source: `/uploads/:path*`,
-        destination: `${resolvedBackendUrl}/uploads/:path*`,
-      },
-      { source: "/robots.txt", destination: `${resolvedBackendUrl}/robots.txt` },
-      { source: "/sitemap.xml", destination: `${resolvedBackendUrl}/sitemap.xml` },
-      { source: "/:type(pages|projects|blogs|casestudies)_sitemap.xml", destination: `${resolvedBackendUrl}/:type_sitemap.xml` },
-    ];
+    return {
+      beforeFiles: [],
+      afterFiles: [
+        {
+          source: `/api/:path*`,
+          destination: `${resolvedBackendUrl}/api/:path*`,
+        },
+        {
+          source: `/uploads/:path*`,
+          destination: `${resolvedBackendUrl}/uploads/:path*`,
+        },
+        { source: "/robots.txt", destination: `${resolvedBackendUrl}/robots.txt` },
+        { source: "/sitemap.xml", destination: `${resolvedBackendUrl}/sitemap.xml` },
+        { source: "/:type(pages|projects|blogs|casestudies)_sitemap.xml", destination: `${resolvedBackendUrl}/:type_sitemap.xml` },
+      ],
+      fallback: [
+        {
+          source: "/:path*",
+          destination: `${process.env.LEGACY_URL || 'https://legacy.elipsestudio.com'}/:path*`,
+        },
+      ]
+    };
   },
 
   // Allow images from the configured backend host & disable static image objects if needed
