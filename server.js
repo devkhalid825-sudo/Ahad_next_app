@@ -1,103 +1,114 @@
-require('dotenv').config();
-const express = require('express');
-const next = require('next');
-const morgan = require('morgan');
-const compression = require('compression');
+require("dotenv").config();
+const express = require("express");
+const morgan = require("morgan");
+const compression = require("compression");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const dev = process.env.NODE_ENV !== 'production';
-const hostname = '127.0.0.1';
-const port = parseInt(process.env.PORT || '3000', 10);
+// In Node 18+, fetch is natively available.
+// We use a small LRU cache to store whether a route exists in Next.js.
+// This prevents us from doing a HEAD request for every single GET request to the same path.
+const routeCache = new Map();
 
-// Initialize Next.js programmatically
-const app = next({ dev, hostname, port });
-const handle = app.getRequestHandler();
+async function doesNextJsHandleRoute(reqPath) {
+  // Strip query parameters for the check, as Next.js route matching is path-based
+  const pathOnly = reqPath.split('?')[0];
 
-app.prepare().then(() => {
-  const server = express();
+  if (routeCache.has(pathOnly)) {
+    return routeCache.get(pathOnly);
+  }
 
-  server.disable("x-powered-by");
+  try {
+    // Perform a lightweight HEAD request to Next.js on port 3001.
+    // This allows us to check if the route exists *before* piping the original request.
+    // If it's a 404, Next.js doesn't have it.
+    // If it's a 405 (Method Not Allowed for POST endpoints) or 200/301/308, Next.js has it.
+    const res = await fetch(`http://127.0.0.1:3001${pathOnly}`, {
+      method: "HEAD",
+      redirect: "manual", // Do not follow redirects (a redirect means Next.js handles it!)
+    });
 
-  // 1. Trust proxy if sitting behind Caddy/Nginx
-  server.set('trust proxy', 1);
+    const exists = res.status !== 404;
 
-  // 2. Logging and Compression
-  server.use(morgan('combined'));
-  server.use(compression());
-
-  // 3. Prevent Absolute Redirect Escapes
-  // If Hostinger issues a 301 redirect to an absolute URL (e.g., adding a trailing slash),
-  // this middleware intercepts it and rewrites the domain back to elipsestudio.com.
-  server.use((req, res, nextMiddleware) => {
-    const originalSetHeader = res.setHeader;
-    const originalWriteHead = res.writeHead;
-    const legacyUrl = (process.env.LEGACY_URL || '').replace(/\/$/, '');
-
-    const rewriteLocation = (value) => {
-    if (typeof value !== "string") return value;
-
-    try {
-      const legacy = new URL(process.env.LEGACY_URL);
-      const incomingHost = req.headers.host;
-      const protocol = req.headers["x-forwarded-proto"] || "https";
-
-      // Absolute redirect from Hostinger
-      if (value.startsWith(legacy.origin)) {
-        const url = new URL(value);
-        return `${protocol}://${incomingHost}${url.pathname}${url.search}${url.hash}`;
-      }
-
-      // Relative redirect (e.g. /Steering_Configurator/)
-      if (value.startsWith("/")) {
-        return `${protocol}://${incomingHost}${value}`;
-      }
-
-      return value;
-    } catch (err) {
-      return value;
+    // Prevent memory leaks by capping the cache size
+    if (routeCache.size > 10000) {
+      routeCache.clear();
     }
-  };
+    
+    routeCache.set(pathOnly, exists);
+    return exists;
+  } catch (err) {
+    // If Next.js is down or unresponsive, assume it handles the route.
+    // This allows the proxy to return a 502 Bad Gateway instead of accidentally 
+    // leaking internal traffic to the legacy server.
+    console.error(`Error checking route ${pathOnly} in Next.js:`, err.message);
+    return true;
+  }
+}
 
-    res.setHeader = function (name, value) {
-      if (name.toLowerCase() === 'location') {
-        value = rewriteLocation(value);
-      }
-      return originalSetHeader.call(this, name, value);
-    };
+const server = express();
 
-    res.writeHead = function (statusCode, statusMessage, headers) {
-      let checkHeaders = headers;
-      if (typeof statusMessage === 'object') {
-        checkHeaders = statusMessage;
-      }
-      
-      if (checkHeaders) {
-        const locKey = Object.keys(checkHeaders).find((k) => k.toLowerCase() === 'location');
-        if (locKey) {
-          checkHeaders[locKey] = rewriteLocation(checkHeaders[locKey]);
-        }
-      }
-      return originalWriteHead.apply(this, arguments);
-    };
+server.disable("x-powered-by");
+server.set("trust proxy", 1);
+server.use(morgan("combined"));
+server.use(compression());
 
-    nextMiddleware();
-  });
+const nextTarget = "http://127.0.0.1:3001";
+const legacyTarget = (process.env.LEGACY_URL || "https://legacy.elipsestudio.com").replace(/\/$/, '');
 
-  // 4. Custom Express Routes (Optional)
-  server.get('/proxy-health', (req, res) => {
-    res.status(200).send('Proxy Server is Running');
-  });
+// Create the intelligent proxy middleware
+const smartProxy = createProxyMiddleware({
+  // Default target is Next.js
+  target: nextTarget,
+  
+  // Dynamically determine the target BEFORE the request stream is consumed
+  router: async function (req) {
+    // Always route Next.js internal paths directly to Next.js
+    if (req.url.startsWith("/_next") || req.url === "/favicon.ico") {
+      return nextTarget;
+    }
 
-  // 5. Let Next.js handle everything else
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
+    // Check if the route exists in Next.js
+    const existsInNextJs = await doesNextJsHandleRoute(req.url);
 
-  server.listen(port, hostname, (err) => {
-    if (err) throw err;
-    console.log(`> Ready on http://${hostname}:${port}`);
-    console.log(`> Proxying 404s to ${process.env.LEGACY_URL}`);
-  });
-}).catch((err) => {
-  console.error('Error starting server:', err);
-  process.exit(1);
+    if (!existsInNextJs) {
+      console.log(`[PROXY] Routing to LEGACY: ${req.url}`);
+      return legacyTarget;
+    }
+
+    // Default to Next.js
+    return nextTarget;
+  },
+
+  // Ensure Host header is rewritten so Hostinger virtual hosts work correctly
+  changeOrigin: true,
+
+  // Powerful native rewrites that fix Hostinger's absolute redirects:
+  // Automatically rewrite the Location header host to match the incoming request
+  hostRewrite: true,
+  // Automatically rewrite the Location header protocol/host based on the incoming request
+  autoRewrite: true,
+  // Force HTTPS in Location headers
+  protocolRewrite: "https",
+  
+  // Prevent cookies set by Legacy from being rejected by the browser due to domain mismatch
+  cookieDomainRewrite: {
+    "*": "" // Removes domain from cookies so they default to the current domain (elipsestudio.com)
+  },
+
+  onError: (err, req, res) => {
+    console.error("[PROXY ERROR]", err.message);
+    if (!res.headersSent) {
+      res.status(502).send("Bad Gateway");
+    }
+  },
+});
+
+// Route all requests through the proxy
+server.all("*", smartProxy);
+
+const port = parseInt(process.env.PORT || "3000", 10);
+server.listen(port, "127.0.0.1", (err) => {
+  if (err) throw err;
+  console.log(`> Express Proxy listening on http://127.0.0.1:${port}`);
+  console.log(`> Intelligent Routing enabled.`);
 });
