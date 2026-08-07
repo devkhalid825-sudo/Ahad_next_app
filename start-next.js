@@ -19,14 +19,17 @@ try {
   nextBin = candidates.find((p) => fs.existsSync(p)) || candidates[0];
 }
 
+const PORT = process.env.PORT || "3005";
+const HOST = process.env.HOSTNAME || "127.0.0.1";
+
 console.log(`[START-NEXT] Found Next.js binary at: ${nextBin}`);
-console.log(`[START-NEXT] Launching Next.js production server on 127.0.0.1:3001...`);
+console.log(`[START-NEXT] Launching Next.js production server on ${HOST}:${PORT}...`);
 
 const isCmd = nextBin.endsWith(".cmd") || nextBin.endsWith(".bat");
 const command = isCmd ? nextBin : process.execPath;
 const args = isCmd
-  ? ["start", "-p", "3001", "-H", "127.0.0.1"]
-  : [nextBin, "start", "-p", "3001", "-H", "127.0.0.1"];
+  ? ["start", "-p", PORT, "-H", HOST]
+  : [nextBin, "start", "-p", PORT, "-H", HOST];
 
 const child = spawn(command, args, {
   cwd: __dirname,
@@ -35,8 +38,8 @@ const child = spawn(command, args, {
   env: {
     ...process.env,
     NODE_ENV: "production",
-    PORT: "3001",
-    HOSTNAME: "127.0.0.1"
+    PORT: PORT,
+    HOSTNAME: HOST
   }
 });
 

@@ -6,6 +6,8 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const routeCache = new Map();
 
+const NEXT_PORT = process.env.NEXT_PORT || "3005";
+
 async function doesNextJsHandleRoute(reqPath) {
   const pathOnly = reqPath.split('?')[0];
 
@@ -14,7 +16,7 @@ async function doesNextJsHandleRoute(reqPath) {
   }
 
   try {
-    const res = await fetch(`http://127.0.0.1:3001${pathOnly}`, {
+    const res = await fetch(`http://127.0.0.1:${NEXT_PORT}${pathOnly}`, {
       method: "HEAD",
       redirect: "manual", 
     });
@@ -40,7 +42,7 @@ server.set("trust proxy", 1);
 server.use(morgan("combined"));
 server.use(compression());
 
-const nextTarget = "http://127.0.0.1:3001";
+const nextTarget = `http://127.0.0.1:${NEXT_PORT}`;
 const legacyTarget = (process.env.LEGACY_URL || "https://legacy.elipsestudio.com").replace(/\/$/, '');
 
 const smartProxy = createProxyMiddleware({
