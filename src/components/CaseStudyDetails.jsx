@@ -99,7 +99,8 @@ const CaseStudyDetail = ({ slug, initialData }) => {
   ];
 
   const heroImage = absImage(cs.largeBanner);
-  const smallBanner = absImage(cs.smallBanner) || undefined;
+  const smallBannerRaw = absImage(cs.smallBanner);
+  const smallBanner = smallBannerRaw && smallBannerRaw !== heroImage ? smallBannerRaw : undefined;
   const heroVideo = cs.videoUrl ? getYoutubeEmbed(cs.videoUrl) : undefined;
 
   return (
