@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { FiSearch } from 'react-icons/fi';
@@ -19,7 +19,7 @@ const mapProjects = (data) =>
       path: p.path,
     }));
 
-const LatestWork = ({ isLight = false, initialProjects = null }) => {
+const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -283,5 +283,36 @@ const LatestWork = ({ isLight = false, initialProjects = null }) => {
     </section>
   );
 };
+
+const LatestWorkFallback = ({ isLight = false }) => (
+  <section
+    id="latest-work"
+    className={`relative transition-colors duration-300 ${
+      isLight ? 'bg-white pt-8 md:pt-16 pb-10 md:pb-16' : 'bg-black pt-8 md:pt-12 pb-10'
+    }`}
+  >
+    <div className="w-full mx-auto px-[15px] md:px-[40px]">
+      <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1]">
+        Latest Work
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px] mt-8">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className={`aspect-[16/9] rounded ${
+              isLight ? 'bg-zinc-100' : 'bg-zinc-900'
+            } animate-pulse`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const LatestWork = (props) => (
+  <Suspense fallback={<LatestWorkFallback isLight={props.isLight} />}>
+    <LatestWorkContent {...props} />
+  </Suspense>
+);
 
 export default LatestWork;
