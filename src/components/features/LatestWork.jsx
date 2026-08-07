@@ -34,18 +34,21 @@ const LatestWork = ({ isLight = false, initialProjects = null }) => {
   const rightSentinelRef = useRef(null);
 
   useEffect(() => {
-    if (initialProjects !== null) return;
+    let cancelled = false;
     const fetchProjects = async () => {
       try {
         const { data, status } = await apiCall('/projects', 'GET');
-        if (status === 200 && Array.isArray(data)) {
+        if (!cancelled && status === 200 && Array.isArray(data)) {
           setApiProjects(mapProjects(data));
         }
       } catch {
-        /* ignore */
+        /* keep initialProjects as fallback */
       }
     };
     fetchProjects();
+    return () => {
+      cancelled = true;
+    };
   }, [initialProjects]);
 
   const projects = apiProjects;
