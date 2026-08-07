@@ -6,7 +6,7 @@ const normalizeUrl = (value, fallback) => {
   return String(value).replace(/\/+$/, '');
 };
 
-const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || 'https://darkgray-alpaca-239355.hostingersite.com';
+const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || 'https://elipsestudio.com';
 const defaultApiBase = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || '/api';
 
 export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || LIVE_BACKEND, LIVE_BACKEND);
@@ -62,7 +62,11 @@ export function fixUrls(obj) {
 export const apiCall = async (endpoint, method = 'GET', body = null, token = null, isFormData = false, next = {}) => {
   const headers = {};
   if (!isFormData) {
-    headers['Content-Type'] = 'application/json';
+    // Hostinger's Node-hosting wrapper + CDN block request bodies whose
+    // Content-Type is application/json or text/plain (400 "Bad Request"
+    // HTML). The JSON payload is sent as a urlencoded `data` field
+    // instead; the backend decodes it back into req.body.
+    headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
   }
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
@@ -71,7 +75,7 @@ export const apiCall = async (endpoint, method = 'GET', body = null, token = nul
     if (isFormData) {
       config.body = body;
     } else {
-      config.body = JSON.stringify(body);
+      config.body = 'data=' + encodeURIComponent(JSON.stringify(body));
     }
   }
 
