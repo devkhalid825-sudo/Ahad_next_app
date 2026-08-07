@@ -58,7 +58,20 @@ const smartProxy = createProxyMiddleware({
   target: nextTarget,
   
   router: async function (req) {
+    // Static Next.js assets always go to Next.js
     if (req.url.startsWith("/_next") || req.url === "/favicon.ico") {
+      return nextTarget;
+    }
+
+    // API & upload routes MUST always go to Next.js (which proxies to backend).
+    // Routing these to legacy causes CORS errors because the Origin header
+    // becomes legacy.elipsestudio.com which is not in the backend CORS whitelist.
+    if (
+      req.url.startsWith("/api/") ||
+      req.url.startsWith("/uploads/") ||
+      req.url.startsWith("/sitemap") ||
+      req.url.startsWith("/robots.txt")
+    ) {
       return nextTarget;
     }
 
@@ -76,6 +89,15 @@ const smartProxy = createProxyMiddleware({
 
   cookieDomainRewrite: {
     "*": ""
+  },
+
+  onProxyReq: (proxyReq, req) => {
+    // Ensure the Origin header always reflects the production domain,
+    // not the legacy domain — prevents backend CORS rejections.
+    const host = req.headers.host || "elipsestudio.com";
+    const origin = `https://${host}`;
+    proxyReq.setHeader("origin", origin);
+    proxyReq.setHeader("referer", origin + req.url);
   },
 
   onProxyRes: (proxyRes, req, res) => {
