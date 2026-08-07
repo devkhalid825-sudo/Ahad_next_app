@@ -10,8 +10,8 @@ const defaultSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL 
 const defaultApiBase = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || '/api';
 
 export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || LIVE_BACKEND, LIVE_BACKEND);
-export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://darkgray-alpaca-239355.hostingersite.com');
-export const FRONTEND_HOST = 'https://darkgray-alpaca-239355.hostingersite.com';
+export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://elipsestudio.com');
+export const FRONTEND_HOST = 'https://elipsestudio.com';
 export const BACKEND_HOST = BACKEND_ORIGIN;
 // Browser: use relative /api (proxied by Next.js rewrites → backend, no CORS)
 // Server/build-time: use direct backend origin (no proxy available)

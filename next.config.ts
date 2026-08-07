@@ -41,7 +41,7 @@ const redirects = [
 ];
 
 const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://darkgray-alpaca-239355.hostingersite.com").replace(/\/+$/, "");
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -93,10 +93,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "mediumseagreen-crocodile-699024.hostingersite.com",
         pathname: "/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "darkgray-alpaca-239355.hostingersite.com",
       },
     ],
   },
