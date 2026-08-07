@@ -25,7 +25,7 @@ export const metadata = {
     template: `%s | Elipse Studio`,
   },
   description:
-    'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
+    'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.',
   robots: {
     index: true,
     follow: true,
@@ -44,7 +44,7 @@ export const metadata = {
     siteName: 'Elipse Studio',
     title: 'Elipse Studio | 3D Visualization & AR/VR Studio',
     description:
-      'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
+      'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.',
     images: [
       {
         url: `${SITE_URL}/assets/logo-og.webp`,
@@ -60,7 +60,7 @@ export const metadata = {
     creator: '@ElipseStudio',
     title: 'Elipse Studio | 3D Visualization & AR/VR Studio',
     description:
-      'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
+      'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.',
     images: [`${SITE_URL}/assets/logo-og.webp`],
   },
   icons: {

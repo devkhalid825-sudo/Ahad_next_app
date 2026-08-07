@@ -25,7 +25,7 @@ export function buildMetadata({
   const fullTitle = cleanTitle ? `${cleanTitle} | ${SITE_NAME}` : SITE_NAME;
   const fullDescription =
     description ||
-    'Elipse Studio: photoreal 3D rendering, architectural visualization, interactive configurators, and VR/AR for global brands.';
+    'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.';
   const url = canonical || SITE_URL;
 
   const metadata = {

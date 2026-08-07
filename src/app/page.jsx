@@ -9,7 +9,7 @@ export function generateMetadata() {
   return buildMetadata({
     title: '3D Visualization & Web Configurators',
     description:
-      'Professional 3D visualization, AR/VR, and web configurators for product-based businesses. Transform ideas into immersive digital experiences.',
+      'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.',
     canonical: `${SITE_URL}/`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — 3D Visualization & AR/VR Studio',
@@ -18,7 +18,7 @@ export function generateMetadata() {
       '@type': 'WebPage',
       name: 'Elipse Studio — 3D Visualization, AR/VR & Web Configurator Agency',
       description:
-        'Professional 3D visualization, AR/VR experiences, and web configurators for product-based businesses. Transform your ideas into immersive digital experiences.',
+        'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.',
       url: SITE_URL,
       publisher: {
         '@type': 'Organization',
