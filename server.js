@@ -16,12 +16,21 @@ async function doesNextJsHandleRoute(reqPath) {
   }
 
   try {
-    const res = await fetch(`http://127.0.0.1:${NEXT_PORT}${pathOnly}`, {
+    let res = await fetch(`http://127.0.0.1:${NEXT_PORT}${pathOnly}`, {
       method: "HEAD",
       redirect: "manual", 
     });
 
-    const exists = res.status !== 404;
+    let exists = res.status !== 404;
+
+    // If 404 and path has uppercase letters, try lowercase path matching
+    if (!exists && pathOnly !== pathOnly.toLowerCase()) {
+      const lowerRes = await fetch(`http://127.0.0.1:${NEXT_PORT}${pathOnly.toLowerCase()}`, {
+        method: "HEAD",
+        redirect: "manual", 
+      });
+      exists = lowerRes.status !== 404;
+    }
 
     if (routeCache.size > 10000) {
       routeCache.clear();
@@ -65,12 +74,17 @@ const smartProxy = createProxyMiddleware({
 
   changeOrigin: true,
 
-  hostRewrite: true,
-  autoRewrite: true,
-  protocolRewrite: "https",
-
   cookieDomainRewrite: {
     "*": ""
+  },
+
+  onProxyRes: (proxyRes, req, res) => {
+    if (proxyRes.headers.location) {
+      const currentHost = req.headers.host || "elipsestudio.com";
+      // Cleanly rewrite legacy domain or invalid 'true' string in Location header to current domain
+      proxyRes.headers.location = proxyRes.headers.location
+        .replace(/https?:\/\/(legacy\.elipsestudio\.com|true)/gi, `https://${currentHost}`);
+    }
   },
 
   onError: (err, req, res) => {
