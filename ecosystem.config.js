@@ -2,29 +2,30 @@ module.exports = {
   apps: [
     {
       name: "elipsestudio",
-      script: "npm",
-      args: "run start",
-      instances: "max",
-      exec_mode: "cluster",
+      cwd: "C:\\elipsestudio",
+      script: "start-next.js",
+      exec_mode: "fork",
       autorestart: true,
       watch: false,
       max_memory_restart: "1G",
       env: {
         NODE_ENV: "production",
-        PORT: 3001
+        PORT: "3001",
+        HOSTNAME: "127.0.0.1"
       }
     },
     {
       name: "express-proxy",
+      cwd: "C:\\elipsestudio",
       script: "server.js",
-      instances: 1, // Usually 1 instance is enough for a proxy, but could be "max"
       exec_mode: "fork",
+      instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: "500M",
       env: {
         NODE_ENV: "production",
-        PORT: 3000
+        PORT: "3000"
       }
     }
   ]
