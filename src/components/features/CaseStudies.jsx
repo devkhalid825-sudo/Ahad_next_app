@@ -19,15 +19,22 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
   const bottomSwiperRef = useRef(null);
 
   useEffect(() => {
-    if (initialFeatured !== null) return;
+    let cancelled = false;
     const fetchFeatured = async () => {
-      const { data, status } = await apiCall('/case-studies?featured=true', 'GET');
-      if (status === 200 && Array.isArray(data)) {
-        setFeatured(data);
+      try {
+        const { data, status } = await apiCall('/case-studies?featured=true', 'GET');
+        if (!cancelled && status === 200 && Array.isArray(data)) {
+          setFeatured(data);
+        }
+      } catch {
+        /* keep initialFeatured as fallback */
       }
-      setLoading(false);
+      if (!cancelled) setLoading(false);
     };
     fetchFeatured();
+    return () => {
+      cancelled = true;
+    };
   }, [initialFeatured]);
 
   const fallback = isLight ? DEFAULT_IMAGE_LIGHT : DEFAULT_IMAGE;

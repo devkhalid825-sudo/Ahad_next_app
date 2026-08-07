@@ -129,11 +129,11 @@ const ClientReviews = ({ initialReviews = null }) => {
   }, []);
 
   useEffect(() => {
-    if (initialReviews !== null) return;
+    let cancelled = false;
     const fetchReviews = async () => {
       try {
         const { data, status } = await apiCall('/reviews', 'GET');
-        if (status === 200 && Array.isArray(data) && data.length > 0) {
+        if (!cancelled && status === 200 && Array.isArray(data) && data.length > 0) {
           setReviews(mapReviews(data));
         }
         // If backend returns no data, keep reviews empty → section stays hidden
@@ -142,6 +142,9 @@ const ClientReviews = ({ initialReviews = null }) => {
       }
     };
     fetchReviews();
+    return () => {
+      cancelled = true;
+    };
   }, [initialReviews]);
 
   const displayReviews = useMemo(() => {

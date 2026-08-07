@@ -51,18 +51,21 @@ const News = ({ initialBlogs = null }) => {
   const [apiBlogs, setApiBlogs] = useState(initialBlogs ? mapBlogs(initialBlogs) : []);
 
   useEffect(() => {
-    if (initialBlogs !== null) return;
+    let cancelled = false;
     const fetchBlogs = async () => {
       try {
         const { data, status } = await apiCall('/blogs', 'GET');
-        if (status === 200 && Array.isArray(data)) {
+        if (!cancelled && status === 200 && Array.isArray(data)) {
           setApiBlogs(mapBlogs(data));
         }
       } catch {
-        /* ignore */
+        /* keep initialBlogs as fallback */
       }
     };
     fetchBlogs();
+    return () => {
+      cancelled = true;
+    };
   }, [initialBlogs]);
 
   const staticPosts = [
