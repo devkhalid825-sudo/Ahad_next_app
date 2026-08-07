@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "next-app",
+      name: "elipsestudio",
       script: "npm",
       args: "run start",
       instances: "max",
