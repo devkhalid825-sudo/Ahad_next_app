@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FiFacebook } from 'react-icons/fi';
+import { FiFacebook, FiPhone, FiMail } from 'react-icons/fi';
 import { SiInstagram } from 'react-icons/si';
 import { TbBrandLinkedin } from 'react-icons/tb';
 import { RiYoutubeLine } from 'react-icons/ri';
@@ -87,9 +87,8 @@ const Footer = () => {
                   width="120"
                   height="48"
                   loading="lazy"
-                  className={`h-8 md:h-12 w-auto object-contain opacity-100 hover:opacity-100 transition-opacity ${
-                    brand.className || ''
-                  }`}
+                  className={`h-8 md:h-12 w-auto object-contain opacity-100 hover:opacity-100 transition-opacity ${brand.className || ''
+                    }`}
                 />
               </div>
             ))}
@@ -106,9 +105,8 @@ const Footer = () => {
             placeholder={status === 'success' ? 'Subscribed Successfully!' : 'Enter your email..'}
             value={footerEmail}
             onChange={(e) => setFooterEmail(e.target.value)}
-            className={`bg-white/5 backdrop-blur-md border border-white/50 rounded-full px-8 py-3 w-full sm:w-[500px] md:w-[850px] lg:w-[1000px] focus:outline-none focus:border-[#4169E1] transition-all placeholder:text-white/30 text-sm shadow-inner ${
-              status === 'success' ? 'border-green-400 text-green-400' : ''
-            }`}
+            className={`bg-white/5 backdrop-blur-md border border-white/50 rounded-full px-8 py-3 w-full sm:w-[500px] md:w-[850px] lg:w-[1000px] focus:outline-none focus:border-[#4169E1] transition-all placeholder:text-white/30 text-sm shadow-inner ${status === 'success' ? 'border-green-400 text-green-400' : ''
+              }`}
           />
           <button
             onClick={handleFooterSubmit}
@@ -121,40 +119,42 @@ const Footer = () => {
 
         <div className="border-t border-white/50 mb-10 w-full"></div>
 
-        <div className="w-full xl:h-72 flex lg:flex-row flex-col justify-between gap-5">
-          <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10 gap-6 mb-16 relative">
-            <div className="col-span-1 flex justify-start sm:justify-start">
-              <a href="#" onClick={scrollToTop} className="cursor-pointer inline-block">
-                <img
-                  src={typeof logo === 'string' ? logo : logo?.src}
-                  alt="Elipse Studio"
-                  width="180"
-                  height="96"
-                  loading="lazy"
-                  className="md:h-24 h-16 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
-                />
-              </a>
-            </div>
-
-            <div className="flex flex-col md:space-y-6 space-y-6">
-              <h3 className="text-white text-sm tracking-[0.2em] border-white/50 inline-block w-fit">
+        <div className="w-full flex lg:flex-row flex-col justify-between gap-8 py-8">
+          <div className="w-full xl:w-[85%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-8 relative">
+            <div className="flex flex-col space-y-3 sm:space-y-4">
+              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 Company
               </h3>
-              <ul className="space-y-2 text-[14px] font-light text-white/80">
+              <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/about">About Us</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/capabilities">Capabilities</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/portfolio">Portfolio</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/industries">Industries</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/case-studies">Case Studies</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/blog">Blogs</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/contact">Contact</Link>
                 </li>
               </ul>
             </div>
 
-            <div className="flex flex-col md:space-y-6 space-y-6">
-              <h3 className="text-white text-sm tracking-[0.2em] border-white/50 inline-block w-fit">
+            <div className="flex flex-col space-y-3 sm:space-y-4">
+              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 Our Services
               </h3>
-              <ul className="space-y-2 text-[14px] font-light text-white/80">
+              <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services">All Services</Link>
                 </li>
@@ -179,26 +179,79 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="flex flex-col justify-between h-full space-y-12">
-              <div>
-                <h3 className="text-white text-sm tracking-[0.2em] mb-4 inline-block w-fit">Contact Us</h3>
-                <div className="text-[14px] font-light leading-relaxed text-white/70 space-y-3">
-                  <p>House no A-08, near Wasim Bagh</p>
-                  <p>Block 13D-3, Gulshan-e-Iqbal</p>
-                  <p>Karachi, 75300</p>
-                  <p className="pt-2 text-white font-medium">
-                    <a href="mailto:info@elipsestudio.com" className="hover:text-white transition-colors">
-                      info@elipsestudio.com
-                    </a>
-                  </p>
-                </div>
+            {/* Pakistan Column */}
+            <div className="flex flex-col space-y-3 sm:space-y-4">
+              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+                Pakistan
+              </h3>
+              <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
+                <p>House no A-08, near Wasim Bagh</p>
+                <p>Block 13D-3, Gulshan-e-Iqbal</p>
+                <p>Karachi, 75300</p>
+                <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
+                  <a href="tel:+923471245257" className="hover:text-white transition-colors">
+                    +92 3471245257
+                  </a>
+                  <a href="tel:+923323141556" className="hover:text-white transition-colors">
+                    +92 3323141556
+                  </a>
+                </p>
+                <p className="pt-1 text-white font-medium break-all sm:break-normal">
+                  <a href="mailto:info@elipsestudio.com" className="hover:text-white transition-colors">
+                    info@elipsestudio.com
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            {/* United States Column */}
+            <div className="flex flex-col space-y-3 sm:space-y-4">
+              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+                United States
+              </h3>
+              <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
+                <p>1812 McCormick Ln</p>
+                <p>Hanover Park, IL 60133</p>
+                <p>United States</p>
+                <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
+                  <a href="tel:+16308211521" className="hover:text-white transition-colors">
+                    +1 6308211521
+                  </a>
+                  <a href="tel:+16302970428" className="hover:text-white transition-colors">
+                    (630) 297-0428
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            {/* United Kingdom Column */}
+            <div className="flex flex-col space-y-3 sm:space-y-4">
+              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+                United Kingdom
+              </h3>
+              <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
+                <p>Elipse Studio UK</p>
+                <p>London, United Kingdom</p>
+                <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
+                  <a href="tel:+447882755014" className="hover:text-white transition-colors">
+                    +44 7882755014
+                  </a>
+                  <a href="tel:+442046343117" className="hover:text-white transition-colors">
+                    +442046343117
+                  </a>
+                </p>
+                <p className="pt-1 text-white font-medium break-all sm:break-normal">
+                  <a href="mailto:info@inknalgorithm.com" className="hover:text-white transition-colors">
+                    info@inknalgorithm.com
+                  </a>
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="lg:w-1/3 h-full flex flex-col justify-between lg:items-end">
-            <div className="flex flex-col gap-6 lg:items-end">
-              <span className="text-white lg:text-right text-sm tracking-[0.2em] border-white/50 inline-block w-fit">
+          <div className="w-full lg:w-1/5 flex flex-col justify-between lg:items-end gap-6">
+            <div className="flex flex-col gap-4 lg:items-end">
+              <span className="text-white lg:text-right text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 Social
               </span>
               <div className="flex gap-4">
@@ -218,7 +271,7 @@ const Footer = () => {
             </div>
             <button
               onClick={scrollToTop}
-              className="flex w-fit xl:mt-0 mt-10 items-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-full px-8 py-3 text-xs uppercase tracking-widest hover:bg-white/20 transition-all group cursor-pointer text-white"
+              className="flex w-fit xl:mt-0 mt-6 items-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-full px-8 py-3 text-xs uppercase tracking-widest hover:bg-white/20 transition-all group cursor-pointer text-white"
             >
               Back to top
               <svg
@@ -238,7 +291,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/50 mt-12 mb-8 w-full"></div>
+        <div className="border-t border-white/50 mt-8 mb-8 w-full"></div>
 
         <div className="text-center text-[11px] md:text-[13px] text-white tracking-[0.2em] md:tracking-[0.3em] font-light uppercase flex flex-col gap-3 md:gap-4">
           <span>© Elipse Studio. All rights reserved.</span>
