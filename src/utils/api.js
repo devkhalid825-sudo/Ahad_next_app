@@ -31,23 +31,27 @@ export function getImgSrc(img) {
 // Next.js rewrite proxy (next.config.ts) serves it — this avoids CORS issues.
 function toRelativeUpload(url) {
   if (!url || typeof url !== 'string') return url;
+  let str = url;
+  if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+    str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
+  }
   // Already relative
-  if (url.startsWith('/uploads/')) return url;
+  if (str.startsWith('/uploads/')) return str;
   // Absolute URL pointing to any backend /uploads/
-  const match = url.match(/^https?:\/\/[^/]+(\/.*)$/);
+  const match = str.match(/^https?:\/\/[^/]+(\/.*)$/);
   if (match && match[1].startsWith('/uploads/')) return match[1];
-  return url;
+  return str;
 }
 
 export function fixUrls(obj) {
   if (typeof obj === 'string') {
-    // Convert any absolute upload URL (any domain) → relative /uploads/...
-    // so the Next.js rewrite proxy handles them correctly regardless of which
-    // backend domain is active (staging, new backend, localhost, etc.)
-    const relative = toRelativeUpload(obj);
-    if (relative !== obj) return relative;
-    // Clean up double-slashes in non-protocol parts
-    const cleaned = obj.replace(/:(\/\/)/g, '~PROTO~').replace(/\/+/g, '/').replace(/~PROTO~/g, '://');
+    let str = obj;
+    if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+      str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
+    }
+    const relative = toRelativeUpload(str);
+    if (relative !== str) return relative;
+    const cleaned = str.replace(/:(\/\/)/g, '~PROTO~').replace(/\/+/g, '/').replace(/~PROTO~/g, '://');
     return cleaned;
   }
   if (Array.isArray(obj)) return obj.map(fixUrls);
