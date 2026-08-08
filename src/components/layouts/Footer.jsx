@@ -213,11 +213,8 @@ const Footer = () => {
                 <p>Hanover Park, IL 60133</p>
                 <p>United States</p>
                 <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
-                  <a href="tel:+16308211521" className="hover:text-white transition-colors">
-                    +1 6308211521
-                  </a>
                   <a href="tel:+16302970428" className="hover:text-white transition-colors">
-                    (630) 297-0428
+                    +1 630-297-0428
                   </a>
                 </p>
               </div>
@@ -232,11 +229,8 @@ const Footer = () => {
                 <p>Elipse Studio UK</p>
                 <p>London, United Kingdom</p>
                 <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
-                  <a href="tel:+447882755014" className="hover:text-white transition-colors">
-                    +44 7882755014
-                  </a>
                   <a href="tel:+442046343117" className="hover:text-white transition-colors">
-                    +442046343117
+                    +44 20 4634 3117
                   </a>
                 </p>
                 <p className="pt-1 text-white font-medium break-all sm:break-normal">
