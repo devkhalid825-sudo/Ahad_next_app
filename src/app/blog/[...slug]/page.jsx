@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
-import { apiCall } from '@/utils/api';
-import { buildMetadata } from '@/lib/seo';
-import { SITE_URL } from '@/utils/api';
+import { apiCall, SITE_URL } from '@/utils/api';
+import { buildMetadata, buildArticleSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import BlogArticle from '@/components/BlogArticle';
 
 import ConfiguratorArticle from '@/components/articles/ConfiguratorArticle';
@@ -113,41 +112,61 @@ export async function generateMetadata({ params }) {
       title: meta.title,
       description: meta.description,
       canonical: `${SITE_URL}/blog/${slugStr}`,
+      type: 'article',
       schema: {
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: meta.title,
         description: meta.description,
-        publisher: { '@type': 'Organization', name: 'Elipse Studio' },
+        publisher: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
         datePublished: new Date().toISOString().split('T')[0],
       },
-      breadcrumb: {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
-          { '@type': 'ListItem', position: 3, name: meta.title, item: `${SITE_URL}/blog/${slugStr}` },
-        ],
-      },
+      breadcrumb: buildBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Blog', url: '/blog' },
+        { name: meta.title, url: `/blog/${slugStr}` },
+      ]),
     });
   }
 
   const { data } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 300 } });
   if (!data || !data.title) return {};
   const description = data.metaDescription || (data.excerpt || '').slice(0, 160);
-  return {
-    title: data.metaTitle || data.title,
+
+  let image = data.image;
+  if (image) {
+    if (image.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+      image = image.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', SITE_URL);
+    }
+    if (image.startsWith('/')) {
+      image = `${SITE_URL}${image}`;
+    }
+  } else {
+    image = `${SITE_URL}/assets/logo-og.webp`;
+  }
+
+  const blogTitle = data.metaTitle || data.title;
+
+  return buildMetadata({
+    title: blogTitle,
     description,
-    alternates: { canonical: `${SITE_URL}/blog/${slugStr}` },
-    openGraph: {
-      title: data.metaTitle || data.title,
+    canonical: `${SITE_URL}/blog/${slugStr}`,
+    ogImage: image,
+    type: 'article',
+    schema: buildArticleSchema({
+      title: blogTitle,
       description,
-      url: `${SITE_URL}/blog/${slugStr}`,
-      images: data.image ? [data.image] : undefined,
-      type: 'article',
-    },
-  };
+      image,
+      publishedAt: data.createdAt || data.date,
+      updatedAt: data.updatedAt,
+      slug: slugStr,
+    }),
+    breadcrumb: buildBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Blog', url: '/blog' },
+      { name: blogTitle, url: `/blog/${slugStr}` },
+    ]),
+  });
 }
 
 export default async function Page({ params }) {

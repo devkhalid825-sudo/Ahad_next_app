@@ -1,10 +1,11 @@
 import ServicesPage from '@/components/ServicesPage';
 import { buildMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
+import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Digital Solutions That Move Markets',
+    title: '3D Visualization, AR/VR & Digital Services',
     description:
       'From web and mobile to VR, AR, and animation — we build immersive digital experiences that engage audiences and drive results across every platform.',
     canonical: `${SITE_URL}/services`,
@@ -49,5 +50,15 @@ export function generateMetadata() {
 }
 
 export default function Page() {
-  return <ServicesPage />;
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', item: `${SITE_URL}/` },
+          { name: 'Services', item: `${SITE_URL}/services` },
+        ]}
+      />
+      <ServicesPage />
+    </>
+  );
 }

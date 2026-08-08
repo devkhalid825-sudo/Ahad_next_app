@@ -41,12 +41,14 @@ function toRelativeUpload(url) {
 
 export function fixUrls(obj) {
   if (typeof obj === 'string') {
-    // Convert absolute upload URLs → relative so Next.js proxy handles them
+    // Convert any absolute upload URL (any domain) → relative /uploads/...
+    // so the Next.js rewrite proxy handles them correctly regardless of which
+    // backend domain is active (staging, new backend, localhost, etc.)
     const relative = toRelativeUpload(obj);
     if (relative !== obj) return relative;
-    let replaced = obj;
-    replaced = replaced.replace(/:\/\//g, '~!~~!~').replace(/\/+/g, '/').replace(/~!~~!~/g, '://');
-    return replaced;
+    // Clean up double-slashes in non-protocol parts
+    const cleaned = obj.replace(/:(\/\/)/g, '~PROTO~').replace(/\/+/g, '/').replace(/~PROTO~/g, '://');
+    return cleaned;
   }
   if (Array.isArray(obj)) return obj.map(fixUrls);
   if (obj && typeof obj === 'object') {

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { SITE_URL } from '@/utils/api';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/seo';
+import { SERVICE_FAQS } from '@/seo/serviceFaqs';
 import ArchitecturalVisualizationPage from '@/components/services/ArchitecturalVisualizationPage';
 import ProductVisualizationPage from '@/components/services/ProductVisualizationPage';
 import ProductConfiguratorsPage from '@/components/services/ProductConfiguratorsPage';
@@ -151,6 +152,16 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const meta = serviceMeta[slug];
   if (!meta) return {};
+
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
+    { name: meta.title, url: `/services/${slug}` },
+  ]);
+
+  const faqs = SERVICE_FAQS[slug];
+  const faq = faqs ? buildFaqSchema(faqs) : null;
+
   return buildMetadata({
     title: meta.title,
     description: meta.description,
@@ -163,7 +174,14 @@ export async function generateMetadata({ params }) {
       name: meta.title,
       description: meta.description,
       url: `${SITE_URL}/services/${slug}`,
+      provider: {
+        '@type': 'Organization',
+        name: 'Elipse Studio',
+        url: SITE_URL,
+      },
     },
+    breadcrumb,
+    faq,
   });
 }
 
@@ -171,5 +189,34 @@ export default async function Page({ params }) {
   const { slug } = await params;
   const ServicePage = servicePages[slug];
   if (!ServicePage) notFound();
-  return <ServicePage />;
+
+  const meta = serviceMeta[slug];
+  const breadcrumbSchema = meta
+    ? buildBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Services', url: '/services' },
+        { name: meta.title, url: `/services/${slug}` },
+      ])
+    : null;
+
+  const faqs = SERVICE_FAQS[slug];
+  const faqSchema = faqs ? buildFaqSchema(faqs) : null;
+
+  return (
+    <>
+      {breadcrumbSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+      )}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+      <ServicePage />
+    </>
+  );
 }

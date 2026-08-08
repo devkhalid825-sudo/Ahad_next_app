@@ -130,3 +130,19 @@ export function buildArticleSchema({ title, description, image, publishedAt, upd
     },
   };
 }
+
+export function buildFaqSchema(faqItems) {
+  if (!faqItems || !Array.isArray(faqItems) || faqItems.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q || item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a || item.answer,
+      },
+    })),
+  };
+}

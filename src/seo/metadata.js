@@ -21,15 +21,27 @@ export function buildMetadata({
   breadcrumb,
   faq,
 }) {
-  const cleanTitle = title ? title.replace(/\s*\|\s*Elipse Studio\s*$/i, '') : '';
+  const cleanTitle = title ? title.replace(/\s*([|—–]|-)\s*Elipse Studio\s*$/i, '') : '';
   const fullTitle = cleanTitle ? `${cleanTitle} | ${SITE_NAME}` : SITE_NAME;
   const fullDescription =
     description ||
     'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive web configurators, and AR/VR experiences for property developers and brands worldwide since 2014. Trusted by Burj Binghatti.';
   const url = canonical || SITE_URL;
 
+  let sanitizedOgImage = ogImage;
+  if (sanitizedOgImage) {
+    if (sanitizedOgImage.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+      sanitizedOgImage = sanitizedOgImage.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', SITE_URL);
+    }
+    if (sanitizedOgImage.startsWith('/')) {
+      sanitizedOgImage = `${SITE_URL}${sanitizedOgImage}`;
+    }
+  } else {
+    sanitizedOgImage = DEFAULT_OG_IMAGE;
+  }
+
   const metadata = {
-    title: fullTitle,
+    title: { absolute: fullTitle },
     description: fullDescription,
     ...(noIndex
       ? {
@@ -66,8 +78,8 @@ export function buildMetadata({
       type,
       images: [
         {
-          url: ogImage,
-          secureUrl: ogImage,
+          url: sanitizedOgImage,
+          secureUrl: sanitizedOgImage,
           type: 'image/webp',
           width: 1200,
           height: 630,
@@ -82,7 +94,7 @@ export function buildMetadata({
       creator: TWITTER_CREATOR,
       title: fullTitle,
       description: fullDescription,
-      images: [ogImage],
+      images: [sanitizedOgImage],
     },
     publisher: SITE_NAME,
     authors: [{ name: SITE_NAME }],

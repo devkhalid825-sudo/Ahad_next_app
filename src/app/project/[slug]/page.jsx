@@ -54,7 +54,7 @@ export async function generateMetadata({ params }) {
   return buildMetadata({
     title: data.metaTitle || data.title,
     description,
-    canonical: data.path || `${SITE_URL}/project/${slug}`,
+    canonical: data.path ? (data.path.startsWith('http') ? data.path : `${SITE_URL}${data.path.startsWith('/') ? data.path : '/' + data.path}`) : `${SITE_URL}/project/${slug}`,
     schema: {
       '@context': 'https://schema.org',
       '@type': 'CreativeWork',

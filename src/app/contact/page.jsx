@@ -1,6 +1,7 @@
 import ContactPage from '@/components/ContactPage';
 import { buildMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
+import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd';
 
 export function generateMetadata() {
   return buildMetadata({
@@ -39,5 +40,15 @@ export function generateMetadata() {
 }
 
 export default function Page() {
-  return <ContactPage />;
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', item: `${SITE_URL}/` },
+          { name: 'Contact', item: `${SITE_URL}/contact` },
+        ]}
+      />
+      <ContactPage />
+    </>
+  );
 }

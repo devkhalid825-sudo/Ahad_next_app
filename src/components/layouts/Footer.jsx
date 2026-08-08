@@ -179,15 +179,14 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Pakistan Column */}
+            {/* Regional / South Asia Column */}
             <div className="flex flex-col space-y-3 sm:space-y-4">
               <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
-                Pakistan
+                South Asia Operations
               </h3>
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
-                <p>House no A-08, near Wasim Bagh</p>
-                <p>Block 13D-3, Gulshan-e-Iqbal</p>
-                <p>Karachi, 75300</p>
+                <p>Regional Development Hub</p>
+                <p>Worldwide Project Delivery</p>
                 <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
                   <a href="tel:+923471245257" className="hover:text-white transition-colors">
                     +92 3471245257

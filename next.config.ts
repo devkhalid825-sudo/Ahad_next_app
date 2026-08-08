@@ -97,16 +97,19 @@ const nextConfig: NextConfig = {
         source: `/uploads/:path*`,
         destination: `${resolvedBackendUrl}/uploads/:path*`,
       },
-      { source: "/robots.txt", destination: `${resolvedBackendUrl}/robots.txt` },
-      { source: "/sitemap.xml", destination: `${resolvedBackendUrl}/sitemap.xml` },
-      { source: "/:type(pages|projects|blogs|casestudies)_sitemap.xml", destination: `${resolvedBackendUrl}/:type_sitemap.xml` },
     ];
   },
 
-  // Allow images from the configured backend host & disable static image objects if needed
+  // Allow images from the configured backend host & production domain
   images: {
     disableStaticImages: false,
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "elipsestudio.com",
+        pathname: "/**",
+      },
+      // Backend server where uploads are stored
       {
         protocol: "https",
         hostname: "mediumseagreen-crocodile-699024.hostingersite.com",
