@@ -47,11 +47,13 @@ const oldWordPressRedirects = [
   ["/animation/", "/services/3d-animation"],
   ["/portfolio/giordano-vfx", "/portfolio"],
   ["/portfolio/giordano-vfx/", "/portfolio"],
-  ["/rt-portfolios/boat-configurator", "/services/3d-product-configurators"],
-  ["/rt-portfolios/boat-configurator/", "/services/3d-product-configurators"],
-  ["/elipse-studio-viz-roi", "/case-studies"],
-  ["/elipse-studio-viz-roi/", "/case-studies"],
+  ["/elipse-studio-viz-roi", "/blog/elipse-studio-viz-roi"],
+  ["/elipse-studio-viz-roi/", "/blog/elipse-studio-viz-roi"],
+  ["/rt-portfolios", "/portfolio"],
+  ["/rt-portfolios/", "/portfolio"],
+  ["/rt-portfolios/:slug*", "/portfolio/:slug*"],
 ];
+
 
 const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
