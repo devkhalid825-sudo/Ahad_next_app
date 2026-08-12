@@ -35,9 +35,11 @@ export const SITE_SCHEMA = [
       availableLanguage: ['English', 'Arabic', 'Urdu'],
     },
     sameAs: [
-      'https://www.linkedin.com/company/elipse-studio',
-      'https://www.instagram.com/elipsestudio',
-      'https://twitter.com/elipsestudio',
+      'https://www.linkedin.com/company/elipse-studioo',
+      'https://www.instagram.com/elipse_studio/',
+      'https://www.facebook.com/elipsestudio',
+      'https://www.youtube.com/@officialelipsestudio',
+      'https://www.tiktok.com/@elipse_studio?lang=en',
     ],
   },
   {
@@ -144,5 +146,26 @@ export function buildFaqSchema(faqItems) {
         text: item.a || item.answer,
       },
     })),
+  };
+}
+
+export function buildVideoObjectSchema({ name, description, thumbnailUrl, uploadDate, embedUrl }) {
+  if (!embedUrl) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: name || 'Elipse Studio Video',
+    description: description || name || '3D visualization and immersive solutions by Elipse Studio',
+    thumbnailUrl: thumbnailUrl || 'https://img.youtube.com/vi/aXGkn51OToA/maxresdefault.jpg',
+    uploadDate: uploadDate || '2024-01-01',
+    embedUrl: embedUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/assets/logo-og.webp`,
+      },
+    },
   };
 }

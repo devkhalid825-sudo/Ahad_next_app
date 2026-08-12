@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { SITE_URL } from '@/utils/api';
-import { buildMetadata, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/seo';
+import { buildMetadata, buildBreadcrumbSchema, buildFaqSchema, buildVideoObjectSchema } from '@/lib/seo';
 import { SERVICE_FAQS } from '@/seo/serviceFaqs';
 import ArchitecturalVisualizationPage from '@/components/services/ArchitecturalVisualizationPage';
 import ProductVisualizationPage from '@/components/services/ProductVisualizationPage';
@@ -38,108 +38,115 @@ const servicePages = {
 
 const serviceMeta = {
   'architectural-visualization': {
-    title: 'Architectural Visualization Services Worldwide',
-    description: 'Photorealistic architectural visualization services from Elipse Studio — 3D renderings, walkthroughs, and immersive experiences for developers and architects worldwide.',
+    title: 'Architectural Visualization Services',
+    description: 'Photorealistic architectural visualization for developers and architects worldwide. 3D exterior renders, interior visualization, and walkthrough animation. Since 2014.',
     keywords: 'architectural visualization services, 3d architectural rendering, photoreal visualization, arch viz, architectural rendering company, 3d rendering services',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-architectural-visualization.jpg`,
     schemaType: 'Service',
   },
   '3d-product-visualization': {
-    title: '3D Product Visualization Services',
-    description: 'Photorealistic 3D product visualization and rendering services for e-commerce brands, manufacturers, and product designers. Transform your products into stunning digital assets.',
+    title: '3D Product Visualization for E-Commerce',
+    description: 'Photorealistic 3D product visualization for e-commerce brands and manufacturers. CGI renders, lifestyle shots, and 360° product views from Elipse Studio worldwide.',
     keywords: '3d product visualization, 3d product rendering, product visualization services, e-commerce 3d rendering, photorealistic product rendering',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-3d-product-visualization.jpg`,
     schemaType: 'Service',
   },
   '3d-product-configurators': {
-    title: '3D Product Configurator Development',
-    description: 'Custom interactive 3D product configurators for e-commerce brands. Real-time customization with photoreal previews integrated with Shopify, WooCommerce, and Magento.',
+    title: 'Custom 3D Product Configurators',
+    description: 'Custom 3D product configurators integrated with Shopify, WooCommerce, and enterprise platforms. Real-time visualization for furniture, automotive, and retail brands.',
     keywords: '3d product configurator, web configurator, interactive 3d configurator, custom product configurator, e-commerce configurator',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-3d-product-configurators.jpg`,
     schemaType: 'Product',
   },
   'interactive-web-experiences': {
-    title: 'Interactive Web Experiences Development',
-    description: 'Immersive interactive web experiences combining 3D, motion, and WebGL for brands and agencies. Award-quality digital campaigns that engage audiences.',
+    title: 'Interactive Web Experiences & Digital Tools',
+    description: 'Immersive interactive web experiences and WebGL applications for global brands. Award-winning 3D web configurators and interactive marketing campaigns since 2014.',
     keywords: 'interactive web experiences, webgl experiences, 3d web development, interactive campaigns, browser-based 3d',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-interactive-web-experiences.jpg`,
     schemaType: 'Service',
   },
   'vr-development': {
     title: 'VR Development Services',
-    description: 'Custom VR development for enterprise training, sales, and marketing. Meta Quest 3, HTC Vive, Varjo XR-4 with Unreal Engine 5. Immersive virtual reality experiences.',
+    description: 'Custom VR development for enterprise training, sales, and simulation. Meta Quest 3, Varjo XR-4, Unreal Engine 5. Worldwide deployments since 2014. Get a quote.',
     keywords: 'vr development, virtual reality development, vr app development, meta quest development, unreal engine vr',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-vr-development.jpg`,
     schemaType: 'Service',
+    video: {
+      name: 'VR Development Services — Elipse Studio',
+      description: 'See how Elipse Studio builds enterprise VR training and sales applications.',
+      thumbnailUrl: 'https://img.youtube.com/vi/aXGkn51OToA/maxresdefault.jpg',
+      uploadDate: '2024-01-01',
+      embedUrl: 'https://www.youtube.com/embed/aXGkn51OToA',
+    },
   },
   'ar-development': {
-    title: 'AR Development Services',
-    description: 'Custom AR development for retail, real estate, and marketing. ARKit, ARCore, and WebAR with no app download required. Augmented reality solutions.',
+    title: 'Augmented Reality (AR) Development',
+    description: 'Enterprise AR development — ARKit, ARCore, WebAR for retail, real estate, and marketing worldwide. Elipse Studio builds production-grade AR experiences since 2014.',
     keywords: 'ar development, augmented reality development, ar app development, arkit, arcore, webar',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-ar-development.jpg`,
     schemaType: 'Service',
   },
   '3d-animation': {
-    title: '3D Animation & Motion Graphics Services',
-    description: 'Cinematic 3D animation and motion graphics for brands and enterprises. Architectural walkthroughs, product animation, and explainer videos with stunning quality.',
+    title: '3D Animation Services for Brands',
+    description: 'Cinematic 3D animation and motion graphics for brands worldwide. Character animation, product demos, explainer video, and VFX — Elipse Studio since 2014.',
     keywords: '3d animation, motion graphics, 3d animation services, explainer videos, architectural walkthrough, product animation',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-3d-animation.jpg`,
     schemaType: 'Service',
   },
   'vfx-virtual-production': {
     title: 'VFX & Virtual Production Services',
-    description: 'VFX and virtual production services for film, commercial, and brand content. CG visual effects, compositing, and LED wall production for creative projects.',
+    description: 'High-end VFX and virtual production services for commercial films, broadcasting, and global brand campaigns. CG visual effects and LED wall production since 2014.',
     keywords: 'vfx services, virtual production, cg visual effects, vfx studio, led wall production, compositing',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-vfx-virtual-production.jpg`,
     schemaType: 'Service',
   },
   'virtual-showrooms-digital-twins': {
-    title: 'Virtual Showrooms & Digital Twins Development',
-    description: 'Immersive virtual showrooms and photorealistic digital twins for brands, developers, and enterprises. 3D virtual environments for real estate and retail.',
+    title: 'Virtual Showrooms & Digital Twins',
+    description: 'Immersive virtual showrooms and digital twins for brands and developers worldwide. Built with Unreal Engine 5 and WebGL. Elipse Studio since 2014. Get a quote.',
     keywords: 'virtual showroom, digital twins, 3d virtual showroom, virtual reality showroom, digital twin development',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-virtual-showrooms-digital-twins.jpg`,
     schemaType: 'Service',
   },
   'custom-software-development': {
-    title: 'Custom Software Development Services',
-    description: 'Custom software development for enterprises and startups. Web apps, SaaS platforms, ERP/CRM systems, APIs, and cloud-native architecture solutions.',
+    title: 'Custom Software Development',
+    description: 'Enterprise custom software development, cloud-native web apps, SaaS platforms, and API integrations for growing businesses and enterprises worldwide since 2014.',
     keywords: 'custom software development, enterprise software, saas development, web application development, cloud-native',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-custom-software-development.jpg`,
     schemaType: 'Service',
   },
   'website-development': {
     title: 'Website Development Services',
-    description: 'Custom website development with Next.js, WordPress, and JAMstack. SEO-optimized, mobile-first responsive design with Core Web Vitals focus.',
+    description: 'Custom high-performance website development using Next.js and modern stacks. Mobile-first responsive web design with Core Web Vitals optimization. Get a quote.',
     keywords: 'website development, next.js development, jamstack, seo website, responsive web design, wordpress development',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-website-development.jpg`,
     schemaType: 'Service',
   },
   'mobile-app-development': {
-    title: 'Mobile App Development Services',
-    description: 'Custom mobile app development for iOS and Android. Cross-platform apps with React Native, Flutter, Swift, and Kotlin. Native and hybrid solutions.',
+    title: 'Mobile App Development',
+    description: 'Cross-platform and native mobile app development for iOS and Android. Built with React Native, Flutter, Swift, and Kotlin for enterprise brands worldwide.',
     keywords: 'mobile app development, ios app development, android app development, react native, flutter development',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-mobile-app-development.jpg`,
     schemaType: 'Service',
   },
   'creative-services': {
-    title: 'Creative Services',
-    description: 'Brand identity design, motion graphics, video production, graphic design, UI/UX design, and photography for brands and agencies.',
+    title: 'Creative Services & Motion Design',
+    description: 'Full-service creative agency specializing in brand identity, UI/UX design, motion graphics, video production, and visual design for global brands since 2014.',
     keywords: 'creative services, brand identity design, ui/ux design, motion graphics, video production, graphic design',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-creative-services.jpg`,
     schemaType: 'Service',
   },
   'enterprise-solutions': {
-    title: 'Enterprise Solutions',
-    description: 'Scalable enterprise-grade solutions including cloud infrastructure, ERP systems, custom software, data analytics, cybersecurity, and IT consulting.',
+    title: 'Enterprise Immersive Solutions',
+    description: 'Scalable enterprise-grade digital transformation, custom software, cloud infrastructure, and 3D visualization solutions for Fortune 500 companies worldwide.',
     keywords: 'enterprise solutions, enterprise software, cloud computing, erp systems, cybersecurity, it consulting',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-enterprise-solutions.jpg`,
     schemaType: 'Service',
   },
   marketing: {
-    title: 'Digital Marketing Services',
-    description: 'Data-driven marketing strategies including SEO/SEM, social media marketing, content strategy, email marketing, and performance analytics.',
+    title: 'Immersive Marketing Solutions',
+    description: 'Data-driven immersive marketing solutions, 3D campaign assets, SEO optimization, and digital strategy for performance-driven brands worldwide since 2014.',
     keywords: 'digital marketing, seo services, sem, social media marketing, content marketing, email marketing',
-    ogImage: `${SITE_URL}/assets/logo-og.webp`,
+    ogImage: `${SITE_URL}/assets/services/og-marketing.jpg`,
     schemaType: 'Service',
   },
 };
@@ -161,6 +168,7 @@ export async function generateMetadata({ params }) {
 
   const faqs = SERVICE_FAQS[slug];
   const faq = faqs ? buildFaqSchema(faqs) : null;
+  const videoSchema = meta.video ? buildVideoObjectSchema(meta.video) : null;
 
   return buildMetadata({
     title: meta.title,
@@ -182,6 +190,7 @@ export async function generateMetadata({ params }) {
     },
     breadcrumb,
     faq,
+    ...(videoSchema ? { video: videoSchema } : {}),
   });
 }
 
@@ -193,14 +202,15 @@ export default async function Page({ params }) {
   const meta = serviceMeta[slug];
   const breadcrumbSchema = meta
     ? buildBreadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Services', url: '/services' },
-        { name: meta.title, url: `/services/${slug}` },
-      ])
+      { name: 'Home', url: '/' },
+      { name: 'Services', url: '/services' },
+      { name: meta.title, url: `/services/${slug}` },
+    ])
     : null;
 
   const faqs = SERVICE_FAQS[slug];
   const faqSchema = faqs ? buildFaqSchema(faqs) : null;
+  const videoSchema = meta?.video ? buildVideoObjectSchema(meta.video) : null;
 
   return (
     <>
@@ -216,7 +226,14 @@ export default async function Page({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
+      {videoSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+        />
+      )}
       <ServicePage />
     </>
   );
 }
+

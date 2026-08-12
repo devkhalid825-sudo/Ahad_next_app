@@ -21,7 +21,7 @@ export function buildMetadata({
   breadcrumb,
   faq,
 }) {
-  const cleanTitle = title ? title.replace(/\s*([|—–]|-)\s*Elipse Studio\s*$/i, '') : '';
+  const cleanTitle = title ? title.replace(/\s*([|—–]|-)\s*Elipse(\s*Studio)?\s*$/i, '').trim() : '';
   const fullTitle = cleanTitle ? `${cleanTitle} | ${SITE_NAME}` : SITE_NAME;
   const fullDescription =
     description ||
