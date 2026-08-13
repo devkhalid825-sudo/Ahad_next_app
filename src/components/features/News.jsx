@@ -18,12 +18,13 @@ const articleImg6 = getImgSrc(articleImg6Raw);
 const vrHero = getImgSrc(vrHeroRaw);
 
 const getImageSrc = (image) => {
-  if (!image) return '';
-  if (typeof image === 'object') image = image.url || image.src || '';
-  if (typeof image !== 'string') return '';
-  if (image.startsWith('http')) return image;
-  if (image.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${image}`;
-  return image;
+  if (!image) return articleImg1;
+  let src = image;
+  if (typeof src === 'object') src = src.url || src.src || '';
+  if (typeof src !== 'string' || !src.trim()) return articleImg1;
+  if (src.startsWith('http')) return src;
+  if (src.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${src}`;
+  return src;
 };
 
 const mapBlogs = (data) =>

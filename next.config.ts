@@ -53,6 +53,8 @@ const oldWordPressRedirects = [
   ["/elipse-studio-viz-roi/", "/blog/elipse-studio-viz-roi"],
   ["/rt-portfolios/boat-configurator", "/portfolio/boat-configurator"],
   ["/rt-portfolios/boat-configurator/", "/portfolio/boat-configurator"],
+  ["/vr-development-guide-for-beginners", "/blog/vr-custom-development-2026"],
+  ["/vr-development-guide-for-beginners/", "/blog/vr-custom-development-2026"],
   ["/rt-portfolios", "/portfolio"],
   ["/rt-portfolios/", "/portfolio"],
   ["/rt-portfolios/:slug*", "/portfolio/:slug*"],

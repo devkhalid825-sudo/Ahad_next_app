@@ -145,7 +145,8 @@ export async function generateMetadata({ params }) {
     image = `${SITE_URL}/assets/logo-og.webp`;
   }
 
-  const blogTitle = data.metaTitle || data.title;
+  const rawBlogTitle = data.metaTitle || data.title;
+  const blogTitle = rawBlogTitle ? rawBlogTitle.replace(/(\s*([|—–]|-)\s*(Elipse\s*Studio|Elipse))+$/i, '').trim() : rawBlogTitle;
 
   return buildMetadata({
     title: blogTitle,
