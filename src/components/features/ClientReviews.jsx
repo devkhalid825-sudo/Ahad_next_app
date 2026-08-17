@@ -21,89 +21,6 @@ const getYouTubeEmbedUrl = (url, muted = true) => {
   return null;
 };
 
-// Extract YouTube video ID from any YouTube URL
-const getYouTubeId = (url) => {
-  if (!url) return null;
-  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-  return match ? match[1] : null;
-};
-
-/**
- * YouTubeLazyEmbed — shows a thumbnail + play button until clicked.
- * The iframe is only injected AFTER the user clicks, preventing YouTube from
- * firing continuous telemetry (log_event, watchtime, qoe, videoplayback) in
- * the background while the page is idle.
- */
-const YouTubeLazyEmbed = ({ src, dataId, title, className, style, allow, loading }) => {
-  const [active, setActive] = useState(false);
-  const videoId = getYouTubeId(src);
-  const thumb = videoId
-    ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
-    : null;
-
-  if (active) {
-    return (
-      <iframe
-        src={src}
-        data-review-id={dataId}
-        className={className}
-        style={style}
-        allow={allow || 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'}
-        title={title}
-        loading={loading || 'lazy'}
-      />
-    );
-  }
-
-  return (
-    <div
-      className={className}
-      style={{ ...style, position: 'relative', cursor: 'pointer', background: '#000' }}
-      onClick={() => setActive(true)}
-      role="button"
-      aria-label={`Play ${title}`}
-    >
-      {thumb && (
-        <img
-          src={thumb}
-          alt={title}
-          className="w-full h-full object-cover"
-          style={{ display: 'block' }}
-          loading="lazy"
-        />
-      )}
-      {/* Play button overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'rgba(0,0,0,0.3)',
-        }}
-      >
-        <div
-          style={{
-            width: 56,
-            height: 56,
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.92)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
-          }}
-        >
-          <svg viewBox="0 0 24 24" fill="#111" width="24" height="24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // No static fallback — section is hidden until real backend data loads.
 
 const mapReviews = (data) =>
@@ -303,8 +220,9 @@ const ClientReviews = ({ initialReviews = null }) => {
                         ref={getPlayerRef(review.id)}
                         src={review.video}
                         muted={isMuted}
-                        controls
                         autoPlay
+                        loop
+                        controls
                         playsInline
                         onEnded={handleVideoEnded}
                         className="w-full h-full object-contain bg-black rounded-[16px]"
@@ -388,20 +306,22 @@ const ClientReviews = ({ initialReviews = null }) => {
                   >
                     <div className="w-full h-[140px] md:h-[380px] rounded-[12px] md:rounded-[36px] overflow-hidden border border-white/5 group relative">
                       {review.video && dtYtUrl ? (
-                        <YouTubeLazyEmbed
-                          src={dtYtUrl}
-                          dataId={`dt-${review.id}`}
-                          title={`${review.clientName} review`}
+                        <iframe
+                          src={`${dtYtUrl}&rel=0&modestbranding=1&iv_load_policy=3`}
+                          data-review-id={`dt-${review.id}`}
                           className="w-full h-full"
                           style={{ border: 'none', background: '#000', borderRadius: '12px' }}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          title={`${review.clientName} review`}
                           loading="lazy"
                         />
                       ) : review.video ? (
                         <video
                           src={review.video}
                           muted={isDtMuted}
+                          autoPlay
+                          loop
                           controls
-                          preload="none"
                           playsInline
                           className="w-full h-full object-contain bg-black rounded-[12px] md:rounded-[36px]"
                         />
