@@ -14,10 +14,10 @@ const getYouTubeEmbedUrl = (url, muted = true) => {
   const muteParam = muted ? '1' : '0';
   if (url.includes('youtube.com/embed/'))
     return url.includes('?')
-      ? `${url}&autoplay=1&mute=${muteParam}&enablejsapi=1`
-      : `${url}?autoplay=1&mute=${muteParam}&enablejsapi=1`;
+      ? `${url}&autoplay=1&mute=${muteParam}&enablejsapi=1&playsinline=1`
+      : `${url}?autoplay=1&mute=${muteParam}&enablejsapi=1&playsinline=1`;
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
-  if (match) return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1&mute=${muteParam}&enablejsapi=1&rel=0&modestbranding=1`;
+  if (match) return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1&mute=${muteParam}&enablejsapi=1&playsinline=1&rel=0&modestbranding=1`;
   return null;
 };
 
@@ -120,6 +120,13 @@ const ClientReviews = ({ initialReviews = null }) => {
             v.muted = true;
           });
           setMutedStates({});
+        } else {
+          const videos = section.querySelectorAll('video');
+          videos.forEach((v) => {
+            v.muted = true;
+            const p = v.play();
+            if (p !== undefined) p.catch(() => { });
+          });
         }
       },
       { threshold: [0, 0.2] }
@@ -138,7 +145,6 @@ const ClientReviews = ({ initialReviews = null }) => {
         if (!cancelled && status === 200 && Array.isArray(data) && data.length > 0) {
           setReviews(mapReviews(data));
         }
-        // If backend returns no data, keep reviews empty → section stays hidden
       } catch {
         // Network error → keep reviews empty → section stays hidden
       }
@@ -147,7 +153,7 @@ const ClientReviews = ({ initialReviews = null }) => {
     return () => {
       cancelled = true;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const displayReviews = useMemo(() => {
@@ -222,8 +228,15 @@ const ClientReviews = ({ initialReviews = null }) => {
                         muted={isMuted}
                         autoPlay
                         loop
-                        controls
                         playsInline
+                        controls
+                        onCanPlay={(e) => {
+                          e.currentTarget.muted = isMuted;
+                          const playPromise = e.currentTarget.play();
+                          if (playPromise !== undefined) {
+                            playPromise.catch(() => { });
+                          }
+                        }}
                         onEnded={handleVideoEnded}
                         className="w-full h-full object-contain bg-black rounded-[16px]"
                       />
@@ -281,8 +294,8 @@ const ClientReviews = ({ initialReviews = null }) => {
           speed={8000}
           autoplay={{
             delay: 0,
-            disableOnInteraction: true,
-            pauseOnMouseEnter: true,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: false,
           }}
           slidesPerView="auto"
           spaceBetween={10}
@@ -317,12 +330,20 @@ const ClientReviews = ({ initialReviews = null }) => {
                         />
                       ) : review.video ? (
                         <video
+                          ref={getPlayerRef(`dt-${review.id}`)}
                           src={review.video}
                           muted={isDtMuted}
                           autoPlay
                           loop
-                          controls
                           playsInline
+                          controls
+                          onCanPlay={(e) => {
+                            e.currentTarget.muted = isDtMuted;
+                            const playPromise = e.currentTarget.play();
+                            if (playPromise !== undefined) {
+                              playPromise.catch(() => { });
+                            }
+                          }}
                           className="w-full h-full object-contain bg-black rounded-[12px] md:rounded-[36px]"
                         />
                       ) : null}
