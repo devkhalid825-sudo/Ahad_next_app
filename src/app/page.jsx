@@ -4,6 +4,7 @@ import { SITE_URL } from '@/utils/api';
 import { getFeaturedCaseStudies, getProjects } from '@/services/projectService';
 import { getReviews } from '@/services/reviewService';
 import { getBlogs } from '@/services/blogService';
+import { getSocialMedia } from '@/services/socialMediaService';
 
 export function generateMetadata() {
   return buildMetadata({
@@ -40,11 +41,12 @@ export function generateMetadata() {
 }
 
 export default async function Page() {
-  const [featured, projects, reviews, blogs] = await Promise.all([
+  const [featured, projects, reviews, blogs, socialMedia] = await Promise.all([
     getFeaturedCaseStudies(),
     getProjects(),
     getReviews(),
     getBlogs(),
+    getSocialMedia(),
   ]);
 
   return (
@@ -53,6 +55,7 @@ export default async function Page() {
       initialProjects={projects}
       initialReviews={reviews}
       initialBlogs={blogs}
+      initialSocialMedia={socialMedia}
     />
   );
 }

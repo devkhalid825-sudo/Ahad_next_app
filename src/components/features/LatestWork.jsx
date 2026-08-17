@@ -34,6 +34,8 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
   const rightSentinelRef = useRef(null);
 
   useEffect(() => {
+    // Skip fetch if server already provided data (avoid redundant request).
+    if (initialProjects) return;
     let cancelled = false;
     const fetchProjects = async () => {
       try {
@@ -49,7 +51,8 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
     return () => {
       cancelled = true;
     };
-  }, [initialProjects]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const projects = apiProjects;
 

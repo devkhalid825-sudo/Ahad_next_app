@@ -12,12 +12,9 @@ const firstSlidePosterDesktop = HERO_ASSETS.images.desktopPoster;
 
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(max-width: 767px)').matches;
-    }
-    return false;
-  });
+  // null = unknown (SSR / pre-hydration). Avoids fetching wrong video type before
+  // the browser resolves the media query. Renders poster-only until determined.
+  const [isMobile, setIsMobile] = useState(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -62,6 +59,30 @@ const Hero = () => {
       return () => clearTimeout(timeout);
     }
   }, [activeIndex, backgrounds.length]);
+
+  // While isMobile is null (SSR / first paint), show poster only — no video request
+  if (isMobile === null) {
+    return (
+      <section className="relative w-full h-dvh bg-black max-md:px-[15px] max-md:py-[15px]">
+        <div className="relative w-full h-full overflow-hidden bg-black shadow-2xl max-md:rounded-[24px]">
+          <Header />
+          <img
+            src={firstSlidePosterDesktop}
+            alt="Hero Background"
+            width="1920"
+            height="1080"
+            fetchPriority="high"
+            loading="eager"
+            decoding="sync"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <h1 className="sr-only">
+            Elipse Studio &mdash; 3D Visualization, AR/VR &amp; Web Configurator Agency
+          </h1>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative w-full h-dvh bg-black max-md:px-[15px] max-md:py-[15px]">
@@ -119,7 +140,7 @@ const Hero = () => {
                     lazy={!isActive && !isNext}
                     onEnded={nextSlide}
                     loop={backgrounds.length === 1}
-                    preload={isActive || (isNext && !isMobile) ? 'metadata' : 'none'}
+                    preload={isActive ? 'metadata' : 'none'}
                     fetchPriority={isActive ? 'high' : 'low'}
                   />
                 </Suspense>

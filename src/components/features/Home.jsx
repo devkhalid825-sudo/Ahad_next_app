@@ -15,7 +15,7 @@ import News from './News';
 import Contact from './Contact';
 import Footer from '../layouts/Footer';
 
-const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs }) => {
+const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, initialSocialMedia }) => {
   return (
     <>
       <Hero />
@@ -27,7 +27,7 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs }
       <Solutions />
       <Industries />
       <Technology />
-      <SocialMediaSection />
+      <SocialMediaSection initialSocialMedia={initialSocialMedia} />
       <News initialBlogs={initialBlogs} />
 
       <section className="bg-black py-14 md:py-20 px-[15px] md:px-[40px] border-t border-zinc-800">

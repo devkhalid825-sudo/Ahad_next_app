@@ -19,6 +19,8 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
   const bottomSwiperRef = useRef(null);
 
   useEffect(() => {
+    // Skip fetch if server already provided data (avoid redundant request).
+    if (initialFeatured) return;
     let cancelled = false;
     const fetchFeatured = async () => {
       try {
@@ -35,7 +37,8 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
     return () => {
       cancelled = true;
     };
-  }, [initialFeatured]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fallback = isLight ? DEFAULT_IMAGE_LIGHT : DEFAULT_IMAGE;
 

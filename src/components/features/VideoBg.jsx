@@ -1,124 +1,149 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
+/**
+ * VideoBg - Optimized hero background video
+ *
+ * - Poster image is always rendered underneath the video.
+ * - Video starts at opacity 0, fades to 1 once canplay fires.
+ * - If video fails to load, poster stays fully visible.
+ * - Only one controlled play() path (via shouldShow guard + IntersectionObserver).
+ * - Does NOT block the global page loader.
+ */
 const VideoBg = ({
-  videoFile,
-  videoFileMp4,
-  videoFileOgg,
-  videoFileWebm,
-  videoPoster,
-  darken = false,
-  fullScreen = true,
-  autoPlay = true,
-  loop = true,
-  muted = true,
-  overlay = false,
-  OverlayTopOffset = 0,
-  caption = '',
-  description = '',
-  AriaLabel,
-  className = '',
-  isActive = true,
-  lazy = false,
-  onEnded,
-  onLoaded,
-  preload = 'metadata',
+    videoFile,
+    videoPoster,
+    className = '',
+    darken = false,
+    overlay = false,
+    isActive = false,
+    lazy = false,
+    onEnded,
+    loop = false,
+    muted = true,
+    preload = 'metadata',
+    fetchPriority = 'low',
 }) => {
-  const finalVideoFile = videoFile || videoFileMp4;
-  const videoRef = useRef(null);
+    const videoRef = useRef(null);
+    const [videoReady, setVideoReady] = useState(false);
+    const [videoError, setVideoError] = useState(false);
 
-  const { ref: observerRef, inView: observerInView } = useInView({
-    triggerOnce: true,
-    rootMargin: '100px',
-    skip: !lazy,
-  });
+    const handleCanPlay = useCallback(() => {
+        setVideoReady(true);
+    }, []);
 
-  const shouldShow = !lazy || observerInView;
+    const handleError = useCallback(() => {
+        setVideoError(true);
+        console.warn('VideoBg: video failed to load', videoFile);
+    }, [videoFile]);
 
-  const handleCanPlay = () => {
-    onLoaded?.();
-    if (videoRef.current && isActive) {
-      videoRef.current.play().catch(err => {
-        console.debug('Autoplay prevented by browser:', err);
-      });
-    }
-  };
+    const handleEnded = useCallback(() => {
+        if (onEnded) onEnded();
+    }, [onEnded]);
 
-  const handleLoaded = () => {
-    onLoaded?.();
-  };
+    const shouldShow = videoReady && !videoError;
 
-  const handleError = (event) => {
-    console.warn('VideoBg loading warning/error:', event);
-  };
+    // Single controlled play/pause via useEffect — no double play() calls.
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
 
-  useEffect(() => {
-    if (videoRef.current) {
-      if (isActive) {
-        videoRef.current.play().catch(err => {
-          console.debug('Autoplay prevented:', err);
-        });
-      } else {
-        videoRef.current.pause();
-      }
-    }
-  }, [isActive, shouldShow]);
+        if (shouldShow && isActive) {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Autoplay prevented — poster stays visible, no action needed.
+                });
+            }
+        } else {
+            video.pause();
+        }
+    }, [shouldShow, isActive]);
 
-  return (
-    <div
-      className={`relative w-full ${fullScreen ? 'h-full' : ''} ${
-        darken
-          ? 'after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/10 after:via-black/20 after:to-black/90'
-          : ''
-      } ${className}`}
-      ref={lazy ? observerRef : null}
-    >
-      {overlay && (caption || description) && (
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center px-4 z-10"
-          style={OverlayTopOffset !== 0 ? { paddingTop: OverlayTopOffset } : {}}
-        >
-          {caption && (
-            <h1 className="text-white text-4xl md:text-8xl font-black uppercase drop-shadow-2xl">
-              {caption}
-            </h1>
-          )}
-          {description && (
-            <p className="text-white max-w-3xl mx-auto mt-5 drop-shadow-lg">{description}</p>
-          )}
-        </div>
-      )}
-      {shouldShow && (
-        <video
-          ref={videoRef}
-          {...(AriaLabel ? { 'aria-label': AriaLabel } : {})}
-          autoPlay={autoPlay && isActive}
-          loop={loop}
-          muted={muted}
-          poster={videoPoster}
-          className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ease-in-out"
-          playsInline
-          preload={preload}
-          onEnded={onEnded}
-          onLoadedData={handleLoaded}
-          onCanPlay={handleCanPlay}
-          onError={handleError}
-        >
-          {finalVideoFile && (
-            <source
-              src={finalVideoFile}
-              type={finalVideoFile.endsWith('.webm') ? 'video/webm' : 'video/mp4'}
+    // IntersectionObserver: pause when off-screen, resume when visible.
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        video.pause();
+                    } else if (shouldShow && isActive) {
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => { });
+                        }
+                    }
+                });
+            },
+            { rootMargin: '200px', threshold: 0 }
+        );
+
+        observer.observe(video);
+        return () => observer.disconnect();
+    }, [shouldShow, isActive]);
+
+    return (
+        <div className={className}>
+            {/* Poster image - always visible, sits underneath the video */}
+            {videoPoster && (
+                <img
+                    src={videoPoster}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{
+                        zIndex: shouldShow ? 0 : 1,
+                        opacity: shouldShow ? 0 : 1,
+                        transition: 'opacity 0.9s ease-in-out',
+                        pointerEvents: 'none',
+                    }}
+                />
+            )}
+
+            {/* Video layer - fades in when ready */}
+            <video
+                ref={videoRef}
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{
+                    zIndex: shouldShow ? 1 : 0,
+                    opacity: shouldShow ? 1 : 0,
+                    transition: 'opacity 0.9s ease-in-out',
+                    pointerEvents: 'none',
+                }}
+                src={lazy ? undefined : videoFile}
+                poster={undefined}
+                autoPlay={isActive}
+                loop={loop}
+                muted={muted}
+                playsInline
+                preload={preload}
+                fetchPriority={fetchPriority}
+                onCanPlay={handleCanPlay}
+                onError={handleError}
+                onEnded={handleEnded}
             />
-          )}
-          {videoFileWebm && <source src={videoFileWebm} type="video/webm" />}
-          {videoFileOgg && <source src={videoFileOgg} type="video/ogg" />}
-          Your browser does not support HTML5 background videos.
-        </video>
-      )}
-    </div>
-  );
+
+            {/* Optional dark overlay */}
+            {darken && (
+                <div
+                    className="absolute inset-0"
+                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 2, pointerEvents: 'none' }}
+                />
+            )}
+
+            {/* Optional top overlay */}
+            {overlay && (
+                <div
+                    className="absolute inset-0"
+                    style={{ zIndex: 3, pointerEvents: 'none' }}
+                />
+            )}
+        </div>
+    );
 };
 
 export default VideoBg;

@@ -52,6 +52,8 @@ const News = ({ initialBlogs = null }) => {
   const [apiBlogs, setApiBlogs] = useState(initialBlogs ? mapBlogs(initialBlogs) : []);
 
   useEffect(() => {
+    // Skip fetch if server already provided data (avoid redundant request).
+    if (initialBlogs) return;
     let cancelled = false;
     const fetchBlogs = async () => {
       try {
@@ -67,7 +69,8 @@ const News = ({ initialBlogs = null }) => {
     return () => {
       cancelled = true;
     };
-  }, [initialBlogs]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const staticPosts = [
     {

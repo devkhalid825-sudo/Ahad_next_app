@@ -120,9 +120,20 @@ const SocialIcon = ({ href, title, children, activeBg, activeBorder, activeColor
   );
 };
 
-const SocialMediaSection = () => {
-  const [items, setItems] = useState([]);
+const SocialMediaSection = ({ initialSocialMedia = [] }) => {
+  const [items, setItems] = useState(() =>
+    Array.isArray(initialSocialMedia) && initialSocialMedia.length > 0
+      ? initialSocialMedia.map((item) => ({
+          id: item.id,
+          videoUrl: item.videoUrl,
+          projectName: item.projectName || '',
+          projectLink: item.projectLink || '',
+        }))
+      : []
+  );
   const mobileSwiperRef = useRef(null);
+  const sectionRef = useRef(null);
+  const [sectionVisible, setSectionVisible] = useState(false);
 
   const handleVideoEnded = useCallback(() => {
     if (mobileSwiperRef.current) {
@@ -131,6 +142,7 @@ const SocialMediaSection = () => {
   }, []);
 
   useEffect(() => {
+    if (items.length > 0) return;
     const fetchItems = async () => {
       try {
         const { data, status } = await apiCall('/social-media', 'GET');
@@ -144,18 +156,35 @@ const SocialMediaSection = () => {
             }))
           );
         }
-        // If backend returns no data, keep items empty → section stays hidden
       } catch {
-        // Network error → keep items empty → section stays hidden
+        // Silently fail — section stays hidden if both server and client fetch fail
       }
     };
     fetchItems();
-  }, []);
+  }, [items.length]);
+
+  // Lazy-load: only mount heavy video iframes when section enters viewport
+  useEffect(() => {
+    if (sectionVisible) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSectionVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '400px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [sectionVisible]);
 
   if (items.length === 0) return null;
 
   return (
-    <section className="w-full bg-black py-8 md:py-14 overflow-hidden font-sans flex flex-col justify-center relative">
+    <section ref={sectionRef} className="w-full bg-black py-8 md:py-14 overflow-hidden font-sans flex flex-col justify-center relative">
       <div className="w-full relative">
         <div className="flex justify-between items-center px-[15px] md:px-[40px] gap-2 mb-6 md:mb-10">
           <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
@@ -236,11 +265,12 @@ const SocialMediaSection = () => {
                 className="relative w-full h-[420px] bg-[#1a1a1c] overflow-hidden"
                 style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7)' }}
               >
-                <div className="block w-full h-full">
-                  <div className="absolute inset-0 overflow-hidden">
-                    {item.videoUrl && <VideoPlayer url={item.videoUrl} onEnded={handleVideoEnded} />}
+                  <div className="block w-full h-full">
+                    <div className="absolute inset-0 overflow-hidden">
+                      {item.videoUrl && sectionVisible && <VideoPlayer url={item.videoUrl} onEnded={handleVideoEnded} />}
+                      {item.videoUrl && !sectionVisible && <div className="w-full h-full bg-[#1a1a1c]" />}
+                    </div>
                   </div>
-                </div>
               </div>
             </SwiperSlide>
           ))}
@@ -276,7 +306,8 @@ const SocialMediaSection = () => {
                   onClick={() => item.videoUrl && window.open(item.videoUrl, '_blank', 'noopener,noreferrer')}
                 >
                   <div className="absolute inset-0 overflow-hidden">
-                    {item.videoUrl && <VideoPlayer url={item.videoUrl} />}
+                    {item.videoUrl && sectionVisible && <VideoPlayer url={item.videoUrl} />}
+                    {item.videoUrl && !sectionVisible && <div className="w-full h-full bg-[#1a1a1c]" />}
                   </div>
 
                   {item.projectName && (

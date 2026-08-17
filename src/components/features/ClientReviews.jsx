@@ -17,8 +17,91 @@ const getYouTubeEmbedUrl = (url, muted = true) => {
       ? `${url}&autoplay=1&mute=${muteParam}&enablejsapi=1`
       : `${url}?autoplay=1&mute=${muteParam}&enablejsapi=1`;
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
-  if (match) return `https://www.youtube.com/embed/${match[1]}?autoplay=1&mute=${muteParam}&enablejsapi=1`;
+  if (match) return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1&mute=${muteParam}&enablejsapi=1&rel=0&modestbranding=1`;
   return null;
+};
+
+// Extract YouTube video ID from any YouTube URL
+const getYouTubeId = (url) => {
+  if (!url) return null;
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+};
+
+/**
+ * YouTubeLazyEmbed — shows a thumbnail + play button until clicked.
+ * The iframe is only injected AFTER the user clicks, preventing YouTube from
+ * firing continuous telemetry (log_event, watchtime, qoe, videoplayback) in
+ * the background while the page is idle.
+ */
+const YouTubeLazyEmbed = ({ src, dataId, title, className, style, allow, loading }) => {
+  const [active, setActive] = useState(false);
+  const videoId = getYouTubeId(src);
+  const thumb = videoId
+    ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+    : null;
+
+  if (active) {
+    return (
+      <iframe
+        src={src}
+        data-review-id={dataId}
+        className={className}
+        style={style}
+        allow={allow || 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'}
+        title={title}
+        loading={loading || 'lazy'}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={className}
+      style={{ ...style, position: 'relative', cursor: 'pointer', background: '#000' }}
+      onClick={() => setActive(true)}
+      role="button"
+      aria-label={`Play ${title}`}
+    >
+      {thumb && (
+        <img
+          src={thumb}
+          alt={title}
+          className="w-full h-full object-cover"
+          style={{ display: 'block' }}
+          loading="lazy"
+        />
+      )}
+      {/* Play button overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'rgba(0,0,0,0.3)',
+        }}
+      >
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.92)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
+          }}
+        >
+          <svg viewBox="0 0 24 24" fill="#111" width="24" height="24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 // No static fallback — section is hidden until real backend data loads.
@@ -129,6 +212,8 @@ const ClientReviews = ({ initialReviews = null }) => {
   }, []);
 
   useEffect(() => {
+    // Skip fetch if server already provided data (avoid redundant request).
+    if (initialReviews) return;
     let cancelled = false;
     const fetchReviews = async () => {
       try {
@@ -145,7 +230,8 @@ const ClientReviews = ({ initialReviews = null }) => {
     return () => {
       cancelled = true;
     };
-  }, [initialReviews]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const displayReviews = useMemo(() => {
     if (reviews.length === 0) return [];
@@ -302,17 +388,14 @@ const ClientReviews = ({ initialReviews = null }) => {
                   >
                     <div className="w-full h-[140px] md:h-[380px] rounded-[12px] md:rounded-[36px] overflow-hidden border border-white/5 group relative">
                       {review.video && dtYtUrl ? (
-                        <div className="relative w-full h-full">
-                          <iframe
-                            src={`${dtYtUrl}&rel=0&modestbranding=1`}
-                            data-review-id={`dt-${review.id}`}
-                            className="w-full h-full"
-                            style={{ border: 'none', background: '#000', borderRadius: '12px', pointerEvents: 'none' }}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            title={`${review.clientName} review`}
-                            loading="lazy"
-                          />
-                        </div>
+                        <YouTubeLazyEmbed
+                          src={dtYtUrl}
+                          dataId={`dt-${review.id}`}
+                          title={`${review.clientName} review`}
+                          className="w-full h-full"
+                          style={{ border: 'none', background: '#000', borderRadius: '12px' }}
+                          loading="lazy"
+                        />
                       ) : review.video ? (
                         <video
                           src={review.video}
