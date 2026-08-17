@@ -2,18 +2,20 @@
 
 import React from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import Hero from './Hero';
 import HeroCTA from './HeroCTA';
-import CaseStudies from './CaseStudies';
-import LatestWork from './LatestWork';
-import ClientReviews from './ClientReviews';
-import Solutions from './Solutions';
-import Industries from './Industries';
-import Technology from './Technology';
-import SocialMediaSection from './SocialMediaSection';
-import News from './News';
-import Contact from './Contact';
-import Footer from '../layouts/Footer';
+
+const CaseStudies = dynamic(() => import('./CaseStudies'), { ssr: false });
+const LatestWork = dynamic(() => import('./LatestWork'), { ssr: false });
+const ClientReviews = dynamic(() => import('./ClientReviews'), { ssr: false });
+const Solutions = dynamic(() => import('./Solutions'), { ssr: false });
+const Industries = dynamic(() => import('./Industries'), { ssr: false });
+const Technology = dynamic(() => import('./Technology'), { ssr: false });
+const SocialMediaSection = dynamic(() => import('./SocialMediaSection'), { ssr: false });
+const News = dynamic(() => import('./News'), { ssr: false });
+const Contact = dynamic(() => import('./Contact'), { ssr: false });
+const Footer = dynamic(() => import('../layouts/Footer'), { ssr: false });
 
 const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, initialSocialMedia }) => {
   return (
