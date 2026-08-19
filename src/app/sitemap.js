@@ -56,7 +56,7 @@ export default async function sitemap() {
   try {
     const projects = await getProjects();
     projectEntries = projects.map((project) => ({
-      url: `${SITE_URL}${project.path || `/project/${project.slug}`}`,
+      url: (() => { const p = project.path || `/project/${project.slug}`; return p.startsWith('http') ? p : `${SITE_URL}${p}`; })(),
       lastModified: project.updatedAt || currentDate,
       changeFrequency: 'monthly',
       priority: 0.6,

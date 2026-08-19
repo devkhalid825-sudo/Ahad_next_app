@@ -107,6 +107,19 @@ export default function RootLayout({ children }) {
             })();
           `}
         </Script>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-BEL0YQZ0G0"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-config" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BEL0YQZ0G0');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
