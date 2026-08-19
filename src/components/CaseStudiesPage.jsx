@@ -46,6 +46,9 @@ const CaseStudiesPage = () => {
                         <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-white">
                             Case Studies
                         </h2>
+                        <p className="text-white/50 text-sm md:text-base max-w-2xl leading-relaxed mb-6">
+                            Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
+                        </p>
                         <Link
                             to="/case-studies"
                             className="rounded-full text-[11px] md:text-base bg-white text-[#4169E1] font-bold py-1.5 px-4 md:py-2 md:px-8 shadow-sm hover:scale-105 transition flex items-center justify-center whitespace-nowrap flex-shrink-0"

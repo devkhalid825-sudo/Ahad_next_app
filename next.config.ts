@@ -6,10 +6,13 @@ const routerCompatPath = path.resolve(__dirname, "src/lib/router-compat.js");
 
 const serviceRedirects = [
   ["/services/web-configurators", "/services/3d-product-configurators"],
+  ["/services/web-configurator-development", "/services/3d-product-configurators"],
   ["/services/vr", "/services/vr-development"],
   ["/services/ar", "/services/ar-development"],
   ["/services/app-development", "/services/custom-software-development"],
   ["/services/animation", "/services/3d-animation"],
+  ["/services/walkthrough-animation", "/services/3d-animation"],
+  ["/services/3d-rendering-dubai", "/services/3d-product-visualization"],
   ["/services/interactive-configurators", "/services/3d-product-configurators"],
   ["/services/vr-ar-experiences", "/services/vr-development"],
   ["/services/architectural-visualization-uae", "/services/architectural-visualization"],

@@ -99,7 +99,7 @@ return (
                                     Tailored solutions for every industry<span className="text-[#4169E1]">.</span>
                                 </h1>
                                 <p className="text-base md:text-lg text-gray-400 max-w-2xl leading-relaxed mb-8">
-                                    Photoreal visualization, immersive experiences, and interactive platforms — purpose-built for each industry we work with.
+                                    Photoreal visualization, immersive experiences, and interactive platforms — purpose-built for each industry we work with. From architectural renders that sell unbuilt properties to VR training systems that reduce operational risk, we craft digital experiences tailored to your sector's unique challenges and audience expectations.
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <button
@@ -182,7 +182,7 @@ return (
                                         Need a Custom Solution?
                                     </h3>
                                     <p className="text-white/40 text-sm font-light leading-relaxed mb-5">
-                                        From photoreal configurators to VR training — we deliver immersive experiences across all industries. Tell us about your project.
+                                        From photoreal configurators to VR training — we deliver immersive experiences across all industries. Tell us about your project and we will recommend the right technology stack, timeline, and approach.
                                     </p>
                                     <div className="flex flex-wrap gap-2.5">
                                         <button

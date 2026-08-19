@@ -38,6 +38,9 @@ const PortfolioPage = () => {
                                 <span className="text-white opacity-100 block">Portfolio</span>
                                 <span className="text-[#4169E1] opacity-90 block">our work & case studies</span>
                             </h1>
+                            <p className="text-white/60 text-sm md:text-base max-w-xl leading-relaxed mt-6">
+                                Explore our collection of 3D visualizations, interactive configurators, VR/AR experiences, and walkthrough animations delivered for clients across real estate, automotive, ecommerce, and manufacturing industries worldwide.
+                            </p>
                         </motion.div>
                     </div>
                 </div>
