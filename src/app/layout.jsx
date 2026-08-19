@@ -125,7 +125,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
         />
       </head>
-      <body className="font-sans antialiased bg-black text-white overflow-x-hidden">
+      <body className="font-sans antialiased bg-black text-white">
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

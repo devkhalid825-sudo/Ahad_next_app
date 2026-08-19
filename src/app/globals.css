@@ -12,10 +12,14 @@
     --font-size-fluid-body: clamp(1.125rem, 2vw, 1.4rem);
 }
 
+html {
+    overflow-x: hidden;
+}
 body {
     font-size: 17px;
     line-height: 1.7;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 @media (min-width: 768px) {

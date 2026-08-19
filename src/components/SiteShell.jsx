@@ -9,7 +9,7 @@ export default function SiteShell({ children }) {
   }, []);
 
   return (
-    <div className="font-sans antialiased bg-black overflow-x-hidden min-h-screen">
+    <div className="font-sans antialiased bg-black min-h-screen">
       <main className="flex flex-col">
         {children}
       </main>
