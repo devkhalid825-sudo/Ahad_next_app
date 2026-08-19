@@ -239,17 +239,8 @@ const CapabilitiesPage = () => {
                   transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   className="text-[clamp(2.5rem,6vw,6.5rem)] font-semibold tracking-tighter leading-none text-white"
                 >
-                  Our
-                </motion.h1>
-              </div>
-              <div className="overflow-hidden">
-                <motion.h1
-                  initial={{ y: 80 }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-[clamp(2.5rem,6vw,6.5rem)] font-semibold tracking-tighter leading-none text-[#4169E1]"
-                >
-                  Capabilities
+                  Our{' '}
+                  <span className="text-[#4169E1]">Capabilities</span>
                 </motion.h1>
               </div>
 

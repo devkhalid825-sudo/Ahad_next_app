@@ -1,4 +1,4 @@
-﻿﻿'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -64,8 +64,7 @@ const BlogArticle = ({ slug, initialData }) => {
   if (blog.image4) gallery.push(blog.image4);
 
   return (
-    <>
-      
+    <article>
       <AhmedFoodLayout
         title={blog.title}
         meta={meta}
@@ -77,7 +76,7 @@ const BlogArticle = ({ slug, initialData }) => {
         sections={sections}
         gallery={gallery}
       />
-    </>
+    </article>
   );
 };
 

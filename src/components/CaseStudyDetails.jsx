@@ -104,8 +104,7 @@ const CaseStudyDetail = ({ slug, initialData }) => {
   const heroVideo = cs.videoUrl ? getYoutubeEmbed(cs.videoUrl) : undefined;
 
   return (
-    <>
-      
+    <article>
       <ArticleProgress fromColor="#4169E1" />
       <AhmedFoodLayout
         title={cs.title}
@@ -117,7 +116,7 @@ const CaseStudyDetail = ({ slug, initialData }) => {
         nextProject={nextCs ? { path: `/case-study/${nextCs.slug}`, name: nextCs.title } : undefined}
       />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-    </>
+    </article>
   );
 };
 

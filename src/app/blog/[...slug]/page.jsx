@@ -119,7 +119,7 @@ export async function generateMetadata({ params }) {
         headline: meta.title,
         description: meta.description,
         publisher: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
-        datePublished: new Date().toISOString().split('T')[0],
+        datePublished: '2025-01-15',
       },
       breadcrumb: buildBreadcrumbSchema([
         { name: 'Home', url: '/' },
@@ -130,7 +130,14 @@ export async function generateMetadata({ params }) {
   }
 
   const { data } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 300 } });
-  if (!data || !data.title) return {};
+  if (!data || !data.title) {
+    return buildMetadata({
+      title: 'Blog Post Not Found',
+      description: 'The requested blog post could not be found.',
+      canonical: `${SITE_URL}/blog/${slugStr}`,
+      noIndex: true,
+    });
+  }
   const description = data.metaDescription || (data.excerpt || '').slice(0, 160);
 
   let image = data.image;

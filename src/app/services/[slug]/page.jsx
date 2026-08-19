@@ -158,7 +158,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const meta = serviceMeta[slug];
-  if (!meta) return {};
+  if (!meta) {
+    return buildMetadata({
+      title: 'Service Not Found',
+      description: 'The requested service could not be found.',
+      canonical: `${SITE_URL}/services/${slug}`,
+      noIndex: true,
+    });
+  }
 
   const breadcrumb = buildBreadcrumbSchema([
     { name: 'Home', url: '/' },
@@ -198,42 +205,5 @@ export default async function Page({ params }) {
   const { slug } = await params;
   const ServicePage = servicePages[slug];
   if (!ServicePage) notFound();
-
-  const meta = serviceMeta[slug];
-  const breadcrumbSchema = meta
-    ? buildBreadcrumbSchema([
-      { name: 'Home', url: '/' },
-      { name: 'Services', url: '/services' },
-      { name: meta.title, url: `/services/${slug}` },
-    ])
-    : null;
-
-  const faqs = SERVICE_FAQS[slug];
-  const faqSchema = faqs ? buildFaqSchema(faqs) : null;
-  const videoSchema = meta?.video ? buildVideoObjectSchema(meta.video) : null;
-
-  return (
-    <>
-      {breadcrumbSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-        />
-      )}
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
-      {videoSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
-        />
-      )}
-      <ServicePage />
-    </>
-  );
+  return <ServicePage />;
 }
-

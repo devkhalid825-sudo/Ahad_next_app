@@ -6,6 +6,8 @@ import { getReviews } from '@/services/reviewService';
 import { getBlogs } from '@/services/blogService';
 import { getSocialMedia } from '@/services/socialMediaService';
 
+export const revalidate = 300;
+
 export function generateMetadata() {
   return buildMetadata({
     title: '3D Visualization & Web Configurators',

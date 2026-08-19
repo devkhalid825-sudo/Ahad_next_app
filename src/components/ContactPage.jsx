@@ -156,9 +156,9 @@ const ContactPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8 lg:gap-16 xl:gap-24 items-start">
                     {/* Left side text */}
                     <div className="flex flex-col justify-center items-center lg:items-start h-full pt-8 lg:pt-0 pb-12 xl:pb-0 xl:pl-12">
-                        <h2 className="text-[#4169E1] text-4xl md:text-[56px] font-bold tracking-tight leading-[1.1] mb-10">
+                        <h1 className="text-[#4169E1] text-4xl md:text-[56px] font-bold tracking-tight leading-[1.1] mb-10">
                             Connect with Us
-                        </h2>
+                        </h1>
                         <p className="text-gray-200 text-lg md:text-[21px] font-light leading-relaxed max-w-lg text-left">
                             We would love to hear from you. Share your production needs with us, or drop a note to say hello.
                             Whether you are envisioning something bold or seeking inspiration for AR, VR, AI, or innovative

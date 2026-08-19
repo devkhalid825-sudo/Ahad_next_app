@@ -43,9 +43,9 @@ const CaseStudiesPage = () => {
                 <div className="w-full relative">
                     {/* HEADER */}
                     <div className="flex justify-between items-center px-[15px] md:px-[40px] gap-2">
-                        <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-white">
+                        <h1 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-white">
                             Case Studies
-                        </h2>
+                        </h1>
                         <p className="text-white/50 text-sm md:text-base max-w-2xl leading-relaxed mb-6">
                             Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
                         </p>

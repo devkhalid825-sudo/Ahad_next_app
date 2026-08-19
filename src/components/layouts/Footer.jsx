@@ -121,10 +121,10 @@ const Footer = () => {
 
         <div className="w-full flex lg:flex-row flex-col justify-between gap-8 py-8">
           <div className="w-full xl:w-[85%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-8 relative">
-            <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+            <nav aria-label="Company" className="flex flex-col space-y-3 sm:space-y-4">
+              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 Company
-              </h3>
+              </h2>
               <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/about">About Us</Link>
@@ -148,12 +148,12 @@ const Footer = () => {
                   <Link href="/contact">Contact</Link>
                 </li>
               </ul>
-            </div>
+            </nav>
 
-            <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+            <nav aria-label="Our Services" className="flex flex-col space-y-3 sm:space-y-4">
+              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 Our Services
-              </h3>
+              </h2>
               <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services">All Services</Link>
@@ -177,13 +177,13 @@ const Footer = () => {
                   <Link href="/services/mobile-app-development">Mobile App Development</Link>
                 </li>
               </ul>
-            </div>
+            </nav>
 
             {/* Regional / South Asia Column */}
             <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 South Asia Operations
-              </h3>
+              </h2>
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
                 <p>Regional Development Hub</p>
                 <p>Worldwide Project Delivery</p>
@@ -205,9 +205,9 @@ const Footer = () => {
 
             {/* United States Column */}
             <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 United States
-              </h3>
+              </h2>
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
                 <p>1812 McCormick Ln</p>
                 <p>Hanover Park, IL 60133</p>
@@ -222,9 +222,9 @@ const Footer = () => {
 
             {/* United Kingdom Column */}
             <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h3 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 United Kingdom
-              </h3>
+              </h2>
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
                 <p>Elipse Studio UK</p>
                 <p>London, United Kingdom</p>

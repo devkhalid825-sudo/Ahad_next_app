@@ -4,7 +4,6 @@ import { buildMetadata } from '@/lib/seo';
 import ProjectPage from '@/components/ProjectPage';
 import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
-import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd';
 
 const FALLBACK_TITLE = 'Project Details';
 const VOWELS = /[aeiou]/i;
@@ -66,7 +65,14 @@ export async function generateMetadata({ params }) {
     });
   }
   const { data } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + slug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
-  if (!data || !data.title) return {};
+  if (!data || !data.title) {
+    return buildMetadata({
+      title: 'Project Not Found',
+      description: 'The requested project could not be found.',
+      canonical: `${SITE_URL}/project/${slug}`,
+      noIndex: true,
+    });
+  }
   const title = projectTitle(data);
   const rawDesc = data.description ? data.description.replace(/<[^>]*>/g, '') : '';
   const description = data.metaDescription || rawDesc.slice(0, 160);
@@ -104,51 +110,14 @@ export default async function Page({ params }) {
   if (!safeSlug) notFound();
 
   if (safeSlug === 'ahmed-food') {
-    return (
-      <>
-        <BreadcrumbJsonLd
-          items={[
-            { name: 'Home', item: `${SITE_URL}/` },
-            { name: 'Projects', item: `${SITE_URL}/portfolio` },
-            { name: 'Ahmed Food', item: `${SITE_URL}/project/ahmed-food` },
-          ]}
-        />
-        <AhmedFood />
-      </>
-    );
+    return <AhmedFood />;
   }
 
   if (projectMap[safeSlug]) {
-    const project = projectMap[safeSlug];
-    const category = project.meta?.find((m) => m.label === 'Service')?.value || 'Projects';
-    return (
-      <>
-        <BreadcrumbJsonLd
-          items={[
-            { name: 'Home', item: `${SITE_URL}/` },
-            { name: category, item: `${SITE_URL}/portfolio` },
-            { name: project.title, item: `${SITE_URL}/project/${safeSlug}` },
-          ]}
-        />
-        <ProjectPage slug={safeSlug} />
-      </>
-    );
+    return <ProjectPage slug={safeSlug} />;
   }
 
   const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
   if (status !== 200 || !data || !data.title) notFound();
-  const category = data.category || data.service || 'Projects';
-  const title = projectTitle(data);
-  return (
-    <>
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Home', item: `${SITE_URL}/` },
-          { name: category, item: `${SITE_URL}/portfolio` },
-          { name: title, item: `${SITE_URL}${data.path || '/project/' + safeSlug}` },
-        ]}
-      />
-      <ProjectPage slug={safeSlug} initialData={data} />
-    </>
-  );
+  return <ProjectPage slug={safeSlug} initialData={data} />;
 }

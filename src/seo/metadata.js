@@ -17,6 +17,7 @@ export function buildMetadata({
   ogImageAlt,
   noIndex = false,
   type = 'website',
+  keywords,
   schema,
   breadcrumb,
   faq,
@@ -46,6 +47,7 @@ export function buildMetadata({
   const metadata = {
     title: { absolute: fullTitle },
     description: fullDescription,
+    ...(keywords ? { keywords } : {}),
     ...(noIndex
       ? {
           robots: {

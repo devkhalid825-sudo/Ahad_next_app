@@ -13,7 +13,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const industry = industriesData.find((i) => i.slug === slug);
-  if (!industry) return {};
+  if (!industry) {
+    return buildMetadata({
+      title: 'Industry Not Found',
+      description: 'The requested industry page could not be found.',
+      canonical: `${SITE_URL}/industries/${slug}`,
+      noIndex: true,
+    });
+  }
 
   const description = industry.meta?.metaDescription || industry.title;
   const keywords = industry.meta?.keywords || '';

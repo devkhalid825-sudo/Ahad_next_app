@@ -83,11 +83,6 @@ const nextConfig: NextConfig = {
         destination,
         permanent: true,
       })),
-      ...industryRedirects.map(([source, destination]) => ({
-        source,
-        destination,
-        permanent: true,
-      })),
       ...oldWordPressRedirects.map(([source, destination]) => ({
         source,
         destination,

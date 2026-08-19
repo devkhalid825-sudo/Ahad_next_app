@@ -1,7 +1,6 @@
 import CaseStudiesPage from '@/components/CaseStudiesPage';
 import { buildMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
-import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd';
 
 export function generateMetadata() {
   return buildMetadata({
@@ -37,15 +36,5 @@ export function generateMetadata() {
 }
 
 export default function Page() {
-  return (
-    <>
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Home', item: `${SITE_URL}/` },
-          { name: 'Case Studies', item: `${SITE_URL}/case-studies` },
-        ]}
-      />
-      <CaseStudiesPage />
-    </>
-  );
+  return <CaseStudiesPage />;
 }
