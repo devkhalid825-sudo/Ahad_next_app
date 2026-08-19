@@ -38,6 +38,7 @@ const redirects = [
   ["/case-study-peek-freans", "/project/peek-freans"],
   ["/project", "/portfolio"],
   ["/blogs", "/blog"],
+  ["/project/Costa-cart", "/project/costa-cart"],
 ];
 
 const oldWordPressRedirects = [
