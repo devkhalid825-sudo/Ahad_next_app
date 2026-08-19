@@ -6,6 +6,24 @@ import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd';
 
+const FALLBACK_TITLE = 'Project Details';
+const VOWELS = /[aeiou]/i;
+
+function isValidTitle(str) {
+  if (!str || typeof str !== 'string') return false;
+  const trimmed = str.trim();
+  if (trimmed.length < 2 || trimmed.length > 200) return false;
+  if (!/[a-zA-Z]/.test(trimmed)) return false;
+  const alphaOnly = trimmed.replace(/[^a-zA-Z]/g, '');
+  if (alphaOnly.length > 0 && !VOWELS.test(alphaOnly)) return false;
+  return true;
+}
+
+function projectTitle(data) {
+  const raw = data.metaTitle || data.title || '';
+  return isValidTitle(raw) ? raw.trim() : FALLBACK_TITLE;
+}
+
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map((p) => [p.slug, p]));
 
@@ -49,16 +67,17 @@ export async function generateMetadata({ params }) {
   }
   const { data } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + slug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
   if (!data || !data.title) return {};
+  const title = projectTitle(data);
   const rawDesc = data.description ? data.description.replace(/<[^>]*>/g, '') : '';
   const description = data.metaDescription || rawDesc.slice(0, 160);
   return buildMetadata({
-    title: data.metaTitle || data.title,
+    title,
     description,
     canonical: data.path ? (data.path.startsWith('http') ? data.path : `${SITE_URL}${data.path.startsWith('/') ? data.path : '/' + data.path}`) : `${SITE_URL}/project/${slug}`,
     schema: {
       '@context': 'https://schema.org',
       '@type': 'CreativeWork',
-      name: data.title,
+      name: title,
       description,
       url: `${SITE_URL}${data.path || '/project/' + slug}`,
       creator: {
@@ -72,7 +91,7 @@ export async function generateMetadata({ params }) {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
         { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE_URL}/portfolio` },
-        { '@type': 'ListItem', position: 3, name: data.title, item: `${SITE_URL}${data.path || '/project/' + slug}` },
+        { '@type': 'ListItem', position: 3, name: title, item: `${SITE_URL}${data.path || '/project/' + slug}` },
       ],
     },
   });
@@ -119,13 +138,14 @@ export default async function Page({ params }) {
   const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
   if (status !== 200 || !data || !data.title) notFound();
   const category = data.category || data.service || 'Projects';
+  const title = projectTitle(data);
   return (
     <>
       <BreadcrumbJsonLd
         items={[
           { name: 'Home', item: `${SITE_URL}/` },
           { name: category, item: `${SITE_URL}/portfolio` },
-          { name: data.title, item: `${SITE_URL}${data.path || '/project/' + safeSlug}` },
+          { name: title, item: `${SITE_URL}${data.path || '/project/' + safeSlug}` },
         ]}
       />
       <ProjectPage slug={safeSlug} initialData={data} />
