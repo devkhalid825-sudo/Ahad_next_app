@@ -42,7 +42,6 @@ const redirects = [
   ["/project", "/portfolio"],
   ["/blogs", "/blog"],
   ["/blogs/", "/blog"],
-  ["/project/Costa-cart", "/project/costa-cart"],
 ];
 
 const wildcardRedirects = [
