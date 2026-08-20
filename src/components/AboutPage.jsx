@@ -228,11 +228,7 @@ const teamData = [
                 className="relative w-full h-full"
               >
                 <div className="relative rounded-2xl overflow-hidden border border-white/[0.06] w-full h-[400px] sm:h-[500px] lg:h-[600px] xl:h-[680px]">
-                  <img
-                    src={heroAboutImg}
-                    alt="Elipse Studio team at work"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={heroAboutImg} alt="Elipse Studio team at work" width="800" height="600" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 </div>
               </motion.div>
@@ -415,7 +411,7 @@ const teamData = [
               className="group bg-[#111111] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#4169E1]/30 transition-all duration-500 hover:-translate-y-1"
             >
               <div className="aspect-[16/9] overflow-hidden">
-                <img src={clubproImg} alt="Club Pro 3D Configurator" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={clubproImg} alt="Club Pro 3D Configurator" width="600" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-5 md:p-8">
                 <h3 className="text-lg md:text-2xl font-semibold text-white">Club Pro 3D Configurator</h3>
@@ -437,7 +433,7 @@ const teamData = [
               className="group bg-[#111111] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#4169E1]/30 transition-all duration-500 hover:-translate-y-1"
             >
               <div className="aspect-[16/9] overflow-hidden">
-                <img src={steeringImg} alt="BMW Steering Wheel Configurator" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={steeringImg} alt="BMW Steering Wheel Configurator" width="600" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-5 md:p-8">
                 <h3 className="text-lg md:text-2xl font-semibold text-white">BMW Steering Wheel Configurator</h3>
@@ -459,7 +455,7 @@ const teamData = [
               className="group bg-[#111111] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#4169E1]/30 transition-all duration-500 hover:-translate-y-1"
             >
               <div className="aspect-[16/9] overflow-hidden">
-                <img src={ahmedImg} alt="Ahmed Foods CGI Commercials" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={ahmedImg} alt="Ahmed Foods CGI Commercials" width="600" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-5 md:p-8">
                 <h3 className="text-lg md:text-2xl font-semibold text-white">Ahmed Foods CGI Commercials</h3>
@@ -482,7 +478,7 @@ const teamData = [
               className="group bg-[#111111] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#4169E1]/30 transition-all duration-500 hover:-translate-y-1"
             >
               <div className="aspect-[16/9] overflow-hidden">
-                <img src={zooImg} alt="Lahore Zoo 3D Visualization" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={zooImg} alt="Lahore Zoo 3D Visualization" width="600" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-5 md:p-8">
                 <h3 className="text-lg md:text-2xl font-semibold text-white">Lahore Zoo 3D Visualization</h3>
@@ -523,7 +519,7 @@ const teamData = [
                 className="group cursor-pointer"
               >
                 <div className="aspect-[3/4] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden bg-[#1a1a1a] border border-white/5 group-hover:border-[#4169E1]/40 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(65,105,225,0.15)]">
-                  <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
+                  <img src={member.img} alt={member.name} width="400" height="400" className="w-full h-full object-cover" />
                 </div>
                 <div className="mt-6 text-center">
                   <h3 className="text-lg md:text-xl font-semibold text-white">{member.name}</h3>

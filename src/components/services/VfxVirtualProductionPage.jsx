@@ -79,7 +79,7 @@ const VfxVirtualProductionPage = () => {
             </ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our VFX solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+            <img src={solutionsImg} alt="Our VFX solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -101,7 +101,7 @@ const VfxVirtualProductionPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why brands choose Elipse Studio for VFX" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why brands choose Elipse Studio for VFX" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -118,14 +118,14 @@ const VfxVirtualProductionPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our VFX technology" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our VFX technology" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
 
       <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#0D0D0D]"><Eyebrow>How we did it</Eyebrow><SectionTitle>Our VFX Production Process</SectionTitle><div className="flex flex-wrap gap-3 md:gap-8 justify-center"><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="01" phase="Pre-Production" title="Creative Planning" desc="Understanding creative goals, technical requirements, and delivery specs." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="02" phase="Breakdown" title="Shot Breakdown" desc="Detailed shot analysis and asset identification." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="03" phase="Production" title="Asset Creation" desc="Building CG elements and virtual environments." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="04" phase="Integration" title="Compositing & Integration" desc="Seamless CG and live-action integration." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="05" phase="Review" title="Iteration Rounds" desc="Client review and refinement cycles." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="06" phase="Delivery" title="Final Delivery" desc="Required formats and quality standards." /></div></div></section>
 
-      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="VFX Virtual Production showcase" className="w-full h-full object-cover" loading="lazy" /></div></section>
+      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="VFX Virtual Production showcase" className="w-full h-full object-cover" loading="lazy" width="1280" height="720"/></div></section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]"><div className="max-w-[800px] mx-auto"><Eyebrow>FAQ</Eyebrow><SectionTitle>Frequently Asked Questions</SectionTitle><div className="max-w-[680px]">{[{ q: "What are VFX and virtual production services?", a: "VFX and virtual production services combine traditional visual effects craft with modern real-time content generation for film, commercial, and brand production." },{ q: "What is the difference between VFX and virtual production?", a: "Traditional VFX happens in post-production. Virtual production generates content in real time during shooting. Modern productions often combine both approaches." },{ q: "Does Elipse Studio work with LED wall stages?", a: "Yes. We produce Unreal Engine 5 virtual production environments compatible with major LED wall stage installations." },{ q: "What VFX software does Elipse Studio use?", a: "Unreal Engine 5, Autodesk Maya, Houdini, Nuke, Adobe After Effects, V-Ray, Corona, and DaVinci Resolve." },{ q: "How do I start a VFX or virtual production project?", a: "Contact Elipse Studio with your production details — project type, VFX scope, requirements, and timeline." }].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}</div></div></section>
 

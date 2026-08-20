@@ -188,11 +188,7 @@ const IndustryLayout = ({
                     {/* HERO VISUAL */}
                     <div className="w-full mt-[1.5rem] h-[50vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl relative flex flex-col items-center justify-center p-4 md:p-8 select-none">
                         {hero?.image ? (
-                            <img
-                                src={hero.image}
-                                alt={title}
-                                className="absolute inset-0 w-full h-full object-cover"
-                            />
+                            <img src={hero.image} alt={title} width="1200" height="700" className="absolute inset-0 w-full h-full object-cover" />
                         ) : (
                             <>
                                 <div className="absolute inset-0 bg-gradient-to-br from-[#0d0d0d] via-[#121829] to-[#0d0d0d]">

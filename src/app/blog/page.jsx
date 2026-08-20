@@ -7,9 +7,9 @@ export const revalidate = 300;
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Blog',
+    title: 'Blog & Insights',
     description:
-      'Insights on 3D visualization, VR, AR, configurators, and immersive technology from Elipse Studio. The latest trends, guides, and industry analysis.',
+      'Explore expert insights, guides, and trends on 3D visualization, VR/AR development, and interactive configurators from Elipse Studio.',
     keywords:
       '3D visualization blog, VR insights, AR technology, configurator trends, immersive tech Dubai, 3D web, WebGL, Unreal Engine, real-time rendering',
     canonical: `${SITE_URL}/blog`,

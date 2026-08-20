@@ -172,7 +172,7 @@ const ProductVisualizationPage = () => {
             </ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="3D Product Visualization solutions" className="w-full h-full object-cover" loading="lazy" />
+            <img src={solutionsImg} alt="3D Product Visualization solutions" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -219,7 +219,7 @@ const ProductVisualizationPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why Elipse Studio for product visualization" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why Elipse Studio for product visualization" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -249,7 +249,7 @@ const ProductVisualizationPage = () => {
             <ReadText text="Elipse Studio's product visualization pipeline uses V-Ray and Corona for photrealistic offline rendering, Unreal Engine 5 for real-time interactive product experiences, Cinema 4D and Maya for animation and complex modeling, and specialized material libraries covering thousands of physically-accurate surfaces. We work directly with CAD files from SolidWorks, Rhino, STEP, IGES, and other engineering formats — no re-modeling required." />
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our product visualization technology stack" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our product visualization technology stack" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>

@@ -4,9 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: '3D Visualization, AR/VR & Digital Services',
+    title: 'Services & Solutions',
     description:
-      'From web and mobile to VR, AR, and animation — we build immersive digital experiences that engage audiences and drive results across every platform.',
+      'Explore 3D rendering, walkthrough animation, interactive configurators, and AR/VR development services from Elipse Studio worldwide.',
     canonical: `${SITE_URL}/services`,
     schema: {
       '@context': 'https://schema.org',

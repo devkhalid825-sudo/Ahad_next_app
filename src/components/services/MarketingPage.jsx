@@ -48,7 +48,7 @@ const MarketingPage = () => {
         <Header />
         <h1 className="text-[clamp(1.8rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">Marketing Services<span className="text-[#4169E1]">.</span></h1>
         <div className="flex flex-wrap gap-[8px] mt-[3rem]"><button onClick={handleStartProject} className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto">Start a Project →</button></div>
-        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Marketing Services" className="w-full h-full object-cover" loading="lazy" /></div>
+        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Marketing Services" className="w-full h-full object-cover" loading="lazy" width="1200" height="700"/></div>
       </section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D] flex flex-col lg:flex-row gap-8 lg:gap-[3rem] items-stretch">
@@ -62,7 +62,7 @@ const MarketingPage = () => {
             <Eyebrow>What we do</Eyebrow><SectionTitle>Our Marketing Solutions</SectionTitle><ul className="max-w-[680px]">{[{ title: "SEO & SEM", desc: "Search engine optimization and paid search campaigns for maximum visibility." },{ title: "Social Media Marketing", desc: "Strategic social media campaigns across all major platforms." },{ title: "Content Strategy", desc: "Content planning and creation that engages and converts." },{ title: "Email Marketing", desc: "Automated email campaigns and newsletter strategies." },{ title: "Brand Strategy", desc: "Brand positioning, messaging, and market differentiation." },{ title: "Analytics & Reporting", desc: "Real-time analytics dashboards and performance tracking." }].map((s, i) => <SolutionItem key={i} title={s.title} desc={s.desc} />)}</ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our marketing solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+            <img src={solutionsImg} alt="Our marketing solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -77,7 +77,7 @@ const MarketingPage = () => {
             <Eyebrow>Why Elipse Studio</Eyebrow><SectionTitle>Why Choose Our Marketing?</SectionTitle><div><ReadText text="Our data-driven strategies are backed by in-depth market research. We execute multi-channel campaigns for maximum reach and engagement, with creative content tailored to your brand voice." /><ReadText text="We provide real-time analytics and performance tracking with an ROI-focused approach delivering measurable results. Every campaign is optimized for continuous improvement." /><div className="mt-8"><CTA label="View Portfolio" to="/portfolio" /></div></div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why brands choose Elipse Studio for marketing" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why brands choose Elipse Studio for marketing" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>

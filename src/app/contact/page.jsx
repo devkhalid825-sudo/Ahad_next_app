@@ -6,7 +6,7 @@ export function generateMetadata() {
   return buildMetadata({
     title: 'Contact Us',
     description:
-      'Ready to start your project? Get in touch with Elipse Studio for 3D visualization, VR, AR, and interactive experiences. We respond within 24 hours.',
+      'Get in touch with Elipse Studio for 3D visualization, VR, AR, and interactive web experiences. We respond to inquiries within 24 hours.',
     canonical: `${SITE_URL}/contact`,
     schema: {
       '@context': 'https://schema.org',

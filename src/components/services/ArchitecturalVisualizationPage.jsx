@@ -194,7 +194,7 @@ return (
             </ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our architectural solutions showcase" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+            <img src={solutionsImg} alt="Our architectural solutions showcase" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -241,7 +241,7 @@ return (
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why developers choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why developers choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -271,7 +271,7 @@ return (
             <ReadText text="Elipse Studio's architectural visualization pipeline uses industry-leading tools: Unreal Engine 5 for photorealistic real-time rendering, V-Ray and Corona for offline cinematic-quality rendering, Rhino and Revit integration for architectural workflow compatibility, and specialized VR platforms including Meta Quest 3 and Varjo XR-4 for immersive experiences." />
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our technology and production pipeline" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our technology and production pipeline" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -302,7 +302,7 @@ return (
           <div className="flex animate-marquee-gallery gap-3 md:gap-[15px] w-max">
             {[...galleryImages, ...galleryImages].map((src, i) => (
               <div key={i} className="flex-shrink-0 w-[70vw] sm:w-[55vw] md:w-[45vw] lg:w-[35vw] aspect-[16/9] overflow-hidden">
-                <img src={src} alt={`Architectural showcase ${(i % galleryImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
+                <img src={src} alt={`Architectural showcase ${(i % galleryImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" width="640" height="400"/>
               </div>
             ))}
           </div>

@@ -48,7 +48,7 @@ const EnterpriseSolutionsPage = () => {
         <Header />
         <h1 className="text-[clamp(1.8rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">Enterprise Solutions<span className="text-[#4169E1]">.</span></h1>
         <div className="flex flex-wrap gap-[8px] mt-[3rem]"><button onClick={handleStartProject} className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto">Start a Project →</button></div>
-        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Enterprise Solutions" className="w-full h-full object-cover" loading="lazy" /></div>
+        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Enterprise Solutions" className="w-full h-full object-cover" loading="lazy" width="1200" height="700"/></div>
       </section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D] flex flex-col lg:flex-row gap-8 lg:gap-[3rem] items-stretch">
@@ -62,7 +62,7 @@ const EnterpriseSolutionsPage = () => {
             <div className="max-w-[800px]"><Eyebrow>What we do</Eyebrow><SectionTitle>Our Enterprise Solutions</SectionTitle><ul className="max-w-[680px]">{[{ title: "Cloud Solutions", desc: "Cloud-native architecture on AWS, Azure, and GCP for maximum scalability." },{ title: "ERP Systems", desc: "Custom ERP development and integration for streamlined operations." },{ title: "Custom Software Development", desc: "Tailored business software for specific workflows and requirements." },{ title: "Data Analytics & BI", desc: "Business intelligence platforms and analytics dashboards." },{ title: "Cybersecurity", desc: "Enterprise-grade security solutions and compliance standards." },{ title: "IT Consulting", desc: "Strategic technology consulting and digital transformation advisory." }].map((s, i) => <SolutionItem key={i} title={s.title} desc={s.desc} />)}</ul></div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our enterprise solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+            <img src={solutionsImg} alt="Our enterprise solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -73,7 +73,7 @@ const EnterpriseSolutionsPage = () => {
             <Eyebrow>Capabilities</Eyebrow><SectionTitle>What We Deliver</SectionTitle><div className="flex flex-wrap gap-3 md:gap-6">{[{ title: "Cloud-Native", desc: "AWS, Azure, GCP architecture." },{ title: "ERP Systems", desc: "Custom development and integration." },{ title: "Data Analytics", desc: "BI platforms and dashboards." },{ title: "Cybersecurity", desc: "Enterprise security and compliance." },{ title: "IT Consulting", desc: "Strategic digital transformation." },{ title: "Custom Software", desc: "Tailored business applications." }].map((f, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-16px)]"><FeatureCard title={f.title} desc={f.desc} /></div>)}</div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our enterprise technology" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our enterprise technology" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -86,14 +86,14 @@ const EnterpriseSolutionsPage = () => {
             <div className="max-w-[800px]"><Eyebrow>Why Elipse Studio</Eyebrow><SectionTitle>Why Choose Our Enterprise Solutions?</SectionTitle><div><ReadText text="Our team delivers end-to-end enterprise architecture and implementation using cloud-native solutions on AWS, Azure, and GCP. We maintain enterprise-grade security and compliance standards throughout every engagement." /><ReadText text="We build scalable microservices architecture with dedicated support and 24/7 monitoring. Our solutions are designed for long-term maintainability and operational excellence." /><div className="mt-8"><CTA label="View Portfolio" to="/portfolio" /></div></div></div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why enterprises choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why enterprises choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
 
       <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#0D0D0D]"><Eyebrow>How we did it</Eyebrow><SectionTitle>Our Enterprise Process</SectionTitle><div className="flex flex-wrap gap-3 md:gap-8 justify-center"><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="01" phase="Discovery" title="Business Assessment" desc="Understanding enterprise requirements and constraints." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="02" phase="Architecture" title="Solution Architecture" desc="Cloud-native architecture design and planning." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="03" phase="Development" title="Agile Implementation" desc="Iterative development with regular demos." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="04" phase="Security" title="Security & Compliance" desc="Enterprise-grade security implementation." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="05" phase="Deploy" title="Deployment & Testing" desc="Production deployment with comprehensive testing." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="06" phase="Support" title="Ongoing Operations" desc="24/7 monitoring and dedicated support." /></div></div></section>
 
-      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Enterprise Solutions showcase" className="w-full h-full object-cover" loading="lazy" /></div></section>
+      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Enterprise Solutions showcase" className="w-full h-full object-cover" loading="lazy" width="1280" height="720"/></div></section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]"><div className="max-w-[800px] mx-auto"><Eyebrow>FAQ</Eyebrow><SectionTitle>Frequently Asked Questions</SectionTitle><div className="max-w-[680px]">{[{ q: "What enterprise solutions does Elipse Studio offer?", a: "We offer cloud solutions, ERP systems, custom software, data analytics, cybersecurity, and IT consulting — all delivered with enterprise-grade standards." },{ q: "Which cloud platforms do you support?", a: "We work with AWS, Azure, and GCP, recommending based on your specific requirements and existing infrastructure." },{ q: "Do you provide ongoing support?", a: "Yes. We offer 24/7 monitoring, dedicated support, and ongoing maintenance for all enterprise solutions." },{ q: "Can you integrate with our existing systems?", a: "Yes. Our enterprise solutions integrate with existing infrastructure, CRM, ERP, and custom platforms." },{ q: "How long do enterprise projects take?", a: "Focused solutions: 3-6 months. Full enterprise platforms: 6-12 months. Complex digital transformations: 12+ months." }].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}</div></div></section>
 

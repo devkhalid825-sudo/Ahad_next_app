@@ -4,9 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Capabilities',
+    title: 'Capabilities & Tools',
     description:
-      'Explore 3D architectural visualization, interactive configurators, AR/VR, CGI animation, and creative technology solutions from Elipse Studio.',
+      'Explore our full range of creative technology capabilities including 3D rendering, interactive web configurators, and AR/VR development.',
     canonical: `${SITE_URL}/capabilities`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — Full Range of Creative Technology Capabilities',

@@ -5,7 +5,7 @@ export function generateMetadata() {
   return buildMetadata({
     title: 'Industries We Serve',
     description:
-      '3D visualization, VR, AR, and interactive solutions for real estate, ecommerce, healthcare, manufacturing, automotive, construction, and hospitality.',
+      'Explore tailored 3D visualization, AR/VR, and interactive digital solutions for real estate, automotive, e-commerce, and healthcare.',
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://elipsestudio.com'}/industries`,
     schema: {
       '@context': 'https://schema.org',

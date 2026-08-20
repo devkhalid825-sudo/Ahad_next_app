@@ -66,6 +66,8 @@ const Technology = () => {
             <img
               src={techHero}
               alt="Advanced Technology Visualization"
+              width="1200"
+              height="700"
               loading="lazy"
               decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

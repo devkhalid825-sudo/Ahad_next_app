@@ -4,9 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Case Studies — Real Results from Real Projects',
+    title: 'Case Studies & Results',
     description:
-      'See how Elipse Studio delivers immersive 3D, VR, AR, and interactive configurator solutions across real estate, automotive, ecommerce, healthcare, and manufacturing.',
+      'Discover how Elipse Studio delivers measurable business results through 3D visualization, VR/AR, and interactive product configurators.',
     keywords:
       '3D visualization case studies, VR projects, AR solutions, interactive configurator examples, Elipse Studio portfolio, real results',
     canonical: `${SITE_URL}/case-studies`,

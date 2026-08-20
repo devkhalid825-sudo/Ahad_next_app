@@ -155,7 +155,7 @@ const AnimationPage = () => {
             <ul className="max-w-[680px]">{[{ title: "Architectural Walkthroughs", desc: "Cinematic camera-driven animation traversing designed spaces." },{ title: "Product Animation", desc: "Photreal product motion for launches, marketing, and demonstrations." },{ title: "Character Animation", desc: "3D character work for brand storytelling and marketing content." },{ title: "Motion Graphics", desc: "Typography and iconography animation for social media and corporate content." },{ title: "Explainer Video Animation", desc: "Short-form animation for SaaS, service, and B2B communications." },{ title: "Cinematic Marketing Animation", desc: "Feature-quality brand content for premium campaigns." },{ title: "Real-Time Animation", desc: "Unreal Engine 5 content for interactive and immersive applications." },{ title: "Broadcast and Social Edits", desc: "Multi-format delivery from a single animation production." }].map((s, i) => <SolutionItem key={i} title={s.title} desc={s.desc} />)}</ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our animation solutions showcase" className="w-full h-full object-cover" loading="lazy" />
+            <img src={solutionsImg} alt="Our animation solutions showcase" className="w-full h-full object-cover" loading="lazy" width="800" height="600" />
           </div>
         </div>
       </section>
@@ -187,7 +187,7 @@ const AnimationPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why brands choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why brands choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -208,7 +208,7 @@ const AnimationPage = () => {
             <ReadText text="Elipse Studio's animation pipeline uses Unreal Engine 5 for real-time and cinematic content, Cinema 4D and Autodesk Maya for keyframe animation, Adobe After Effects for motion graphics and compositing, V-Ray and Corona for photrealistic offline rendering, and DaVinci Resolve for color grading and finishing." />
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our animation technology stack" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our animation technology stack" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -237,7 +237,7 @@ const AnimationPage = () => {
           <div className="flex animate-marquee-gallery gap-3 md:gap-[15px] w-max">
             {[...galleryImages, ...galleryImages].map((src, i) => (
               <div key={i} className="flex-shrink-0 w-[70vw] sm:w-[55vw] md:w-[45vw] lg:w-[35vw] aspect-[16/9] overflow-hidden">
-                <img src={src} alt={`Animation showcase ${(i % galleryImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
+                <img src={src} alt={`Animation showcase ${(i % galleryImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" width="640" height="400"/>
               </div>
             ))}
           </div>

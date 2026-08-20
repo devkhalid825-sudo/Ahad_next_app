@@ -127,7 +127,7 @@ return (
                                         <div className="relative w-full h-full bg-[#111] p-[2px] rounded-[18px] sm:rounded-[28px] overflow-hidden"
                                             style={{ clipPath: "polygon(0 0, calc(100% - 36px) 0, 100% 36px, 100% 100%, 0 100%)" }}
                                         >
-                                            <img src={blogImg} alt="Industries" className="w-full h-full object-cover" />
+                                            <img src={blogImg} alt="Industries" width="600" height="400" className="w-full h-full object-cover" />
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -74,6 +74,8 @@ const CaseStudiesPage = () => {
                                             <img
                                                 src={cs.largeBanner ? (cs.largeBanner.startsWith('http') ? cs.largeBanner : `${BACKEND_ORIGIN}${cs.largeBanner}`) : ''}
                                                 alt={cs.title}
+                                                width="577"
+                                                height="380"
                                                 loading="lazy"
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
                                             />

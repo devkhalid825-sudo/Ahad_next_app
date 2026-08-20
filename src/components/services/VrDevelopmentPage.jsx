@@ -188,7 +188,7 @@ const VrDevelopmentPage = () => {
             </ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our VR solutions showcase" className="w-full h-full object-cover" loading="lazy" />
+            <img src={solutionsImg} alt="Our VR solutions showcase" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -235,7 +235,7 @@ const VrDevelopmentPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why enterprises choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why enterprises choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -265,7 +265,7 @@ const VrDevelopmentPage = () => {
             <ReadText text="Elipse Studio's VR pipeline supports Meta Quest 3 and Meta Quest Pro for cost-effective standalone deployment, HTC Vive Focus and PICO 4 Enterprise for enterprise programs with better institutional management, and Varjo XR-4 for premium visual fidelity applications. Our development stack uses Unreal Engine 5 and Unity — choosing per project based on visual quality requirements, deployment scale, and integration needs." />
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our VR technology platform" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our VR technology platform" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -303,7 +303,7 @@ const VrDevelopmentPage = () => {
             <div className="flex animate-marquee-gallery gap-3 md:gap-[15px] w-max">
               {[...dayImages, ...dayImages].map((src, i) => (
                 <div key={i} className="flex-shrink-0 w-[70vw] sm:w-[55vw] md:w-[45vw] lg:w-[35vw] aspect-[16/9] overflow-hidden">
-                  <img src={src} alt={`VR Day showcase ${(i % dayImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
+                  <img src={src} alt={`VR Day showcase ${(i % dayImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" width="640" height="400"/>
                 </div>
               ))}
             </div>
@@ -320,7 +320,7 @@ const VrDevelopmentPage = () => {
             <div className="flex animate-marquee-gallery gap-3 md:gap-[15px] w-max" style={{ animationDirection: 'reverse' }}>
               {[...nightImages, ...nightImages].map((src, i) => (
                 <div key={i} className="flex-shrink-0 w-[70vw] sm:w-[55vw] md:w-[45vw] lg:w-[35vw] aspect-[16/9] overflow-hidden">
-                  <img src={src} alt={`VR Night showcase ${(i % nightImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
+                  <img src={src} alt={`VR Night showcase ${(i % nightImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" width="640" height="400"/>
                 </div>
               ))}
             </div>

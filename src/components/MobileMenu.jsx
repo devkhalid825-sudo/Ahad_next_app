@@ -57,11 +57,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
             {/* --- TOP BAR (Logo & Close) --- */}
             {/* Added px-8 to ensure elements don't touch screen edges */}
             <div className="flex justify-between items-center w-full px-8 pt-10 pb-6 md:p-10 relative z-[110]">
-                <img
-                    src={logo}
-                    alt="Logo"
-                    className="h-5 md:h-8 w-auto grayscale invert brightness-200"
-                />
+                <img src={logo} alt="Elipse Studio Logo" width="180" height="40" className="h-5 md:h-8 w-auto grayscale invert brightness-200" />
 
                 <button
                     onClick={onClose}
@@ -76,11 +72,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
 
             {/* --- BACKGROUND WATERMARK --- */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-                <img
-                    src={logo}
-                    alt=""
-                    className="w-[110vw] max-w-5xl -rotate-12 grayscale invert brightness-200"
-                />
+                <img src={logo} alt="Elipse Studio Logo" width="180" height="40" className="w-[110vw] max-w-5xl -rotate-12 grayscale invert brightness-200" />
             </div>
 
             {/* --- MENU LINKS --- */}

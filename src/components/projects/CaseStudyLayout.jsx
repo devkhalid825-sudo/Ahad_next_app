@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from "react";
 import { useNavigate } from 'react-router-dom';
@@ -92,7 +92,7 @@ const CaseStudyLayout = ({
                     </div>
                 ) : heroImage && (
                     <div className="w-full mt-[1.5rem] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]">
-                        <img src={heroImage} alt={title} className="w-full object-cover" />
+                        <img src={heroImage} alt={title} width="1200" height="700" className="w-full object-cover" />
                     </div>
                 )}
             </section>

@@ -147,6 +147,8 @@ const News = ({ initialBlogs = null }) => {
                     <img
                       src={getImageSrc(post.image)}
                       alt={post.title}
+                      width="577"
+                      height="380"
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
                     />

@@ -49,7 +49,7 @@ const WebsiteDevelopmentPage = () => {
           <Header />
           <h1 className="text-[clamp(1.8rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">Custom Website Development Services for Brands and Businesses Worldwide<span className="text-[#4169E1]">.</span></h1>
           <div className="flex flex-wrap gap-[8px] mt-[3rem]"><button onClick={handleStartProject} className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto">Start a Project →</button></div>
-          <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Website Development" className="w-full h-full object-cover" loading="lazy" /></div>
+          <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Website Development" className="w-full h-full object-cover" loading="lazy" width="1200" height="700"/></div>
         </section>
 
         <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D] flex flex-col lg:flex-row gap-8 lg:gap-[3rem] items-stretch">
@@ -67,7 +67,7 @@ const WebsiteDevelopmentPage = () => {
               </ul>
             </div>
             <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-              <img src={solutionsImg} alt="Our website development solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+              <img src={solutionsImg} alt="Our website development solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
             </div>
           </div>
         </section>
@@ -89,7 +89,7 @@ const WebsiteDevelopmentPage = () => {
               </div>
             </div>
             <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-              <img src={whyUsImg} alt="Why brands choose Elipse Studio for web development" className="w-full h-full object-cover" loading="lazy" />
+              <img src={whyUsImg} alt="Why brands choose Elipse Studio for web development" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
             </div>
           </div>
         </section>
@@ -106,14 +106,14 @@ const WebsiteDevelopmentPage = () => {
               </div>
             </div>
             <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-              <img src={stackImg} alt="Our web development technology" className="w-full h-full object-cover" loading="lazy" />
+              <img src={stackImg} alt="Our web development technology" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
             </div>
           </div>
         </section>
 
         <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#0D0D0D]"><Eyebrow>How we did it</Eyebrow><SectionTitle>Our Website Development Process</SectionTitle><div className="flex flex-wrap gap-3 md:gap-8 justify-center"><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="01" phase="Discovery" title="Strategic Scoping" desc="Understanding brand goals, audience, functionality, and integrations." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="02" phase="Design" title="Design Mockups" desc="Visual design and information architecture." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="03" phase="Development" title="Front-End Development" desc="Pixel-perfect responsive implementation." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="04" phase="Integration" title="Back-End Integrations" desc="CMS, commerce, and business system connections." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="05" phase="QA" title="Quality Assurance" desc="Cross-device and cross-browser testing." /></div><div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="06" phase="Launch" title="Launch & Monitor" desc="Deployment with performance monitoring." /></div></div></section>
 
-        <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Website Development showcase" className="w-full h-full object-cover" loading="lazy" /></div></section>
+        <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Website Development showcase" className="w-full h-full object-cover" loading="lazy" width="1280" height="720"/></div></section>
 
         <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]"><div className="max-w-[800px] mx-auto"><Eyebrow>FAQ</Eyebrow><SectionTitle>Frequently Asked Questions</SectionTitle><div className="max-w-[680px]">{[{ q: "What is custom website development?", a: "Custom website development is the design and development of websites tailored to specific brand and business requirements — versus template-based solutions." }, { q: "Should I choose WordPress or Next.js?", a: "WordPress excels for content-heavy sites requiring frequent updates. Next.js delivers superior performance for interactive applications where speed matters commercially." }, { q: "Does Elipse Studio provide SEO with website development?", a: "Yes. Every website includes SEO fundamentals — semantic HTML, structured data, Core Web Vitals optimization, mobile-first design, and clean URL architecture." }, { q: "Can you integrate with our existing systems?", a: "Yes. We integrate with CRM platforms, marketing automation, e-commerce backends, analytics, and custom enterprise systems." }, { q: "How long does custom website development take?", a: "Focused websites: 8-12 weeks. Complex websites: 12-20 weeks. Enterprise websites: 20-30 weeks." }].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}</div></div></section>
 

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -297,6 +297,8 @@ const CapabilitiesPage = () => {
                   <img
                     src={capabilitiesHeroImg}
                     alt="Elipse Studio capabilities"
+                    width="800"
+                    height="680"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
@@ -372,6 +374,8 @@ const CapabilitiesPage = () => {
               <img
                 src={capabilitiesSecImg}
                 alt="Elipse Studio team workspace — creative technology and 3D design studio"
+                width="800"
+                height="600"
                 className="w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"

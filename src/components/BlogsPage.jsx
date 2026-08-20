@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -184,7 +184,6 @@ const staticPosts = [
     },
 ];
 
-
 const getImageSrc = (image) => {
     if (!image) return '';
     if (typeof image === 'string') {
@@ -217,6 +216,8 @@ const BlogCard = ({ post, eager = false }) => (
                 <img
                     src={getImageSrc(post.image)}
                     alt={post.title}
+                    width="540"
+                    height="280"
                     loading={eager ? 'eager' : 'lazy'}
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -305,8 +306,6 @@ const BlogsPage = ({ initialBlogs }) => {
     });
     const [loading, setLoading] = useState(!(initialBlogs && initialBlogs.length));
     const [error, setError] = useState('');
-
-    
 
     useEffect(() => {
         if (initialBlogs && initialBlogs.length) return;

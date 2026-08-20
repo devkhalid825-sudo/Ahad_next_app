@@ -70,7 +70,7 @@ const CreativeServicesPage = () => {
             </ul>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our creative services" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+            <img src={solutionsImg} alt="Our creative services" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -85,7 +85,7 @@ const CreativeServicesPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our creative technology" className="w-full h-full object-cover" loading="lazy" />
+            <img src={stackImg} alt="Our creative technology" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
@@ -104,14 +104,14 @@ const CreativeServicesPage = () => {
             </div>
           </div>
           <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why brands choose Elipse Studio for creative services" className="w-full h-full object-cover" loading="lazy" />
+            <img src={whyUsImg} alt="Why brands choose Elipse Studio for creative services" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
           </div>
         </div>
       </section>
 
       <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#0D0D0D]"><Eyebrow>How we did it</Eyebrow><SectionTitle>Our Creative Process</SectionTitle><div className="flex flex-wrap gap-3 md:gap-8" style={{ justifyContent: 'center' }}>{[{ step: "01", phase: "Discovery", title: "Brand Understanding", desc: "Deep dive into your brand, audience, and goals." },{ step: "02", phase: "Concept", title: "Creative Concept", desc: "Developing visual directions and concepts." },{ step: "03", phase: "Design", title: "Design Execution", desc: "Crafting visual assets and materials." },{ step: "04", phase: "Production", title: "Content Production", desc: "Photography, video, and motion production." },{ step: "05", phase: "Review", title: "Client Review", desc: "Feedback and refinement cycles." },{ step: "06", phase: "Delivery", title: "Final Delivery", desc: "All formats optimized for every channel." }].map((p, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard {...p} /></div>)}</div></section>
 
-      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Creative Services showcase" className="w-full h-full object-cover" loading="lazy" /></div></section>
+      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Creative Services showcase" className="w-full h-full object-cover" loading="lazy" width="1280" height="720"/></div></section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]"><div className="max-w-[800px] mx-auto"><Eyebrow>FAQ</Eyebrow><SectionTitle>Frequently Asked Questions</SectionTitle><div className="max-w-[680px]">{[{ q: "What creative services does Elipse Studio offer?", a: "We offer brand identity, motion graphics, video production, graphic design, UI/UX design, and photography — all delivered end-to-end from concept to final production." },{ q: "Can you handle large-scale creative projects?", a: "Yes. Our team scales from focused brand identity projects through full multimedia production campaigns." },{ q: "Do you work with marketing agencies?", a: "Yes. We partner with agencies as their creative production execution partner." },{ q: "What industries do you serve?", a: "We serve luxury brands, technology companies, real estate, hospitality, and specialty industries worldwide." },{ q: "How do I start a creative project?", a: "Contact Elipse Studio with a brief description of your creative needs. Our team responds within one business day." }].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}</div></div></section>
 

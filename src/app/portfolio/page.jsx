@@ -6,7 +6,7 @@ export function generateMetadata() {
   return buildMetadata({
     title: 'Portfolio & Projects',
     description:
-      'Explore 3D visualization, VR, AR, and interactive configurator projects across real estate, automotive, ecommerce, and manufacturing.',
+      'Explore our portfolio of 3D visualization, VR, AR, and interactive product configurator projects across global client industries.',
     canonical: `${SITE_URL}/portfolio`,
     schema: {
       '@context': 'https://schema.org',

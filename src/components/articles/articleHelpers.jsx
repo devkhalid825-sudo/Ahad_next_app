@@ -1,4 +1,4 @@
-﻿﻿'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
@@ -54,7 +54,7 @@ export const ImagePlaceholder = ({ height = "h-[400px]", text = "Asset", classNa
       {video ? (
         <video src={video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
       ) : src ? (
-        <img src={src} alt={text} className={`w-full h-full ${contain ? 'object-contain p-8' : 'object-cover'}`} />
+        <img src={src} alt={text} className={`w-full h-full ${contain ? 'object-contain p-8' : 'object-cover'}`} width="640" height="400" />
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center text-black/10 p-6 text-center">
           <div className="w-16 h-16 mb-4 border-2 border-dashed border-black/5 rounded-full flex items-center justify-center">

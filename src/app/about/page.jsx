@@ -4,9 +4,9 @@ import { SITE_URL } from '@/utils/api';
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'About — Elipse Studio',
+    title: 'About Our Studio',
     description:
-      'Founded in 2014, Elipse Studio is a Dubai-based 3D visualization and immersive technology studio trusted by premium developers worldwide.',
+      'Founded in 2014, Elipse Studio is a leading 3D visualization, AR/VR, and creative technology studio trusted by global developers.',
     keywords:
       'Elipse Studio, 3D visualization studio Dubai, immersive technology company, architectural visualization, VR studio, AR development, creative technology',
     canonical: `${SITE_URL}/about`,

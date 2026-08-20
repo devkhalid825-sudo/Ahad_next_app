@@ -144,11 +144,7 @@ const Header = () => {
       >
         {isMenuOpen && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.1]">
-            <img
-              src={logo}
-              alt=""
-              className="w-[80vw] max-w-4xl -rotate-12 opacity-50 grayscale invert brightness-200"
-            />
+            <img src={logo} alt="Elipse Studio Logo" width="180" height="40" className="w-[80vw] max-w-4xl -rotate-12 opacity-50 grayscale invert brightness-200" />
           </div>
         )}
 

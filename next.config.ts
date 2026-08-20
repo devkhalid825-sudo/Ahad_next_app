@@ -41,7 +41,12 @@ const redirects = [
   ["/case-study-peek-freans", "/project/peek-freans"],
   ["/project", "/portfolio"],
   ["/blogs", "/blog"],
+  ["/blogs/", "/blog"],
   ["/project/Costa-cart", "/project/costa-cart"],
+];
+
+const wildcardRedirects = [
+  { source: "/blogs/:slug*", destination: "/blog/:slug*", permanent: true },
 ];
 
 const oldWordPressRedirects = [
@@ -68,21 +73,65 @@ const oldWordPressRedirects = [
 const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
 
+const securityHeaders = [
+  {
+    key: "X-Content-Type-Options",
+    value: "nosniff",
+  },
+  {
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
+  },
+  {
+    key: "X-XSS-Protection",
+    value: "1; mode=block",
+  },
+  {
+    key: "Referrer-Policy",
+    value: "strict-origin-when-cross-origin",
+  },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; media-src 'self' https: blob: data:; frame-src 'self' https://www.youtube.com https://youtube.com https://calendly.com; connect-src 'self' https: wss:;",
+  },
+];
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
 
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ];
+  },
+
   async redirects() {
     return [
+      ...wildcardRedirects,
       ...redirects.map(([source, destination]) => ({
         source,
         destination,
         permanent: true,
       })),
-      ...serviceRedirects.map(([source, destination]) => ({
-        source,
-        destination,
-        permanent: true,
-      })),
+      ...serviceRedirects.flatMap(([source, destination]) => [
+        { source, destination, permanent: true },
+        { source: `${source}/`, destination, permanent: true },
+      ]),
+      ...industryRedirects.flatMap(([source, destination]) => [
+        { source, destination, permanent: true },
+        { source: `${source}/`, destination, permanent: true },
+      ]),
       ...oldWordPressRedirects.map(([source, destination]) => ({
         source,
         destination,

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
 import Header from './layouts/Header';
@@ -403,6 +403,8 @@ const ContactPage = () => {
                         <img
                             src={buildingImg}
                             alt="3927 MAIN STREET"
+                            width="800"
+                            height="600"
                             className="w-full h-full object-cover brightness-[0.7]"
                         />
                         <div className="absolute top-8 left-8 md:top-12 md:left-12">

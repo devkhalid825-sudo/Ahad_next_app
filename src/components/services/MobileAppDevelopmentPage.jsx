@@ -48,7 +48,7 @@ const MobileAppDevelopmentPage = () => {
         <Header />
         <h1 className="text-[clamp(1.8rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">Custom Mobile App Development for iOS, Android, and Cross-Platform<span className="text-[#4169E1]">.</span></h1>
         <div className="flex flex-wrap gap-[8px] mt-[3rem]"><button onClick={handleStartProject} className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto">Start a Project â†’</button></div>
-        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Mobile App Development" className="w-full h-full object-cover" loading="lazy" /></div>
+        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]"><img src={heroImg} alt="Mobile App Development" className="w-full h-full object-cover" loading="lazy" width="1200" height="700"/></div>
       </section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
@@ -64,7 +64,7 @@ const MobileAppDevelopmentPage = () => {
       <Eyebrow>What we do</Eyebrow><SectionTitle>Our Mobile App Development Solutions</SectionTitle><ul className="max-w-[680px]">{[{ title: "Native iOS Development", desc: "Swift and SwiftUI applications with premium platform integration." },{ title: "Native Android Development", desc: "Kotlin applications following modern Android architecture." },{ title: "React Native Cross-Platform", desc: "Single codebase apps for iOS and Android." },{ title: "Flutter Cross-Platform", desc: "Modern cross-platform development for consistent UI." },{ title: "Enterprise Mobile Applications", desc: "Business apps with enterprise-grade security and integration." },{ title: "Consumer Product Apps", desc: "Direct-to-consumer applications for growing brands." },{ title: "MVP Mobile Development", desc: "Rapid mobile MVP builds for early market validation." },{ title: "App Modernization", desc: "Rebuilding outdated mobile applications on modern architectures." }].map((s, i) => <SolutionItem key={i} title={s.title} desc={s.desc} />)}</ul>
     </div>
     <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-      <img src={solutionsImg} alt="Our mobile app solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" />
+      <img src={solutionsImg} alt="Our mobile app solutions" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
     </div>
   </div>
 </section>
@@ -79,7 +79,7 @@ const MobileAppDevelopmentPage = () => {
       <Eyebrow>Why Elipse Studio</Eyebrow><SectionTitle>Why Businesses Choose Elipse Studio for App Development</SectionTitle><div><ReadText text="Startups and enterprises select Elipse Studio for custom app development because our team combines technical craft with genuine mobile product understanding. Great mobile apps require thoughtful UX, careful App Store optimization, appropriate monetization architecture, and long-term maintenance planning." /><ReadText text="Our development approach emphasizes what actually matters for mobile success. Native performance where it counts. Cross-platform efficiency where it makes sense. Enterprise-grade security architecture. App Store optimization for consumer discovery." /><ReadText text="See our mobile app development portfolio. Explore mobile applications Elipse Studio has built for startups, enterprises, and specialty businesses worldwide." /><div className="mt-8"><CTA label="View Portfolio" to="/portfolio" /></div></div>
     </div>
     <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-      <img src={whyUsImg} alt="Why brands choose Elipse Studio for mobile apps" className="w-full h-full object-cover" loading="lazy" />
+      <img src={whyUsImg} alt="Why brands choose Elipse Studio for mobile apps" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
     </div>
   </div>
 </section>
@@ -92,14 +92,14 @@ const MobileAppDevelopmentPage = () => {
       <Eyebrow>Our stack</Eyebrow><SectionTitle>Our Mobile Development Technology Stack</SectionTitle><div><ReadText text="Elipse Studio's mobile stack covers Swift and SwiftUI for premium iOS, Kotlin for modern Android, React Native for cross-platform efficiency, Flutter for consistent cross-platform UI. Backend infrastructure uses Node.js, Python, and cloud-native architectures on AWS, Azure, or GCP." /></div>
     </div>
     <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-      <img src={stackImg} alt="Our mobile development technology" className="w-full h-full object-cover" loading="lazy" />
+      <img src={stackImg} alt="Our mobile development technology" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
     </div>
   </div>
 </section>
 
       <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#0D0D0D]"><Eyebrow>How we did it</Eyebrow><SectionTitle>Our App Development Process</SectionTitle><div className="flex flex-wrap gap-3 md:gap-8" style={{ justifyContent: 'center' }}>{[{ step: "01", phase: "Discovery", title: "Strategic Scoping", desc: "Business objectives, users, platform priorities, and monetization." },{ step: "02", phase: "Design", title: "UX Design", desc: "User-centered interface and interaction design." },{ step: "03", phase: "Development", title: "Iterative Sprints", desc: "Regular demos with transparent progress." },{ step: "04", phase: "QA", title: "Device Testing", desc: "Cross-device quality assurance." },{ step: "05", phase: "Launch", title: "App Store Submission", desc: "ASO optimization and store submission." },{ step: "06", phase: "Growth", title: "Analytics & Iteration", desc: "Post-launch optimization based on data." }].map((p, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard {...p} /></div>)}</div></section>
 
-      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Mobile App Development showcase" className="w-full h-full object-cover" loading="lazy" /></div></section>
+      <section className="bg-[#111] px-5 md:px-8 py-10 md:py-[6rem] overflow-hidden"><Eyebrow>Visual output</Eyebrow><SectionTitle>Selected work</SectionTitle><div className="w-full max-w-[1280px] mx-auto rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]"><img src={galleryImg} alt="Mobile App Development showcase" className="w-full h-full object-cover" loading="lazy" width="1280" height="720"/></div></section>
 
       <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]"><div className="max-w-[800px] mx-auto"><Eyebrow>FAQ</Eyebrow><SectionTitle>Frequently Asked Questions</SectionTitle><div className="max-w-[680px]">{[{ q: "What is custom app development?", a: "Custom app development is the design and development of mobile applications tailored to specific business requirements â€” versus adapting off-the-shelf solutions." },{ q: "Native iOS/Android or cross-platform?", a: "Native delivers maximum performance. Cross-platform (React Native, Flutter) delivers faster development and code sharing. We recommend based on your specific requirements." },{ q: "Does Elipse Studio handle App Store submission?", a: "Yes. We handle App Store optimization and submission for both Apple App Store and Google Play Store." },{ q: "Can you integrate with enterprise systems?", a: "Yes. We integrate with CRM, ERP, MDM platforms, and custom backends." },{ q: "How long does custom app development take?", a: "MVP: 3-5 months. Full consumer apps: 5-9 months. Enterprise apps: 9-15 months." }].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}</div></div></section>
 

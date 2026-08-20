@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -123,7 +123,7 @@ const RenderCard = ({ src, title }) => (
                 src={src}
                 alt={title}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+            width="640" height="400" />
         </div>
     </div>
 );

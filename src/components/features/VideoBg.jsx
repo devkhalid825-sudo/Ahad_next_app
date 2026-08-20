@@ -94,6 +94,8 @@ const VideoBg = ({
                     src={videoPoster}
                     alt=""
                     aria-hidden="true"
+                    width="1920"
+                    height="1080"
                     className="absolute inset-0 w-full h-full object-cover"
                     style={{
                         zIndex: shouldShow ? 0 : 1,
