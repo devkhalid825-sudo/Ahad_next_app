@@ -31,6 +31,7 @@ const industryRedirects = [
   ["/industries/construction", "/services/architectural-visualization"],
   ["/industries/energy-utilities", "/services/enterprise-solutions"],
   ["/industries/hospitality", "/services/architectural-visualization"],
+  ["/industries/retail", "/services/3d-product-configurators"],
 ];
 
 const redirects = [
@@ -42,6 +43,16 @@ const redirects = [
   ["/project", "/portfolio"],
   ["/blogs", "/blog"],
   ["/blogs/", "/blog"],
+  // Dead/renamed CMS blog slugs still receiving crawler hits — redirect to
+  // the current post (or the blog hub) instead of serving a noindex 200.
+  ["/blog/3d-configurators-increase-ecommerce-sales-qualified-leads", "/blog/how-3d-configurators-increase-ecommerce-sales-qualified-leads"],
+  ["/blog/does-animation-pricing-usually-include-scriptwriting", "/blog"],
+  // projects_sitemap.xml previously listed slugs that don't match the CMS
+  // (typos in the real slugs / a since-renamed slug) — Google indexed the
+  // wrong URLs and got a noindex 404 fallback. Point them at the real pages.
+  ["/project/deck-configurator", "/project/deck-configrutor"],
+  ["/project/the-academy", "/project/the-acadmey"],
+  ["/project/space-explorer-vr-experience", "/project/space-explorer-vr"],
 ];
 
 const wildcardRedirects = [

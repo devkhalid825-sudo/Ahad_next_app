@@ -86,7 +86,7 @@ Hub pages: [Portfolio](https://elipsestudio.com/portfolio) · [Case Studies](htt
 
 **VR / AR Experiences**
 - [Virtual Reality Experience](https://elipsestudio.com/project/virtual-reality-experience)
-- [Space Explorer VR Experience](https://elipsestudio.com/project/space-explorer-vr-experience)
+- [Space Explorer VR Experience](https://elipsestudio.com/project/space-explorer-vr)
 - [Wayfinding AR](https://elipsestudio.com/project/wayfinding-ar)
 - [Retail AR](https://elipsestudio.com/project/retail-ar)
 - [VR Training Simulation](https://elipsestudio.com/project/contact-vr-training-simulation)
@@ -135,7 +135,6 @@ Hub: [Blog](https://elipsestudio.com/blog)
 - [Apparel Configurators for Fashion Brands 2026](https://elipsestudio.com/blog/apparel-configurator-fashion-brands-2026)
 - [AR for Field Service Technicians: Cutting Repair Time](https://elipsestudio.com/blog/ar-for-field-service-technicians-how-every-company-is-cutting-repair-time)
 - [The AR Development Process](https://elipsestudio.com/blog/what-does-the-ar-development-process)
-- [Does Animation Pricing Include Scriptwriting?](https://elipsestudio.com/blog/does-animation-pricing-usually-include-scriptwriting)
 - [ARKit vs ARCore: Developer Comparison in Pakistan 2026](https://elipsestudio.com/blog/arkit-vs-arcore-developer-comparison-in-pakistan-2026)
 - [Why Every Business Needs a Web Configurator in 2026](https://elipsestudio.com/blog/why-every-business-needs-a-web-configurator-to-increase-online-sales-in-2026)
 - [How VR Healthcare Training Is Changing Medical Education](https://elipsestudio.com/blog/how-vr-healthcare-training-is-changing-medical-education-in-2026)
