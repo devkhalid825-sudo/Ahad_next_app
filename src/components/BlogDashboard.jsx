@@ -276,7 +276,7 @@ const BlogDashboard = () => {
                 </div>
                 <div>
                   <label className="block text-[#0D0D0D]/60 text-[8px] uppercase tracking-widest mb-2">Slug (no slashes)</label>
-                  <input type="text" required value={form.slug} onChange={(e) => setForm(f => ({ ...f, slug: e.target.value.replace(/[\/\\]/g, '') }))} className="w-full bg-[#0D0D0D]/10 border border-[#0D0D0D]/20 rounded-xl px-4 py-3 text-[#0D0D0D] focus:border-[#4169E1] outline-none transition-all text-xs font-mono placeholder:text-[#0D0D0D]/30" placeholder="blog-url-slug" />
+                  <input type="text" required value={form.slug} onChange={(e) => setForm(f => ({ ...f, slug: generateSlug(e.target.value) }))} className="w-full bg-[#0D0D0D]/10 border border-[#0D0D0D]/20 rounded-xl px-4 py-3 text-[#0D0D0D] focus:border-[#4169E1] outline-none transition-all text-xs font-mono placeholder:text-[#0D0D0D]/30" placeholder="blog-url-slug" />
                 </div>
                 <div>
                   <label className="block text-[#0D0D0D]/60 text-[8px] uppercase tracking-widest mb-2">Category</label>

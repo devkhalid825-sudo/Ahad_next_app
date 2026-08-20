@@ -258,7 +258,7 @@ const CaseStudyDashboard = () => {
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <label className="text-[#888] text-[8px] uppercase tracking-widest font-bold">Slug <span className="text-red-400">*</span></label>
-                    <input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-xs text-[#F2F0EB] font-mono focus:border-[#4169E1] outline-none transition-all placeholder:text-[#444]" placeholder="case-study-url" />
+                    <input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: generateSlug(e.target.value) }))} className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-xs text-[#F2F0EB] font-mono focus:border-[#4169E1] outline-none transition-all placeholder:text-[#444]" placeholder="case-study-url" />
                   </div>
                 </div>
               </SectionCard>
