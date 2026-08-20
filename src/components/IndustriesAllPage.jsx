@@ -38,20 +38,7 @@ const iconMap = {
     HiOutlineBuildingOffice: <HiOutlineBuildingOffice className="w-7 h-7" />,
 };
 
-const industryToServiceMap = {
-  "real-estate": "/services/architectural-visualization",
-  "architecture": "/services/architectural-visualization",
-  "interior-design": "/services/architectural-visualization",
-  "manufacturing": "/services/3d-product-visualization",
-  "ecommerce": "/services/3d-product-configurators",
-  "automotive": "/services/3d-product-configurators",
-  "furniture": "/services/3d-product-configurators",
-  "healthcare": "/services/vr-development",
-  "education-training": "/services/vr-development",
-  "construction": "/services/architectural-visualization",
-  "energy-utilities": "/services/enterprise-solutions",
-  "hospitality": "/services/architectural-visualization",
-};
+
 
 const categories = ["ALL", "Real Estate", "Architecture", "Interior Design", "Industrial", "Advertising", "Healthcare", "Education & Training"];
 
@@ -217,7 +204,7 @@ return (
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.05, duration: 0.4 }}
-                                onClick={() => navigate(industryToServiceMap[ind.slug] || `/industries/${ind.slug}`)}
+                                onClick={() => navigate(`/industries/${ind.slug}`)}
                                 className="group bg-[#111111] border border-white/5 rounded-2xl p-5 hover:border-[#4169E1]/30 transition-all duration-500 cursor-pointer"
                             >
                                 <div className="w-10 h-10 rounded-full bg-[#4169E1]/10 flex items-center justify-center text-[#4169E1] text-sm mb-4">
@@ -239,7 +226,7 @@ return (
                                         whileInView={{ opacity: 1, x: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: index * 0.05, duration: 0.4 }}
-                                        onClick={() => navigate(industryToServiceMap[ind.slug] || `/industries/${ind.slug}`)}
+                                        onClick={() => navigate(`/industries/${ind.slug}`)}
                                         className="snap-start shrink-0 w-[75vw] max-w-[280px] group bg-[#111111] border border-white/5 rounded-2xl p-5 hover:border-[#4169E1]/30 transition-all duration-500 cursor-pointer"
                                     >
                                         <div className="w-10 h-10 rounded-full bg-[#4169E1]/10 flex items-center justify-center text-[#4169E1] text-sm mb-4">
@@ -262,7 +249,7 @@ return (
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                                onClick={() => navigate(industryToServiceMap[ind.slug] || `/industries/${ind.slug}`)}
+                                onClick={() => navigate(`/industries/${ind.slug}`)}
                                 className="group relative bg-[#111111] border border-white/5 rounded-[2rem] p-8 md:p-10 hover:border-[#4169E1]/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(65,105,225,0.05)] cursor-pointer"
                             >
                                 <div className="w-14 h-14 rounded-full bg-[#4169E1]/10 flex items-center justify-center text-[#4169E1] text-xl mb-6">

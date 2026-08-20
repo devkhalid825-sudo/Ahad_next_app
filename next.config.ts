@@ -18,22 +18,6 @@ const serviceRedirects = [
   ["/services/architectural-visualization-uae", "/services/architectural-visualization"],
 ];
 
-const industryRedirects = [
-  ["/industries/real-estate", "/services/architectural-visualization"],
-  ["/industries/architecture", "/services/architectural-visualization"],
-  ["/industries/interior-design", "/services/architectural-visualization"],
-  ["/industries/manufacturing", "/services/3d-product-visualization"],
-  ["/industries/ecommerce", "/services/3d-product-configurators"],
-  ["/industries/automotive", "/services/3d-product-configurators"],
-  ["/industries/furniture", "/services/3d-product-configurators"],
-  ["/industries/healthcare", "/services/vr-development"],
-  ["/industries/education-training", "/services/vr-development"],
-  ["/industries/construction", "/services/architectural-visualization"],
-  ["/industries/energy-utilities", "/services/enterprise-solutions"],
-  ["/industries/hospitality", "/services/architectural-visualization"],
-  ["/industries/retail", "/services/3d-product-configurators"],
-];
-
 const redirects = [
   ["/case-study", "/case-studies"],
   ["/case-study-one", "/project/gabani-emerald"],
@@ -135,10 +119,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       })),
       ...serviceRedirects.flatMap(([source, destination]) => [
-        { source, destination, permanent: true },
-        { source: `${source}/`, destination, permanent: true },
-      ]),
-      ...industryRedirects.flatMap(([source, destination]) => [
         { source, destination, permanent: true },
         { source: `${source}/`, destination, permanent: true },
       ]),
