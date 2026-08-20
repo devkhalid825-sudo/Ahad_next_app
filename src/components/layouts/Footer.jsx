@@ -234,9 +234,7 @@ const Footer = () => {
                   </a>
                 </p>
                 <p className="pt-1 text-white font-medium break-all sm:break-normal">
-                  <a href="mailto:info@inknalgorithm.com" className="hover:text-white transition-colors">
-                    info@inknalgorithm.com
-                  </a>
+
                 </p>
               </div>
             </div>
