@@ -31,6 +31,7 @@ const redirects = [
   // the current post (or the blog hub) instead of serving a noindex 200.
   ["/blog/3d-configurators-increase-ecommerce-sales-qualified-leads", "/blog/how-3d-configurators-increase-ecommerce-sales-qualified-leads"],
   ["/blog/does-animation-pricing-usually-include-scriptwriting", "/blog"],
+  ["/blog/How Browser-Based AR Turns Product Pages Into Try-Before-You-Buy Experiences", "/blog/how-browser-based-arturns-product-pages-into-try-before-you-buy-experiences"],
   // projects_sitemap.xml previously listed slugs that don't match the CMS
   // (typos in the real slugs / a since-renamed slug) — Google indexed the
   // wrong URLs and got a noindex 404 fallback. Point them at the real pages.
