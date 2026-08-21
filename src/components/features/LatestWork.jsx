@@ -202,7 +202,7 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
               key={project.id}
               href={project.path || `/case-study/${project.id}`}
               target={project.path?.startsWith('http') ? '_blank' : '_self'}
-              rel={project.path?.startsWith('http') ? 'noopener noreferrer' : ''}
+              rel={project.path?.startsWith('http') ? `noopener noreferrer${project.category === 'Tour 360' ? ' nofollow' : ''}` : ''}
               aria-label={`View project: ${project.title}`}
               className={`group block relative overflow-hidden border transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl aspect-[16/9] w-full ${
                 isLight ? 'border-zinc-200 hover:border-zinc-300' : 'border-zinc-800 hover:border-zinc-700'
