@@ -28,6 +28,7 @@ const industries = [
   { title: 'Construction', description: 'BIM visualization, site safety training & progress viz.', icon: <HiOutlineWrenchScrewdriver className="w-7 h-7 md:w-10 md:h-10" />, link: '/industries/construction' },
   { title: 'Energy & Utilities', description: 'Plant viz, digital twins & energy safety training.', icon: <HiOutlineBolt className="w-7 h-7 md:w-10 md:h-10" />, link: '/industries/energy-utilities' },
   { title: 'Hospitality', description: 'Hotel marketing, resort virtual tours & venue showcases.', icon: <HiOutlineBuildingOffice className="w-7 h-7 md:w-10 md:h-10" />, link: '/industries/hospitality' },
+  { title: 'Retail', description: '3D product visualization, virtual showrooms & interactive commerce.', icon: <HiOutlineShoppingCart className="w-7 h-7 md:w-10 md:h-10" />, link: '/industries/retail' },
 ];
 
 const Industries = () => {

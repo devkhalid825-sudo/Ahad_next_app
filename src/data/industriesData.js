@@ -765,5 +765,66 @@ export const industriesData = [
       buttonText: "Discuss Your Hospitality Project →",
       buttonLink: "/contact"
     }
+  },
+  {
+    slug: "retail",
+    title: "Retail",
+    shortDesc: "3D product visualization, virtual showrooms & interactive commerce.",
+    category: "Retail",
+    icon: "HiOutlineShoppingCart",
+    meta: {
+      seoTitle: "Retail 3D Visualization & Virtual Showroom Solutions | Elipse Studio",
+      metaDescription: "Elipse Studio delivers 3D product visualization, virtual showrooms, interactive configurators, and AR commerce experiences for retail brands worldwide.",
+      keywords: "retail 3D visualization, virtual showroom, interactive product display, retail AR experience, ecommerce 3D, product configurator retail, digital retail experience",
+      ogImage: "/assets/logo-og.webp",
+      ogImageAlt: "Retail Solutions by Elipse Studio",
+    },
+    hero: {
+      headline: "Retail 3D Visualization & Interactive Commerce Solutions",
+      subheadline: "Elipse Studio delivers photoreal 3D product visualization, immersive virtual showrooms, interactive product configurators, and AR commerce experiences that help retail brands increase conversions, reduce returns, and modernize the shopping experience.",
+      ctaText: "Discuss Your Retail Project",
+      ctaLink: "/contact",
+      image: ecommerceImg
+    },
+    tlDr: "Elipse Studio delivers retail 3D visualization, virtual showroom platforms, interactive product configurators, and AR commerce experiences for retail brands worldwide. Our retail solutions include 3D product visualization, virtual showrooms, interactive product displays, AR try-on experiences, ecommerce visualization, and in-store digital experiences that lift conversion rates, reduce return rates, and deliver modern shopping experiences.",
+    intro: [
+      "Retail is undergoing its most significant transformation since the invention of e-commerce. Physical retailers face declining foot traffic while online retailers struggle with high return rates and low conversion. The brands bridging this gap successfully invest in interactive 3D visualization that lets customers see, configure, and experience products before purchasing.",
+      "Elipse Studio serves retail brands, ecommerce platforms, and physical retailers worldwide with photoreal 3D product visualization and immersive commerce experiences. Our team combines visualization craft with retail commercial understanding, building experiences that increase conversion rates and reduce returns."
+    ],
+    solutions: [
+      "3D Product Visualization — Photorealistic 3D renders of retail products for ecommerce, marketing, and catalog use.",
+      "Virtual Showroom Platforms — Immersive online showrooms where customers browse and interact with entire product ranges.",
+      "Interactive Product Configurators — Real-time customization tools letting customers configure colors, materials, and options before purchase.",
+      "AR Commerce Experiences — Mobile AR try-on and placement experiences for fashion, furniture, accessories, and specialty retail.",
+      "Ecommerce Visualization Pipelines — Scalable 3D production pipelines delivering product visuals at ecommerce volume.",
+      "In-Store Digital Experiences — Interactive displays, digital signage, and immersive in-store visualization installations.",
+      "Virtual Try-On Solutions — AR-powered virtual try-on for fashion, eyewear, jewelry, and cosmetics retail.",
+      "Product Marketing Campaigns — Cinematic product animation and motion graphics for retail marketing channels."
+    ],
+    whyUs: [
+      "Retail brands select Elipse Studio for 3D product visualization because our team understands retail's specific commercial requirements. Retail visualization must serve multiple channels simultaneously — ecommerce product pages, social media marketing, in-store displays, and advertising campaigns. Our integrated capability delivers consistent 3D assets across every retail touchpoint from a single production pipeline.",
+      "Elipse Studio's retail visualization combines photorealistic quality with scalable production processes. We build 3D product libraries that serve ongoing retail needs — new product launches, seasonal campaigns, and expanding product ranges — rather than one-off visualization projects."
+    ],
+    midCta: {
+      headline: "See Retail 3D Visualization in Action",
+      text: "Explore our retail portfolio featuring 3D product visualization, virtual showrooms, interactive configurators, and AR commerce experiences for brands worldwide.",
+      buttonText: "View Retail Portfolio",
+      buttonLink: "/portfolio"
+    },
+    useCases: "Retail 3D visualization serves specific commercial scenarios across physical and digital channels. Ecommerce brands need photorealistic product renders that replace expensive photography and scale across thousands of SKUs. Furniture retailers need AR placement experiences that let customers visualize products in their spaces. Fashion brands need virtual try-on solutions that reduce return rates. Physical retailers need interactive in-store displays that bridge online and offline experiences.",
+    technology: "Elipse Studio's retail visualization pipeline uses Blender and Maya for 3D product modeling, V-Ray and Cycles for photorealistic rendering, Three.js and WebGL for browser-based virtual showrooms and configurators, ARKit and ARCore for mobile AR commerce, and Unreal Engine 5 for high-fidelity interactive experiences.",
+    faqs: [
+      { q: "How does 3D product visualization reduce retail return rates?", a: "3D product visualization gives customers accurate, detailed views of products from every angle before purchase — including materials, textures, colors, and scale. When customers understand exactly what they are buying, return rates drop significantly." },
+      { q: "Can you create virtual showrooms for our entire product range?", a: "Yes. Elipse Studio builds scalable virtual showroom platforms that showcase entire product catalogs with efficient 3D production pipelines that produce consistent product visuals at volume." },
+      { q: "Do you build AR try-on experiences for fashion retail?", a: "Yes. Elipse Studio develops AR virtual try-on solutions for fashion, eyewear, jewelry, and cosmetics retail, letting customers see products on themselves through their phone camera." },
+      { q: "How long does retail 3D visualization take?", a: "Individual product visualization delivers in 1-2 weeks per product. Scalable product pipelines for entire catalogs typically require 4-8 weeks to establish. Virtual showroom platforms span 8-16 weeks." },
+      { q: "How do I start a retail visualization project?", a: "Contact Elipse Studio with a brief description of your retail brand, product range, and commercial objectives. A senior team member will respond within one business day with a scoped approach." }
+    ],
+    finalCta: {
+      headline: "Modernize Your Retail Experience with 3D Visualization",
+      text: "Tell Elipse Studio about your retail brand. Our team will respond within one business day with a scoped approach for 3D product visualization, virtual showrooms, AR commerce, or interactive retail experiences.",
+      buttonText: "Discuss Your Retail Project →",
+      buttonLink: "/contact"
+    }
   }
 ];

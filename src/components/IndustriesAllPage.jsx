@@ -40,7 +40,7 @@ const iconMap = {
 
 
 
-const categories = ["ALL", "Real Estate", "Architecture", "Interior Design", "Industrial", "Advertising", "Healthcare", "Education & Training"];
+const categories = ["ALL", "Real Estate", "Architecture", "Interior Design", "Industrial", "Advertising", "Healthcare", "Education & Training", "Retail"];
 
 const IndustriesAllPage = () => {
     const navigate = useNavigate();

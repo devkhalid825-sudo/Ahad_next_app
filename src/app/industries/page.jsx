@@ -30,6 +30,7 @@ export function generateMetadata() {
           { '@type': 'ListItem', position: 10, name: 'Construction', url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://elipsestudio.com'}/industries/construction` },
           { '@type': 'ListItem', position: 11, name: 'Energy & Utilities', url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://elipsestudio.com'}/industries/energy-utilities` },
           { '@type': 'ListItem', position: 12, name: 'Hospitality', url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://elipsestudio.com'}/industries/hospitality` },
+          { '@type': 'ListItem', position: 13, name: 'Retail', url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://elipsestudio.com'}/industries/retail` },
         ],
       },
     },
