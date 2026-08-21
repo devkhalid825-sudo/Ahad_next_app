@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { BACKEND_ORIGIN, fixUrls } from '@/utils/api';
 
-const DEFAULT_REVALIDATE = 3600; // 1 hour caching by default
+const DEFAULT_REVALIDATE = 300; // 5 min caching by default, matches page-level `revalidate` export used across the app
 
 /**
  * Standard server-side fetch wrapper wrapped in React cache() to prevent duplicate fetches 
