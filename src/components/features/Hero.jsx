@@ -60,22 +60,27 @@ const Hero = () => {
     }
   }, [activeIndex, backgrounds.length]);
 
-  // While isMobile is null (SSR / first paint), show poster only — no video request
+  // While isMobile is null (SSR / first paint), show poster only — no video request.
+  // <picture>/<source media> lets the browser pick the right poster at parse time,
+  // before JS/matchMedia resolves, so mobile never flashes the desktop poster.
   if (isMobile === null) {
     return (
       <section className="relative w-full h-dvh bg-black max-md:px-[15px] max-md:py-[15px]">
         <div className="relative w-full h-full overflow-hidden bg-black shadow-2xl max-md:rounded-[24px]">
           <Header />
-          <img
-            src={firstSlidePosterDesktop}
-            alt="Hero Background"
-            width="1920"
-            height="1080"
-            fetchPriority="high"
-            loading="eager"
-            decoding="sync"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet={firstSlidePosterMobile} />
+            <img
+              src={firstSlidePosterDesktop}
+              alt="Hero Background"
+              width="1920"
+              height="1080"
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </picture>
           <h1 className="sr-only">
             Elipse Studio &mdash; 3D Visualization, AR/VR &amp; Web Configurator Agency
           </h1>
