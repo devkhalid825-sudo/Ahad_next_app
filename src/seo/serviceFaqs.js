@@ -121,6 +121,20 @@ export const SERVICE_FAQS = {
       a: 'Yes. We offer end-to-end animation production including concept development, voiceover casting, custom sound effects, and color grading.',
     },
   ],
+  'product-animation': [
+    {
+      q: 'What is 3D product animation?',
+      a: '3D product animation uses CAD or 3D-modeled product data to create moving video content — hero videos, 360° spins, exploded views, and mechanism animation — without needing a physical unit on set.',
+    },
+    {
+      q: 'Can you animate from our CAD files?',
+      a: 'Yes. We work directly from CAD, STEP, or existing 3D product visualization assets, which speeds up production and keeps geometry accurate.',
+    },
+    {
+      q: 'How long does product animation take?',
+      a: '360° spins and simple hero videos: 2-4 weeks. Mechanism and exploded-view animation: 4-6 weeks. Full launch films with multiple cutdowns: 6-10 weeks.',
+    },
+  ],
   'vfx-virtual-production': [
     {
       q: 'What is Virtual Production with LED Walls?',

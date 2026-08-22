@@ -9,6 +9,7 @@ import InteractiveWebExperiencesPage from '@/components/services/InteractiveWebE
 import VrDevelopmentPage from '@/components/services/VrDevelopmentPage';
 import ArDevelopmentPage from '@/components/services/ArDevelopmentPage';
 import AnimationPage from '@/components/services/AnimationPage';
+import ProductAnimationPage from '@/components/services/ProductAnimationPage';
 import VfxVirtualProductionPage from '@/components/services/VfxVirtualProductionPage';
 import VirtualShowroomsDigitalTwinsPage from '@/components/services/VirtualShowroomsDigitalTwinsPage';
 import CustomSoftwareDevelopmentPage from '@/components/services/CustomSoftwareDevelopmentPage';
@@ -26,6 +27,7 @@ const servicePages = {
   'vr-development': VrDevelopmentPage,
   'ar-development': ArDevelopmentPage,
   '3d-animation': AnimationPage,
+  'product-animation': ProductAnimationPage,
   'vfx-virtual-production': VfxVirtualProductionPage,
   'virtual-showrooms-digital-twins': VirtualShowroomsDigitalTwinsPage,
   'custom-software-development': CustomSoftwareDevelopmentPage,
@@ -90,6 +92,13 @@ const serviceMeta = {
     title: '3D Animation Services',
     description: 'Cinematic 3D animation and motion graphics for global brands. Product demos, explainer videos, and architectural walkthroughs.',
     keywords: '3d animation, motion graphics, 3d animation services, explainer videos, architectural walkthrough, product animation',
+    ogImage: `${SITE_URL}/assets/services/og-3d-animation.jpg`,
+    schemaType: 'Service',
+  },
+  'product-animation': {
+    title: '3D Product Animation Services',
+    description: 'Photorealistic 3D product animation for launches, e-commerce, and marketing. Hero videos, 360° spins, exploded views, and mechanism animation.',
+    keywords: '3d product animation, product animation services, product video animation, exploded view animation, 360 product animation, e-commerce product video',
     ogImage: `${SITE_URL}/assets/services/og-3d-animation.jpg`,
     schemaType: 'Service',
   },
