@@ -32,6 +32,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
         { name: "VR Development", href: "/services/vr-development" },
         { name: "AR Development", href: "/services/ar-development" },
         { name: "3D Animation", href: "/services/3d-animation" },
+        { name: "3D Product Animation", href: "/services/product-animation" },
         { name: "VFX & Virtual Production", href: "/services/vfx-virtual-production" },
         { name: "Virtual Showrooms & Digital Twins", href: "/services/virtual-showrooms-digital-twins" },
         { name: "Custom Software Development", href: "/services/custom-software-development" },

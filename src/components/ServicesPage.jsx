@@ -55,6 +55,12 @@ const services = [
         icon: "▶"
     },
     {
+        title: "3D Product Animation",
+        slug: "product-animation",
+        description: "Photorealistic 3D product animation for launches and e-commerce. Hero videos, 360° spins, exploded views, and mechanism animation.",
+        icon: "🎥"
+    },
+    {
         title: "VFX & Virtual Production",
         slug: "vfx-virtual-production",
         description: "VFX and virtual production services for film, commercial, and brand content. CG visual effects, compositing, LED wall production.",
