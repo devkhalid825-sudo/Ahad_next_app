@@ -37,7 +37,7 @@ const Industries = () => {
       <div className="w-full px-[15px] md:px-[40px]">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 md:mb-12 text-center sm:text-left">
           <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-3 sm:mb-0 tracking-tight leading-[1.1]">
-            Industries We Serve
+            Services We Offer
           </h2>
           <Link
             href="/industries"
