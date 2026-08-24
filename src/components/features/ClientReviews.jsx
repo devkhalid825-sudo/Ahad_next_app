@@ -37,6 +37,7 @@ const ClientReviews = ({ initialReviews = null }) => {
   const [reviews, setReviews] = useState(initialReviews ? mapReviews(initialReviews) : []);
   const [mutedStates, setMutedStates] = useState({});
   const mobileSwiperRef = useRef(null);
+  const marqueeSwiperRef = useRef(null);
   const playerRefs = useRef({});
   const sectionRef = useRef(null);
 
@@ -289,6 +290,11 @@ const ClientReviews = ({ initialReviews = null }) => {
         <div className="mobile-review-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
 
         <Swiper
+          onSwiper={(swiper) => {
+            marqueeSwiperRef.current = swiper;
+          }}
+          onMouseEnter={() => marqueeSwiperRef.current?.autoplay?.stop()}
+          onMouseLeave={() => marqueeSwiperRef.current?.autoplay?.start()}
           modules={[Autoplay, FreeMode]}
           loop={true}
           speed={8000}

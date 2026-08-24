@@ -22,7 +22,18 @@ import brandsImg10 from '@/assets/ElipseImages/logos/logo10.webp';
 import brandsImgStudentLife from '@/assets/ElipseImages/logos/SL.webp';
 import brandsImgCarbon from '@/assets/ElipseImages/logos/carbon.webp';
 
-const FooterColumn = ({ title, sectionKey, as: Tag = 'div', ariaLabel, isOpen, onToggle, children }) => {
+const FooterColumn = ({ title, sectionKey, as: Tag = 'div', ariaLabel, isOpen, onToggle, alwaysOpen = false, children }) => {
+  if (alwaysOpen) {
+    return (
+      <Tag aria-label={ariaLabel} className="flex flex-col space-y-3 sm:space-y-4">
+        <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+          {title}
+        </h2>
+        {children}
+      </Tag>
+    );
+  }
+
   return (
     <Tag
       aria-label={ariaLabel}
@@ -231,6 +242,7 @@ const Footer = () => {
             <FooterColumn
               title="South Asia Operations"
               sectionKey="southAsia"
+              alwaysOpen
               isOpen={!!openSections.southAsia}
               onToggle={toggleSection}
             >
@@ -257,6 +269,7 @@ const Footer = () => {
             <FooterColumn
               title="United States"
               sectionKey="unitedStates"
+              alwaysOpen
               isOpen={!!openSections.unitedStates}
               onToggle={toggleSection}
             >
@@ -276,6 +289,7 @@ const Footer = () => {
             <FooterColumn
               title="United Kingdom"
               sectionKey="unitedKingdom"
+              alwaysOpen
               isOpen={!!openSections.unitedKingdom}
               onToggle={toggleSection}
             >
