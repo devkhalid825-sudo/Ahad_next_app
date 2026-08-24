@@ -289,26 +289,36 @@ const ClientReviews = ({ initialReviews = null }) => {
         </Swiper>
         <div className="mobile-review-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
 
+        <div
+          className="max-md:!hidden"
+          onMouseEnter={() => {
+            const swiper = marqueeSwiperRef.current;
+            if (!swiper || swiper.destroyed) return;
+            // Freeze the in-flight transition at its current position instantly,
+            // then hand off to Swiper's own pause() so its internal state stays
+            // consistent (a raw stop()/start() here left autoplay unable to resume).
+            const translate = swiper.getTranslate();
+            swiper.setTransition(0);
+            swiper.setTranslate(translate);
+            swiper.animating = false;
+            swiper.autoplay.pause(true, true);
+          }}
+          onMouseLeave={() => {
+            const swiper = marqueeSwiperRef.current;
+            if (!swiper || swiper.destroyed) return;
+            swiper.autoplay.resume();
+          }}
+        >
         <Swiper
           onSwiper={(swiper) => {
             marqueeSwiperRef.current = swiper;
           }}
-          onMouseEnter={() => {
-            const swiper = marqueeSwiperRef.current;
-            if (!swiper) return;
-            swiper.autoplay?.stop();
-            const translate = swiper.getTranslate();
-            swiper.setTransition(0);
-            swiper.setTranslate(translate);
-          }}
-          onMouseLeave={() => marqueeSwiperRef.current?.autoplay?.start()}
           modules={[Autoplay, FreeMode]}
           loop={true}
           speed={8000}
           autoplay={{
             delay: 0,
             disableOnInteraction: false,
-            pauseOnMouseEnter: true,
           }}
           slidesPerView="auto"
           spaceBetween={10}
@@ -318,7 +328,7 @@ const ClientReviews = ({ initialReviews = null }) => {
           }}
           grabCursor={true}
           allowTouchMove={true}
-          className="!overflow-visible px-0 marquee-swiper max-md:!hidden"
+          className="!overflow-visible px-0 marquee-swiper"
         >
           {displayReviews.map((review) => {
             const isDtMuted = getIsMuted(`dt-${review.id}`);
@@ -336,7 +346,7 @@ const ClientReviews = ({ initialReviews = null }) => {
                           src={`${dtYtUrl}&rel=0&modestbranding=1&iv_load_policy=3`}
                           data-review-id={`dt-${review.id}`}
                           className="w-full h-full"
-                          style={{ border: 'none', background: '#000', borderRadius: '12px' }}
+                          style={{ border: 'none', background: '#000', borderRadius: '12px', pointerEvents: 'none' }}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           title={`${review.clientName} review`}
                           loading="lazy"
@@ -425,6 +435,7 @@ const ClientReviews = ({ initialReviews = null }) => {
             );
           })}
         </Swiper>
+        </div>
       </div>
     </section>
   );
