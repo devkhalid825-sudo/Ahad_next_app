@@ -293,7 +293,14 @@ const ClientReviews = ({ initialReviews = null }) => {
           onSwiper={(swiper) => {
             marqueeSwiperRef.current = swiper;
           }}
-          onMouseEnter={() => marqueeSwiperRef.current?.autoplay?.stop()}
+          onMouseEnter={() => {
+            const swiper = marqueeSwiperRef.current;
+            if (!swiper) return;
+            swiper.autoplay?.stop();
+            const translate = swiper.getTranslate();
+            swiper.setTransition(0);
+            swiper.setTranslate(translate);
+          }}
           onMouseLeave={() => marqueeSwiperRef.current?.autoplay?.start()}
           modules={[Autoplay, FreeMode]}
           loop={true}
