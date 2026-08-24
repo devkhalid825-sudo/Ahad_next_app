@@ -295,7 +295,7 @@ const ClientReviews = ({ initialReviews = null }) => {
           autoplay={{
             delay: 0,
             disableOnInteraction: false,
-            pauseOnMouseEnter: false,
+            pauseOnMouseEnter: true,
           }}
           slidesPerView="auto"
           spaceBetween={10}

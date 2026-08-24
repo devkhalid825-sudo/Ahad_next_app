@@ -148,10 +148,12 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
                 value={searchTerm}
                 onChange={handleSearchChange}
                 aria-label="Search projects"
+                suppressHydrationWarning
               />
               <button
                 className="bg-[#4169E1] text-black p-2 md:p-2.5 rounded-full hover:bg-[#4169E1] transition-colors shrink-0 flex items-center justify-center min-w-[32px] min-h-[32px]"
                 aria-label="Submit Search"
+                suppressHydrationWarning
               >
                 <FiSearch className="w-3.5 h-3.5 md:w-4 h-4" />
               </button>
@@ -176,6 +178,7 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
               <button
                 key={cat}
                 onClick={() => handleCategoryChange(cat)}
+                suppressHydrationWarning
                 className={`text-sm md:text-2xl transition-all duration-300 whitespace-nowrap snap-start ${
                   activeCategory === cat && !searchTerm
                     ? isLight
@@ -272,6 +275,7 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
           <div className="flex justify-center mt-8 pb-6 md:pb-8">
             <button
               onClick={filteredProjects.length > visibleCount ? loadMore : () => setVisibleCount(6)}
+              suppressHydrationWarning
               className={`group relative flex items-center gap-3 border rounded-full px-10 py-4 text-sm font-medium tracking-widest uppercase hover:scale-105 transition-all duration-500 ${
                 isLight
                   ? 'bg-black/5 border-black/20 hover:bg-black hover:text-white'

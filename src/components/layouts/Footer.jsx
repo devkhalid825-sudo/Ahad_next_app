@@ -22,9 +22,47 @@ import brandsImg10 from '@/assets/ElipseImages/logos/logo10.webp';
 import brandsImgStudentLife from '@/assets/ElipseImages/logos/SL.webp';
 import brandsImgCarbon from '@/assets/ElipseImages/logos/carbon.webp';
 
+const FooterColumn = ({ title, sectionKey, as: Tag = 'div', ariaLabel, isOpen, onToggle, children }) => {
+  return (
+    <Tag
+      aria-label={ariaLabel}
+      className="flex flex-col border-b border-white/10 pb-4 md:border-none md:pb-0"
+    >
+      <button
+        type="button"
+        onClick={() => onToggle(sectionKey)}
+        aria-expanded={isOpen}
+        className="flex items-center justify-between w-full text-left md:pointer-events-none"
+      >
+        <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+          {title}
+        </h2>
+        <span
+          aria-hidden="true"
+          className="md:hidden flex-shrink-0 w-5 h-5 flex items-center justify-center text-white text-xl leading-none font-light transition-transform duration-300"
+          style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+        >
+          +
+        </span>
+      </button>
+      <div
+        className={`grid transition-all duration-300 ease-in-out md:!grid-rows-[1fr] md:!opacity-100 ${isOpen ? 'grid-rows-[1fr] opacity-100 mt-3 sm:mt-4' : 'grid-rows-[0fr] opacity-0'
+          }`}
+      >
+        <div className="overflow-hidden">{children}</div>
+      </div>
+    </Tag>
+  );
+};
+
 const Footer = () => {
   const [footerEmail, setFooterEmail] = useState('');
   const [status, setStatus] = useState('');
+  const [openSections, setOpenSections] = useState({});
+
+  const toggleSection = (key) => {
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
   const handleFooterSubmit = async () => {
     if (!footerEmail) return;
@@ -105,12 +143,14 @@ const Footer = () => {
             placeholder={status === 'success' ? 'Subscribed Successfully!' : 'Enter your email..'}
             value={footerEmail}
             onChange={(e) => setFooterEmail(e.target.value)}
+            suppressHydrationWarning
             className={`bg-white/5 backdrop-blur-md border border-white/50 rounded-full px-8 py-3 w-full sm:w-[500px] md:w-[850px] lg:w-[1000px] focus:outline-none focus:border-[#4169E1] transition-all placeholder:text-white/30 text-sm shadow-inner ${status === 'success' ? 'border-green-400 text-green-400' : ''
               }`}
           />
           <button
             onClick={handleFooterSubmit}
             disabled={status === 'loading'}
+            suppressHydrationWarning
             className="w-full sm:w-auto bg-[#4169E1] text-white font-bold px-12 py-3 rounded-full hover:bg-[#3558c8] hover:scale-105 transition-all duration-300 text-sm md:text-base whitespace-nowrap disabled:opacity-50"
           >
             {status === 'loading' ? 'Sending...' : 'Submit'}
@@ -121,10 +161,14 @@ const Footer = () => {
 
         <div className="w-full flex lg:flex-row flex-col justify-between gap-8 py-8">
           <div className="w-full xl:w-[85%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-8 relative">
-            <nav aria-label="Company" className="flex flex-col space-y-3 sm:space-y-4">
-              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
-                Company
-              </h2>
+            <FooterColumn
+              as="nav"
+              ariaLabel="Company"
+              title="Company"
+              sectionKey="company"
+              isOpen={!!openSections.company}
+              onToggle={toggleSection}
+            >
               <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/about">About Us</Link>
@@ -148,12 +192,16 @@ const Footer = () => {
                   <Link href="/contact">Contact</Link>
                 </li>
               </ul>
-            </nav>
+            </FooterColumn>
 
-            <nav aria-label="Our Services" className="flex flex-col space-y-3 sm:space-y-4">
-              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
-                Our Services
-              </h2>
+            <FooterColumn
+              as="nav"
+              ariaLabel="Our Services"
+              title="Our Services"
+              sectionKey="services"
+              isOpen={!!openSections.services}
+              onToggle={toggleSection}
+            >
               <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services">All Services</Link>
@@ -177,13 +225,15 @@ const Footer = () => {
                   <Link href="/services/mobile-app-development">Mobile App Development</Link>
                 </li>
               </ul>
-            </nav>
+            </FooterColumn>
 
             {/* Regional / South Asia Column */}
-            <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
-                South Asia Operations
-              </h2>
+            <FooterColumn
+              title="South Asia Operations"
+              sectionKey="southAsia"
+              isOpen={!!openSections.southAsia}
+              onToggle={toggleSection}
+            >
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
                 <p>Regional Development Hub</p>
                 <p>Worldwide Project Delivery</p>
@@ -201,13 +251,15 @@ const Footer = () => {
                   </a>
                 </p>
               </div>
-            </div>
+            </FooterColumn>
 
             {/* United States Column */}
-            <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
-                United States
-              </h2>
+            <FooterColumn
+              title="United States"
+              sectionKey="unitedStates"
+              isOpen={!!openSections.unitedStates}
+              onToggle={toggleSection}
+            >
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
                 <p>1812 McCormick Ln</p>
                 <p>Hanover Park, IL 60133</p>
@@ -218,13 +270,15 @@ const Footer = () => {
                   </a>
                 </p>
               </div>
-            </div>
+            </FooterColumn>
 
             {/* United Kingdom Column */}
-            <div className="flex flex-col space-y-3 sm:space-y-4">
-              <h2 className="text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
-                United Kingdom
-              </h2>
+            <FooterColumn
+              title="United Kingdom"
+              sectionKey="unitedKingdom"
+              isOpen={!!openSections.unitedKingdom}
+              onToggle={toggleSection}
+            >
               <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
                 <p>Elipse Studio UK</p>
                 <p>London, United Kingdom</p>
@@ -237,7 +291,7 @@ const Footer = () => {
 
                 </p>
               </div>
-            </div>
+            </FooterColumn>
           </div>
 
           <div className="w-full lg:w-1/5 flex flex-col justify-between lg:items-end gap-6">
@@ -262,6 +316,7 @@ const Footer = () => {
             </div>
             <button
               onClick={scrollToTop}
+              suppressHydrationWarning
               className="flex w-fit xl:mt-0 mt-6 items-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-full px-8 py-3 text-xs uppercase tracking-widest hover:bg-white/20 transition-all group cursor-pointer text-white"
             >
               Back to top
