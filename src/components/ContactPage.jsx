@@ -311,7 +311,7 @@ const ContactPage = () => {
                                     disabled={isSubmitting}
                                     className={`w-full bg-[#4169E1] hover:bg-[#8ab4ff] text-black md:font-bold py-4 rounded-full text-sm md:text-base transition-all transform active:scale-[0.98] ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
-                                    {isSubmitting ? 'Sending...' : 'Get Updates'}
+                                    {isSubmitting ? 'Sending...' : 'Submit'}
                                 </button>
                             </div>
                         </form>

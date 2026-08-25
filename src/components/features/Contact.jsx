@@ -315,7 +315,7 @@ const Contact = () => {
                     isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
-                  {isSubmitting ? 'Sending...' : 'Get Updates'}
+                  {isSubmitting ? 'Sending...' : 'Submit'}
                 </button>
               </div>
             </form>
