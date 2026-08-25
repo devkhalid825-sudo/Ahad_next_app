@@ -143,7 +143,7 @@ const Contact = () => {
               <input type="hidden" name="interest" value={formData.interest} />
 
               <div className="space-y-6">
-                <p className="text-white text-base md:text-lg lg:text-xl font-medium">I'm interested in...</p>
+                <p className="text-white text-base md:text-lg lg:text-xl font-medium">I&apos;m interested in...</p>
                 <div className="space-y-3 md:space-y-4">
                   <button
                     type="button"

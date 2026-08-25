@@ -56,15 +56,21 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
 
   const projects = apiProjects;
 
-  useEffect(() => {
-    const category = searchParams ? searchParams.get('category') : null;
-    if (category) {
-      const foundCategory = categories.find((c) => c.toUpperCase() === category.toUpperCase());
+  // Sync activeCategory from the URL's ?category= param. Adjusted during
+  // render (React's documented pattern for deriving state from a changed
+  // external value) rather than in an effect, since this isn't syncing with
+  // an external system — it's a one-time reaction to the param changing.
+  const categoryParam = searchParams ? searchParams.get('category') : null;
+  const [prevCategoryParam, setPrevCategoryParam] = useState(categoryParam);
+  if (categoryParam !== prevCategoryParam) {
+    setPrevCategoryParam(categoryParam);
+    if (categoryParam) {
+      const foundCategory = categories.find((c) => c.toUpperCase() === categoryParam.toUpperCase());
       if (foundCategory) {
         setActiveCategory(foundCategory);
       }
     }
-  }, [searchParams]);
+  }
 
   useEffect(() => {
     const leftObserver = new IntersectionObserver(

@@ -25,6 +25,9 @@ class ErrorBoundary extends React.Component {
           <p style={{fontSize:'1rem',color:'rgba(255,255,255,0.4)',fontWeight:300,maxWidth:'400px',lineHeight:1.6}}>An unexpected error occurred. Please refresh or go back to home.</p>
           <div style={{display:'flex',gap:'1rem',flexWrap:'wrap',justifyContent:'center'}}>
             <button onClick={()=>window.location.reload()} style={{backgroundColor:'transparent',border:'1px solid rgba(255,255,255,0.2)',color:'#F2F0EB',padding:'0.75rem 2rem',borderRadius:'999px',fontSize:'0.75rem',fontWeight:700,letterSpacing:'0.15em',textTransform:'uppercase',cursor:'pointer'}}>Refresh Page</button>
+            {/* Plain <a>, not next/link: this only renders after the router's own tree has
+                already crashed, so it must not depend on client-side router/prefetch state. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a href="/" style={{backgroundColor:'#4169E1',color:'#fff',padding:'0.75rem 2rem',borderRadius:'999px',fontSize:'0.75rem',fontWeight:700,letterSpacing:'0.15em',textTransform:'uppercase',textDecoration:'none',display:'inline-block'}}>Go to Home</a>
           </div>
           <a href="https://elipsestudio.com" style={{marginTop:'2rem',fontSize:'0.75rem',color:'rgba(255,255,255,0.15)',textDecoration:'none',letterSpacing:'0.1em',textTransform:'uppercase'}}>Elipse Studio</a>

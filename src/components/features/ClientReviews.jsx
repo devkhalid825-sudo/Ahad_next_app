@@ -41,12 +41,12 @@ const ClientReviews = ({ initialReviews = null }) => {
   const playerRefs = useRef({});
   const sectionRef = useRef(null);
 
-  const getPlayerRef = useCallback((id) => {
-    if (!playerRefs.current[id]) {
-      playerRefs.current[id] = React.createRef();
-    }
-    return playerRefs.current[id];
-  }, []);
+  const setPlayerRef = useCallback(
+    (id) => (el) => {
+      playerRefs.current[id] = el;
+    },
+    []
+  );
 
   const getIsMuted = useCallback(
     (id) => {
@@ -72,9 +72,9 @@ const ClientReviews = ({ initialReviews = null }) => {
           );
         }
       } else {
-        const ref = playerRefs.current[id];
-        if (ref && ref.current) {
-          ref.current.muted = newMuted;
+        const el = playerRefs.current[id];
+        if (el) {
+          el.muted = newMuted;
         }
       }
       return { ...prev, [id]: newMuted };
@@ -212,7 +212,6 @@ const ClientReviews = ({ initialReviews = null }) => {
                     {review.video && ytUrl ? (
                       <div className="relative w-full h-full">
                         <iframe
-                          ref={getPlayerRef(review.id)}
                           src={`${ytUrl}&rel=0&modestbranding=1&iv_load_policy=3`}
                           data-review-id={review.id}
                           className="w-full h-full"
@@ -224,7 +223,7 @@ const ClientReviews = ({ initialReviews = null }) => {
                       </div>
                     ) : review.video ? (
                       <video
-                        ref={getPlayerRef(review.id)}
+                        ref={setPlayerRef(review.id)}
                         src={review.video}
                         muted={isMuted}
                         autoPlay
@@ -353,7 +352,7 @@ const ClientReviews = ({ initialReviews = null }) => {
                         />
                       ) : review.video ? (
                         <video
-                          ref={getPlayerRef(`dt-${review.id}`)}
+                          ref={setPlayerRef(`dt-${review.id}`)}
                           src={review.video}
                           muted={isDtMuted}
                           autoPlay

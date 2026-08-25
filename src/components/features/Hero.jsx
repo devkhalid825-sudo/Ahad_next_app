@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useMemo, useSyncExternalStore, Suspense, lazy } from 'react';
 import Header from '../layouts/Header';
 import { HERO_ASSETS } from '@/constants/assets';
 
@@ -10,19 +10,19 @@ const CarouselIndicators = lazy(() => import('../ui/CarouselIndicators'));
 const firstSlidePosterMobile = HERO_ASSETS.images.mobilePoster;
 const firstSlidePosterDesktop = HERO_ASSETS.images.desktopPoster;
 
+function subscribeToMobileQuery(callback) {
+  const mediaQuery = window.matchMedia('(max-width: 767px)');
+  mediaQuery.addEventListener('change', callback);
+  return () => mediaQuery.removeEventListener('change', callback);
+}
+const getIsMobileSnapshot = () => window.matchMedia('(max-width: 767px)').matches;
+// null = unknown (SSR / pre-hydration). Avoids fetching wrong video type before
+// the browser resolves the media query. Renders poster-only until determined.
+const getIsMobileServerSnapshot = () => null;
+
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  // null = unknown (SSR / pre-hydration). Avoids fetching wrong video type before
-  // the browser resolves the media query. Renders poster-only until determined.
-  const [isMobile, setIsMobile] = useState(null);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mediaQuery.matches);
-    const handleResize = (e) => setIsMobile(e.matches);
-    mediaQuery.addEventListener('change', handleResize);
-    return () => mediaQuery.removeEventListener('change', handleResize);
-  }, []);
+  const isMobile = useSyncExternalStore(subscribeToMobileQuery, getIsMobileSnapshot, getIsMobileServerSnapshot);
 
   const desktopBackgrounds = useMemo(
     () => [

@@ -86,7 +86,7 @@ return (
                                     Tailored solutions for every industry<span className="text-[#4169E1]">.</span>
                                 </h1>
                                 <p className="text-base md:text-lg text-gray-400 max-w-2xl leading-relaxed mb-8">
-                                    Photoreal visualization, immersive experiences, and interactive platforms — purpose-built for each industry we work with. From architectural renders that sell unbuilt properties to VR training systems that reduce operational risk, we craft digital experiences tailored to your sector's unique challenges and audience expectations.
+                                    Photoreal visualization, immersive experiences, and interactive platforms — purpose-built for each industry we work with. From architectural renders that sell unbuilt properties to VR training systems that reduce operational risk, we craft digital experiences tailored to your sector&apos;s unique challenges and audience expectations.
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <button
@@ -164,7 +164,7 @@ return (
                             <div className="h-full bg-gradient-to-br from-[#0e0e0e] via-[#0e0e0e] to-[#0e0e0e] rounded-2xl border border-white/[0.04] p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group">
                                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#4169E1]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[#4169E1]/10 transition-all duration-700"></div>
                                 <div className="relative z-10">
-                                    <span className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#4169E1] mb-2 block">Let's Collaborate</span>
+                                    <span className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#4169E1] mb-2 block">Let&apos;s Collaborate</span>
                                     <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white mb-3">
                                         Need a Custom Solution?
                                     </h3>
@@ -269,7 +269,7 @@ return (
 
                     {filtered.length === 0 && (
                         <div className="text-center py-20 text-white/30">
-                            <p className="text-lg font-light">No industries found matching "{searchTerm}"</p>
+                            <p className="text-lg font-light">No industries found matching &quot;{searchTerm}&quot;</p>
                         </div>
                     )}
                 </div>

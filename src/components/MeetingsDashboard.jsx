@@ -76,7 +76,10 @@ const MeetingsDashboard = () => {
     }
   };
 
+  // Standard fetch-on-mount: fetchData's setState calls only run after its
+  // awaited request settles, not synchronously within this effect.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
   }, [router]);
 

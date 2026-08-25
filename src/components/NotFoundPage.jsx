@@ -14,7 +14,7 @@ const NotFoundPage = () => {
           <span className="text-[150px] md:text-[250px] font-black text-white/5 block leading-none select-none">404</span>
           <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">Page Not Found</h1>
           <p className="text-lg text-white/40 font-light max-w-md">
-            The page you are looking for doesn't exist or has been moved.
+            The page you are looking for doesn&apos;t exist or has been moved.
           </p>
           <Link
             to="/"

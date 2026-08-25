@@ -238,7 +238,7 @@ const AhmedFood = () => {
                         Turning packaged food into a premium visual brand
                     </h4>
                     <p className="text-base md:text-lg lg:text-xl font-light text-left leading-relaxed text-[#3A3A3A]/80">
-                        Ahmed Food needed to compete on digital shelves where photography alone wasn't cutting through. We created a library of photorealistic 3D product renders that gave their team complete control — any angle, any surface, any lighting.
+                        Ahmed Food needed to compete on digital shelves where photography alone wasn&apos;t cutting through. We created a library of photorealistic 3D product renders that gave their team complete control — any angle, any surface, any lighting.
                     </p>
                 </div>
                 <div className="bg-[#0D0D0D] rounded-lg p-[2rem] text-[#F2F0EB]">
@@ -323,7 +323,7 @@ const AhmedFood = () => {
                         </div>
                         <h4 className="text-[17px] md:text-[20px] font-semibold text-[#0D0D0D] mb-3">Organised asset library + source files</h4>
                         <p className="text-sm md:text-[15px] font-light leading-[1.7] text-[#555]/80">
-                            Final delivery included layered PSDs, transparent PNGs, and locked .blend source files with documentation — so the client's internal team can request new variants independently going forward.
+                            Final delivery included layered PSDs, transparent PNGs, and locked .blend source files with documentation — so the client&apos;s internal team can request new variants independently going forward.
                         </p>
                     </div>
                 </div>

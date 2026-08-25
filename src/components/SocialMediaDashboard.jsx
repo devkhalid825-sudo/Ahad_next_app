@@ -49,6 +49,9 @@ const SocialMediaDashboard = () => {
     setLoading(false);
   };
 
+  // Standard fetch-on-mount: fetchItems's setState calls only run after its
+  // awaited request settles, not synchronously within this effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchItems(); }, []);
 
   const showMsg = (text) => { setMsg(text); setTimeout(() => setMsg(''), 3000); };
@@ -131,7 +134,7 @@ const SocialMediaDashboard = () => {
         <div className="text-[#0D0D0D]/40 text-center py-12">Loading...</div>
       ) : items.length === 0 ? (
         <div className="bg-white border border-[#0D0D0D]/20 border-dashed rounded-[2rem] p-16 md:p-32 text-center">
-          <p className="text-[#0D0D0D]/50 text-[8px] uppercase tracking-[0.3em] font-bold">No social media videos yet. Click "Add Video" to create one.</p>
+          <p className="text-[#0D0D0D]/50 text-[8px] uppercase tracking-[0.3em] font-bold">No social media videos yet. Click &quot;Add Video&quot; to create one.</p>
         </div>
       ) : (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>

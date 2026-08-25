@@ -71,6 +71,9 @@ const ReviewDashboard = () => {
     setSeeding(false);
   };
 
+  // Standard fetch-on-mount: fetchReviews's setState calls only run after
+  // its awaited request settles, not synchronously within this effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchReviews(); }, []);
 
   const showMsg = (text) => { setMsg(text); setTimeout(() => setMsg(''), 3000); };

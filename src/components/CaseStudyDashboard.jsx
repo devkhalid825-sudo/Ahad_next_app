@@ -90,6 +90,9 @@ const CaseStudyDashboard = () => {
     else setMsg('Failed to load case studies');
     setLoading(false);
   };
+  // Standard fetch-on-mount: fetchCaseStudies's setState calls only run
+  // after its awaited request settles, not synchronously within this effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchCaseStudies(); }, []);
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
@@ -402,7 +405,7 @@ const CaseStudyDashboard = () => {
       {!loading && caseStudies.length === 0 && (
         <div className="text-center py-16 md:py-24 bg-[#111] border border-[#222] border-dashed rounded-[2rem]">
           <FiImage className="text-[#333] text-4xl mx-auto mb-4" />
-          <p className="text-[#555] text-sm">No case studies yet. Click "New Case Study" to create one.</p>
+          <p className="text-[#555] text-sm">No case studies yet. Click &quot;New Case Study&quot; to create one.</p>
         </div>
       )}
 

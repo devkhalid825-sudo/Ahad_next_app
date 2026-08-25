@@ -122,6 +122,9 @@ const ProjectDashboard = () => {
     else setMsg('Failed to load projects');
     setLoading(false);
   };
+  // Standard fetch-on-mount: fetchProjects's setState calls only run after
+  // its awaited request settles, not synchronously within this effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchProjects(); }, []);
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));

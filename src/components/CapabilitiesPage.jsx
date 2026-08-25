@@ -520,7 +520,7 @@ const CapabilitiesPage = () => {
               Ready to Bring Your Vision to Life?
             </h2>
             <p className="text-gray-400 text-xs md:text-base max-w-xl mx-auto mb-5 md:mb-8 font-light">
-              Let's discuss how our capabilities can transform your next project into an immersive digital experience.
+              Let&apos;s discuss how our capabilities can transform your next project into an immersive digital experience.
             </p>
             <div className="flex flex-row flex-wrap items-center justify-center gap-3 md:gap-4">
               <Link to="/contact"

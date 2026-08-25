@@ -174,7 +174,7 @@ const ContactPage = () => {
                             <input type="hidden" name="interest" value={formData.interest} />
 
                             <div className="space-y-4">
-                                <p className="text-white text-lg font-medium">I'm interested in...</p>
+                                <p className="text-white text-lg font-medium">I&apos;m interested in...</p>
                                 <div className="space-y-3 md:space-y-4">
                                     <button
                                         type="button"
@@ -417,16 +417,16 @@ const ContactPage = () => {
                     {/* Text Content */}
                     <div className="space-y-8 text-gray-300 text-base md:text-[18px] leading-relaxed">
                         <p>
-                            We are a creatively led technology company, recognized as one of the world's oldest and most established XR studios.
-                            Founded in 2015, we have taken home over 200 industry awards, including multiple ADDYs, Event Marketer's
-                            EX Awards, Shorty's, Obies, and Clios for our work.
+                            We are a creatively led technology company, recognized as one of the world&apos;s oldest and most established XR studios.
+                            Founded in 2015, we have taken home over 200 industry awards, including multiple ADDYs, Event Marketer&apos;s
+                            EX Awards, Shorty&apos;s, Obies, and Clios for our work.
                         </p>
                         <p>
                             Our team of accomplished artists and thoughtful engineers leverage emerging technologies and proven processes
-                            to produce innovative and creative solutions for today's digitally connected brands and consumers.
+                            to produce innovative and creative solutions for today&apos;s digitally connected brands and consumers.
                         </p>
                         <p>
-                            We are based in downtown Dallas, but our team can be found around the globe. Throughout our history, we've
+                            We are based in downtown Dallas, but our team can be found around the globe. Throughout our history, we&apos;ve
                             maintained a unique vision to inspire, engage, and entertain by bringing our imagination to life.
                         </p>
                         <p className="text-white italic font-bold">Let us inspire you.</p>
