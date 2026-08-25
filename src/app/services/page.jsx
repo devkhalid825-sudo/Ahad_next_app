@@ -1,14 +1,9 @@
 import ServicesPage from '@/components/ServicesPage';
 import { buildMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
+import { MultiJsonLd } from '@/components/seo/JsonLd';
 
-export function generateMetadata() {
-  return buildMetadata({
-    title: 'Services & Solutions',
-    description:
-      'Explore 3D rendering, walkthrough animation, interactive configurators, and AR/VR development services from Elipse Studio worldwide.',
-    canonical: `${SITE_URL}/services`,
-    schema: {
+const schema = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: 'Elipse Studio Services',
@@ -37,18 +32,31 @@ export function generateMetadata() {
           { '@type': 'ListItem', position: 16, name: 'Marketing', url: `${SITE_URL}/services/marketing` },
         ],
       },
-    },
-    breadcrumb: {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
-      ],
-    },
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
+  ],
+};
+
+export function generateMetadata() {
+  return buildMetadata({
+    title: 'Services & Solutions',
+    description:
+      'Explore 3D rendering, walkthrough animation, interactive configurators, and AR/VR development services from Elipse Studio worldwide.',
+    canonical: `${SITE_URL}/services`,
   });
 }
 
 export default function Page() {
-  return <ServicesPage />;
+  return (
+    <>
+      <MultiJsonLd schemas={[schema, breadcrumb]} />
+      <ServicesPage />
+    </>
+  );
 }

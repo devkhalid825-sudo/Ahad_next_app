@@ -5,8 +5,34 @@ import { getFeaturedCaseStudies, getProjects } from '@/services/projectService';
 import { getReviews } from '@/services/reviewService';
 import { getBlogs } from '@/services/blogService';
 import { getSocialMedia } from '@/services/socialMediaService';
+import { MultiJsonLd } from '@/components/seo/JsonLd';
 
 export const revalidate = 300;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Elipse Studio — 3D Visualization, AR/VR & Web Configurator Agency',
+  description:
+    'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive configurators, and AR/VR experiences for global developers and brands.',
+  url: SITE_URL,
+  publisher: {
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    name: 'Elipse Studio',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/assets/logo-og.webp`,
+    },
+  },
+  isPartOf: { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, name: 'Elipse Studio', url: SITE_URL },
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` }],
+};
 
 export function generateMetadata() {
   return buildMetadata({
@@ -16,29 +42,6 @@ export function generateMetadata() {
     canonical: `${SITE_URL}/`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — 3D Visualization & AR/VR Studio',
-    schema: {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      name: 'Elipse Studio — 3D Visualization, AR/VR & Web Configurator Agency',
-      description:
-        'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive configurators, and AR/VR experiences for global developers and brands.',
-      url: SITE_URL,
-      publisher: {
-        '@type': 'Organization',
-        '@id': `${SITE_URL}/#organization`,
-        name: 'Elipse Studio',
-        logo: {
-          '@type': 'ImageObject',
-          url: `${SITE_URL}/assets/logo-og.webp`,
-        },
-      },
-      isPartOf: { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, name: 'Elipse Studio', url: SITE_URL },
-    },
-    breadcrumb: {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` }],
-    },
   });
 }
 
@@ -52,12 +55,15 @@ export default async function Page() {
   ]);
 
   return (
-    <Home
-      initialFeatured={featured}
-      initialProjects={projects}
-      initialReviews={reviews}
-      initialBlogs={blogs}
-      initialSocialMedia={socialMedia}
-    />
+    <>
+      <MultiJsonLd schemas={[schema, breadcrumb]} />
+      <Home
+        initialFeatured={featured}
+        initialProjects={projects}
+        initialReviews={reviews}
+        initialBlogs={blogs}
+        initialSocialMedia={socialMedia}
+      />
+    </>
   );
 }

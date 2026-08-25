@@ -66,30 +66,12 @@ export const SITE_SCHEMA = [
     name: SITE_NAME,
     url: `${SITE_URL}/`,
   },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    '@id': `${SITE_URL}/#webpage`,
-    name: 'Elipse Studio | 3D Visualization & AR/VR Studio',
-    description:
-      'Professional 3D visualization, AR/VR experiences, and web configurators for property developers and product brands worldwide since 2014.',
-    url: `${SITE_URL}/`,
-    isPartOf: { '@type': 'WebSite', '@id': `${SITE_URL}/#website` },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': `${SITE_URL}/#breadcrumb`,
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: `${SITE_URL}/`,
-      },
-    ],
-  },
 ];
+// Note: WebPage and BreadcrumbList are page-specific (they describe a single
+// URL), so they are NOT included here — a copy of the homepage's WebPage/
+// Breadcrumb rendered on every page would tell Google every page IS the
+// homepage. Each page renders its own via buildMetadata's schema/breadcrumb
+// and <MultiJsonLd> in its page component.
 
 export function buildBreadcrumbSchema(items) {
   return {

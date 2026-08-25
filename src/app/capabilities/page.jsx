@@ -1,6 +1,31 @@
 import CapabilitiesPage from '@/components/CapabilitiesPage';
 import { buildMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
+import { MultiJsonLd } from '@/components/seo/JsonLd';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${SITE_URL}/capabilities#webpage`,
+  url: `${SITE_URL}/capabilities`,
+  name: 'Our Capabilities | Elipse Studio',
+  description:
+    'Full range of creative technology capabilities including 3D visualization, interactive configurators, AR/VR, CGI animation, web development, and digital marketing.',
+  isPartOf: { '@id': `${SITE_URL}/#website` },
+  about: { '@id': `${SITE_URL}/#organization` },
+  breadcrumb: { '@id': `${SITE_URL}/capabilities#breadcrumb` },
+  inLanguage: 'en-US',
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  '@id': `${SITE_URL}/capabilities#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Capabilities', item: `${SITE_URL}/capabilities` },
+  ],
+};
 
 export function generateMetadata() {
   return buildMetadata({
@@ -10,31 +35,14 @@ export function generateMetadata() {
     canonical: `${SITE_URL}/capabilities`,
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — Full Range of Creative Technology Capabilities',
-    schema: {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      '@id': `${SITE_URL}/capabilities#webpage`,
-      url: `${SITE_URL}/capabilities`,
-      name: 'Our Capabilities | Elipse Studio',
-      description:
-        'Full range of creative technology capabilities including 3D visualization, interactive configurators, AR/VR, CGI animation, web development, and digital marketing.',
-      isPartOf: { '@id': `${SITE_URL}/#website` },
-      about: { '@id': `${SITE_URL}/#organization` },
-      breadcrumb: { '@id': `${SITE_URL}/capabilities#breadcrumb` },
-      inLanguage: 'en-US',
-    },
-    breadcrumb: {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      '@id': `${SITE_URL}/capabilities#breadcrumb`,
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: 'Capabilities', item: `${SITE_URL}/capabilities` },
-      ],
-    },
   });
 }
 
 export default function Page() {
-  return <CapabilitiesPage />;
+  return (
+    <>
+      <MultiJsonLd schemas={[schema, breadcrumb]} />
+      <CapabilitiesPage />
+    </>
+  );
 }

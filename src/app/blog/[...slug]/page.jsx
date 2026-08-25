@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata, buildArticleSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import BlogArticle from '@/components/BlogArticle';
+import { MultiJsonLd } from '@/components/seo/JsonLd';
 
 import ConfiguratorArticle from '@/components/articles/ConfiguratorArticle';
 import ARMarketingArticle from '@/components/articles/ARMarketingArticle';
@@ -102,10 +103,64 @@ export async function generateStaticParams() {
 
 const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
+function staticArticleSchemas(slugStr, meta) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: meta.title,
+    description: meta.description,
+    publisher: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
+    datePublished: '2025-01-15',
+  };
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: meta.title, url: `/blog/${slugStr}` },
+  ]);
+  return [schema, breadcrumb];
+}
+
+function blogImageUrl(image) {
+  if (!image) return `${SITE_URL}/assets/logo-og.webp`;
+  let resolved = image;
+  if (resolved.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+    resolved = resolved.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', SITE_URL);
+  }
+  if (resolved.startsWith('/')) {
+    resolved = `${SITE_URL}${resolved}`;
+  }
+  return resolved;
+}
+
+function blogTitleFromData(data) {
+  const rawBlogTitle = data.metaTitle || data.title;
+  return rawBlogTitle ? rawBlogTitle.replace(/(\s*([|—–]|-)\s*(Elipse\s*Studio|Elipse))+$/i, '').trim() : rawBlogTitle;
+}
+
+function apiArticleSchemas(slugStr, data) {
+  const description = data.metaDescription || (data.excerpt || '').slice(0, 160);
+  const image = blogImageUrl(data.image);
+  const blogTitle = blogTitleFromData(data);
+  const schema = buildArticleSchema({
+    title: blogTitle,
+    description,
+    image,
+    publishedAt: data.createdAt || data.date,
+    updatedAt: data.updatedAt,
+    slug: slugStr,
+  });
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: blogTitle, url: `/blog/${slugStr}` },
+  ]);
+  return { blogTitle, description, image, schemas: [schema, breadcrumb] };
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const slugStr = slugFromParams(slug);
-  
+
   if (staticArticleMetadata[slugStr]) {
     const meta = staticArticleMetadata[slugStr];
     return buildMetadata({
@@ -113,19 +168,6 @@ export async function generateMetadata({ params }) {
       description: meta.description,
       canonical: `${SITE_URL}/blog/${slugStr}`,
       type: 'article',
-      schema: {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: meta.title,
-        description: meta.description,
-        publisher: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
-        datePublished: '2025-01-15',
-      },
-      breadcrumb: buildBreadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Blog', url: '/blog' },
-        { name: meta.title, url: `/blog/${slugStr}` },
-      ]),
     });
   }
 
@@ -138,22 +180,7 @@ export async function generateMetadata({ params }) {
       noIndex: true,
     });
   }
-  const description = data.metaDescription || (data.excerpt || '').slice(0, 160);
-
-  let image = data.image;
-  if (image) {
-    if (image.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
-      image = image.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', SITE_URL);
-    }
-    if (image.startsWith('/')) {
-      image = `${SITE_URL}${image}`;
-    }
-  } else {
-    image = `${SITE_URL}/assets/logo-og.webp`;
-  }
-
-  const rawBlogTitle = data.metaTitle || data.title;
-  const blogTitle = rawBlogTitle ? rawBlogTitle.replace(/(\s*([|—–]|-)\s*(Elipse\s*Studio|Elipse))+$/i, '').trim() : rawBlogTitle;
+  const { blogTitle, description, image } = apiArticleSchemas(slugStr, data);
 
   return buildMetadata({
     title: blogTitle,
@@ -161,19 +188,6 @@ export async function generateMetadata({ params }) {
     canonical: `${SITE_URL}/blog/${slugStr}`,
     ogImage: image,
     type: 'article',
-    schema: buildArticleSchema({
-      title: blogTitle,
-      description,
-      image,
-      publishedAt: data.createdAt || data.date,
-      updatedAt: data.updatedAt,
-      slug: slugStr,
-    }),
-    breadcrumb: buildBreadcrumbSchema([
-      { name: 'Home', url: '/' },
-      { name: 'Blog', url: '/blog' },
-      { name: blogTitle, url: `/blog/${slugStr}` },
-    ]),
   });
 }
 
@@ -182,9 +196,23 @@ export default async function Page({ params }) {
   const slugStr = slugFromParams(slug);
 
   const StaticArticle = staticArticles[slugStr];
-  if (StaticArticle) return <StaticArticle />;
+  if (StaticArticle) {
+    const meta = staticArticleMetadata[slugStr];
+    return (
+      <>
+        {meta && <MultiJsonLd schemas={staticArticleSchemas(slugStr, meta)} />}
+        <StaticArticle />
+      </>
+    );
+  }
 
   const { data, status } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 300 } });
   if (status !== 200 || !data || !data.title) notFound();
-  return <BlogArticle slug={slugStr} initialData={data} />;
+  const { schemas } = apiArticleSchemas(slugStr, data);
+  return (
+    <>
+      <MultiJsonLd schemas={schemas} />
+      <BlogArticle slug={slugStr} initialData={data} />
+    </>
+  );
 }

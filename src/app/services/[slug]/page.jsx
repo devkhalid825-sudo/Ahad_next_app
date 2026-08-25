@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { SITE_URL } from '@/utils/api';
 import { buildMetadata, buildBreadcrumbSchema, buildFaqSchema, buildVideoObjectSchema } from '@/lib/seo';
 import { SERVICE_FAQS } from '@/seo/serviceFaqs';
+import { MultiJsonLd } from '@/components/seo/JsonLd';
 import ArchitecturalVisualizationPage from '@/components/services/ArchitecturalVisualizationPage';
 import ProductVisualizationPage from '@/components/services/ProductVisualizationPage';
 import ProductConfiguratorsPage from '@/components/services/ProductConfiguratorsPage';
@@ -164,6 +165,30 @@ export function generateStaticParams() {
   return Object.keys(servicePages).map((slug) => ({ slug }));
 }
 
+function buildServiceSchemas(slug, meta) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': meta.schemaType,
+    name: meta.title,
+    description: meta.description,
+    url: `${SITE_URL}/services/${slug}`,
+    provider: {
+      '@type': 'Organization',
+      name: 'Elipse Studio',
+      url: SITE_URL,
+    },
+  };
+  const breadcrumb = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
+    { name: meta.title, url: `/services/${slug}` },
+  ]);
+  const faqs = SERVICE_FAQS[slug];
+  const faq = faqs ? buildFaqSchema(faqs) : null;
+  const video = meta.video ? buildVideoObjectSchema(meta.video) : null;
+  return [schema, breadcrumb, faq, video].filter(Boolean);
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const meta = serviceMeta[slug];
@@ -171,43 +196,24 @@ export async function generateMetadata({ params }) {
     notFound();
   }
 
-  const breadcrumb = buildBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Services', url: '/services' },
-    { name: meta.title, url: `/services/${slug}` },
-  ]);
-
-  const faqs = SERVICE_FAQS[slug];
-  const faq = faqs ? buildFaqSchema(faqs) : null;
-  const videoSchema = meta.video ? buildVideoObjectSchema(meta.video) : null;
-
   return buildMetadata({
     title: meta.title,
     description: meta.description,
     canonical: `${SITE_URL}/services/${slug}`,
     keywords: meta.keywords,
     ogImage: meta.ogImage,
-    schema: {
-      '@context': 'https://schema.org',
-      '@type': meta.schemaType,
-      name: meta.title,
-      description: meta.description,
-      url: `${SITE_URL}/services/${slug}`,
-      provider: {
-        '@type': 'Organization',
-        name: 'Elipse Studio',
-        url: SITE_URL,
-      },
-    },
-    breadcrumb,
-    faq,
-    ...(videoSchema ? { video: videoSchema } : {}),
   });
 }
 
 export default async function Page({ params }) {
   const { slug } = await params;
   const ServicePage = servicePages[slug];
-  if (!ServicePage) notFound();
-  return <ServicePage />;
+  const meta = serviceMeta[slug];
+  if (!ServicePage || !meta) notFound();
+  return (
+    <>
+      <MultiJsonLd schemas={buildServiceSchemas(slug, meta)} />
+      <ServicePage />
+    </>
+  );
 }

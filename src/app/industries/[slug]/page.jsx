@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, buildFaqSchema } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
 import IndustryLayout from '@/components/IndustryLayout';
 import { industriesData } from '@/data/industriesData';
+import { MultiJsonLd } from '@/components/seo/JsonLd';
 
 export const revalidate = 300;
 
@@ -10,26 +11,7 @@ export async function generateStaticParams() {
   return industriesData.map((industry) => ({ slug: industry.slug }));
 }
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const industry = industriesData.find((i) => i.slug === slug);
-  if (!industry) {
-    return buildMetadata({
-      title: 'Industry Not Found',
-      description: 'The requested industry page could not be found.',
-      canonical: `${SITE_URL}/industries/${slug}`,
-      noIndex: true,
-    });
-  }
-
-  const description = industry.meta?.metaDescription || industry.title;
-  const keywords = industry.meta?.keywords || '';
-  const ogImage = industry.meta?.ogImage
-    ? industry.meta.ogImage.startsWith('http')
-      ? industry.meta.ogImage
-      : `${SITE_URL}${industry.meta.ogImage}`
-    : `${SITE_URL}/assets/logo-og.webp`;
-
+function industrySchemas(slug, industry, description) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -57,14 +39,44 @@ export async function generateMetadata({ params }) {
     url: `${SITE_URL}/industries/${slug}`,
   };
 
-  if (industry.faqs && industry.faqs.length) {
-    schema['@type'] = 'FAQPage';
-    schema.mainEntity = industry.faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    }));
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Industries', item: `${SITE_URL}/industries` },
+      { '@type': 'ListItem', position: 3, name: industry.title, item: `${SITE_URL}/industries/${slug}` },
+    ],
+  };
+
+  // FAQ is a separate schema object (a page can validly carry both a Service
+  // and an FAQPage schema) — mutating schema['@type'] to 'FAQPage' in place
+  // used to silently leave Service-only properties (provider, areaServed) on
+  // an object Google would then read as FAQPage, which schema validators flag.
+  const faq = industry.faqs && industry.faqs.length ? buildFaqSchema(industry.faqs) : null;
+
+  return [schema, breadcrumb, faq].filter(Boolean);
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const industry = industriesData.find((i) => i.slug === slug);
+  if (!industry) {
+    return buildMetadata({
+      title: 'Industry Not Found',
+      description: 'The requested industry page could not be found.',
+      canonical: `${SITE_URL}/industries/${slug}`,
+      noIndex: true,
+    });
   }
+
+  const description = industry.meta?.metaDescription || industry.title;
+  const keywords = industry.meta?.keywords || '';
+  const ogImage = industry.meta?.ogImage
+    ? industry.meta.ogImage.startsWith('http')
+      ? industry.meta.ogImage
+      : `${SITE_URL}${industry.meta.ogImage}`
+    : `${SITE_URL}/assets/logo-og.webp`;
 
   return buildMetadata({
     title: industry.meta?.seoTitle || `${industry.title} Solutions | Elipse Studio`,
@@ -73,16 +85,6 @@ export async function generateMetadata({ params }) {
     canonical: `${SITE_URL}/industries/${slug}`,
     ogImage,
     ogImageAlt: industry.meta?.ogImageAlt || `${industry.title} by Elipse Studio`,
-    schema,
-    breadcrumb: {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: 'Industries', item: `${SITE_URL}/industries` },
-        { '@type': 'ListItem', position: 3, name: industry.title, item: `${SITE_URL}/industries/${slug}` },
-      ],
-    },
   });
 }
 
@@ -91,23 +93,28 @@ export default async function Page({ params }) {
   const industry = industriesData.find((i) => i.slug === slug);
   if (!industry) notFound();
 
+  const description = industry.meta?.metaDescription || industry.title;
+
   return (
-    <IndustryLayout
-      slug={industry.slug}
-      title={industry.title}
-      category={industry.category}
-      icon={industry.icon}
-      meta={industry.meta}
-      hero={industry.hero}
-      tlDr={industry.tlDr}
-      intro={industry.intro}
-      solutions={industry.solutions}
-      whyUs={industry.whyUs}
-      midCta={industry.midCta}
-      useCases={industry.useCases}
-      technology={industry.technology}
-      faqs={industry.faqs}
-      finalCta={industry.finalCta}
-    />
+    <>
+      <MultiJsonLd schemas={industrySchemas(slug, industry, description)} />
+      <IndustryLayout
+        slug={industry.slug}
+        title={industry.title}
+        category={industry.category}
+        icon={industry.icon}
+        meta={industry.meta}
+        hero={industry.hero}
+        tlDr={industry.tlDr}
+        intro={industry.intro}
+        solutions={industry.solutions}
+        whyUs={industry.whyUs}
+        midCta={industry.midCta}
+        useCases={industry.useCases}
+        technology={industry.technology}
+        faqs={industry.faqs}
+        finalCta={industry.finalCta}
+      />
+    </>
   );
 }

@@ -6,8 +6,11 @@ export const TWITTER_SITE = '@ElipseStudio';
 export const TWITTER_CREATOR = '@ElipseStudio';
 
 /**
- * Builds standard metadata object compliant with Next.js 15 Metadata API.
- * Includes Canonical URLs, Open Graph, Twitter cards, and Schema.org JSON-LD scripts.
+ * Builds standard metadata object compliant with Next.js 15 Metadata API:
+ * canonical URLs, Open Graph, and Twitter cards. Schema.org JSON-LD is NOT
+ * handled here — generateMetadata() can't render JSX, so render
+ * <JsonLd>/<MultiJsonLd> (src/components/seo/JsonLd.jsx) directly in the
+ * page component instead.
  */
 export function buildMetadata({
   title,
@@ -18,9 +21,6 @@ export function buildMetadata({
   noIndex = false,
   type = 'website',
   keywords,
-  schema,
-  breadcrumb,
-  faq,
 }) {
   let cleanTitle = title || '';
   if (cleanTitle) {
@@ -104,18 +104,6 @@ export function buildMetadata({
     publisher: SITE_NAME,
     authors: [{ name: SITE_NAME }],
   };
-
-  const jsonLdScripts = [];
-  if (schema) jsonLdScripts.push(schema);
-  if (breadcrumb) jsonLdScripts.push(breadcrumb);
-  if (faq) jsonLdScripts.push(faq);
-
-  if (jsonLdScripts.length > 0) {
-    metadata.other = jsonLdScripts.reduce((acc, script, i) => {
-      acc[`ld+json-${i}`] = JSON.stringify(script);
-      return acc;
-    }, {});
-  }
 
   return metadata;
 }
