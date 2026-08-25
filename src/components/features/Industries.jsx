@@ -52,12 +52,13 @@ const Industries = () => {
             <Link
               key={index}
               href={item.link}
-              className="bg-zinc-950/40 backdrop-blur-md border border-white/20 hover:border-[#4169E1]/40 rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-500 min-h-[130px]"
+              className="relative overflow-hidden bg-zinc-950/40 backdrop-blur-md border border-white/20 active:border-[#4169E1]/50 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 active:scale-[0.97] min-h-[130px]"
             >
-              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/20 flex items-center justify-center text-white/70">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#4169E1]/0 via-transparent to-transparent active:from-[#4169E1]/10 transition-all duration-300 pointer-events-none" />
+              <div className="relative z-10 w-11 h-11 rounded-full bg-white/[0.03] border border-white/20 flex items-center justify-center text-[#4169E1] shrink-0">
                 {React.cloneElement(item.icon, { className: 'w-5 h-5' })}
               </div>
-              <h3 className="text-[11px] font-semibold tracking-tight text-center leading-tight">
+              <h3 className="relative z-10 text-[11px] font-semibold tracking-tight text-center leading-tight">
                 {item.title}
               </h3>
             </Link>

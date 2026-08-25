@@ -40,8 +40,8 @@ const Technology = () => {
             Cinematic Real‑Time Technology
           </h2>
 
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed font-light max-w-2xl lg:mx-0 mx-auto">
-            Most architectural visualization studios are still offline-render shops &mdash; they make pretty pictures, slowly. Elipse Studio is built differently. Our pipeline combines traditional photoreal rendering with Unreal Engine real-time technology and Cesium global geospatial data.
+          <p className="text-gray-300 text-sm md:text-base leading-relaxed font-light max-w-md lg:max-w-lg lg:mx-0 mx-auto">
+            Most studios are still offline-render shops — pretty pictures, slowly. Elipse Studio pairs traditional photoreal rendering with Unreal Engine real-time technology and Cesium global geospatial data.
           </p>
 
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 md:gap-4">
