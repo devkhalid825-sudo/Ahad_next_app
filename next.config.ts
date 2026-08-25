@@ -39,6 +39,8 @@ const redirects = [
   ["/project/deck-configurator", "/project/deck-configrutor"],
   ["/project/the-academy", "/project/the-acadmey"],
   ["/project/space-explorer-vr-experience", "/project/space-explorer-vr"],
+  ["/project/seats-configurator", "/project/seat-configurator"],
+  ["/project/towels-configurator", "/project/towel-configurator"],
   ["/services/web-configurator-developmented-leads", "/services/3d-product-configurators"],
 ];
 
