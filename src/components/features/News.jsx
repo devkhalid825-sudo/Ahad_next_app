@@ -134,7 +134,7 @@ const News = ({ initialBlogs = null }) => {
           spaceBetween={15}
           freeMode={true}
           grabCursor={true}
-          className="!overflow-visible px-0"
+          className="!overflow-visible !px-[15px] md:!px-0"
         >
           {blogPosts.map((post) => (
             <SwiperSlide key={post._key} className="!w-[220px] md:!w-[577px] py-2 md:py-4">

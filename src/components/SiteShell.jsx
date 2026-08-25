@@ -24,10 +24,10 @@ export default function SiteShell({ children }) {
         target="_blank"
         rel="noopener noreferrer"
         data-el-track="whatsapp-floating-button"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#1877F2] text-white rounded-full shadow-lg hover:bg-[#166FE5] transition-all duration-300 hover:scale-110"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex items-center justify-center w-11 h-11 md:w-14 md:h-14 bg-[#1877F2] text-white rounded-full shadow-lg hover:bg-[#166FE5] transition-all duration-300 hover:scale-110"
         aria-label="Chat on WhatsApp"
       >
-        <FaWhatsapp className="w-7 h-7" />
+        <FaWhatsapp className="w-5 h-5 md:w-7 md:h-7" />
       </a>
     </div>
   );

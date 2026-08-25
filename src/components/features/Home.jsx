@@ -75,7 +75,7 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
             <div className="flex flex-row flex-wrap items-center justify-center gap-3 md:gap-4">
               <Link
                 href="/contact"
-                className="inline-block bg-[#4169E1] hover:bg-[#3558c8] text-white px-10 py-4 rounded-full text-sm md:text-base font-semibold transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 transform hover:-translate-y-0.5"
+                className="inline-block bg-[#4169E1] hover:bg-[#3558c8] text-white px-6 py-2.5 md:px-10 md:py-4 rounded-full text-sm md:text-base font-semibold transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 transform hover:-translate-y-0.5"
               >
                 Get a Free Estimate
               </Link>
@@ -83,7 +83,7 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
                 href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-10 py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 rounded-full text-sm md:text-base font-semibold transition-all"
+                className="inline-block px-6 py-2.5 md:px-10 md:py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 rounded-full text-sm md:text-base font-semibold transition-all"
               >
                 Schedule a Quick Call
               </a>
