@@ -12,13 +12,15 @@ export const SITE_SCHEMA = [
     logo: `${SITE_URL}/assets/logo-og.webp`,
     image: `${SITE_URL}/assets/logo-og.webp`,
     description:
-      'Award-winning architectural visualization studio specializing in 3D rendering, walkthrough animation, interactive configurators, and immersive AR/VR experiences for property developers and brands worldwide.',
-    foundingDate: '2014',
+      'Creatively led technology studio specializing in 3D rendering, walkthrough animation, interactive configurators, and immersive AR/VR experiences for property developers and brands worldwide.',
+    foundingDate: '2021',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Dubai',
-      addressRegion: 'Dubai',
-      addressCountry: 'AE',
+      streetAddress: '1812 McCormick Ln',
+      addressLocality: 'Hanover Park',
+      addressRegion: 'IL',
+      postalCode: '60133',
+      addressCountry: 'US',
     },
     areaServed: [
       { '@type': 'Country', name: 'United Arab Emirates' },

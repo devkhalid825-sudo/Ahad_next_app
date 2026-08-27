@@ -66,7 +66,7 @@ const InteractiveWebExperiencesPage = () => {
           <Eyebrow>TL;DR</Eyebrow>
           <SectionTitle className="text-2xl md:text-3xl lg:text-[34px] mb-6 md:mb-10">Quick answer</SectionTitle>
           <div className="text-base md:text-lg font-light leading-relaxed text-white/70">
-            Elipse Studio designs and develops interactive web experiences for brands, marketing agencies, and enterprises worldwide. Our immersive websites combine 3D content, motion, and interactivity using WebGL through Three.js and Babylon.js — delivering award-quality digital experiences that differentiate brands from static competitors. Founded 2014, serving worldwide clients with production-ready output.
+            Elipse Studio designs and develops interactive web experiences for brands, marketing agencies, and enterprises worldwide. Our immersive websites combine 3D content, motion, and interactivity using WebGL through Three.js and Babylon.js — delivering award-quality digital experiences that differentiate brands from static competitors. Founded 2021, serving worldwide clients with production-ready output.
           </div>
           <div className="mt-6"><CTA label="Get Started" to="/contact" /></div>
         </div>

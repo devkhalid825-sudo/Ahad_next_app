@@ -58,6 +58,8 @@ const oldWordPressRedirects = [
   ["/animation/", "/services/3d-animation"],
   ["/portfolio/giordano-vfx", "/portfolio"],
   ["/portfolio/giordano-vfx/", "/portfolio"],
+  ["/portfolio/warrior-girl", "/portfolio"],
+  ["/portfolio/warrior-girl/", "/portfolio"],
   ["/elipse-studio-viz-roi", "/blog/elipse-studio-viz-roi"],
   ["/elipse-studio-viz-roi/", "/blog/elipse-studio-viz-roi"],
   ["/rt-portfolios/boat-configurator", "/portfolio/boat-configurator"],

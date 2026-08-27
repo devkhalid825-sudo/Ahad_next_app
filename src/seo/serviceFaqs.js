@@ -190,17 +190,53 @@ export const SERVICE_FAQS = {
       q: 'What creative design services do you offer?',
       a: 'Brand identity & logo design, UI/UX design systems, 3D motion graphics, pitch deck presentation design, and digital brand asset production.',
     },
+    {
+      q: 'Do you handle video production and photography?',
+      a: 'Yes. Our creative team produces brand videos, product photography, and motion graphics alongside our design and branding work.',
+    },
+    {
+      q: 'Can you work from an existing brand guideline, or build one from scratch?',
+      a: 'Both. We can design a brand identity from the ground up, or extend and apply an existing brand system consistently across new assets and campaigns.',
+    },
+    {
+      q: 'What formats do you deliver creative assets in?',
+      a: 'Print-ready and web-optimized files, editable source files (Figma, Adobe Creative Suite), and video in whatever resolution/format your platforms require.',
+    },
   ],
   'enterprise-solutions': [
     {
       q: 'How do enterprise software solutions help large organizations?',
       a: 'Enterprise solutions streamline multi-department workflows, improve security & compliance, unify legacy databases, and automate reporting.',
     },
+    {
+      q: 'Can you integrate with our existing enterprise systems?',
+      a: 'Yes. We design integrations and APIs that connect new solutions with your existing ERP, CRM, and legacy databases rather than replacing them wholesale.',
+    },
+    {
+      q: 'Do you support cloud migration and architecture?',
+      a: 'We plan and execute cloud-native architecture and migrations, including scalability, security, and compliance considerations for enterprise workloads.',
+    },
+    {
+      q: 'Do you offer ongoing IT consulting after launch?',
+      a: 'Yes. We provide post-launch consulting, monitoring, and iterative improvements as your organization’s systems and requirements evolve.',
+    },
   ],
   marketing: [
     {
       q: 'What digital marketing services do you provide?',
       a: 'Technical SEO, search engine marketing (SEM), content strategy, performance analytics, social media creative production, and conversion rate optimization (CRO).',
+    },
+    {
+      q: 'Do you manage paid ad campaigns as well as organic marketing?',
+      a: 'Yes. We run both — technical SEO and content strategy for organic growth, plus paid search and social campaigns for immediate reach.',
+    },
+    {
+      q: 'How do you measure marketing campaign performance?',
+      a: 'Through performance analytics dashboards tracking traffic, conversions, and ROI, with regular reporting so strategy can be adjusted based on real results.',
+    },
+    {
+      q: 'Can marketing be combined with your 3D/creative production services?',
+      a: 'Yes. Since we also produce 3D visualization, animation, and creative assets in-house, marketing campaigns can use custom visuals rather than stock content.',
     },
   ],
 };

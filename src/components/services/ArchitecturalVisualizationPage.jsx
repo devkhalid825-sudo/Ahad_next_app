@@ -156,18 +156,18 @@ return (
           <div className="flex-1">
             <Eyebrow>Architectural Visualization</Eyebrow>
             <SectionTitle>Overview</SectionTitle>
-            <div className="md:hidden"><TextCarousel texts={["Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results.", "Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy.", "Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2014, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti."]} /></div>
+            <div className="md:hidden"><TextCarousel texts={["Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results.", "Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy.", "Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2021, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti."]} /></div>
             <div className="hidden md:block">
               <ReadText text="Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results." />
               <ReadText text="Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy." />
-              <ReadText text="Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2014, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti." />
+              <ReadText text="Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2021, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti." />
             </div>
           </div>
           <div className="flex-1 bg-[#111] rounded-lg p-5 md:p-[2rem] text-[#F2F0EB]">
             <Eyebrow>TL;DR</Eyebrow>
             <SectionTitle className="text-xl md:text-3xl lg:text-[34px] mb-4 md:mb-10">Quick answer</SectionTitle>
             <div className="text-sm md:text-lg font-light leading-relaxed text-white/70">
-              Elipse Studio delivers photorealistic architectural visualization services to real estate developers, architects, and design firms worldwide. Since 2014, our team has produced 3D renderings, cinematic walkthroughs, VR architectural experiences, and interactive presentation platforms for premium developments including Burj Binghatti.
+              Elipse Studio delivers photorealistic architectural visualization services to real estate developers, architects, and design firms worldwide. Since 2021, our team has produced 3D renderings, cinematic walkthroughs, VR architectural experiences, and interactive presentation platforms for premium developments including Burj Binghatti.
             </div>
             <div className="mt-4 md:mt-6"><CTA label="Get Started" to="/contact" /></div>
           </div>
@@ -222,7 +222,7 @@ return (
         <div className="flex flex-wrap gap-px  border border-white/5 rounded-xl overflow-hidden">
           {[
             { number: "500+", label: "Projects Delivered", desc: "Visualization projects for global clients." },
-            { number: "10+", label: "Years Experience", desc: "Since 2014 delivering production output." },
+            { number: "5+", label: "Years Experience", desc: "Since 2021 delivering production output." },
             { number: "98%", label: "Client Retention", desc: "Clients return for additional projects." },
           ].map((s, i) => <div key={i} className="w-full sm:w-[calc(50%-1px)] lg:w-[calc(33.333%-1px)]"><StatCard number={s.number} label={s.label} desc={s.desc} /></div>)}
         </div>
@@ -316,7 +316,7 @@ return (
           <SectionTitle>Frequently Asked Questions</SectionTitle>
           <div className="max-w-[680px]">
             {[
-              { q: "What are architectural visualization services and how do they help my project?", a: "Architectural visualization services create photorealistic 3D representations of buildings and spaces before physical construction begins. They help by enabling off-plan property sales, winning architectural competitions, securing stakeholder approvals, and marketing developments to international audiences. Elipse Studio has delivered architectural visualization worldwide since 2014." },
+              { q: "What are architectural visualization services and how do they help my project?", a: "Architectural visualization services create photorealistic 3D representations of buildings and spaces before physical construction begins. They help by enabling off-plan property sales, winning architectural competitions, securing stakeholder approvals, and marketing developments to international audiences. Elipse Studio has delivered architectural visualization worldwide since 2021." },
               { q: "Can Elipse Studio work directly from Revit, Rhino, or SketchUp files?", a: "Yes. Elipse Studio's architectural visualization pipeline works with all major architectural design formats including Revit, Rhino, SketchUp, AutoCAD, and ArchiCAD. Our team handles file translation and geometry cleanup so architects deliver source files in their native workflow." },
               { q: "Do you deliver both static renderings and VR walkthroughs?", a: "Yes. Elipse Studio delivers photorealistic renderings, cinematic architectural animation, browser-based virtual tours, immersive VR walkthroughs, and AR mobile experiences � all from an integrated 3D asset pipeline." },
               { q: "How long does a typical architectural visualization project take?", a: "Focused exterior and interior renderings typically deliver in 3-5 weeks. Full presentation packages span 8-14 weeks. VR experiences and interactive presentations require 12-20 weeks." },

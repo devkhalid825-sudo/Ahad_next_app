@@ -21,7 +21,7 @@ function industrySchemas(slug, industry, description) {
       name: 'Elipse Studio',
       url: SITE_URL,
       logo: `${SITE_URL}/assets/logo-og.webp`,
-      foundingDate: '2014',
+      foundingDate: '2021',
       sameAs: [
         'https://www.linkedin.com/company/elipse-studio',
         'https://www.instagram.com/elipsestudio',

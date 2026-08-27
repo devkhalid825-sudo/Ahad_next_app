@@ -145,7 +145,7 @@ const ProductVisualizationPage = () => {
             <Eyebrow>TL;DR</Eyebrow>
             <SectionTitle className="text-xl md:text-3xl lg:text-[34px] mb-4 md:mb-10">Quick answer</SectionTitle>
             <div className="text-sm md:text-lg font-light leading-relaxed text-white/70">
-              Elipse Studio delivers photorealistic 3D product visualization for e-commerce brands, manufacturers, and consumer product companies worldwide. Our team creates hero product renderings, 360° views, exploded assemblies, lifestyle shots, and animated product demonstrations that replace expensive photography while offering unlimited flexibility. Founded 2014, powered by V-Ray, Corona, and Unreal Engine 5.
+              Elipse Studio delivers photorealistic 3D product visualization for e-commerce brands, manufacturers, and consumer product companies worldwide. Our team creates hero product renderings, 360° views, exploded assemblies, lifestyle shots, and animated product demonstrations that replace expensive photography while offering unlimited flexibility. Founded 2021, powered by V-Ray, Corona, and Unreal Engine 5.
             </div>
             <div className="mt-4 md:mt-6"><CTA label="Get Started" to="/contact" /></div>
           </div>
