@@ -393,7 +393,7 @@ const ContactPage = () => {
                 <div className="max-w-[1750px] mx-auto px-6 text-center mb-24">
                     <h2 className="text-4xl md:text-[64px] font-medium tracking-tight leading-[1.05]">
                         All Over the World.<br />
-                        Deep in the Heart of Texas.
+                        Wherever the Work Takes Us.
                     </h2>
                 </div>
 
@@ -402,14 +402,14 @@ const ContactPage = () => {
                     <div className="relative overflow-hidden aspect-[4/3] shadow-2xl">
                         <img
                             src={buildingImg}
-                            alt="3927 MAIN STREET"
+                            alt="Elipse Studio"
                             width="800"
                             height="600"
                             className="w-full h-full object-cover brightness-[0.7]"
                         />
                         <div className="absolute top-8 left-8 md:top-12 md:left-12">
                             <span className="text-yellow-400 text-3xl md:text-5xl font-black italic tracking-tighter drop-shadow-lg">
-                                3927 MAIN STREET
+                                ELIPSE STUDIO
                             </span>
                         </div>
                     </div>
@@ -417,16 +417,15 @@ const ContactPage = () => {
                     {/* Text Content */}
                     <div className="space-y-8 text-gray-300 text-base md:text-[18px] leading-relaxed">
                         <p>
-                            We are a creatively led technology company, recognized as one of the world&apos;s oldest and most established XR studios.
-                            Founded in 2015, we have taken home over 200 industry awards, including multiple ADDYs, Event Marketer&apos;s
-                            EX Awards, Shorty&apos;s, Obies, and Clios for our work.
+                            We are a creatively led technology company specializing in XR, 3D visualization, and immersive digital experiences.
+                            Founded in 2021, we partner with brands to bring bold ideas to life through emerging technology.
                         </p>
                         <p>
                             Our team of accomplished artists and thoughtful engineers leverage emerging technologies and proven processes
                             to produce innovative and creative solutions for today&apos;s digitally connected brands and consumers.
                         </p>
                         <p>
-                            We are based in downtown Dallas, but our team can be found around the globe. Throughout our history, we&apos;ve
+                            We are based across the US, UK, and South Asia, with our team spread around the globe. Throughout our history, we&apos;ve
                             maintained a unique vision to inspire, engage, and entertain by bringing our imagination to life.
                         </p>
                         <p className="text-white italic font-bold">Let us inspire you.</p>

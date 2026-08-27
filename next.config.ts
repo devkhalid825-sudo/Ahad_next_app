@@ -36,7 +36,6 @@ const redirects = [
   // projects_sitemap.xml previously listed slugs that don't match the CMS
   // (typos in the real slugs / a since-renamed slug) — Google indexed the
   // wrong URLs and got a noindex 404 fallback. Point them at the real pages.
-  ["/project/deck-configurator", "/project/deck-configrutor"],
   // the-acadmey was the actual CMS slug (typo); it has now been corrected to
   // the-academy in the database, so old links/crawled URLs must redirect forward.
   ["/project/the-acadmey", "/project/the-academy"],
