@@ -37,7 +37,9 @@ const redirects = [
   // (typos in the real slugs / a since-renamed slug) — Google indexed the
   // wrong URLs and got a noindex 404 fallback. Point them at the real pages.
   ["/project/deck-configurator", "/project/deck-configrutor"],
-  ["/project/the-academy", "/project/the-acadmey"],
+  // the-acadmey was the actual CMS slug (typo); it has now been corrected to
+  // the-academy in the database, so old links/crawled URLs must redirect forward.
+  ["/project/the-acadmey", "/project/the-academy"],
   ["/project/space-explorer-vr-experience", "/project/space-explorer-vr"],
   ["/project/seats-configurator", "/project/seat-configurator"],
   ["/project/towels-configurator", "/project/towel-configurator"],
