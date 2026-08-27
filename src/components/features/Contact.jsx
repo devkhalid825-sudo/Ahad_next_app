@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { SiCalendly } from 'react-icons/si';
 import { apiCall } from '@/utils/api';
+import { servicesList } from '@/data/servicesList';
 
 const Contact = () => {
   const form = useRef();
@@ -13,12 +14,10 @@ const Contact = () => {
   const [touched, setTouched] = useState({});
 
   const [formData, setFormData] = useState({
-    interest: 'Discussing a Production',
+    interest: '',
     user_name: '',
-    user_company: '',
     user_email: '',
     user_phone: '',
-    user_source: '',
     message: '',
   });
 
@@ -32,6 +31,9 @@ const Contact = () => {
         return '';
       case 'user_phone':
         if (!value || !/^\+?[\d\s\-()]{7,15}$/.test(value)) return 'Please enter a valid phone number';
+        return '';
+      case 'interest':
+        if (!value) return 'Please select a service';
         return '';
       case 'message':
         if (!value || value.trim().length < 10) return 'Message must be at least 10 characters';
@@ -49,7 +51,7 @@ const Contact = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    const fieldsToValidate = ['user_name', 'user_email', 'user_phone', 'message'];
+    const fieldsToValidate = ['user_name', 'user_email', 'user_phone', 'interest', 'message'];
     fieldsToValidate.forEach((key) => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
@@ -74,10 +76,6 @@ const Contact = () => {
     }
   };
 
-  const handleInterestSelect = (interest) => {
-    setFormData((prev) => ({ ...prev, interest }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
@@ -96,12 +94,10 @@ const Contact = () => {
       if (status === 200) {
         setSubmitStatus('success');
         setFormData({
-          interest: 'Discussing a Production',
+          interest: '',
           user_name: '',
-          user_company: '',
           user_email: '',
           user_phone: '',
-          user_source: '',
           message: '',
         });
         setErrors({});
@@ -140,49 +136,6 @@ const Contact = () => {
 
           <div className="bg-[#0c0c0c] rounded-[2rem] md:rounded-[3rem] p-5 md:p-12 py-8 md:py-10 relative border border-white/10 w-full">
             <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-              <input type="hidden" name="interest" value={formData.interest} />
-
-              <div className="space-y-6">
-                <p className="text-white text-base md:text-lg lg:text-xl font-medium">I&apos;m interested in...</p>
-                <div className="space-y-3 md:space-y-4">
-                  <button
-                    type="button"
-                    onClick={() => handleInterestSelect('Discussing a Production')}
-                    className={`w-full px-5 py-3 md:px-6 md:py-3 rounded-full border md:text-sm text-[13px] transition-all ${
-                      formData.interest === 'Discussing a Production'
-                        ? 'bg-white text-black border-white'
-                        : 'border-white/20 hover:bg-white/10'
-                    }`}
-                  >
-                    Discussing a Production
-                  </button>
-                  <div className="grid grid-cols-2 gap-3 md:gap-4">
-                    <button
-                      type="button"
-                      onClick={() => handleInterestSelect('Get a Quote')}
-                      className={`px-5 py-3 md:px-6 md:py-3 rounded-full border md:text-sm text-[13px] transition-all ${
-                        formData.interest === 'Get a Quote'
-                          ? 'bg-white text-black border-white'
-                          : 'border-white/20 hover:bg-white/10'
-                      }`}
-                    >
-                      Get a Quote
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleInterestSelect('Other')}
-                      className={`px-5 py-3 md:px-6 md:py-3 rounded-full border md:text-sm text-[13px] transition-all ${
-                        formData.interest === 'Other'
-                          ? 'bg-white text-black border-white'
-                          : 'border-white/20 hover:bg-white/10'
-                      }`}
-                    >
-                      Other
-                    </button>
-                  </div>
-                </div>
-              </div>
-
               <div className="grid grid-cols-2 md:gap-x-10 md:gap-y-6 gap-x-5 gap-y-4 pt-4">
                 <div className="space-y-2">
                   <label htmlFor="user_name" className="text-sm font-medium text-gray-300">
@@ -206,19 +159,6 @@ const Contact = () => {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="user_company" className="text-sm font-medium text-gray-300">
-                    Company
-                  </label>
-                  <input
-                    id="user_company"
-                    type="text"
-                    name="user_company"
-                    value={formData.user_company}
-                    onChange={handleInputChange}
-                    className="w-full bg-white/15 border border-white/40 rounded-lg px-4 py-3 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base"
-                  />
-                </div>
-                <div className="space-y-2">
                   <label htmlFor="user_email" className="text-sm font-medium text-gray-300">
                     Email
                   </label>
@@ -240,7 +180,7 @@ const Contact = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="user_phone" className="text-sm font-medium text-gray-300">
-                    Phone Number
+                    Contact Number
                   </label>
                   <input
                     id="user_phone"
@@ -257,33 +197,35 @@ const Contact = () => {
                     <p className="text-red-400 text-xs mt-1">{errors.user_phone}</p>
                   )}
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label htmlFor="user_source" className="text-sm font-medium text-gray-300">
-                  How did you hear about us?
-                </label>
-                <div className="relative border-b border-gray-500/80">
-                  <select
-                    id="user_source"
-                    name="user_source"
-                    value={formData.user_source}
-                    onChange={handleInputChange}
-                    className="w-full bg-white/10 border border-white/30 rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base appearance-none cursor-pointer"
-                  >
-                    <option value="" className="bg-black">
-                      Select an option
-                    </option>
-                    <option value="social" className="bg-black">
-                      Social Media
-                    </option>
-                    <option value="referral" className="bg-black">
-                      Referral
-                    </option>
-                    <option value="other" className="bg-black">
-                      Other
-                    </option>
-                  </select>
+                <div className="space-y-2">
+                  <label htmlFor="interest" className="text-sm font-medium text-gray-300">
+                    Select Service
+                  </label>
+                  <div className="relative border-b border-gray-500/80">
+                    <select
+                      id="interest"
+                      name="interest"
+                      value={formData.interest}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base appearance-none cursor-pointer ${
+                        errors.interest && touched.interest ? 'border-red-500' : 'border-white/30'
+                      }`}
+                    >
+                      <option value="" className="bg-black">
+                        Select a service
+                      </option>
+                      {servicesList.map((service) => (
+                        <option key={service} value={service} className="bg-black">
+                          {service}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {errors.interest && touched.interest && (
+                    <p className="text-red-400 text-xs mt-1">{errors.interest}</p>
+                  )}
                 </div>
               </div>
 
