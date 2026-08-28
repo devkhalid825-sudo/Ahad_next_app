@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect } from 'react';
 import Header from './layouts/Header';
@@ -26,20 +26,21 @@ const PortfolioPage = () => {
                 <div className="relative mx-auto min-h-[50vh] md:min-h-[60vh] w-full overflow-hidden bg-black rounded-none shadow-2xl flex flex-col p-4 md:p-8">
                     <Header />
 
-                    {/* No background images, pure premium dark solid background */}
-                    <div className="relative z-10 px-5 sm:px-8 md:px-20 w-full flex-1 flex flex-col justify-center pt-24 pb-16 sm:pb-20">
+                    {/* Hero Content */}
+                    <div className="relative z-10 px-5 sm:px-8 md:px-14 lg:px-16 w-full flex-1 flex flex-col justify-center items-center text-center pt-24 pb-16">
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="mb-8 md:mb-12"
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="max-w-xl mx-auto flex flex-col items-center"
                         >
-                            <h1 className="text-3xl sm:text-5xl md:text-[84px] tracking-tighter leading-[1] sm:leading-[0.9] font-extralight uppercase break-words">
-                                <span className="text-white opacity-100 block">Portfolio</span>
-                                <span className="text-[#4169E1] opacity-90 block">our work & case studies</span>
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[50px] font-medium tracking-tight leading-[1.15] uppercase mb-4">
+                                <span className="text-white block">Portfolio</span>
+                                <span className="text-[#4169E1] block mt-1">Our Work &amp; Case Studies</span>
                             </h1>
-                            <p className="text-white/60 text-sm md:text-base max-w-xl leading-relaxed mt-6">
-                                Explore our collection of 3D visualizations, interactive configurators, VR/AR experiences, and walkthrough animations delivered for clients across real estate, automotive, ecommerce, and manufacturing industries worldwide.
+
+                            <p className="text-white/65 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg mx-auto font-normal">
+                                Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
                             </p>
                         </motion.div>
                     </div>

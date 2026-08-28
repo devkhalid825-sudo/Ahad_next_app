@@ -42,16 +42,18 @@ const CaseStudiesPage = () => {
             <section className="w-full bg-[black] py-8 md:py-14 overflow-hidden font-sans flex flex-col justify-center relative">
                 <div className="w-full relative">
                     {/* HEADER */}
-                    <div className="flex justify-between items-center px-[15px] md:px-[40px] gap-2">
-                        <h1 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-white">
-                            Case Studies
-                        </h1>
-                        <p className="text-white/50 text-sm md:text-base max-w-2xl leading-relaxed mb-6">
-                            Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
-                        </p>
+                    <div className="flex flex-col md:flex-row md:items-end justify-between px-[15px] md:px-[40px] mb-6 md:mb-8 gap-4">
+                        <div>
+                            <h1 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
+                                Case Studies
+                            </h1>
+                            <p className="text-white/60 text-sm md:text-base max-w-2xl leading-relaxed mt-2 md:mt-3">
+                                Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
+                            </p>
+                        </div>
                         <Link
                             href="/case-studies"
-                            className="rounded-full text-[11px] md:text-base bg-white text-[#4169E1] font-bold py-1.5 px-4 md:py-2 md:px-8 shadow-sm hover:scale-105 transition flex items-center justify-center whitespace-nowrap flex-shrink-0"
+                            className="rounded-full text-[11px] md:text-sm bg-white text-[#4169E1] font-bold py-2 px-6 shadow-sm hover:scale-105 transition flex items-center justify-center whitespace-nowrap shrink-0 self-start md:self-end"
                         >
                             View All
                         </Link>
