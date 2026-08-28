@@ -7,7 +7,7 @@ import { getBlogs } from '@/services/blogService';
 import { getSocialMedia } from '@/services/socialMediaService';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
-export const revalidate = 300;
+export const revalidate = 0; // No cache — always fetch fresh data from backend
 
 const schema = {
   '@context': 'https://schema.org',
