@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { FaThLarge, FaPaperPlane } from 'react-icons/fa';
 import Header from './layouts/Header';
 import LatestWork from './features/LatestWork';
@@ -70,7 +70,7 @@ const AhmedFoodLayout = ({
   ctaUrl,
   ctaText,
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [activeVideo, setActiveVideo] = useState(0);
 
   const handleStartProject = () => {
@@ -85,95 +85,101 @@ const AhmedFoodLayout = ({
     <div className="w-full overflow-x-hidden bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-[#F2F0EB]">
 
       {/* HERO */}
-      <section className="bg-[#0D0D0D] px-8 pt-[140px] pb-[3rem] relative min-h-screen">
+      <section className="bg-[#0D0D0D] px-4 sm:px-8 md:px-12 lg:px-16 pt-[90px] sm:pt-[120px] md:pt-[140px] pb-8 md:pb-12 relative min-h-screen">
         <Header />
 
-        <h1 className="text-[clamp(1.8rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">
-          {title}<span className="text-[#4169E1]">.</span>
-        </h1>
-
-        {meta.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-1 border-t border-[#222] pt-[1.5rem] max-w-[680px]">
-            {meta.map((item, i) => (
-              <div key={i} className="cs-hero-meta-item">
-                <label className="block text-[10px] font-medium tracking-[0.1em] uppercase text-[#555] mb-[4px]">{item.label}</label>
-                <p className="text-[13px] font-medium text-[#F2F0EB] leading-[1.4]">{item.value}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-[8px] mt-[3rem]">
-          {hasVideoTabs && videoTabs.map((tab) => (
+        <div className="max-w-7xl mx-auto">
+          {/* Heading and Start a Project Button in same row */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pt-4 sm:pt-6">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F2F0EB] leading-[1.1] tracking-tight">
+              {title}<span className="text-[#4169E1]">.</span>
+            </h1>
             <button
-              key={tab.id ?? tab.label}
-              onClick={() => setActiveVideo(tab.id ?? videoTabs.indexOf(tab))}
-              className={`text-[13px] font-medium px-[18px] py-[8px] rounded-full border transition-all duration-200 cursor-pointer ${
-                activeVideo === (tab.id ?? videoTabs.indexOf(tab))
-                  ? 'bg-[#4169E1] text-white border-[#4169E1]'
-                  : 'bg-transparent text-[#888] border-[#333] hover:border-[#666] hover:text-[#ccc]'
-              }`}
+              onClick={handleStartProject}
+              className="inline-flex items-center justify-center text-xs sm:text-[13px] font-semibold px-6 py-3 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 cursor-pointer shrink-0 shadow-lg shadow-[#4169E1]/20 self-start sm:self-auto"
             >
-              {tab.label}
+              Start a Project →
             </button>
-          ))}
-          <button
-            onClick={handleStartProject}
-            className="text-[13px] font-semibold px-[20px] py-[8px] bg-[#4169E1] text-white rounded-full border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-auto"
-          >
-            Start a Project →
-          </button>
-        </div>
+          </div>
 
-        <div className="w-full mt-[1.5rem] h-[65vh] rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl bg-[#111]">
-          {currentVideoUrl ? (
-            <iframe
-              src={currentVideoUrl}
-              title={title}
-              frameBorder="0"
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          ) : heroImage ? (
-            <img src={heroImage} alt={title} width="1200" height="700" className="w-full h-full object-cover" />
-          ) : null}
+          {meta.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 border-t border-white/10 pt-4 sm:pt-6 mb-6 max-w-3xl">
+              {meta.map((item, i) => (
+                <div key={i} className="cs-hero-meta-item">
+                  <label className="block text-[9px] sm:text-[10px] font-semibold tracking-[0.15em] uppercase text-zinc-500 mb-1">{item.label}</label>
+                  <p className="text-xs sm:text-sm font-medium text-[#F2F0EB] leading-snug">{item.value}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {hasVideoTabs && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {videoTabs.map((tab) => (
+                <button
+                  key={tab.id ?? tab.label}
+                  onClick={() => setActiveVideo(tab.id ?? videoTabs.indexOf(tab))}
+                  className={`text-xs sm:text-[13px] font-medium px-4 py-2 rounded-full border transition-all duration-200 cursor-pointer ${activeVideo === (tab.id ?? videoTabs.indexOf(tab))
+                    ? 'bg-[#4169E1] text-white border-[#4169E1]'
+                    : 'bg-transparent text-[#888] border-[#333] hover:border-[#666] hover:text-[#ccc]'
+                    }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="w-full relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+            {currentVideoUrl ? (
+              <iframe
+                src={currentVideoUrl}
+                title={title}
+                frameBorder="0"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            ) : heroImage ? (
+              <img src={heroImage} alt={title} width="1200" height="700" className="w-full h-full object-cover" />
+            ) : null}
+          </div>
         </div>
       </section>
 
       {/* OVERVIEW + CHALLENGE */}
       {(overview || challenge) && (
-      <section className="px-5 md:px-8 py-[6rem] bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-[3rem] items-stretch">
-        <div className="p-[2rem]">
-          <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">Overview</p>
-          {overviewHeading && (
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB]">
-            {overviewHeading}
-          </h2>
-          )}
-          <div className="text-base md:text-lg lg:text-xl font-light text-left leading-relaxed text-white/70">
-            {overview}
-          </div>
-        </div>
-        {challenge && (
-          <div className="bg-[#111] rounded-lg p-[2rem] text-[#F2F0EB] border border-[#1A1A1A]">
-            <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">The challenge</p>
-            <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB]">
-              {challengeHeading}
-            </h2>
-            <div className="text-base md:text-lg lg:text-xl font-light text-left leading-relaxed text-white/70 whitespace-pre-line">
-              {challenge}
+        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch max-w-7xl mx-auto">
+          <div className="p-4 sm:p-6 md:p-8 bg-[#111] rounded-xl border border-[#222]">
+            <p className="text-xs sm:text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Overview</p>
+            {overviewHeading && (
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-medium mb-4 sm:mb-6 tracking-tight leading-tight text-[#F2F0EB]">
+                {overviewHeading}
+              </h2>
+            )}
+            <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-zinc-300">
+              {overview}
             </div>
           </div>
-        )}
-      </section>
+          {challenge && (
+            <div className="bg-[#111] rounded-xl p-4 sm:p-6 md:p-8 text-[#F2F0EB] border border-[#222]">
+              <p className="text-xs sm:text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">The challenge</p>
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-medium mb-4 sm:mb-6 tracking-tight leading-tight text-[#F2F0EB]">
+                {challengeHeading}
+              </h2>
+              <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-zinc-300 whitespace-pre-line">
+                {challenge}
+              </div>
+            </div>
+          )}
+        </section>
       )}
 
       {/* HTML CONTENT (from editor) */}
       {content && (
-        <section className="px-5 md:px-8 py-0 bg-[#0D0D0D]">
+        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-4 bg-[#0D0D0D] max-w-7xl mx-auto">
           <div
-            className="text-base md:text-lg lg:text-xl font-light leading-relaxed text-left w-full text-white/70 [&_h1]:text-[#F2F0EB] [&_h2]:text-[#F2F0EB] [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-[#F2F0EB] [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-8 [&_h3]:mb-3 [&_h4]:text-[#F2F0EB] [&_p]:mb-4 [&_strong]:text-[#F2F0EB] [&_a]:text-[#4169E1] [&_a:hover]:text-[#3158D4] [&_img]:rounded-lg [&_img]:border [&_img]:border-[#1E1E1E] [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#4169E1] [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-white/60 [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_li]:mb-2 [&_article]:!ml-0 [&_article]:!mr-0 [&_article]:!max-w-full [&_article]:!w-full [&_article]:!p-[20px]"
+            className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-left w-full text-zinc-300 [&_h1]:text-[#F2F0EB] [&_h2]:text-[#F2F0EB] [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-[#F2F0EB] [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h4]:text-[#F2F0EB] [&_p]:mb-4 [&_strong]:text-[#F2F0EB] [&_a]:text-[#4169E1] [&_a:hover]:text-[#3158D4] [&_img]:rounded-lg [&_img]:border [&_img]:border-[#1E1E1E] [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#4169E1] [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-zinc-400 [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-2"
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </section>
@@ -184,21 +190,21 @@ const AhmedFoodLayout = ({
         if (!section.content && !section.image && !section.video) return null;
         const hasBoth = section.content && section.image;
         return (
-        <section key={i} className={`px-5 md:px-8 py-[6rem] ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
-          <div className={`${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center' : ''}`}>
-            {section.content && (
-              <div className="text-base md:text-lg lg:text-xl font-light leading-relaxed text-white/70 whitespace-pre-line">
-                {section.content}
-              </div>
-            )}
-            {section.image && (
-              <div className="w-full rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D]">
-                <img src={section.image} alt={`Section ${i + 2}`} width="800" height="500" className="w-full h-auto object-cover" loading="lazy" />
-              </div>
-            )}
-          </div>
+          <section key={i} className={`px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-16 ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
+            <div className={`max-w-7xl mx-auto ${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
+              {section.content && (
+                <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-zinc-300 whitespace-pre-line">
+                  {section.content}
+                </div>
+              )}
+              {section.image && (
+                <div className="w-full rounded-xl overflow-hidden border border-[#222] bg-[#0D0D0D]">
+                  <img src={section.image} alt={`Section ${i + 2}`} width="800" height="500" className="w-full h-auto object-cover" loading="lazy" />
+                </div>
+              )}
+            </div>
             {section.video && (
-              <div className="w-full aspect-video rounded-lg overflow-hidden border border-[#1E1E1E] mt-8">
+              <div className="max-w-7xl mx-auto w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
                 <iframe
                   src={`https://www.youtube.com/embed/${section.video}`}
                   title={`Section ${i + 2} video`}
@@ -209,90 +215,98 @@ const AhmedFoodLayout = ({
                 ></iframe>
               </div>
             )}
-        </section>
+          </section>
         );
       })}
 
       {/* RESULTS */}
       {results.length > 0 && (
-        <section className="bg-[#111] px-5 md:px-8 py-[6rem]">
-          <div className="mb-[3rem]">
-            <p className="text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">Measurable impact</p>
-            <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB]">
-              Results that moved the business
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#1A1A1A] border border-[#1A1A1A] rounded-xl overflow-hidden">
-            {results.map((item, i) => (
-              <div key={i} className="bg-[#111] p-[2.5rem] flex flex-col justify-center">
-                <div className="text-[3.5rem] font-bold text-[#4169E1] leading-[1] mb-[8px]">{item.stat}</div>
-                <div className="font-semibold text-[#F2F0EB] mb-[8px]">{item.label}</div>
-                <div className="text-base md:text-lg lg:text-xl font-light leading-relaxed text-white/70">{item.desc}</div>
-              </div>
-            ))}
+        <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-6 md:mb-12">
+              <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Measurable impact</p>
+              <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium tracking-tight leading-tight text-[#F2F0EB]">
+                Results that moved the business
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+              {results.map((item, i) => (
+                <div key={i} className="bg-[#16161a] border border-[#26262e] rounded-xl p-5 sm:p-8 flex flex-col justify-center">
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#4169E1] leading-none mb-2">{item.stat}</div>
+                  <div className="font-semibold text-[#F2F0EB] text-sm sm:text-base mb-2">{item.label}</div>
+                  <div className="text-xs sm:text-sm font-light leading-relaxed text-zinc-400">{item.desc}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
       {/* PROCESS */}
       {process.length > 0 && (
-        <section className="px-5 md:px-8 py-[3rem] md:py-[6rem] bg-[#0D0D0D]">
-          <p className="text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">How we did it</p>
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-8 md:mb-16 tracking-tight leading-[1.1] text-[#F2F0EB]">
-            Our process
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
-            {process.map((item, i) => (
-              <div key={i} className="bg-[#1A1A1A] rounded-2xl p-6 md:p-8 border border-[#333]">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-3xl md:text-4xl font-bold text-[#4169E1]">{item.step}</span>
-                  <span className="text-[11px] md:text-[12px] font-semibold text-[#4169E1] bg-[#4169E1]/10 px-3 py-1 rounded-full uppercase tracking-[0.08em]">{item.phase}</span>
+        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 bg-[#0D0D0D]">
+          <div className="max-w-7xl mx-auto">
+            <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">How we did it</p>
+            <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-12 tracking-tight leading-tight text-[#F2F0EB]">
+              Our process
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {process.map((item, i) => (
+                <div key={i} className="bg-[#141417] rounded-xl p-5 sm:p-6 border border-[#232328]">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-2xl sm:text-3xl font-bold text-[#4169E1]">{item.step}</span>
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-[#4169E1] bg-[#4169E1]/10 px-2.5 py-0.5 rounded-full uppercase tracking-[0.08em]">{item.phase}</span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-semibold text-[#F2F0EB] mb-2">{item.title}</h3>
+                  <p className="text-xs sm:text-sm font-light leading-relaxed text-zinc-400">{item.desc}</p>
                 </div>
-                <h3 className="text-[17px] md:text-[20px] font-semibold text-[#F2F0EB] mb-3">{item.title}</h3>
-                <p className="text-sm md:text-[15px] font-light leading-[1.7] text-white/70">{item.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       )}
 
       {/* GALLERY — categorized auto-scroll rows or single image */}
       {galleryCategories.length > 0 ? (
-        <section className="bg-[#111] px-[15px] md:px-[40px] py-[6rem] overflow-hidden">
-          <p className="text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">Visual output</p>
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB]">
-            Selected renders
-          </h2>
-          <div className="flex flex-col gap-[24px] mt-[2rem]">
-            {galleryCategories.map((cat, ci) => (
-              <div key={ci}>
-                <h3 className="text-[18px] font-semibold text-[#F2F0EB] tracking-tight mb-3">{cat.name}</h3>
-                {cat.images.length > 0 && (
-                  <AutoScrollRow>
-                    {cat.images.map((src, ii) => (
-                      <RenderCard key={ii} src={src} title={cat.name} />
-                    ))}
-                  </AutoScrollRow>
-                )}
-              </div>
-            ))}
+        <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
+            <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-12 tracking-tight leading-tight text-[#F2F0EB]">
+              Selected renders
+            </h2>
+            <div className="flex flex-col gap-6 mt-4">
+              {galleryCategories.map((cat, ci) => (
+                <div key={ci}>
+                  <h3 className="text-base sm:text-lg font-semibold text-[#F2F0EB] tracking-tight mb-3">{cat.name}</h3>
+                  {cat.images.length > 0 && (
+                    <AutoScrollRow>
+                      {cat.images.map((src, ii) => (
+                        <RenderCard key={ii} src={src} title={cat.name} />
+                      ))}
+                    </AutoScrollRow>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       ) : gallery.length > 0 && (
-        <section className="bg-[#111] px-5 md:px-8 py-[6rem] overflow-hidden">
-          <p className="text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">Visual output</p>
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB]">
-            Selected renders
-          </h2>
-          <div className="w-full rounded-lg overflow-hidden border border-[#1E1E1E] bg-[#0D0D0D] aspect-[16/9]">
-            <img src={gallery[0]} alt={`${title} showcase`} width="1280" height="720" className="w-full h-full object-cover" loading="lazy" />
+        <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
+            <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-12 tracking-tight leading-tight text-[#F2F0EB]">
+              Selected renders
+            </h2>
+            <div className="w-full rounded-xl overflow-hidden border border-[#222] bg-[#0D0D0D] aspect-video">
+              <img src={gallery[0]} alt={`${title} showcase`} width="1280" height="720" className="w-full h-full object-cover" loading="lazy" />
+            </div>
           </div>
         </section>
       )}
 
       {/* EXTRA CONTENT (children) */}
       {children && (
-        <section className="px-5 md:px-8 py-[4rem] bg-[#0D0D0D]">
+        <section className="px-4 sm:px-8 md:px-12 py-8 md:py-16 bg-[#0D0D0D]">
           <div className="max-w-4xl mx-auto">
             {children}
           </div>
@@ -301,20 +315,20 @@ const AhmedFoodLayout = ({
 
       {/* SMALL BANNER */}
       {smallBanner && (
-        <section className="px-5 md:px-8 py-[3rem] bg-[#0D0D0D]">
-          <div className="w-full rounded-lg overflow-hidden border border-[#1E1E1E] shadow-2xl">
+        <section className="px-4 sm:px-8 md:px-12 py-6 md:py-10 bg-[#0D0D0D]">
+          <div className="max-w-7xl mx-auto w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
             <img src={smallBanner} alt={title || "Project banner"} width="1200" height="600" className="w-full h-auto object-contain" />
           </div>
         </section>
       )}
 
       {/* CTA */}
-      <footer className="px-8 py-[3rem] bg-[#0D0D0D] flex flex-col sm:flex-row items-center justify-end gap-[1.5rem] border-t border-[#1A1A1A]">
-        <div className="flex items-center justify-between flex-wrap gap-[10px] w-full">
-          <div className="flex gap-[10px] flex-wrap">
+      <footer className="px-4 sm:px-8 md:px-12 py-6 md:py-10 bg-[#0D0D0D] border-t border-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4 w-full">
+          <div className="flex items-center gap-3 flex-wrap">
             <button
-              className="inline-flex items-center gap-[8px] text-[13px] font-medium px-[20px] py-[10px] border border-[#333] rounded-[6px] hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-[#888] bg-transparent cursor-pointer"
-              onClick={() => navigate('/')}
+              className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-medium px-4 sm:px-5 py-2.5 border border-[#333] rounded-full hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-zinc-400 bg-transparent cursor-pointer"
+              onClick={() => router.push('/')}
             >
               <FaThLarge aria-hidden="true" /> All work
             </button>
@@ -323,27 +337,27 @@ const AhmedFoodLayout = ({
                 href={ctaUrl}
                 target={ctaUrl.startsWith('http') ? '_blank' : undefined}
                 rel={ctaUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-[8px] text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 no-underline"
+                className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold px-5 py-2.5 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 no-underline"
               >
                 <FaPaperPlane aria-hidden="true" /> {ctaText || 'View Project'}
               </a>
             ) : (
               <button
-                className="inline-flex items-center gap-[8px] text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer"
+                className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold px-5 py-2.5 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer"
                 onClick={handleStartProject}
               >
                 <FaPaperPlane aria-hidden="true" /> Start a project
               </button>
             )}
+            {nextProject && (
+              <button
+                className="inline-flex items-center justify-center gap-2 text-xs sm:text-[13px] font-semibold px-5 py-2.5 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer"
+                onClick={() => router.push(nextProject.path)}
+              >
+                Next Project →
+              </button>
+            )}
           </div>
-          {nextProject && (
-            <button
-              className="inline-flex items-center gap-[8px] text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer"
-              onClick={() => navigate(nextProject.path)}
-            >
-              Next Project →
-            </button>
-          )}
         </div>
       </footer>
 

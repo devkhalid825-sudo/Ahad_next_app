@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
 import ProjectPage from '@/components/ProjectPage';
@@ -6,28 +7,15 @@ import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
-const FALLBACK_TITLE = 'Project Details';
-const VOWELS = /[aeiou]/i;
-
-function isValidTitle(str) {
-  if (!str || typeof str !== 'string') return false;
-  const trimmed = str.trim();
-  if (trimmed.length < 2 || trimmed.length > 200) return false;
-  if (!/[a-zA-Z]/.test(trimmed)) return false;
-  const alphaOnly = trimmed.replace(/[^a-zA-Z]/g, '');
-  if (alphaOnly.length > 0 && !VOWELS.test(alphaOnly)) return false;
-  return true;
-}
-
-function projectTitle(data) {
-  const raw = data.metaTitle || data.title || '';
-  return isValidTitle(raw) ? raw.trim() : FALLBACK_TITLE;
-}
+export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
 
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map((p) => [p.slug, p]));
 
-export const revalidate = 0; // No cache — always fetch fresh data from backend
+const getProject = cache(async (safeSlug) => {
+  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 60 } });
+  return { data, status };
+});
 
 export function generateStaticParams() {
   return allProjects.map((p) => ({ slug: p.slug }));
@@ -89,7 +77,7 @@ function apiProjectSchemas(slug, data) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { data } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + slug)}`, 'GET', null, null, false, { next: { revalidate: 0 } });
+  const { data } = await getProject(slug);
   if (data && data.title) {
     const { title, description } = apiProjectSchemas(slug, data);
     return buildMetadata({
@@ -125,7 +113,7 @@ export default async function Page({ params }) {
     return <AhmedFood />;
   }
 
-  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 0 } });
+  const { data, status } = await getProject(safeSlug);
   if (status === 200 && data && data.title) {
     const { schemas } = apiProjectSchemas(safeSlug, data);
     return (

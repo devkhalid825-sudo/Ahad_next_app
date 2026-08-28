@@ -1,10 +1,16 @@
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
 import CaseStudyDetail from '@/components/CaseStudyDetails';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
-export const revalidate = 0; // No cache — always fetch fresh data from backend
+export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
+
+const getCaseStudy = cache(async (slug) => {
+  const { data, status } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 60 } });
+  return { data, status };
+});
 
 function caseStudySchemas(slug, data) {
   const description = data.metaDescription || (data.description || data.content || '').replace(/<[^>]*>/g, '').slice(0, 160);
@@ -33,7 +39,7 @@ function caseStudySchemas(slug, data) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { data } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 0 } });
+  const { data } = await getCaseStudy(slug);
   if (!data || !data.title) {
     return buildMetadata({
       title: 'Case Study Not Found',
@@ -52,7 +58,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const { data, status } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 0 } });
+  const { data, status } = await getCaseStudy(slug);
   if (status !== 200 || !data || !data.title) notFound();
   const { schemas } = caseStudySchemas(slug, data);
   return (

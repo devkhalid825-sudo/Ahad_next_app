@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -92,16 +92,22 @@ const CaseStudyDetail = ({ slug, initialData }) => {
     </div>
   );
 
+  const safeJson = (val, fallback) => {
+    if (!val) return fallback;
+    try { return typeof val === 'string' ? JSON.parse(val) : val; } catch { return fallback; }
+  };
+
   const meta = [
     ...(cs.client ? [{ label: 'Client', value: cs.client }] : []),
-    ...(cs.service ? [{ label: 'Service', value: cs.service }] : []),
-    ...(cs.category ? [{ label: 'Category', value: cs.category }] : []),
+    ...(cs.service ? [{ label: 'Service', value: cs.service }] : (cs.category ? [{ label: 'Category', value: cs.category }] : [])),
+    ...(cs.duration ? [{ label: 'Duration', value: cs.duration }] : []),
+    ...(cs.deliverables ? [{ label: 'Deliverables', value: cs.deliverables }] : []),
   ];
 
-  const heroImage = absImage(cs.largeBanner);
+  const heroImage = absImage(cs.largeBanner || cs.heroImage || cs.image);
   const smallBannerRaw = absImage(cs.smallBanner);
   const smallBanner = smallBannerRaw && smallBannerRaw !== heroImage ? smallBannerRaw : undefined;
-  const heroVideo = cs.videoUrl ? getYoutubeEmbed(cs.videoUrl) : undefined;
+  const heroVideo = cs.heroVideo || (cs.videoUrl ? getYoutubeEmbed(cs.videoUrl) : undefined);
 
   return (
     <article>
@@ -112,7 +118,17 @@ const CaseStudyDetail = ({ slug, initialData }) => {
         heroImage={heroImage}
         heroVideo={heroVideo}
         smallBanner={smallBanner}
-        content={cs.content || ''}
+        overviewHeading={cs.overviewHeading || 'Project overview'}
+        overview={cs.overviewText || cs.overview}
+        challengeHeading={cs.challengeHeading || 'Key challenges'}
+        challenge={cs.challengeText || cs.challenge}
+        content={cs.content || cs.description || ''}
+        results={safeJson(cs.results, [])}
+        process={safeJson(cs.processSteps || cs.process, [])}
+        galleryCategories={safeJson(cs.galleryCategories, [])}
+        videoTabs={safeJson(cs.videoTabs, [])}
+        ctaUrl={cs.ctaUrl || '/contact'}
+        ctaText={cs.ctaText || 'Start a project'}
         nextProject={nextCs ? { path: `/case-study/${nextCs.slug}`, name: nextCs.title } : undefined}
       />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

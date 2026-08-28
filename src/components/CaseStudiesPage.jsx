@@ -62,16 +62,16 @@ const CaseStudiesPage = () => {
                     {/* CARDS */}
                     {loading ? null : caseStudies.length > 0 ? (
                         <div className="flex overflow-x-auto no-scrollbar gap-[15px] px-[15px] md:px-[40px] pb-4 snap-x snap-mandatory">
-                            {/* TODO: Restore Link below when individual case study pages are ready.
                             {caseStudies.map((cs, ci) => (
                                 <Link
                                     key={cs.id}
                                     href={`/case-study/${cs.slug}`}
-                                    className="group snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4"
+                                    className="group snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4 cursor-pointer"
                                 >
                                     <div className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d] will-change-transform"
                                         style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
                                     >
+                                        {/* Image */}
                                         <div className="w-full h-[150px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5">
                                             <img
                                                 src={cs.largeBanner
@@ -84,6 +84,8 @@ const CaseStudiesPage = () => {
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
                                             />
                                         </div>
+
+                                        {/* Body */}
                                         <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
                                             <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
                                                 {cs.client && <span>{cs.client}</span>}
@@ -114,52 +116,6 @@ const CaseStudiesPage = () => {
                                         </div>
                                     </div>
                                 </Link>
-                            ))}
-                            */}
-
-                            {/* TEMPORARY: Click disabled — cards are non-clickable until case study detail pages are ready */}
-                            {caseStudies.map((cs, ci) => (
-                                <div
-                                    key={cs.id}
-                                    className="snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4"
-                                >
-                                    <div className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 ring-[4px] md:ring-[8px] ring-[#2b2b2d]"
-                                        style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
-                                    >
-                                        {/* Image */}
-                                        <div className="w-full h-[150px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5">
-                                            <img
-                                                src={cs.largeBanner
-                                                    ? (cs.largeBanner.startsWith('http') ? cs.largeBanner : `${BACKEND_ORIGIN}${cs.largeBanner}`)
-                                                    : ''}
-                                                alt={cs.title}
-                                                width="577"
-                                                height="380"
-                                                loading="lazy"
-                                                className="w-full h-full object-cover object-center"
-                                            />
-                                        </div>
-
-                                        {/* Body */}
-                                        <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
-                                            <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
-                                                {cs.client && <span>{cs.client}</span>}
-                                                {cs.client && cs.category && <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>}
-                                                {cs.category && <span>{cs.category}</span>}
-                                                {cs.category && cs.service && <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>}
-                                                {cs.service && <span>{cs.service}</span>}
-                                            </div>
-                                            <div className="md:hidden flex items-center gap-2 text-white/80 text-[11px] mb-4">
-                                                {cs.category && <span>{cs.category}</span>}
-                                                {cs.category && cs.service && <span className="w-1.5 h-1.5 rounded-full bg-[#4169E1]"></span>}
-                                                {cs.service && <span>{cs.service}</span>}
-                                            </div>
-                                            <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
-                                                {cs.title}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
                             ))}
                         </div>
                     ) : (

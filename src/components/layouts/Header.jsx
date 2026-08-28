@@ -78,7 +78,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full p-6 z-50 transition-all duration-300">
+    <header className="fixed top-0 left-0 w-full px-4 sm:px-6 md:px-8 py-3 sm:py-5 z-50 transition-all duration-300">
     <nav
       ref={headerRef}
       className={`w-full transition-all duration-300 ${
@@ -88,7 +88,7 @@ const Header = () => {
       <div className="flex justify-between items-center relative z-50">
         <Link
           href="/"
-          className="cursor-pointer relative z-50"
+          className="cursor-pointer relative z-50 flex items-center"
           onClick={() => setIsMenuOpen(false)}
         >
           <img
@@ -96,8 +96,8 @@ const Header = () => {
             alt="Elipse Studio"
             width="230"
             height="105"
-            className={`h-16 md:h-24 w-auto object-contain transition-all duration-300 hover:scale-105 ${
-              isLightSection ? 'brightness-0' : 'drop-shadow-md'
+            className={`h-10 sm:h-14 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-105 ${
+              isLightSection ? 'brightness-0' : 'brightness-0 invert'
             }`}
           />
         </Link>
