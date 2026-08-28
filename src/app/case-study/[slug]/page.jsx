@@ -63,17 +63,19 @@ const projectMap = Object.fromEntries(allProjects.map(p => [p.slug, p]));
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  // If this slug corresponds to a project, render the project layout
+  const { data, status } = await getCaseStudy(slug);
+  if (status === 200 && data && data.title) {
+    const { schemas } = caseStudySchemas(slug, data);
+    return (
+      <>
+        <MultiJsonLd schemas={schemas} />
+        <ProjectPage slug={slug} initialData={data} type="case-study" />
+      </>
+    );
+  }
+  // Fallback only for content that will never live in the dashboard.
   if (projectMap[slug]) {
     return <ProjectPage slug={slug} />;
   }
-  const { data, status } = await getCaseStudy(slug);
-  if (status !== 200 || !data || !data.title) notFound();
-  const { schemas } = caseStudySchemas(slug, data);
-  return (
-    <>
-      <MultiJsonLd schemas={schemas} />
-      <ProjectPage slug={slug} initialData={data} type="case-study" />
-    </>
-  );
+  notFound();
 }

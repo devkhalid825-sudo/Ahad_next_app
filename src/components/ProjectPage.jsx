@@ -100,8 +100,7 @@ const SectionRenderer = ({ section }) => {
 
 const ProjectPage = ({ slug, initialData, type = 'project' }) => {
   const safeSlug = String(slug || '').trim();
-  const staticProject = projectMap[safeSlug];
-  const project = staticProject || (initialData ? normalizeDynamicProject(initialData, { type }) : null);
+  const project = initialData ? normalizeDynamicProject(initialData, { type }) : projectMap[safeSlug];
 
   useEffect(() => { window.scrollTo(0, 0); }, [safeSlug]);
 
