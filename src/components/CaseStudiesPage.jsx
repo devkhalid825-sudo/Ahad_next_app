@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import Hero from './features/Hero';
 import HeroCTA from './features/HeroCTA';
 import Footer from './layouts/Footer';
@@ -50,7 +50,7 @@ const CaseStudiesPage = () => {
                             Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
                         </p>
                         <Link
-                            to="/case-studies"
+                            href="/case-studies"
                             className="rounded-full text-[11px] md:text-base bg-white text-[#4169E1] font-bold py-1.5 px-4 md:py-2 md:px-8 shadow-sm hover:scale-105 transition flex items-center justify-center whitespace-nowrap flex-shrink-0"
                         >
                             View All
@@ -63,7 +63,7 @@ const CaseStudiesPage = () => {
                             {caseStudies.map((cs, ci) => (
                                 <Link
                                     key={cs.id}
-                                    to={`/case-study/${cs.slug}`}
+                                    href={`/case-study/${cs.slug}`}
                                     className="group snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4"
                                 >
                                     <div className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d] will-change-transform"
@@ -72,7 +72,9 @@ const CaseStudiesPage = () => {
                                         {/* Image */}
                                         <div className="w-full h-[150px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5">
                                             <img
-                                                src={cs.largeBanner ? (cs.largeBanner.startsWith('http') ? cs.largeBanner : `${BACKEND_ORIGIN}${cs.largeBanner}`) : ''}
+                                                src={cs.largeBanner
+                                                    ? (cs.largeBanner.startsWith('http') ? cs.largeBanner : `${BACKEND_ORIGIN}${cs.largeBanner}`)
+                                                    : ''}
                                                 alt={cs.title}
                                                 width="577"
                                                 height="380"

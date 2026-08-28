@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { apiCall } from '@/utils/api';
+import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -42,11 +42,18 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
 
   const fallback = isLight ? DEFAULT_IMAGE_LIGHT : DEFAULT_IMAGE;
 
+  const resolveImg = (url) => {
+    if (!url) return fallback;
+    if (url.startsWith('http')) return url;
+    if (url.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${url}`;
+    return url || fallback;
+  };
+
   const topItems = !loading
     ? featured.slice(0, 4).map((cs) => ({
         id: cs.id,
         title: cs.title,
-        image: cs.largeBanner || cs.smallBanner || fallback,
+        image: resolveImg(cs.largeBanner || cs.smallBanner),
         path: `/case-study/${cs.slug}`,
       }))
     : [];
@@ -55,7 +62,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
     ? featured.slice(4).map((cs) => ({
         id: cs.id,
         title: cs.title,
-        image: cs.smallBanner || cs.largeBanner || fallback,
+        image: resolveImg(cs.smallBanner || cs.largeBanner),
         path: `/case-study/${cs.slug}`,
       }))
     : [];
