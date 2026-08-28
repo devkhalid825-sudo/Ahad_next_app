@@ -1,4 +1,4 @@
-﻿﻿'use client';
+﻿'use client';
 
 import React, { useEffect } from "react";
 import ProjectArticle from "./ProjectArticle";
@@ -30,7 +30,7 @@ const ProjectPage = ({ slug, initialData }) => {
 
   useEffect(() => { window.scrollTo(0, 0); }, [safeSlug]);
 
-  if (!project) return <ProjectArticle slug={safeSlug} initialData={initialData} />;
+  if (!project) { notFound(); return null; }
 
   return (
 
