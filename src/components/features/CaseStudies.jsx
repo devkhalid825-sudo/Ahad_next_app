@@ -178,25 +178,39 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                 onSwiper={(swiper) => (topSwiperRef.current = swiper)}
                 className="!overflow-visible"
               >
+                {/* TODO: Restore Link when case study detail pages are ready.
                 {[...topItems, ...topItems].map((study, idx) => (
                   <SwiperSlide key={`top-${idx}`}>
                     <div className="w-full aspect-video relative overflow-hidden group">
                       <Link href={study.path} className="absolute inset-0 w-full h-full block">
+                        <img ... />
+                        ...
+                      </Link>
+                    </div>
+                  </SwiperSlide>
+                ))}
+                */}
+
+                {/* TEMPORARY: Click disabled on top swiper images */}
+                {[...topItems, ...topItems].map((study, idx) => (
+                  <SwiperSlide key={`top-${idx}`}>
+                    <div className="w-full aspect-video relative overflow-hidden group">
+                      <div className="absolute inset-0 w-full h-full block">
                         <img
                           src={study.image}
                           alt={study.title}
                           width="800"
                           height="450"
                           loading={idx < 2 ? 'eager' : 'lazy'}
-                          className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-105"
+                          className="absolute inset-0 w-full h-full object-cover object-center"
                         />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+                        <div className="absolute inset-0 bg-black/20"></div>
                         <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 p-6">
                           <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase text-center text-white">
                             {study.title}
                           </h3>
                         </div>
-                      </Link>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
@@ -227,25 +241,39 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                   onSwiper={(swiper) => (bottomSwiperRef.current = swiper)}
                   className="!overflow-visible"
                 >
+                  {/* TODO: Restore Link when case study detail pages are ready.
                   {[...bottomItems, ...bottomItems].map((study, idx) => (
                     <SwiperSlide key={`bottom-${idx}`}>
                       <div className="w-full aspect-video relative overflow-hidden group">
                         <Link href={study.path} className="absolute inset-0 w-full h-full block">
+                          <img ... />
+                          ...
+                        </Link>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                  */}
+
+                  {/* TEMPORARY: Click disabled on bottom swiper images */}
+                  {[...bottomItems, ...bottomItems].map((study, idx) => (
+                    <SwiperSlide key={`bottom-${idx}`}>
+                      <div className="w-full aspect-video relative overflow-hidden group">
+                        <div className="absolute inset-0 w-full h-full block">
                           <img
                             src={study.image}
                             alt={study.title}
                             width="400"
                             height="225"
                             loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover object-center"
                           />
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+                          <div className="absolute inset-0 bg-black/20"></div>
                           <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 p-4">
                             <h3 className="text-sm sm:text-lg md:text-xl font-bold uppercase text-center text-white">
                               {study.title}
                             </h3>
                           </div>
-                        </Link>
+                        </div>
                       </div>
                     </SwiperSlide>
                   ))}
