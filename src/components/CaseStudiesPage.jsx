@@ -61,12 +61,11 @@ const CaseStudiesPage = () => {
                     {loading ? null : caseStudies.length > 0 ? (
                         <div className="flex overflow-x-auto no-scrollbar gap-[15px] px-[15px] md:px-[40px] pb-4 snap-x snap-mandatory">
                             {caseStudies.map((cs, ci) => (
-                                <Link
+                                <div
                                     key={cs.id}
-                                    href={`/case-study/${cs.slug}`}
-                                    className="group snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4"
+                                    className="snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4"
                                 >
-                                    <div className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d] will-change-transform"
+                                    <div className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 ring-[4px] md:ring-[8px] ring-[#2b2b2d]"
                                         style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
                                     >
                                         {/* Image */}
@@ -79,7 +78,7 @@ const CaseStudiesPage = () => {
                                                 width="577"
                                                 height="380"
                                                 loading="lazy"
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
+                                                className="w-full h-full object-cover object-center"
                                             />
                                         </div>
 
@@ -100,20 +99,9 @@ const CaseStudiesPage = () => {
                                             <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
                                                 {cs.title}
                                             </h3>
-                                            <div className="mt-auto">
-                                                <span className="group/link flex items-center justify-between w-full text-white text-[13px] md:text-md mt-4">
-                                                    <span>View Case Study</span>
-                                                    <div className="bg-white/10 p-1.5 md:p-3 rounded-full border border-white/10 group-hover/link:translate-x-1 transition">
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 md:w-7 md:h-7">
-                                                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                                                            <polyline points="7 7 17 7 17 17"></polyline>
-                                                        </svg>
-                                                    </div>
-                                                </span>
-                                            </div>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             ))}
                         </div>
                     ) : (
