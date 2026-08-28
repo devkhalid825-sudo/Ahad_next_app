@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
-import CaseStudyDetail from '@/components/CaseStudyDetails';
+import ProjectPage from '@/components/ProjectPage';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
 export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
@@ -56,15 +56,24 @@ export async function generateMetadata({ params }) {
   });
 }
 
+import { projectList, caseStudyEntries } from '@/components/projects/projectData';
+
+const allProjects = [...projectList, ...caseStudyEntries];
+const projectMap = Object.fromEntries(allProjects.map(p => [p.slug, p]));
+
 export default async function Page({ params }) {
   const { slug } = await params;
+  // If this slug corresponds to a project, render the project layout
+  if (projectMap[slug]) {
+    return <ProjectPage slug={slug} />;
+  }
   const { data, status } = await getCaseStudy(slug);
   if (status !== 200 || !data || !data.title) notFound();
   const { schemas } = caseStudySchemas(slug, data);
   return (
     <>
       <MultiJsonLd schemas={schemas} />
-      <CaseStudyDetail slug={slug} initialData={data} />
+      <ProjectPage slug={slug} initialData={data} />
     </>
   );
 }
