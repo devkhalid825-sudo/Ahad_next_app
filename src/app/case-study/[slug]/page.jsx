@@ -73,7 +73,7 @@ export default async function Page({ params }) {
   return (
     <>
       <MultiJsonLd schemas={schemas} />
-      <ProjectPage slug={slug} initialData={data} />
+      <ProjectPage slug={slug} initialData={data} type="case-study" />
     </>
   );
 }

@@ -48,7 +48,7 @@ function staticProjectSchemas(slug, staticProject) {
 }
 
 function apiProjectSchemas(slug, data) {
-  const title = projectTitle(data);
+  const title = data.metaTitle || data.title;
   const rawDesc = data.description ? data.description.replace(/<[^>]*>/g, '') : '';
   const description = data.metaDescription || rawDesc.slice(0, 160);
   const url = `${SITE_URL}${data.path || '/project/' + slug}`;
