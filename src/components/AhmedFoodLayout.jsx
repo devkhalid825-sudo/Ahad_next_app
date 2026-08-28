@@ -88,7 +88,7 @@ const AhmedFoodLayout = ({
       <section className="bg-[#0D0D0D] px-4 sm:px-8 md:px-12 lg:px-16 pt-[90px] sm:pt-[120px] md:pt-[140px] pb-8 md:pb-12 relative min-h-screen">
         <Header />
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           {/* Heading and Start a Project Button in same row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pt-4 sm:pt-6">
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F2F0EB] leading-[1.1] tracking-tight">
@@ -149,7 +149,7 @@ const AhmedFoodLayout = ({
 
       {/* OVERVIEW + CHALLENGE */}
       {(overview || challenge) && (
-        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch max-w-7xl mx-auto">
+        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch max-w-[1600px] mx-auto">
           <div className="p-4 sm:p-6 md:p-8 bg-[#111] rounded-xl border border-[#222]">
             <p className="text-xs sm:text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Overview</p>
             {overviewHeading && (
@@ -177,7 +177,7 @@ const AhmedFoodLayout = ({
 
       {/* HTML CONTENT (from editor) */}
       {content && (
-        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-4 bg-[#0D0D0D] max-w-7xl mx-auto">
+        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-4 bg-[#0D0D0D] max-w-[1600px] mx-auto">
           <div
             className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-left w-full text-zinc-300 [&_h1]:text-[#F2F0EB] [&_h2]:text-[#F2F0EB] [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-[#F2F0EB] [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h4]:text-[#F2F0EB] [&_p]:mb-4 [&_strong]:text-[#F2F0EB] [&_a]:text-[#4169E1] [&_a:hover]:text-[#3158D4] [&_img]:rounded-lg [&_img]:border [&_img]:border-[#1E1E1E] [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#4169E1] [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-zinc-400 [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-2"
             dangerouslySetInnerHTML={{ __html: content }}
@@ -191,7 +191,7 @@ const AhmedFoodLayout = ({
         const hasBoth = section.content && section.image;
         return (
           <section key={i} className={`px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-16 ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
-            <div className={`max-w-7xl mx-auto ${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
+            <div className={`max-w-[1600px] mx-auto ${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
               {section.content && (
                 <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-zinc-300 whitespace-pre-line">
                   {section.content}
@@ -204,7 +204,7 @@ const AhmedFoodLayout = ({
               )}
             </div>
             {section.video && (
-              <div className="max-w-7xl mx-auto w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
+              <div className="max-w-[1600px] mx-auto w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
                 <iframe
                   src={`https://www.youtube.com/embed/${section.video}`}
                   title={`Section ${i + 2} video`}
@@ -222,7 +222,7 @@ const AhmedFoodLayout = ({
       {/* RESULTS */}
       {results.length > 0 && (
         <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1600px] mx-auto">
             <div className="mb-6 md:mb-12">
               <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Measurable impact</p>
               <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium tracking-tight leading-tight text-[#F2F0EB]">
@@ -245,7 +245,7 @@ const AhmedFoodLayout = ({
       {/* PROCESS */}
       {process.length > 0 && (
         <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 bg-[#0D0D0D]">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1600px] mx-auto">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">How we did it</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-12 tracking-tight leading-tight text-[#F2F0EB]">
               Our process
@@ -269,7 +269,7 @@ const AhmedFoodLayout = ({
       {/* GALLERY — categorized auto-scroll rows or single image */}
       {galleryCategories.length > 0 ? (
         <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 overflow-hidden">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1600px] mx-auto">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-12 tracking-tight leading-tight text-[#F2F0EB]">
               Selected renders
@@ -292,7 +292,7 @@ const AhmedFoodLayout = ({
         </section>
       ) : gallery.length > 0 && (
         <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-20 overflow-hidden">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1600px] mx-auto">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-12 tracking-tight leading-tight text-[#F2F0EB]">
               Selected renders
@@ -316,7 +316,7 @@ const AhmedFoodLayout = ({
       {/* SMALL BANNER */}
       {smallBanner && (
         <section className="px-4 sm:px-8 md:px-12 py-6 md:py-10 bg-[#0D0D0D]">
-          <div className="max-w-7xl mx-auto w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
+          <div className="max-w-[1600px] mx-auto w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
             <img src={smallBanner} alt={title || "Project banner"} width="1200" height="600" className="w-full h-auto object-contain" />
           </div>
         </section>
@@ -324,7 +324,7 @@ const AhmedFoodLayout = ({
 
       {/* CTA */}
       <footer className="px-4 sm:px-8 md:px-12 py-6 md:py-10 bg-[#0D0D0D] border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4 w-full">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between flex-wrap gap-4 w-full">
           <div className="flex items-center gap-3 flex-wrap">
             <button
               className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-medium px-4 sm:px-5 py-2.5 border border-[#333] rounded-full hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-zinc-400 bg-transparent cursor-pointer"
