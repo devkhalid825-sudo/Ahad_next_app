@@ -27,7 +27,7 @@ function projectTitle(data) {
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map((p) => [p.slug, p]));
 
-export const revalidate = 300;
+export const revalidate = 0; // No cache — always fetch fresh data from backend
 
 export function generateStaticParams() {
   return allProjects.map((p) => ({ slug: p.slug }));
@@ -89,6 +89,15 @@ function apiProjectSchemas(slug, data) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const { data } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + slug)}`, 'GET', null, null, false, { next: { revalidate: 0 } });
+  if (data && data.title) {
+    const { title, description } = apiProjectSchemas(slug, data);
+    return buildMetadata({
+      title,
+      description,
+      canonical: data.path ? (data.path.startsWith('http') ? data.path : `${SITE_URL}${data.path.startsWith('/') ? data.path : '/' + data.path}`) : `${SITE_URL}/project/${slug}`,
+    });
+  }
   const staticProject = projectMap[slug];
   if (staticProject) {
     const { description } = staticProjectSchemas(slug, staticProject);
@@ -98,20 +107,11 @@ export async function generateMetadata({ params }) {
       canonical: `${SITE_URL}/project/${slug}`,
     });
   }
-  const { data } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + slug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
-  if (!data || !data.title) {
-    return buildMetadata({
-      title: 'Project Not Found',
-      description: 'The requested project could not be found.',
-      canonical: `${SITE_URL}/project/${slug}`,
-      noIndex: true,
-    });
-  }
-  const { title, description } = apiProjectSchemas(slug, data);
   return buildMetadata({
-    title,
-    description,
-    canonical: data.path ? (data.path.startsWith('http') ? data.path : `${SITE_URL}${data.path.startsWith('/') ? data.path : '/' + data.path}`) : `${SITE_URL}/project/${slug}`,
+    title: 'Project Not Found',
+    description: 'The requested project could not be found.',
+    canonical: `${SITE_URL}/project/${slug}`,
+    noIndex: true,
   });
 }
 
@@ -125,6 +125,17 @@ export default async function Page({ params }) {
     return <AhmedFood />;
   }
 
+  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 0 } });
+  if (status === 200 && data && data.title) {
+    const { schemas } = apiProjectSchemas(safeSlug, data);
+    return (
+      <>
+        <MultiJsonLd schemas={schemas} />
+        <ProjectPage slug={safeSlug} initialData={data} />
+      </>
+    );
+  }
+
   if (projectMap[safeSlug]) {
     const { schemas } = staticProjectSchemas(safeSlug, projectMap[safeSlug]);
     return (
@@ -135,13 +146,5 @@ export default async function Page({ params }) {
     );
   }
 
-  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 300 } });
-  if (status !== 200 || !data || !data.title) notFound();
-  const { schemas } = apiProjectSchemas(safeSlug, data);
-  return (
-    <>
-      <MultiJsonLd schemas={schemas} />
-      <ProjectPage slug={safeSlug} initialData={data} />
-    </>
-  );
+  notFound();
 }

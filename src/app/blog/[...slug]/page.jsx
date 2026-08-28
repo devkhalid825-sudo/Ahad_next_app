@@ -95,7 +95,7 @@ const staticArticleMetadata = {
   },
 };
 
-export const revalidate = 300;
+export const revalidate = 0; // No cache — always fetch fresh data from backend
 
 export async function generateStaticParams() {
   return Object.keys(staticArticles).map((slug) => ({ slug: [slug] }));
@@ -171,7 +171,7 @@ export async function generateMetadata({ params }) {
     });
   }
 
-  const { data } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 0 } });
   if (!data || !data.title) {
     return buildMetadata({
       title: 'Blog Post Not Found',
@@ -206,7 +206,7 @@ export default async function Page({ params }) {
     );
   }
 
-  const { data, status } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data, status } = await apiCall(`/blogs/${slugStr}`, 'GET', null, null, false, { next: { revalidate: 0 } });
   if (status !== 200 || !data || !data.title) notFound();
   const { schemas } = apiArticleSchemas(slugStr, data);
   return (

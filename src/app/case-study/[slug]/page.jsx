@@ -4,7 +4,7 @@ import { buildMetadata } from '@/lib/seo';
 import CaseStudyDetail from '@/components/CaseStudyDetails';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
-export const revalidate = 300;
+export const revalidate = 0; // No cache — always fetch fresh data from backend
 
 function caseStudySchemas(slug, data) {
   const description = data.metaDescription || (data.description || data.content || '').replace(/<[^>]*>/g, '').slice(0, 160);
@@ -33,7 +33,7 @@ function caseStudySchemas(slug, data) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { data } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 0 } });
   if (!data || !data.title) {
     return buildMetadata({
       title: 'Case Study Not Found',
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const { data, status } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data, status } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 0 } });
   if (status !== 200 || !data || !data.title) notFound();
   const { schemas } = caseStudySchemas(slug, data);
   return (

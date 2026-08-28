@@ -3,7 +3,7 @@ import { apiCall } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
 
-export const revalidate = 300;
+export const revalidate = 0; // No cache — always fetch fresh data from backend
 
 export function generateMetadata() {
   return buildMetadata({
@@ -39,7 +39,7 @@ export function generateMetadata() {
 }
 
 export default async function Page() {
-  const { data, status } = await apiCall('/blogs', 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data, status } = await apiCall('/blogs', 'GET', null, null, false, { next: { revalidate: 0 } });
   const initialBlogs =
     status === 200 && Array.isArray(data)
       ? data

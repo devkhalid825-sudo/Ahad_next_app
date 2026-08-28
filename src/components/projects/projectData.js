@@ -15,10 +15,6 @@ import kia2Raw from '../../assets/ElipseImages/projects/K-2.webp';
 import kia3Raw from '../../assets/ElipseImages/projects/K-3.webp';
 import seatRaw from '../../assets/ElipseImages/projects/seat-2-1.webp';
 import fruitRaw from '../../assets/ElipseImages/projects/Nawarco2.webp';
-import towelRaw from '../../assets/ElipseImages/projects/TOWEL.webp';
-import towe2Raw from '../../assets/ElipseImages/projects/T-1.webp';
-import towe3Raw from '../../assets/ElipseImages/projects/T-2.webp';
-import towe4Raw from '../../assets/ElipseImages/projects/T-3.webp';
 import boat1Raw from '../../assets/ElipseImages/projects/Boat.webp';
 import steeringImgRaw from '../../assets/ElipseImages/projects/Steering-1.webp';
 import steeringImg1Raw from '../../assets/ElipseImages/projects/C-1.webp';
@@ -69,10 +65,6 @@ const kia2 = getImgSrc(kia2Raw);
 const kia3 = getImgSrc(kia3Raw);
 const seat = getImgSrc(seatRaw);
 const fruit = getImgSrc(fruitRaw);
-const towel = getImgSrc(towelRaw);
-const towe2 = getImgSrc(towe2Raw);
-const towe3 = getImgSrc(towe3Raw);
-const towe4 = getImgSrc(towe4Raw);
 const boat1 = getImgSrc(boat1Raw);
 const steeringImg = getImgSrc(steeringImgRaw);
 const steeringImg1 = getImgSrc(steeringImg1Raw);
@@ -525,7 +517,7 @@ export const projectList = [
     ],
     heroImage: kia,
     heroButtons: [{ label: "View in action", primary: true, to: "/kia_configurator_elipse/#", external: true }],
-    nextProject: { path: "/project/towel-configurator", name: "Towel Configurator" },
+    nextProject: { path: "/project/fruit-configurator", name: "Fruit Configurator" },
     sections: [
       { type: "overview", heading: "Automotive configurator at 60fps", text: "The KIA Automotive Configurator provides a seamless bridge between digital exploration and physical ownership. Using high-fidelity CAD data, we enabled potential customers to interact with the vehicle in unprecedented detail.", challenge: { heading: "60fps with uncompromised quality", text: "Maintaining 60fps performance while rendering high-poly automotive models was our primary concern. We needed to optimise the geometry and textures without sacrificing the premium aesthetic and material quality that KIA represents." } },
       {
@@ -544,38 +536,6 @@ export const projectList = [
         ]
       },
       { type: "gallery", title: "Configurator renders", images: [kia, kia2, kia3] }
-    ]
-  },
-  {
-    slug: "towel-configurator",
-    title: "Textile 3D Visualization Configurator",
-    meta: [
-      { label: "Client", value: "Textile Co" },
-      { label: "Service", value: "3D Configurator" },
-      { label: "Duration", value: "6 weeks" },
-      { label: "Deliverables", value: "WebGL app" }
-    ],
-    heroImage: towel,
-    heroButtons: [{ label: "Launch Configurator", primary: false, to: "/Towel_Configurator/" }],
-    nextProject: { path: "/project/fruit-configurator", name: "Fruit Configurator" },
-    sections: [
-      { type: "overview", heading: "Digital textile visualization platform", text: "The Textile 3D Configurator is a specialized visualization platform for premium home goods. Our objective was to create a digital experience that captures the tactile quality of textiles, allowing users to customize colors and embroidered details on towels and linens with photorealistic micro-fiber simulation.", challenge: { heading: "Simulating fabric softness in 3D", text: "Representing the soft, porous surface of cotton and micro-fiber in 3D is notoriously difficult. We had to develop a custom shader that simulates light scattering within the fabric fibers (subsurface scattering), ensuring that the towel looked soft and 'fluffy' rather than like a solid plastic object." } },
-      {
-        type: "results", title: "Textile precision", results: [
-          { value: "Fiber-level", title: "Shader Mapping", desc: "Custom BRDF shaders for accurate cotton and micro-fiber appearance" },
-          { value: "Embroidery", title: "Rendering", desc: "Specialized rendering for intricate embroidery and brand logos" },
-          { value: "Subsurface", title: "Light Scattering", desc: "Advanced subsurface scattering for realistic textile translucency" }
-        ]
-      },
-      {
-        type: "process", steps: [
-          { step: "01", phase: "Materials", title: "Displacement Mapping", desc: "High-resolution displacement maps for physical textile depth and weave" },
-          { step: "02", phase: "Shaders", title: "BRDF Materials", desc: "Advanced BRDF material models for cotton and micro-fabric rendering" },
-          { step: "03", phase: "Lighting", title: "Dynamic Illumination", desc: "Dynamic lighting highlighting weave and texture from every angle" },
-          { step: "04", phase: "Delivery", title: "WebGL Optimization", desc: "Optimized WebGL delivery for seamless browser-based customization" }
-        ]
-      },
-      { type: "gallery", title: "Textile showcase", images: [towe2, towe3, towe4] }
     ]
   },
   {
