@@ -96,9 +96,7 @@ const Header = () => {
             alt="Elipse Studio"
             width="230"
             height="105"
-            className={`h-10 sm:h-14 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-105 ${
-              isLightSection ? 'brightness-0' : 'brightness-0 invert'
-            }`}
+            className="h-10 sm:h-14 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-105"
           />
         </Link>
 
@@ -145,7 +143,7 @@ const Header = () => {
       >
         {isMenuOpen && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.1]">
-            <img src={logo} alt="Elipse Studio Logo" width="180" height="40" className="w-[80vw] max-w-4xl -rotate-12 opacity-50 grayscale invert brightness-200" />
+            <img src={logo} alt="Elipse Studio Logo" width="180" height="40" className="w-[80vw] max-w-4xl -rotate-12 opacity-50" />
           </div>
         )}
 
