@@ -3,6 +3,7 @@ import { cache } from 'react';
 import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
 import ProjectPage from '@/components/ProjectPage';
+import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
@@ -107,6 +108,10 @@ export default async function Page({ params }) {
   const safeSlug = String(slug || '').trim();
 
   if (!safeSlug) notFound();
+
+  if (safeSlug === 'ahmed-food') {
+    return <AhmedFood />;
+  }
 
   const { data, status } = await getProject(safeSlug);
   if (status === 200 && data && data.title) {

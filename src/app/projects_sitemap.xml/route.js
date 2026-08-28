@@ -3,7 +3,9 @@ import { projectList, caseStudyEntries } from '@/components/projects/projectData
 
 export const dynamic = 'force-dynamic';
 
-const staticSlugs = [...projectList.map((p) => p.slug), ...caseStudyEntries.map((p) => p.slug)];
+// ahmed-food is a special-cased static page (src/app/project/[slug]/page.jsx)
+// with no entry in projectData.js and no DB row.
+const staticSlugs = ['ahmed-food', ...projectList.map((p) => p.slug), ...caseStudyEntries.map((p) => p.slug)];
 const staticSlugSet = new Set(staticSlugs);
 
 export async function GET() {
