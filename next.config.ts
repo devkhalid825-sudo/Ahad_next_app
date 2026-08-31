@@ -167,11 +167,11 @@ const nextConfig: NextConfig = {
         hostname: "elipsestudio.com",
         pathname: "/**",
       },
-      // Backend server where uploads are stored
+      // Backend server where uploads and media are stored
       {
         protocol: "https",
         hostname: "mediumseagreen-crocodile-699024.hostingersite.com",
-        pathname: "/uploads/**",
+        pathname: "/**",
       },
     ],
   },
