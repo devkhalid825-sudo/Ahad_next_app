@@ -151,6 +151,10 @@ const nextConfig: NextConfig = {
         source: `/uploads/:path*`,
         destination: `${resolvedBackendUrl}/uploads/:path*`,
       },
+      {
+        source: `/media/:path*`,
+        destination: `${resolvedBackendUrl}/media/:path*`,
+      },
     ];
   },
 
