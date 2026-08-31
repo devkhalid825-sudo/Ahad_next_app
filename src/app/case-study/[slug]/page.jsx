@@ -37,45 +37,64 @@ function caseStudySchemas(slug, data) {
   return { description, schemas: [schema, breadcrumb] };
 }
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const { data } = await getCaseStudy(slug);
-  if (!data || !data.title) {
-    return buildMetadata({
-      title: 'Case Study Not Found',
-      description: 'The requested case study could not be found.',
-      canonical: `${SITE_URL}/case-study/${slug}`,
-      noIndex: true,
-    });
-  }
-  const { description } = caseStudySchemas(slug, data);
-  return buildMetadata({
-    title: data.metaTitle || data.title,
-    description,
-    canonical: `${SITE_URL}/case-study/${slug}`,
-  });
-}
-
+import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map(p => [p.slug, p]));
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const safeSlug = String(slug || '').trim();
+
+  if (safeSlug === 'ahmed-food') {
+    return buildMetadata({
+      title: 'Ahmed Food - Case Study | Elipse Studio',
+      description: 'Ahmed Food 3D animation, visuals, and brand case study by Elipse Studio.',
+      canonical: `${SITE_URL}/case-study/ahmed-food`,
+    });
+  }
+
+  const { data } = await getCaseStudy(safeSlug);
+  if (!data || !data.title) {
+    return buildMetadata({
+      title: 'Case Study Not Found',
+      description: 'The requested case study could not be found.',
+      canonical: `${SITE_URL}/case-study/${safeSlug}`,
+      noIndex: true,
+    });
+  }
+  const { description } = caseStudySchemas(safeSlug, data);
+  return buildMetadata({
+    title: data.metaTitle || data.title,
+    description,
+    canonical: `${SITE_URL}/case-study/${safeSlug}`,
+  });
+}
+
 export default async function Page({ params }) {
   const { slug } = await params;
-  const { data, status } = await getCaseStudy(slug);
+  const safeSlug = String(slug || '').trim();
+
+  if (!safeSlug) notFound();
+
+  if (safeSlug === 'ahmed-food') {
+    return <AhmedFood />;
+  }
+
+  const { data, status } = await getCaseStudy(safeSlug);
   if (status === 200 && data && data.title) {
-    const { schemas } = caseStudySchemas(slug, data);
+    const { schemas } = caseStudySchemas(safeSlug, data);
     return (
       <>
         <MultiJsonLd schemas={schemas} />
-        <ProjectPage slug={slug} initialData={data} type="case-study" />
+        <ProjectPage slug={safeSlug} initialData={data} type="case-study" />
       </>
     );
   }
   // Fallback only for content that will never live in the dashboard.
-  if (projectMap[slug]) {
-    return <ProjectPage slug={slug} />;
+  if (projectMap[safeSlug]) {
+    return <ProjectPage slug={safeSlug} />;
   }
   notFound();
 }
