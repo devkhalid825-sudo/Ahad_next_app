@@ -72,7 +72,7 @@ const oldWordPressRedirects = [
 ];
 
 
-const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://mediumseagreen-crocodile-699024.hostingersite.com").replace(/\/+$/, "");
+const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || "https://api.elipsestudio.com").replace(/\/+$/, "");
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || process.env.FRONTEND_URL || "https://elipsestudio.com").replace(/\/+$/, "");
 
 const securityHeaders = [
@@ -168,6 +168,11 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       // Backend server where uploads and media are stored
+      {
+        protocol: "https",
+        hostname: "api.elipsestudio.com",
+        pathname: "/**",
+      },
       {
         protocol: "https",
         hostname: "mediumseagreen-crocodile-699024.hostingersite.com",

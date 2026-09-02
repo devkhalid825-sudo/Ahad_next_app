@@ -1,5 +1,5 @@
 // Live backend origin — used for image URLs. Next.js rewrites proxy /api/* and /uploads/* to this host.
-const LIVE_BACKEND = 'https://mediumseagreen-crocodile-699024.hostingersite.com';
+const LIVE_BACKEND = 'https://api.elipsestudio.com';
 
 const normalizeUrl = (value, fallback) => {
   if (!value) return fallback;
@@ -27,25 +27,31 @@ export function getImgSrc(img) {
   return img;
 }
 
-// Convert any upload image URL to a relative /uploads/* path so the
+// Convert any upload image URL to a relative /uploads/* or /media/* path so the
 // Next.js rewrite proxy (next.config.ts) serves it — this avoids CORS issues.
 function toRelativeUpload(url) {
   if (!url || typeof url !== 'string') return url;
   let str = url;
+  if (str.includes('api.elipsestudio.com')) {
+    str = str.replace('https://api.elipsestudio.com', '');
+  }
   if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
     str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
   }
   // Already relative
-  if (str.startsWith('/uploads/')) return str;
-  // Absolute URL pointing to any backend /uploads/
-  const match = str.match(/^https?:\/\/[^/]+(\/.*)$/);
-  if (match && match[1].startsWith('/uploads/')) return match[1];
+  if (str.startsWith('/uploads/') || str.startsWith('/media/')) return str;
+  // Absolute URL pointing to any backend /uploads/ or /media/
+  const match = str.match(/^https?:\/\/[^/]+(\/(?:uploads|media)\/.*)$/);
+  if (match) return match[1];
   return str;
 }
 
 export function fixUrls(obj) {
   if (typeof obj === 'string') {
     let str = obj;
+    if (str.includes('api.elipsestudio.com')) {
+      str = str.replace('https://api.elipsestudio.com', '');
+    }
     if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
       str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
     }

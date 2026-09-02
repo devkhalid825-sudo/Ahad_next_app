@@ -23,7 +23,7 @@ const getImageSrc = (image) => {
   if (typeof src === 'object') src = src.url || src.src || '';
   if (typeof src !== 'string' || !src.trim()) return articleImg1;
   if (src.startsWith('http')) return src;
-  if (src.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${src}`;
+  if (src.startsWith('/uploads/') || src.startsWith('/media/')) return `${BACKEND_ORIGIN}${src}`;
   return src;
 };
 

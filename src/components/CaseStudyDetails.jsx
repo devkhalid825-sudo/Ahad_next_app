@@ -11,7 +11,7 @@ const absImage = (img) => {
   if (typeof img === 'object') img = img.url || img.src || '';
   if (typeof img !== 'string') return '';
   if (img.startsWith('http')) return img;
-  if (img.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${img}`;
+  if (img.startsWith('/uploads/') || img.startsWith('/media/')) return `${BACKEND_ORIGIN}${img}`;
   return img;
 };
 import AhmedFoodLayout from './AhmedFoodLayout';

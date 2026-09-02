@@ -188,14 +188,14 @@ const getImageSrc = (image) => {
     if (!image) return '';
     if (typeof image === 'string') {
         if (image.startsWith('http')) return image;
-        if (image.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${image}`;
+        if (image.startsWith('/uploads/') || image.startsWith('/media/')) return `${BACKEND_ORIGIN}${image}`;
         return image;
     }
     if (typeof image === 'object') {
         const u = image.url || image.src || image.srcSet;
         if (typeof u === 'string') {
             if (u.startsWith('http')) return u;
-            if (u.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${u}`;
+            if (u.startsWith('/uploads/') || u.startsWith('/media/')) return `${BACKEND_ORIGIN}${u}`;
             return u;
         }
     }

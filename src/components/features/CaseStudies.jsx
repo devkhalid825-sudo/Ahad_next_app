@@ -45,7 +45,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
   const resolveImg = (url) => {
     if (!url) return fallback;
     if (url.startsWith('http')) return url;
-    if (url.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${url}`;
+    if (url.startsWith('/uploads/') || url.startsWith('/media/')) return `${BACKEND_ORIGIN}${url}`;
     return url || fallback;
   };
 
