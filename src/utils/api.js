@@ -1,5 +1,5 @@
 // Live backend origin — used for image URLs. Next.js rewrites proxy /api/* and /uploads/* to this host.
-const LIVE_BACKEND = 'https://mediumseagreen-crocodile-699024.hostingersite.com';
+const LIVE_BACKEND = 'https://api.elipsestudio.com';
 
 const normalizeUrl = (value, fallback) => {
   if (!value) return fallback;
@@ -32,8 +32,9 @@ export function getImgSrc(img) {
 function toRelativeUpload(url) {
   if (!url || typeof url !== 'string') return url;
   let str = url;
-  if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
-    str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
+  // Strip api.elipsestudio.com origin to get relative /uploads/* path
+  if (str.includes('api.elipsestudio.com')) {
+    str = str.replace('https://api.elipsestudio.com', '');
   }
   // Already relative
   if (str.startsWith('/uploads/')) return str;
@@ -46,8 +47,9 @@ function toRelativeUpload(url) {
 export function fixUrls(obj) {
   if (typeof obj === 'string') {
     let str = obj;
-    if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
-      str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
+    // Strip api.elipsestudio.com origin to get relative /uploads/* path
+    if (str.includes('api.elipsestudio.com')) {
+      str = str.replace('https://api.elipsestudio.com', '');
     }
     const relative = toRelativeUpload(str);
     if (relative !== str) return relative;
@@ -68,10 +70,6 @@ export function fixUrls(obj) {
 export const apiCall = async (endpoint, method = 'GET', body = null, token = null, isFormData = false, next = {}) => {
   const headers = {};
   if (!isFormData) {
-    // Hostinger's Node-hosting wrapper + CDN block request bodies whose
-    // Content-Type is application/json or text/plain (400 "Bad Request"
-    // HTML). The JSON payload is sent as a urlencoded `data` field
-    // instead; the backend decodes it back into req.body.
     headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
   }
   if (token) headers['Authorization'] = `Bearer ${token}`;

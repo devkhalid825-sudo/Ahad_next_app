@@ -123,8 +123,13 @@ function staticArticleSchemas(slugStr, meta) {
 function blogImageUrl(image) {
   if (!image) return `${SITE_URL}/assets/logo-og.webp`;
   let resolved = image;
+  // Normalize old Hostinger backend URL
   if (resolved.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
     resolved = resolved.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', SITE_URL);
+  }
+  // Normalize new api.elipsestudio.com backend URL
+  if (resolved.includes('api.elipsestudio.com')) {
+    resolved = resolved.replace('https://api.elipsestudio.com', SITE_URL);
   }
   if (resolved.startsWith('/')) {
     resolved = `${SITE_URL}${resolved}`;

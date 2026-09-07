@@ -6,7 +6,15 @@ import CaseStudyLayout from "./projects/CaseStudyLayout";
 import AhmedFoodLayout from "./AhmedFoodLayout";
 import { OverviewSection, ResultsSection, ProcessSection, GallerySection } from "./projects/projectSections";
 import { projectList, caseStudyEntries } from "./projects/projectData";
-import { apiCall, getYoutubeEmbed } from "../utils/api";
+import { apiCall, getYoutubeEmbed, BACKEND_ORIGIN } from "../utils/api";
+
+// Normalize backend image URLs — handles both full URLs and relative /uploads/ paths
+const resolveImg = (img) => {
+  if (!img || typeof img !== 'string') return img;
+  if (img.startsWith('http://') || img.startsWith('https://')) return img;
+  if (img.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${img}`;
+  return img;
+};
 
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map(p => [p.slug, p]));
@@ -81,7 +89,7 @@ const DynamicProjectView = ({ data, type }) => {
     ...(data.deliverables ? [{ label: 'Deliverables', value: data.deliverables }] : []),
   ];
 
-  const heroImage = data.heroImage || data.largeBanner || data.image || undefined;
+  const heroImage = resolveImg(data.heroImage || data.largeBanner || data.image || undefined);
   const heroVideoUrl = data.heroVideo || data.videoUrl;
   const heroVideo = heroVideoUrl ? getYoutubeEmbed(heroVideoUrl) : undefined;
 

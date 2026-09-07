@@ -34,8 +34,13 @@ export function buildMetadata({
 
   let sanitizedOgImage = ogImage;
   if (sanitizedOgImage) {
+    // Normalize old Hostinger backend URL
     if (sanitizedOgImage.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
       sanitizedOgImage = sanitizedOgImage.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', SITE_URL);
+    }
+    // Normalize new api.elipsestudio.com backend URL
+    if (sanitizedOgImage.includes('api.elipsestudio.com')) {
+      sanitizedOgImage = sanitizedOgImage.replace('https://api.elipsestudio.com', SITE_URL);
     }
     if (sanitizedOgImage.startsWith('/')) {
       sanitizedOgImage = `${SITE_URL}${sanitizedOgImage}`;

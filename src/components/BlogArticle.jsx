@@ -1,10 +1,23 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
-import { apiCall, getYoutubeEmbed } from '../utils/api';
+import { apiCall, getYoutubeEmbed, BACKEND_ORIGIN } from '../utils/api';
 import AhmedFoodLayout from './AhmedFoodLayout';
+
+/**
+ * Normalize a blog image URL coming from the backend.
+ * - Already full URL (http/https) → return as-is
+ * - Relative /uploads/ path         → prepend BACKEND_ORIGIN
+ * - Anything else                   → return as-is
+ */
+const resolveBlogImg = (img) => {
+  if (!img || typeof img !== 'string') return img;
+  if (img.startsWith('http://') || img.startsWith('https://')) return img;
+  if (img.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${img}`;
+  return img;
+};
 
 const BlogArticle = ({ slug, initialData }) => {
   const navigate = useNavigate();
@@ -58,10 +71,10 @@ const BlogArticle = ({ slug, initialData }) => {
     try { sections = typeof blog.sections === 'string' ? JSON.parse(blog.sections) : blog.sections; } catch (e) {}
   }
 
-  const gallery = sections.filter(s => s.image).map(s => s.image);
-  if (blog.image2) gallery.push(blog.image2);
-  if (blog.image3) gallery.push(blog.image3);
-  if (blog.image4) gallery.push(blog.image4);
+  const gallery = sections.filter(s => s.image).map(s => resolveBlogImg(s.image));
+  if (blog.image2) gallery.push(resolveBlogImg(blog.image2));
+  if (blog.image3) gallery.push(resolveBlogImg(blog.image3));
+  if (blog.image4) gallery.push(resolveBlogImg(blog.image4));
 
   return (
     <article>
@@ -69,7 +82,7 @@ const BlogArticle = ({ slug, initialData }) => {
         title={blog.title}
         meta={meta}
         heroVideo={blog.video ? getYoutubeEmbed(blog.video) : undefined}
-        heroImage={blog.image}
+        heroImage={resolveBlogImg(blog.image)}
         overview={blog.excerpt || ''}
         challenge={sections[0]?.content || ''}
         content={blog.content || ''}
