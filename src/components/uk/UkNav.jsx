@@ -22,9 +22,6 @@ const UkNav = ({
           <img src="/uk-assets/Elipse_Logo.webp" alt="Elipse Studio" className="uk-logo" />
         </Link>
         <div className="uk-nav-links">
-          {links.map((l) => (
-            <a key={l.label} href={l.href}>{l.label}</a>
-          ))}
           {phoneBadge && <span className="uk-nav-phone">{phoneBadge}</span>}
         </div>
         <div className="uk-nav-right">

@@ -10,6 +10,7 @@ const LOCATIONS = [
   { name: 'Global', href: '/' },
   { name: 'United Kingdom', href: '/uk/services' },
   { name: 'Australia', href: '/au/services' },
+  { name: 'United States', href: '/us/services' },
 ];
 
 const Header = () => {
