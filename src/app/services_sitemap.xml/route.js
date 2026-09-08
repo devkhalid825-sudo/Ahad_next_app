@@ -49,6 +49,20 @@ export async function GET() {
     '/interactive-web-experiences',
   ];
 
+  const usServices = [
+    '',
+    '/3d-product-configurators',
+    '/virtual-reality-development',
+    '/ar-development',
+    '/architectural-visualization',
+    '/3d-product-visualization',
+    '/3d-animation-services',
+    '/motion-graphics-services',
+    '/vfx-virtual-production',
+    '/virtual-showrooms',
+    '/interactive-web-experiences',
+  ];
+
   const globalUrls = globalServices.map(
     (slug) => `  <url>
     <loc>${SITE_URL}/services${slug}</loc>
@@ -76,7 +90,16 @@ export async function GET() {
   </url>`
   );
 
-  const urls = [...globalUrls, ...ukUrls, ...auUrls].join('\n');
+  const usUrls = usServices.map(
+    (slug) => `  <url>
+    <loc>${SITE_URL}/us/services${slug}</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${slug === '' ? '0.95' : '0.9'}</priority>
+  </url>`
+  );
+
+  const urls = [...globalUrls, ...ukUrls, ...auUrls, ...usUrls].join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
