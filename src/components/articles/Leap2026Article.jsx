@@ -187,9 +187,7 @@ const Leap2026Article = () => {
       <main className="px-3 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20">
 
 
-        {/* ═══════════════════════════════════════════════
-            HERO SECTION: Studio Editorial Showcase (Reference Style)
-        ═══════════════════════════════════════════════ */}
+        
         <section className="relative bg-white text-neutral-900 py-10 sm:py-16 overflow-hidden mb-8 sm:mb-12">
 
           {/* Decorative ✦ top-left */}
@@ -207,7 +205,7 @@ const Leap2026Article = () => {
           <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
 
             {/* ── Main Center Headline ── */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-serif font-bold tracking-tight text-neutral-900 max-w-4xl leading-tight mb-8 sm:mb-12 px-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[56px] font-bold tracking-tight text-neutral-900 max-w-4xl leading-tight mb-8 sm:mb-12 px-4">
               Beyond the Conference Hype:{' '}
               <span className="text-[#2563EB]">Five Ground Reality Lessons</span>{' '}
               from LEAP in Riyadh
@@ -219,7 +217,7 @@ const Leap2026Article = () => {
               {/* Left Column: Intro / Description */}
               <div className="text-left space-y-4 md:pr-4 px-4 sm:px-0 max-w-md mx-auto md:mx-0">
                 <FaRegLightbulb className="text-[#2563EB] text-2xl" />
-                <p className="text-neutral-600 text-sm sm:text-base font-serif leading-relaxed">
+                <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
                   Traditional conference recaps offer zero value. Here are five practical lessons and commercial opportunities observed directly on the ground at LEAP for creative tech founders.
                 </p>
                 <button
@@ -297,7 +295,7 @@ const Leap2026Article = () => {
 
 
         <section className="my-16 overflow-hidden border-y border-zinc-200 py-6 bg-black -mx-3 sm:-mx-6 md:-mx-10 lg:-mx-14 xl:-mx-16">
-          <div className="flex space-x-12 animate-marquee-custom whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-serif font-extrabold tracking-tight text-white">
+          <div className="flex space-x-12 animate-marquee-custom whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
               <span key={i} className={item === '✦' ? 'text-[#3B82F6]' : ''}>{item}</span>
             ))}
@@ -309,10 +307,10 @@ const Leap2026Article = () => {
         <section className="py-10 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] lg:grid-cols-[0.9fr_1.1fr] gap-8 sm:gap-12 items-start">
             <div className="md:pt-8">
-              <div className="font-serif italic text-[#2563EB] text-base mb-4">
+              <div className="italic text-[#2563EB] text-base mb-4">
                 A dispatch from the exhibition floor, Riyadh
               </div>
-              <p className="text-xl sm:text-2xl md:text-[28px] font-serif leading-snug text-zinc-800 max-w-[38ch]">
+              <p className="text-xl sm:text-2xl md:text-[28px] leading-snug text-zinc-800 max-w-[38ch]">
                 Sitting down and going through the photos from LEAP, one thing is clear: the Kingdom is not waiting. Capital, procurement, and technical demand are all moving at once.
               </p>
               <a

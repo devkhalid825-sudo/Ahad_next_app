@@ -132,8 +132,8 @@ const ProductConfiguratorsPage = () => {
         <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] overflow-hidden">
           <iframe
             className="w-full h-full"
-            src="https://www.youtube.com/embed/4pRnPhp0hH8?si=ZqUmakHyXPpKZujp"
-            title="3D Product Configurator Showcase"
+            src="https://www.youtube.com/embed/Rm2SXb_reVI"
+            title="Steering Configurator Reel"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"

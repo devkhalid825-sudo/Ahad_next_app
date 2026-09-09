@@ -61,8 +61,10 @@ const staticArticleMetadata = {
     description: 'Discover how WebAR, virtual try-ons, and immersive experiences are transforming brand marketing and consumer engagement in 2026.',
   },
   'industrial-animation': {
-    title: 'Industrial 3D Animation',
-    description: 'Professional 3D industrial animation visualizes complex machinery, engineering workflows, and technical concepts for global brands.',
+    title: 'Industrial Animation Services UK for Machinery, Manufacturing & Engineering | Elipse Studio',
+    description: 'Industrial 3D animation services for UK manufacturers, engineering companies, and industrial brands. CAD to 3D mechanical, exploded-view, and manufacturing process animation.',
+    keywords: ['industrial animation', 'industrial 3D animation', 'machinery animation', 'engineering animation', 'manufacturing animation UK', 'CAD animation', 'mechanical animation', 'exploded view animation', 'B2B animation'],
+    ogImage: `${SITE_URL}/assets/industrial-animation/industrial-hero.webp`,
   },
   'automotive-configurator': {
     title: 'Automotive 3D Configurators',
@@ -119,10 +121,11 @@ export async function generateStaticParams() {
 const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
 function staticArticleSchemas(slugStr, meta) {
+  const isLeap = slugStr.startsWith('leap-2026-wrap-up');
   const schema = buildArticleSchema({
     title: meta.title,
     description: meta.description,
-    image: `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
+    image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
     publishedAt: '2026-02-12',
     updatedAt: '2026-02-12',
     slug: slugStr,
@@ -162,7 +165,7 @@ function staticArticleSchemas(slugStr, meta) {
     { name: 'Blog', url: '/blog' },
     { name: meta.title, url: `/blog/${slugStr}` },
   ]);
-  return [schema, breadcrumb, leapFaq, leapAuthor].filter(Boolean);
+  return [schema, breadcrumb, ...(isLeap ? [leapFaq, leapAuthor] : [])].filter(Boolean);
 }
 
 function blogImageUrl(image) {
