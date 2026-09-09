@@ -514,9 +514,7 @@ const IndustrialAnimationArticle = () => {
                     <span className="text-zinc-100 text-sm sm:text-base font-medium">{row[0]}</span>
                     {/* 3D Animation cell */}
                     <div className="flex justify-center">
-                      <span className="inline-flex items-center justify-center w-8 h-8 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                      </span>
+
                     </div>
                     {/* Traditional Video cell */}
                     <div className="flex justify-center">
