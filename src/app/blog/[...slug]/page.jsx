@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { apiCall, SITE_URL } from '@/utils/api';
-import { buildMetadata, buildArticleSchema, buildBreadcrumbSchema } from '@/lib/seo';
+import { buildMetadata, buildArticleSchema, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/seo';
 import BlogArticle from '@/components/BlogArticle';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
@@ -18,8 +18,11 @@ import VRServicesArticle from '@/components/articles/VRServicesArticle';
 import RealEstateConfiguratorArticle from '@/components/articles/RealEstateConfiguratorArticle';
 import ArchitecturalVisualization from '@/components/articles/ArchitecturalVisualization';
 import ApparelConfiguratorArticle from '@/components/articles/ApparelConfiguratorArticle';
+import Leap2026Article from '@/components/articles/Leap2026Article';
 
 const staticArticles = {
+  'leap-2026-wrap-up': Leap2026Article,
+  'leap-2026-wrap-up-bilal-lania': Leap2026Article,
   'web-based-configurator': ConfiguratorArticle,
   'immersive-ar-marketing': ARMarketingArticle,
   'industrial-animation': IndustrialAnimationArticle,
@@ -37,6 +40,18 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  'leap-2026-wrap-up': {
+    title: 'LEAP 2026 Wrap Up: Social Posts and In-Depth Insights | Bilal Lania',
+    description: 'Ground reality lessons from LEAP Riyadh for creative tech founders. 3D interactive configurators, enterprise VR, digital twins, and anamorphic 3D in Saudi Arabia.',
+    keywords: ['LEAP 2026', 'LEAP Riyadh', '3D interactive configurators', 'enterprise VR AR', 'digital twins Saudi Arabia', 'anamorphic 3D', 'creative tech Saudi Arabia', 'Bilal Lania'],
+    ogImage: `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
+  },
+  'leap-2026-wrap-up-bilal-lania': {
+    title: 'LEAP 2026 Wrap Up: Social Posts and In-Depth Insights | Bilal Lania',
+    description: 'Ground reality lessons from LEAP Riyadh for creative tech founders. 3D interactive configurators, enterprise VR, digital twins, and anamorphic 3D in Saudi Arabia.',
+    keywords: ['LEAP 2026', 'LEAP Riyadh', '3D interactive configurators', 'enterprise VR AR', 'digital twins Saudi Arabia', 'anamorphic 3D', 'creative tech Saudi Arabia', 'Bilal Lania'],
+    ogImage: `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
+  },
   'web-based-configurator': {
     title: 'Web-Based 3D Configurators',
     description: 'Learn how interactive 3D product configurators drive online sales conversions, reduce return rates, and engage buyers in real time.',
@@ -104,20 +119,50 @@ export async function generateStaticParams() {
 const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
 function staticArticleSchemas(slugStr, meta) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: meta.title,
+  const schema = buildArticleSchema({
+    title: meta.title,
     description: meta.description,
-    publisher: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
-    datePublished: '2025-01-15',
+    image: `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
+    publishedAt: '2026-02-12',
+    updatedAt: '2026-02-12',
+    slug: slugStr,
+  });
+
+  const leapFaq = buildFaqSchema([
+    {
+      q: 'What are the biggest LEAP 2026 takeaways for creative tech founders?',
+      a: 'The five ground lessons from LEAP Riyadh: interactive 3D configurators replacing passive renders, enterprise VR/AR validation from Aramco and STC, regional e-learning partnerships as the fastest door in, digital twins becoming national-scale infrastructure, and anamorphic 3D content owning public attention.',
+    },
+    {
+      q: 'Why are interactive configurators the future of architectural visualization?',
+      a: 'Across the LEAP floor the most compelling showcases were fully interactive real-time configurators, letting buyers change finishes, layouts and lighting live — turning passive visual assets into commercial sales engines.',
+    },
+    {
+      q: 'How should studios enter the Saudi creative tech market?',
+      a: 'Through regional partnership: regional e-learning and training platforms already carry institutional trust, Arabic content pipelines and government relationships, so plugging 3D and interactive content into existing platforms is faster than launching standalone.',
+    },
+    {
+      q: 'What is the digital twins opportunity in Saudi Arabia?',
+      a: 'Digital twins are transitioning from buzzword to essential infrastructure. Authorities like Haramain are actively exploring partners, and government bodies, master developers and smart-city operators need studios that build accurate data-connected 3D replicas.',
+    },
+  ]);
+
+  const leapAuthor = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Bilal Lania',
+    jobTitle: 'Founder & Creative Director',
+    worksFor: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
+    url: SITE_URL,
+    description: 'Founder and Creative Director of Elipse Studio. Ground report from LEAP 2026 in Riyadh on 3D interactive configurators, enterprise VR/AR, digital twins and anamorphic content in Saudi Arabia.',
   };
+
   const breadcrumb = buildBreadcrumbSchema([
     { name: 'Home', url: '/' },
     { name: 'Blog', url: '/blog' },
     { name: meta.title, url: `/blog/${slugStr}` },
   ]);
-  return [schema, breadcrumb];
+  return [schema, breadcrumb, leapFaq, leapAuthor].filter(Boolean);
 }
 
 function blogImageUrl(image) {
@@ -172,6 +217,8 @@ export async function generateMetadata({ params }) {
       title: meta.title,
       description: meta.description,
       canonical: `${SITE_URL}/blog/${slugStr}`,
+      ogImage: meta.ogImage,
+      keywords: meta.keywords,
       type: 'article',
     });
   }

@@ -32,7 +32,9 @@ import edu1Raw from '../assets/images/edu-1.webp';
 import vrHeroRaw from '../assets/images/1 (1).webp';
 import articleImg1Raw from '../assets/article-img/A (3) .webp';
 import articleImg2Raw from '../assets/article-img/A (5) .webp';
+import leapCardRaw from '../assets/ElipseImages/personal/Configurator.png';
 
+const leapCard = getImgSrc(leapCardRaw);
 const elephantImg = getImgSrc(elephantImgRaw);
 const configuratorHero = getImgSrc(configuratorHeroRaw);
 const arThumbnail = getImgSrc(arThumbnailRaw);
@@ -56,6 +58,15 @@ const staticImages = {
 };
 
 const staticPosts = [
+    {
+        id: 'static-leap-2026',
+        title: 'LEAP 2026 Wrap Up: Five Ground Lessons From Riyadh',
+        excerpt: 'Five concrete observations from LEAP in Riyadh by Bilal Lania. How 3D interactive configurators, enterprise VR, and digital twins are shaping creative tech in Saudi Arabia.',
+        image: leapCard,
+        date: 'SEPTEMBER 1, 2026',
+        category: 'Event & Strategy',
+        url: '/blog/leap-2026-wrap-up',
+    },
     {
         id: 'static-1',
         title: 'How Web-Based Configurators Are Transforming Product Sales',
@@ -297,10 +308,18 @@ const BlogCardSkeleton = () => (
 const BlogsPage = ({ initialBlogs }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [apiBlogs, setApiBlogs] = useState(initialBlogs || []);
+    const pinLeapFirst = (list) => {
+        const leapIdx = list.findIndex(p => p.url === '/blog/leap-2026-wrap-up');
+        if (leapIdx > 0) {
+            const [leap] = list.splice(leapIdx, 1);
+            list.unshift(leap);
+        }
+        return list;
+    };
     const [filteredPosts, setFilteredPosts] = useState(() => {
         if (initialBlogs && initialBlogs.length) {
             const apiUrls = new Set(initialBlogs.map(b => b.url));
-            return [...initialBlogs, ...staticPosts.filter(p => !apiUrls.has(p.url))].sort((a, b) => new Date(b.date) - new Date(a.date));
+            return pinLeapFirst([...initialBlogs, ...staticPosts.filter(p => !apiUrls.has(p.url))].sort((a, b) => new Date(b.date) - new Date(a.date)));
         }
         return staticPosts;
     });
@@ -326,7 +345,7 @@ const BlogsPage = ({ initialBlogs }) => {
                     setApiBlogs(sorted);
                     const apiUrls = new Set(sorted.map(b => b.url));
                     const uniqueStatic = staticPosts.filter(p => !apiUrls.has(p.url));
-                    setFilteredPosts([...sorted, ...uniqueStatic].sort((a, b) => new Date(b.date) - new Date(a.date)));
+                    setFilteredPosts(pinLeapFirst([...sorted, ...uniqueStatic].sort((a, b) => new Date(b.date) - new Date(a.date))));
                 } else {
                     setError('Failed to load blogs from server');
                 }
@@ -343,7 +362,7 @@ const BlogsPage = ({ initialBlogs }) => {
     const allPosts = (() => {
         const apiUrls = new Set(apiBlogs.map(b => b.url));
         const uniqueStatic = staticPosts.filter(p => !apiUrls.has(p.url));
-        return [...apiBlogs, ...uniqueStatic].sort((a, b) => new Date(b.date) - new Date(a.date));
+        return pinLeapFirst([...apiBlogs, ...uniqueStatic].sort((a, b) => new Date(b.date) - new Date(a.date)));
     })();
 
     const handleSearchChange = (e) => {

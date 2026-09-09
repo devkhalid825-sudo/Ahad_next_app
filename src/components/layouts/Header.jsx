@@ -103,7 +103,7 @@ const Header = () => {
     <nav
       ref={headerRef}
       className={`w-full transition-all duration-300 ${
-        isMenuOpen ? '' : isLightSection ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        isMenuOpen ? '' : 'bg-transparent'
       }`}
     >
       <div className="flex justify-between items-center relative z-50">
@@ -117,7 +117,9 @@ const Header = () => {
             alt="Elipse Studio"
             width="230"
             height="105"
-            className="h-10 sm:h-14 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-105"
+            className={`h-10 sm:h-14 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-105 ${
+              isLightSection ? 'invert' : ''
+            }`}
           />
         </Link>
 

@@ -12,10 +12,12 @@ import 'swiper/css/free-mode';
 import articleImg1Raw from '../../assets/article-img/A (3) .webp';
 import articleImg6Raw from '../../assets/ElipseImages/projects/Artictecture.webp';
 import vrHeroRaw from '../../assets/images/1 (1).webp';
+import configuratorCardRaw from '../../assets/ElipseImages/personal/Configurator.png';
 
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);
 const vrHero = getImgSrc(vrHeroRaw);
+const configuratorCard = getImgSrc(configuratorCardRaw);
 
 const getImageSrc = (image) => {
   if (!image) return articleImg1;
@@ -74,6 +76,15 @@ const News = ({ initialBlogs = null }) => {
 
   const staticPosts = [
     {
+      id: 19,
+      title: 'LEAP 2026 Wrap Up: Five Ground Lessons From Riyadh',
+      image: configuratorCard,
+      date: 'SEPTEMBER 1, 2026',
+      category: 'Event & Strategy',
+      readTime: '10 min read',
+      url: '/blog/leap-2026-wrap-up',
+    },
+    {
       id: 18,
       title: 'Apparel Configurator for Fashion Brands in 2026: The Complete Guide',
       image: articleImg1,
@@ -107,7 +118,7 @@ const News = ({ initialBlogs = null }) => {
   const mergedStaticPosts = staticPosts
     .filter((p) => !apiUrls.has(p.url))
     .map((p) => ({ ...p, _key: `static-${p.id}` }));
-  const blogPosts = [...mergedApiBlogs, ...mergedStaticPosts];
+  const blogPosts = [...mergedStaticPosts, ...mergedApiBlogs];
 
   return (
     <section
@@ -154,13 +165,15 @@ const News = ({ initialBlogs = null }) => {
                     />
                   </div>
                   <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
-                    <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
-                      <span>{post.date}</span>
-                      <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
-                      <span>{post.category}</span>
-                      <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
-                      <span>{post.readTime}</span>
-                    </div>
+                    {post.url !== '/blog/leap-2026-wrap-up' && (
+                      <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
+                        <span>{post.date}</span>
+                        <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
+                        <span>{post.category}</span>
+                        <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
+                        <span>{post.readTime}</span>
+                      </div>
+                    )}
                     <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
                       {post.title}
                     </h3>
