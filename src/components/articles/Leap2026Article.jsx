@@ -118,6 +118,18 @@ const Leap2026Article = () => {
   const [activeTab, setActiveTab] = useState('blog'); // 'blog' | 'linkedin' | 'twitter' | 'instagram'
   const [copied, setCopied] = useState(false);
   const [activeCard, setActiveCard] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+
+  const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX);
+  const handleTouchEnd = (e) => {
+    if (touchStart === null) return;
+    const diff = touchStart - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && activeCard < leapCards.length - 1) setActiveCard(activeCard + 1);
+      if (diff < 0 && activeCard > 0) setActiveCard(activeCard - 1);
+    }
+    setTouchStart(null);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -371,7 +383,20 @@ const Leap2026Article = () => {
                 </p>
               </div>
               <div className="md:order-1">
-                <Frame src={configuratorPng} cap="Live configurator, real-estate pavilion" />
+                <figure className="relative aspect-video overflow-hidden rounded-md bg-zinc-900">
+                  <video
+                    src="/assets/ElipseImages/videos/Configurator.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
+                  <figcaption className="absolute left-2.5 bottom-2.5 right-2.5 font-serif italic text-[11px] text-white/70 leading-snug">
+                    Touchless Configurator
+                  </figcaption>
+                </figure>
               </div>
             </article>
 
@@ -442,11 +467,14 @@ const Leap2026Article = () => {
                   Riyadh has already built extraordinary digital display infrastructure, yet most screens still broadcast flat video. At LEAP, the pavilions that deployed anamorphic 3D displays achieved real stopping power — forced-perspective illusions made people physically halt and watch. The value over the next few years belongs to studios that can build <strong className="text-zinc-900 font-semibold font-sans">custom, anamorphic animations</strong> that turn public screens into landmarks.
                 </p>
               </div>
-              <div className="md:order-1 relative overflow-hidden rounded-md bg-zinc-900 aspect-video">
-                <LazyVideo
-                  src="/assets/leap-2026/videos/anamorphic.webm"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+              <div className="md:order-1">
+                <div className="relative overflow-hidden rounded-md bg-zinc-900 aspect-video">
+                  <LazyVideo
+                    src="/assets/leap-2026/videos/anamorphic.webm"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-xs text-zinc-900 mt-2 font-sans">Captured by Syed Maaz Hashim</p>
               </div>
             </article>
           </div>
@@ -488,7 +516,7 @@ const Leap2026Article = () => {
 
           <div className="md:grid md:grid-cols-5 md:gap-6 relative">
             {/* Mobile: carousel */}
-            <div className="md:hidden overflow-hidden rounded-xl">
+            <div className="md:hidden overflow-hidden rounded-xl" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
               <motion.div
                 key={activeCard}
                 initial={{ opacity: 0, x: 40 }}

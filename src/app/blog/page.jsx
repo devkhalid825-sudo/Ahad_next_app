@@ -43,16 +43,16 @@ export default async function Page() {
   const initialBlogs =
     status === 200 && Array.isArray(data)
       ? data
-          .map((b) => ({
-            id: b.id,
-            title: b.title,
-            excerpt: b.excerpt,
-            image: b.image,
-            date: b.date,
-            category: b.category,
-            url: '/blog/' + b.slug,
-          }))
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .map((b) => ({
+          id: b.id,
+          title: b.title,
+          excerpt: b.excerpt,
+          image: b.image,
+          date: b.date,
+          category: b.category,
+          url: '/blog/' + b.slug,
+        }))
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
       : null;
   return <BlogsPage initialBlogs={initialBlogs} />;
 }
