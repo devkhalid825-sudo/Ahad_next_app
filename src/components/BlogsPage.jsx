@@ -32,7 +32,7 @@ import edu1Raw from '../assets/images/edu-1.webp';
 import vrHeroRaw from '../assets/images/1 (1).webp';
 import articleImg1Raw from '../assets/article-img/A (3) .webp';
 import articleImg2Raw from '../assets/article-img/A (5) .webp';
-import leapCardRaw from '../assets/ElipseImages/personal/Configurator.png';
+import leapCardRaw from '../assets/ElipseImages/personal/Configurator.webp';
 
 const leapCard = getImgSrc(leapCardRaw);
 const elephantImg = getImgSrc(elephantImgRaw);

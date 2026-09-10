@@ -12,7 +12,7 @@ import 'swiper/css/free-mode';
 import articleImg1Raw from '../../assets/article-img/A (3) .webp';
 import articleImg6Raw from '../../assets/ElipseImages/projects/Artictecture.webp';
 import vrHeroRaw from '../../assets/images/1 (1).webp';
-import configuratorCardRaw from '../../assets/ElipseImages/personal/Configurator.png';
+import configuratorCardRaw from '../../assets/ElipseImages/personal/Configurator.webp';
 
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);

@@ -9,15 +9,15 @@ import LatestWork from "../features/LatestWork";
 import ServiceRelatedLinks from "./ServiceRelatedLinks";
 import ClientReviews from "../features/ClientReviews";
 
-import _solutionsImg from "../../assets/club-pro/01_00040.webp";
-import _whyUsImg from "../../assets/club-pro/06_00513.webp";
-import _stackImg from "../../assets/club-pro/11_01134.webp";
-import _clubPro1 from "../../assets/club-pro/01_00040.webp";
-import _clubPro2 from "../../assets/club-pro/06_00513.webp";
-import _clubPro3 from "../../assets/club-pro/07.webp";
-import _clubPro4 from "../../assets/club-pro/09.webp";
-import _clubPro5 from "../../assets/club-pro/10.webp";
-import _clubPro6 from "../../assets/club-pro/11_01134.webp";
+import _solutionsImg from "../../assets/ElipseImages/hero/volve-configrator.webp";
+import _whyUsImg from "../../assets/ElipseImages/projects/seat-2-1.webp";
+import _stackImg from "../../assets/ElipseImages/blogs/alnoor1.webp";
+import _clubPro1 from "../../assets/ElipseImages/hero/volve-configrator.webp";
+import _clubPro2 from "../../assets/ElipseImages/blogs/alnoor1.webp";
+import _clubPro3 from "../../assets/ElipseImages/blogs/alnoor2.webp";
+import _clubPro4 from "../../assets/ElipseImages/blogs/alnoor3.webp";
+import _clubPro5 from "../../assets/ElipseImages/blogs/alnoor4.webp";
+import _clubPro6 from "../../assets/ElipseImages/projects/seat-2-1.webp";
 import { getImgSrc } from "../../utils/api";
 const solutionsImg = getImgSrc(_solutionsImg);
 const whyUsImg = getImgSrc(_whyUsImg);
@@ -132,8 +132,8 @@ const ProductConfiguratorsPage = () => {
         <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] overflow-hidden">
           <iframe
             className="w-full h-full"
-            src="https://www.youtube.com/embed/Rm2SXb_reVI"
-            title="Steering Configurator Reel"
+            src="https://www.youtube.com/embed/QGNO3iS2ojo"
+            title="Volvo 3D Product Configurator"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"

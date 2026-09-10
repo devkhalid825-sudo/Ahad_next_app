@@ -85,21 +85,14 @@ const AhmedFoodLayout = ({
     <div className="w-full overflow-x-hidden bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-[#F2F0EB]">
 
       {/* HERO */}
-      <section className="bg-[#0D0D0D] px-4 sm:px-8 md:px-12 lg:px-16 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 md:pb-10 relative">
+      <section className="bg-[#0D0D0D] px-8 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 md:pb-10 relative">
         <Header />
 
-        <div className="max-w-[1600px] mx-auto">
-          {/* Heading and Start a Project Button in same row */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-6 pt-2 sm:pt-4">
+          {/* Heading */}
+          <div className="pt-2 sm:pt-4 mb-4 sm:mb-6">
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F2F0EB] leading-[1.1] tracking-tight">
               {title}<span className="text-[#4169E1]">.</span>
             </h1>
-            <button
-              onClick={handleStartProject}
-              className="inline-flex items-center justify-center text-xs sm:text-[13px] font-semibold px-6 py-3 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 cursor-pointer shrink-0 shadow-lg shadow-[#4169E1]/20 self-start sm:self-auto"
-            >
-              Start a Project →
-            </button>
           </div>
 
           {meta.length > 0 && (
@@ -130,7 +123,7 @@ const AhmedFoodLayout = ({
             </div>
           )}
 
-          <div className="w-full relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+          <div className="w-full relative aspect-[4/3] sm:aspect-video rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-black">
             {currentVideoUrl ? (
               <iframe
                 src={currentVideoUrl}
@@ -144,12 +137,11 @@ const AhmedFoodLayout = ({
               <img src={heroImage} alt={title} width="1200" height="700" className="w-full h-full object-cover" />
             ) : null}
           </div>
-        </div>
       </section>
 
       {/* OVERVIEW + CHALLENGE */}
       {(overview || challenge) && (
-        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-16 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch max-w-[1600px] mx-auto">
+        <section className="px-8 py-8 md:py-16 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch ">
           {overview && (
             <div className="p-4 sm:p-6 md:p-8 bg-[#111] rounded-xl border border-[#222]">
               <p className="text-xs sm:text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Overview</p>
@@ -179,7 +171,7 @@ const AhmedFoodLayout = ({
 
       {/* HTML CONTENT (from editor) */}
       {content && (
-        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-4 bg-[#0D0D0D] max-w-[1600px] mx-auto">
+        <section className="px-8 py-4 bg-[#0D0D0D] ">
           <div
             className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-left w-full text-zinc-300 [&_h1]:text-[#F2F0EB] [&_h2]:text-[#F2F0EB] [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-[#F2F0EB] [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h4]:text-[#F2F0EB] [&_p]:mb-4 [&_strong]:text-[#F2F0EB] [&_a]:text-[#4169E1] [&_a:hover]:text-[#3158D4] [&_img]:rounded-lg [&_img]:border [&_img]:border-[#1E1E1E] [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#4169E1] [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-zinc-400 [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-2"
             dangerouslySetInnerHTML={{ __html: content }}
@@ -192,8 +184,8 @@ const AhmedFoodLayout = ({
         if (!section.content && !section.image && !section.video) return null;
         const hasBoth = section.content && section.image;
         return (
-          <section key={i} className={`px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-14 ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
-            <div className={`max-w-[1600px] mx-auto ${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
+          <section key={i} className={`px-8 py-8 md:py-14 ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
+            <div className={` ${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
               {section.content && (
                 <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-zinc-300 whitespace-pre-line">
                   {section.content}
@@ -206,7 +198,7 @@ const AhmedFoodLayout = ({
               )}
             </div>
             {section.video && (
-              <div className="max-w-[1600px] mx-auto w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
+              <div className=" w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
                 <iframe
                   src={`https://www.youtube.com/embed/${section.video}`}
                   title={`Section ${i + 2} video`}
@@ -223,8 +215,8 @@ const AhmedFoodLayout = ({
 
       {/* RESULTS */}
       {results.length > 0 && (
-        <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-16">
-          <div className="max-w-[1600px] mx-auto">
+        <section className="bg-[#111] px-8 py-8 md:py-16">
+          <div className="">
             <div className="mb-6 md:mb-10">
               <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Measurable impact</p>
               <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium tracking-tight leading-tight text-[#F2F0EB]">
@@ -246,8 +238,8 @@ const AhmedFoodLayout = ({
 
       {/* PROCESS */}
       {process.length > 0 && (
-        <section className="px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-16 bg-[#0D0D0D]">
-          <div className="max-w-[1600px] mx-auto">
+        <section className="px-8 py-8 md:py-16 bg-[#0D0D0D]">
+          <div className="">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">How we did it</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-tight text-[#F2F0EB]">
               Our process
@@ -270,8 +262,8 @@ const AhmedFoodLayout = ({
 
       {/* GALLERY — categorized auto-scroll rows or single image */}
       {galleryCategories.length > 0 ? (
-        <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-16 overflow-hidden">
-          <div className="max-w-[1600px] mx-auto">
+        <section className="bg-[#111] px-8 py-8 md:py-16 overflow-hidden">
+          <div className="">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-tight text-[#F2F0EB]">
               Selected renders
@@ -293,8 +285,8 @@ const AhmedFoodLayout = ({
           </div>
         </section>
       ) : gallery.length > 0 && (
-        <section className="bg-[#111] px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-16 overflow-hidden">
-          <div className="max-w-[1600px] mx-auto">
+        <section className="bg-[#111] px-8 py-8 md:py-16 overflow-hidden">
+          <div className="">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-tight text-[#F2F0EB]">
               Selected renders
@@ -308,7 +300,7 @@ const AhmedFoodLayout = ({
 
       {/* EXTRA CONTENT (children) */}
       {children && (
-        <section className="px-4 sm:px-8 md:px-12 py-6 md:py-12 bg-[#0D0D0D]">
+        <section className="px-8 py-6 md:py-12 bg-[#0D0D0D]">
           <div className="max-w-4xl mx-auto">
             {children}
           </div>
@@ -317,20 +309,19 @@ const AhmedFoodLayout = ({
 
       {/* SMALL BANNER */}
       {smallBanner && (
-        <section className="px-4 sm:px-8 md:px-12 py-6 md:py-10 bg-[#0D0D0D]">
-          <div className="max-w-[1600px] mx-auto w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
+        <section className="px-8 py-6 md:py-10 bg-[#0D0D0D]">
+          <div className=" w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
             <img src={smallBanner} alt={title || "Project banner"} width="1200" height="600" className="w-full h-auto object-contain" />
           </div>
         </section>
       )}
 
-      {/* CTA / BOTTOM NAVIGATION (Desktop: 2 buttons on left, 1 on right) */}
-      <footer className="px-4 sm:px-8 md:px-12 lg:px-16 py-6 md:py-10 bg-[#0D0D0D] border-t border-[#1A1A1A]">
-        <div className="max-w-[1600px] mx-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 w-full">
-          {/* Left side: 2 buttons (All work + View Project / Start a project) */}
-          <div className="flex items-center gap-3 flex-wrap">
+      {/* CTA / BOTTOM NAVIGATION */}
+      <footer className="px-8 py-6 md:py-10 bg-[#0D0D0D] border-t border-[#1A1A1A]">
+        <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
-              className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-medium px-4 sm:px-5 py-2.5 border border-[#333] rounded-full hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-zinc-400 bg-transparent cursor-pointer"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[13px] font-medium px-3 sm:px-5 py-2 sm:py-2.5 border border-[#333] rounded-[6px] hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-zinc-400 bg-transparent cursor-pointer whitespace-nowrap"
               onClick={() => router.push('/')}
             >
               <FaThLarge aria-hidden="true" /> All work
@@ -340,13 +331,13 @@ const AhmedFoodLayout = ({
                 href={ctaUrl}
                 target={ctaUrl.startsWith('http') ? '_blank' : undefined}
                 rel={ctaUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold px-5 py-2.5 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 no-underline"
+                className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[13px] font-semibold px-3 sm:px-5 py-2 sm:py-2.5 bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 no-underline whitespace-nowrap"
               >
                 <FaPaperPlane aria-hidden="true" /> {ctaText || 'View Project'}
               </a>
             ) : (
               <button
-                className="inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold px-5 py-2.5 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer"
+                className="inline-flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[13px] font-semibold px-3 sm:px-5 py-2 sm:py-2.5 bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer whitespace-nowrap"
                 onClick={handleStartProject}
               >
                 <FaPaperPlane aria-hidden="true" /> Start a project
@@ -358,7 +349,7 @@ const AhmedFoodLayout = ({
           {nextProject && (
             <div className="flex items-center">
               <button
-                className="inline-flex items-center justify-center gap-2 text-xs sm:text-[13px] font-semibold px-6 py-2.5 bg-[#4169E1] text-white rounded-full hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-1.5 sm:gap-2 text-[10px] sm:text-[13px] font-semibold px-3 sm:px-6 py-2 sm:py-2.5 bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer whitespace-nowrap"
                 onClick={() => router.push(nextProject.path)}
               >
                 Next Project →

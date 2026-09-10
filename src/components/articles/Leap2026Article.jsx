@@ -12,18 +12,20 @@ import {
 import { FaLinkedin, FaTwitter, FaInstagram, FaRegLightbulb } from 'react-icons/fa';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
-import _leapHero from '../../assets/ElipseImages/personal/leap-hero.jpg';
-import _leapPartner from '../../assets/ElipseImages/personal/leap-partner.jpg';
-import _waSep1 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-01 at 6.55.45 PM.jpeg';
-import _waSep2 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-02 at 4.18.12 AM.jpeg';
-import _wa528pm from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-03 at 2.05.28 PM.jpeg';
-import _wa1258 from '../../assets/ElipseImages/personal/images/WhatsApp Image 2026-09-03 at 1.25.58 AM.jpeg';
-import _anamorphic from '../../assets/ElipseImages/personal/anamorphic.png';
-import _digitalTwins from '../../assets/ElipseImages/personal/Digital twins.png';
-import _eLearning from '../../assets/ElipseImages/personal/e-learning.png';
-import _enterpriseValidation from '../../assets/ElipseImages/personal/Enterprise validation.png';
-import _mainPng from '../../assets/ElipseImages/personal/main.png';
-import _configuratorPng from '../../assets/ElipseImages/personal/Configurator.png';
+import _leapHero from '../../assets/ElipseImages/personal/leap-hero.webp';
+import _leapPartner from '../../assets/ElipseImages/personal/leap-partner.webp';
+import _waSep1 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-01 at 6.55.45 PM.webp';
+import _waSep2 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-02 at 4.18.12 AM.webp';
+import _wa528pm from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-03 at 2.05.28 PM.webp';
+import _wa1258 from '../../assets/ElipseImages/personal/images/WhatsApp Image 2026-09-03 at 1.25.58 AM.webp';
+import _digitalTwins from '../../assets/ElipseImages/personal/Digital twins.webp';
+import _eLearning from '../../assets/ElipseImages/personal/e-learning.webp';
+import _enterpriseValidation from '../../assets/ElipseImages/personal/Enterprise validation.webp';
+import _mainPng from '../../assets/ElipseImages/personal/main.webp';
+import _configuratorPng from '../../assets/ElipseImages/personal/Configurator.webp';
+import _gaming from '../../assets/ElipseImages/personal/gaming.webp';
+import _football from '../../assets/ElipseImages/personal/football.webp';
+import _f1 from '../../assets/ElipseImages/personal/f1.webp';
 import { getImgSrc } from '../../utils/api';
 
 const leapHero = getImgSrc(_leapHero);
@@ -32,12 +34,14 @@ const waSep1 = getImgSrc(_waSep1);
 const waSep2 = getImgSrc(_waSep2);
 const wa528pm = getImgSrc(_wa528pm);
 const wa1258 = getImgSrc(_wa1258);
-const anamorphic = getImgSrc(_anamorphic);
 const digitalTwins = getImgSrc(_digitalTwins);
 const eLearning = getImgSrc(_eLearning);
 const enterpriseValidation = getImgSrc(_enterpriseValidation);
 const mainPng = getImgSrc(_mainPng);
 const configuratorPng = getImgSrc(_configuratorPng);
+const gamingPng = getImgSrc(_gaming);
+const footballPng = getImgSrc(_football);
+const f1Png = getImgSrc(_f1);
 const leapVideos = [
   '/assets/leap-2026/videos/video-1.mp4',
   '/assets/leap-2026/videos/video-2.mp4',
@@ -113,9 +117,19 @@ const LazyVideo = ({ src, className }) => {
 const Leap2026Article = () => {
   const [activeTab, setActiveTab] = useState('blog'); // 'blog' | 'linkedin' | 'twitter' | 'instagram'
   const [copied, setCopied] = useState(false);
+  const [activeCard, setActiveCard] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+    const timer = setInterval(() => {
+      setActiveCard((prev) => (prev + 1) % leapCards.length);
+    }, 3000);
+    return () => clearInterval(timer);
   }, []);
 
   const handleCopyLink = () => {
@@ -127,10 +141,13 @@ const Leap2026Article = () => {
   };
 
   const handleScrollToContact = () => {
-    const contactEl = document.getElementById('leap-contact');
-    if (contactEl) {
-      contactEl.scrollIntoView({ behavior: 'smooth' });
-    }
+    setActiveTab('blog');
+    setTimeout(() => {
+      const journalEl = document.getElementById('journal');
+      if (journalEl) {
+        journalEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   const twitterPosts = [
@@ -183,11 +200,8 @@ const Leap2026Article = () => {
     <div data-nav="light" className="w-full min-h-screen overflow-x-hidden bg-white text-zinc-900 selection:bg-[#2563EB]/30 selection:text-white">
       <Header />
 
-
       <main className="px-3 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20">
 
-
-        
         <section className="relative bg-white text-neutral-900 py-10 sm:py-16 overflow-hidden mb-8 sm:mb-12">
 
           {/* Decorative ✦ top-left */}
@@ -222,7 +236,7 @@ const Leap2026Article = () => {
                 </p>
                 <button
                   onClick={handleScrollToContact}
-                  className="px-5 py-2.5 rounded-full border border-neutral-300 text-xs font-semibold text-neutral-800 hover:bg-neutral-100 hover:border-neutral-900 transition-all shadow-sm cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 sm:px-5 sm:py-2.5 rounded-full border border-neutral-300 text-sm sm:text-xs font-semibold text-neutral-800 hover:bg-neutral-100 hover:border-neutral-900 transition-all shadow-sm cursor-pointer text-center"
                 >
                   Explore Insights
                 </button>
@@ -249,8 +263,8 @@ const Leap2026Article = () => {
               </div>
 
               {/* Right Column: Stars + Stats */}
-              <div className="text-left md:text-right flex flex-col md:items-end justify-center space-y-2 md:pl-4 px-4 sm:px-0 max-w-md mx-auto md:mx-0">
-                <div className="flex gap-0.5 text-[#2563EB] md:justify-end text-lg">
+              <div className="text-center md:text-left flex flex-col items-center md:items-start justify-center space-y-2 md:pl-4 px-4 sm:px-0 max-w-md mx-auto md:mx-0">
+                <div className="flex gap-0.5 text-[#2563EB] justify-center text-lg">
                   {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
                 </div>
                 <div className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 leading-none">
@@ -259,8 +273,8 @@ const Leap2026Article = () => {
                 <p className="text-xs sm:text-sm text-neutral-500 uppercase tracking-wider font-medium">
                   Riyadh Exhibition Floor
                 </p>
-                <div className="mt-3 bg-blue-50 border border-blue-100 p-3 rounded-2xl text-left w-full sm:w-auto sm:max-w-[200px]">
-                  <p className="text-[11px] text-zinc-700 font-medium leading-snug">
+                <div className="mt-3 bg-blue-50 border border-blue-100 p-4 rounded-2xl text-center md:text-left w-full">
+                  <p className="text-[11px] sm:text-xs text-zinc-700 font-medium leading-snug">
                     &ldquo;Deals happen on trust. In new markets, you cannot win from behind a desk.&rdquo;
                   </p>
                   <p className="text-[11px] font-bold text-[#2563EB] mt-1">— Bilal Lania</p>
@@ -293,7 +307,6 @@ const Leap2026Article = () => {
           </div>
         </section>
 
-
         <section className="my-16 overflow-hidden border-y border-zinc-200 py-6 bg-black -mx-3 sm:-mx-6 md:-mx-10 lg:-mx-14 xl:-mx-16">
           <div className="flex space-x-12 animate-marquee-custom whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
@@ -302,7 +315,6 @@ const Leap2026Article = () => {
           </div>
         </section>
 
-
         {/* ══════ INTRO: A DISPATCH FROM THE FLOOR ══════ */}
         <section className="py-10 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] lg:grid-cols-[0.9fr_1.1fr] gap-8 sm:gap-12 items-start">
@@ -310,7 +322,7 @@ const Leap2026Article = () => {
               <div className="italic text-[#2563EB] text-base mb-4">
                 A dispatch from the exhibition floor, Riyadh
               </div>
-              <p className="text-xl sm:text-2xl md:text-[28px] leading-snug text-zinc-800 max-w-[38ch]">
+              <p className="text-xl sm:text-2xl md:text-[28px] leading-snug text-zinc-800 max-w-[38ch] font-sans">
                 Sitting down and going through the photos from LEAP, one thing is clear: the Kingdom is not waiting. Capital, procurement, and technical demand are all moving at once.
               </p>
               <a
@@ -353,7 +365,7 @@ const Leap2026Article = () => {
                 <h3 className="font-serif font-medium text-2xl sm:text-3xl text-zinc-900 max-w-[22ch] leading-tight mb-4">
                   Interactive configurators are replacing passive renders
                 </h3>
-                <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
+                <p className="text-zinc-700 font-sans leading-relaxed max-w-[66ch]">
                   Architectural visualization has relied on pre-rendered flythrough videos and static images for decades. Across the LEAP floor, the most compelling showcases were fully interactive, with real estate and automotive configurators letting buyers change finishes, layouts, and lighting in real time.{' '}
                   <strong className="text-zinc-900 font-semibold">Position your offering around a 3D Interactive Configurator</strong>, and a passive visual asset becomes a commercial sales engine.
                 </p>
@@ -372,8 +384,8 @@ const Leap2026Article = () => {
                 <h3 className="font-serif font-medium text-2xl sm:text-3xl text-zinc-900 max-w-[22ch] leading-tight mb-4">
                   Enterprise validation is pushing VR and AR together
                 </h3>
-                <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
-                  We have moved past the era where VR was an experimental booth attraction. The strongest validation came from the Kingdom&apos;s largest enterprises — organizations like <strong className="text-zinc-900 font-semibold">Aramco</strong> and <strong className="text-zinc-900 font-semibold">STC</strong> were actively demonstrating VR for mission-critical industrial training and complex technical simulation. Expect the line between VR and AR to keep blurring as augmentation folds into daily enterprise workflows.
+                <p className="text-zinc-700 font-sans leading-relaxed max-w-[66ch]">
+                  We have moved past the era where VR was an experimental booth attraction. The strongest validation came from the Kingdom&apos;s largest enterprises — organizations like <strong className="text-zinc-900 font-semibold font-sans">Aramco</strong> and <strong className="text-zinc-900 font-semibold font-sans">STC</strong> were actively demonstrating VR for mission-critical industrial training and complex technical simulation. Expect the line between VR and AR to keep blurring as augmentation folds into daily enterprise workflows.
                 </p>
               </div>
               <div className="md:order-2">
@@ -390,7 +402,7 @@ const Leap2026Article = () => {
                 <h3 className="font-serif font-medium text-2xl sm:text-3xl text-zinc-900 max-w-[22ch] leading-tight mb-4">
                   Regional e-learning platforms are the fastest door in
                 </h3>
-                <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
+                <p className="text-zinc-700 font-sans leading-relaxed max-w-[66ch]">
                   For international studios wondering how to enter the Saudi ecosystem, one of the clearest paths is partnership — not a standalone launch. Regional e-learning and training platforms already carry the institutional trust, the Arabic-language content pipelines, and the government relationships it takes years to build from scratch. <strong className="text-zinc-900 font-semibold">Plug 3D and interactive content into an existing platform</strong> and move faster than competing with it.
                 </p>
               </div>
@@ -427,11 +439,14 @@ const Leap2026Article = () => {
                   The screens already exist — anamorphic content will own the attention
                 </h3>
                 <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
-                  Riyadh has already built extraordinary digital display infrastructure, yet most screens still broadcast flat video. At LEAP, the pavilions that deployed anamorphic 3D displays achieved real stopping power — forced-perspective illusions made people physically halt and watch. The value over the next few years belongs to studios that can build <strong className="text-zinc-900 font-semibold">custom, anamorphic animations</strong> that turn public screens into landmarks.
+                  Riyadh has already built extraordinary digital display infrastructure, yet most screens still broadcast flat video. At LEAP, the pavilions that deployed anamorphic 3D displays achieved real stopping power — forced-perspective illusions made people physically halt and watch. The value over the next few years belongs to studios that can build <strong className="text-zinc-900 font-semibold font-sans">custom, anamorphic animations</strong> that turn public screens into landmarks.
                 </p>
               </div>
-              <div className="md:order-1">
-                <Frame src={anamorphic} cap="Anamorphic content, landmark screen" />
+              <div className="md:order-1 relative overflow-hidden rounded-md bg-zinc-900 aspect-video">
+                <LazyVideo
+                  src="/assets/leap-2026/videos/anamorphic.webm"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
               </div>
             </article>
           </div>
@@ -470,24 +485,117 @@ const Leap2026Article = () => {
             <span className="font-serif italic text-[#2563EB] text-base">The five in short</span>
             <span className="font-serif italic text-xs text-zinc-400 uppercase tracking-widest">Stories at a glance</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {leapCards.map((card, i) => (
-              <article
-                key={i}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-zinc-100 flex flex-col group"
+
+          <div className="md:grid md:grid-cols-5 md:gap-6 relative">
+            {/* Mobile: carousel */}
+            <div className="md:hidden overflow-hidden rounded-xl">
+              <motion.div
+                key={activeCard}
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -40 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden border border-zinc-100"
               >
-                <div className="h-56 sm:h-72 lg:h-[26rem] w-full overflow-hidden bg-zinc-900 relative">
+                <div className="aspect-[3/4] w-full bg-zinc-900 relative">
                   <img
-                    src={card.image}
-                    alt={card.title}
+                    src={leapCards[activeCard].image}
+                    alt={leapCards[activeCard].title}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-              </article>
-            ))}
+              </motion.div>
+            </div>
+
+            {/* Mobile: dots */}
+            <div className="flex md:hidden justify-center gap-2 mt-4">
+              {leapCards.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveCard(i)}
+                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                    i === activeCard ? 'bg-[#2563EB] w-6' : 'bg-zinc-300'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Desktop: grid */}
+            <div className="hidden md:contents">
+              {leapCards.map((card, i) => (
+                <article
+                  key={i}
+                  className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-zinc-100 flex flex-col group"
+                >
+                  <div className="h-56 sm:h-72 lg:h-[26rem] w-full overflow-hidden bg-zinc-900 relative">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
+
+          {/* ── Entry 06 ── */}
+          <article className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 py-12 sm:py-14 border-b border-zinc-200 items-center">
+            <div className="md:order-2">
+              <div className="font-serif font-extrabold text-5xl sm:text-6xl leading-none [color:transparent] [-webkit-text-stroke:1.5px_rgba(23,30,66,0.35)] select-none mb-4">
+                06
+              </div>
+              <h3 className="font-serif font-medium text-2xl sm:text-3xl text-zinc-900 max-w-[22ch] leading-tight mb-4">
+                Gaming experiences at LEAP are redefining interactive entertainment
+              </h3>
+              <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
+                Gaming studios are showcasing immersive, multiplayer experiences that blend virtual reality, augmented reality, and cloud gaming to engage visitors at scale. The convergence of high‑performance graphics and real‑time interaction is opening new avenues for brand storytelling and audience engagement.
+              </p>
+            </div>
+            <div className="md:order-1">
+              <Frame src={gamingPng} cap="Gaming showcase at LEAP" />
+            </div>
+          </article>
+
+          {/* ── Entry 07 ── */}
+          <article className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 py-12 sm:py-14 border-b border-zinc-200 items-center">
+            <div className="md:order-1">
+              <div className="font-serif font-extrabold text-5xl sm:text-6xl leading-none [color:transparent] [-webkit-text-stroke:1.5px_rgba(23,30,66,0.35)] select-none mb-4">
+                07
+              </div>
+              <h3 className="font-serif font-medium text-2xl sm:text-3xl text-zinc-900 max-w-[22ch] leading-tight mb-4">
+                Football innovations spotlight next‑gen fan experiences
+              </h3>
+              <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
+                Football brands and federations leveraged mixed reality to bring stadium‑level analytics, live stats overlays, and interactive fan zones to the exhibition floor, illustrating how sports technology can drive deeper engagement and new revenue streams.
+              </p>
+            </div>
+            <div className="md:order-2">
+              <Frame src={footballPng} cap="Football tech demo at LEAP" />
+            </div>
+          </article>
+
+          {/* ── Entry 08 ── */}
+          <article className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 py-12 sm:py-14 items-center">
+            <div className="md:order-2">
+              <div className="font-serif font-extrabold text-5xl sm:text-6xl leading-none [color:transparent] [-webkit-text-stroke:1.5px_rgba(23,30,66,0.35)] select-none mb-4">
+                08
+              </div>
+              <h3 className="font-serif font-medium text-2xl sm:text-3xl text-zinc-900 max-w-[22ch] leading-tight mb-4">
+                Formula 1 digital experiences accelerate motorsport&rsquo;s future
+              </h3>
+              <p className="text-zinc-700 font-serif leading-relaxed max-w-[66ch]">
+                F1 partners delivered VR pit‑stop simulations and data‑rich AR dashboards, allowing visitors to experience the precision and speed of racing in an immersive, educational format.
+              </p>
+            </div>
+            <div className="md:order-1">
+              <Frame src={f1Png} cap="F1 VR experience at LEAP" />
+            </div>
+          </article>
         </section>
 
         {/* ══════ CLOSING REFLECTIONS ══════ */}
@@ -751,6 +859,3 @@ const Leap2026Article = () => {
 };
 
 export default Leap2026Article;
-
-
-
