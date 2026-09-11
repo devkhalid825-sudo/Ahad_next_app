@@ -12,7 +12,7 @@ import 'swiper/css/free-mode';
 import articleImg1Raw from '../../assets/article-img/A (3) .webp';
 import articleImg6Raw from '../../assets/ElipseImages/projects/Artictecture.webp';
 import vrHeroRaw from '../../assets/images/1 (1).webp';
-import configuratorCardRaw from '../../assets/ElipseImages/personal/Configurator.webp';
+import configuratorCardRaw from '../../assets/ElipseImages/personal/leap-hero.webp';
 
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);
@@ -161,7 +161,8 @@ const News = ({ initialBlogs = null }) => {
                       width="577"
                       height="380"
                       loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      style={{ objectPosition: '50% 30%' }}
                     />
                   </div>
                   <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">

@@ -59,10 +59,7 @@ const StaticProjectView = ({ project }) => (
   </CaseStudyLayout>
 );
 
-// Dashboard/API-driven project or case study. Mirrors the field mapping that
-// ProjectArticle.jsx / CaseStudyDetails.jsx used to render this data with
-// (including the legacy per-slot `sections` editor: {content, image, video}),
-// since the CMS doesn't always populate the newer structured fields.
+
 const DynamicProjectView = ({ data, type }) => {
   const isCaseStudy = type === 'case-study';
   const [nextProject, setNextProject] = useState(null);
@@ -79,7 +76,7 @@ const DynamicProjectView = ({ data, type }) => {
         const path = isCaseStudy ? `/case-study/${next.slug}` : (next.path || `/project/${next.slug}`);
         setNextProject({ path, name: next.title });
       }
-    }).catch(() => {});
+    }).catch(() => { });
   }, [data, isCaseStudy]);
 
   const meta = [

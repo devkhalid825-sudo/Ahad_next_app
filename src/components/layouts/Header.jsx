@@ -124,7 +124,7 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center gap-6 relative z-50">
-          <div className="hidden md:block relative" ref={locationRef}>
+          <div className="hidden" ref={locationRef}>
             <button
               onClick={() => setLocationOpen((prev) => !prev)}
               className={`w-[130px] h-11 flex items-center justify-center gap-1.5 border ${
@@ -200,7 +200,7 @@ const Header = () => {
         )}
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-20 mt-auto mb-auto">
-          <div className="md:hidden mb-8">
+          <div className="hidden">
             <button
               onClick={() => setMobileLocationOpen((prev) => !prev)}
               className="flex items-center gap-2 border border-white/20 text-white/90 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:border-[#4169E1] hover:text-[#4169E1] transition-colors"

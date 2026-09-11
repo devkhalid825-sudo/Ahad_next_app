@@ -4,9 +4,9 @@ import React from 'react';
 import ProjectDashboard from '../ProjectDashboard';
 
 const AdminProjectsPage = () => {
-    return (
+  return (
     <>
-      
+
       <header className="mb-6 md:mb-8">
         <h2 className="text-2xl md:text-4xl font-black tracking-tight uppercase bg-gradient-to-r from-[#4169E1] to-[#8B5CF6] bg-clip-text text-transparent">Project Management</h2>
         <div className="h-0.5 w-8 bg-[#4169E1] mt-3 rounded-full" />

@@ -14,7 +14,7 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import _leapHero from '../../assets/ElipseImages/personal/leap-hero.webp';
 import _leapPartner from '../../assets/ElipseImages/personal/leap-partner.webp';
-import _waSep1 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-01 at 6.55.45 PM.webp';
+import _waSep1 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-01 at 6.55.45 PM.jpeg';
 import _waSep2 from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-02 at 4.18.12 AM.webp';
 import _wa528pm from '../../assets/ElipseImages/personal/WhatsApp Image 2026-09-03 at 2.05.28 PM.webp';
 import _wa1258 from '../../assets/ElipseImages/personal/images/WhatsApp Image 2026-09-03 at 1.25.58 AM.webp';
@@ -25,7 +25,7 @@ import _mainPng from '../../assets/ElipseImages/personal/main.webp';
 import _configuratorPng from '../../assets/ElipseImages/personal/Configurator.webp';
 import _gaming from '../../assets/ElipseImages/personal/gaming.webp';
 import _football from '../../assets/ElipseImages/personal/football.webp';
-import _f1 from '../../assets/ElipseImages/personal/f1.webp';
+import _f1 from '../../assets/ElipseImages/personal/maaz-bhai-image.png';
 import { getImgSrc } from '../../utils/api';
 
 const leapHero = getImgSrc(_leapHero);
@@ -543,9 +543,8 @@ const Leap2026Article = () => {
                 <button
                   key={i}
                   onClick={() => setActiveCard(i)}
-                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
-                    i === activeCard ? 'bg-[#2563EB] w-6' : 'bg-zinc-300'
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${i === activeCard ? 'bg-[#2563EB] w-6' : 'bg-zinc-300'
+                    }`}
                 />
               ))}
             </div>
@@ -573,7 +572,7 @@ const Leap2026Article = () => {
 
           {/* ── Entry 06 ── */}
           <article className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 py-12 sm:py-14 border-b border-zinc-200 items-center">
-            <div className="md:order-2">
+            <div className="md:order-1">
               <div className="font-serif font-extrabold text-5xl sm:text-6xl leading-none [color:transparent] [-webkit-text-stroke:1.5px_rgba(23,30,66,0.35)] select-none mb-4">
                 06
               </div>
@@ -584,14 +583,14 @@ const Leap2026Article = () => {
                 Gaming studios are showcasing immersive, multiplayer experiences that blend virtual reality, augmented reality, and cloud gaming to engage visitors at scale. The convergence of high‑performance graphics and real‑time interaction is opening new avenues for brand storytelling and audience engagement.
               </p>
             </div>
-            <div className="md:order-1">
+            <div className="md:order-2">
               <Frame src={gamingPng} cap="Gaming showcase at LEAP" />
             </div>
           </article>
 
           {/* ── Entry 07 ── */}
           <article className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 py-12 sm:py-14 border-b border-zinc-200 items-center">
-            <div className="md:order-1">
+            <div className="md:order-2">
               <div className="font-serif font-extrabold text-5xl sm:text-6xl leading-none [color:transparent] [-webkit-text-stroke:1.5px_rgba(23,30,66,0.35)] select-none mb-4">
                 07
               </div>
@@ -602,14 +601,14 @@ const Leap2026Article = () => {
                 Football brands and federations leveraged mixed reality to bring stadium‑level analytics, live stats overlays, and interactive fan zones to the exhibition floor, illustrating how sports technology can drive deeper engagement and new revenue streams.
               </p>
             </div>
-            <div className="md:order-2">
+            <div className="md:order-1">
               <Frame src={footballPng} cap="Football tech demo at LEAP" />
             </div>
           </article>
 
           {/* ── Entry 08 ── */}
           <article className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 py-12 sm:py-14 items-center">
-            <div className="md:order-2">
+            <div className="md:order-1">
               <div className="font-serif font-extrabold text-5xl sm:text-6xl leading-none [color:transparent] [-webkit-text-stroke:1.5px_rgba(23,30,66,0.35)] select-none mb-4">
                 08
               </div>
@@ -620,8 +619,8 @@ const Leap2026Article = () => {
                 F1 partners delivered VR pit‑stop simulations and data‑rich AR dashboards, allowing visitors to experience the precision and speed of racing in an immersive, educational format.
               </p>
             </div>
-            <div className="md:order-1">
-              <Frame src={f1Png} cap="F1 VR experience at LEAP" />
+            <div className="md:order-2">
+              <Frame src={f1Png} cap="Used by Syed Maaz Hashim" />
             </div>
           </article>
         </section>

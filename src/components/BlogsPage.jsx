@@ -32,7 +32,7 @@ import edu1Raw from '../assets/images/edu-1.webp';
 import vrHeroRaw from '../assets/images/1 (1).webp';
 import articleImg1Raw from '../assets/article-img/A (3) .webp';
 import articleImg2Raw from '../assets/article-img/A (5) .webp';
-import leapCardRaw from '../assets/ElipseImages/personal/Configurator.webp';
+import leapCardRaw from '../assets/ElipseImages/personal/leap-hero.webp';
 
 const leapCard = getImgSrc(leapCardRaw);
 const elephantImg = getImgSrc(elephantImgRaw);
@@ -232,6 +232,7 @@ const BlogCard = ({ post, eager = false }) => (
                     loading={eager ? 'eager' : 'lazy'}
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ objectPosition: '50% 30%' }}
                 />
                 <div className="bg-black/40 backdrop-blur-md text-white p-2 md:p-3 rounded-full absolute top-4 left-4 shadow-xl z-20">
                     <FiEye className="w-4 h-4 md:w-5 md:h-5" />
