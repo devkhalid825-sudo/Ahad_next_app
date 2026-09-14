@@ -1,10 +1,15 @@
 import type { NextConfig } from "next";
 import path from "path";
-import withBundleAnalyzer from "@next/bundle-analyzer";
-
-const withAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
-});
+let withAnalyzer = (config: NextConfig): NextConfig => config;
+if (process.env.ANALYZE === "true") {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const bundleAnalyzer = require("@next/bundle-analyzer");
+    withAnalyzer = bundleAnalyzer({ enabled: true });
+  } catch {
+    console.warn("@next/bundle-analyzer not found, skipping analysis.");
+  }
+}
 
 // Resolve the compat shim absolute path once
 const routerCompatPath = path.resolve(__dirname, "src/lib/router-compat.js");
