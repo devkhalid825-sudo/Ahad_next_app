@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { FaWhatsapp, FaPaperPlane, FaCheck } from 'react-icons/fa';
-import { SiCalendly } from 'react-icons/si';
+import { FaPaperPlane, FaCheck } from '@/components/ui/Icons';
 import { apiCall } from '../utils/api';
-import { servicesList } from '../data/servicesList';
+
+const PILLARS = [
+  { id: 'configurators', label: 'Interactive 3D Web & Product Configurators', note: 'WebGL / Three.js / PlayCanvas' },
+  { id: 'archviz', label: 'Real-Time ArchViz & Spatial VR/AR', note: 'Unreal Engine 5' },
+  { id: 'commercial', label: 'Cinematic 3D Product & Commercial Visuals', note: 'High-End CGI' },
+];
 
 const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,34 +16,24 @@ const ContactForm = () => {
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
+    const [selectedPillars, setSelectedPillars] = useState([]);
     const [formData, setFormData] = useState({
-        interest: '',
-        first_name: '',
-        last_name: '',
+        user_name: '',
         user_email: '',
-        user_phone: '',
+        user_company: '',
         message: ''
     });
 
+    const togglePillar = (id) => {
+        setSelectedPillars((prev) =>
+            prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
+        );
+    };
+
     const validateField = (name, value) => {
         switch (name) {
-            case 'first_name':
-                if (!value || value.trim().length < 1) return 'First name is required';
-                return '';
-            case 'last_name':
-                if (!value || value.trim().length < 1) return 'Last name is required';
-                return '';
             case 'user_email':
-                if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email';
-                return '';
-            case 'user_phone':
-                if (!value || !/^\+?[\d\s\-()]{7,15}$/.test(value)) return 'Please enter a valid phone number';
-                return '';
-            case 'interest':
-                if (!value) return 'Please select a service';
-                return '';
-            case 'message':
-                if (!value || value.trim().length < 10) return 'Message must be at least 10 characters';
+                if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid work email';
                 return '';
             default:
                 return '';
@@ -54,7 +48,7 @@ const ContactForm = () => {
 
     const validateForm = () => {
         const newErrors = {};
-        const fieldsToValidate = ['first_name', 'last_name', 'user_email', 'user_phone', 'interest', 'message'];
+        const fieldsToValidate = ['user_email'];
         fieldsToValidate.forEach(key => {
             const error = validateField(key, formData[key]);
             if (error) newErrors[key] = error;
@@ -67,10 +61,7 @@ const ContactForm = () => {
     };
 
     const handleInputChange = (e) => {
-        let { name, value } = e.target;
-        if (name === 'user_phone') {
-            value = value.replace(/\D/g, '');
-        }
+        const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
         if (touched[name]) {
             setErrors(prev => ({ ...prev, [name]: validateField(name, value) }));
@@ -84,7 +75,15 @@ const ContactForm = () => {
 
         if (!validateForm()) return;
 
-        const payload = { ...formData, user_name: `${formData.first_name} ${formData.last_name}`.trim() };
+        const pillarsJoined = selectedPillars
+            .map((id) => PILLARS.find((p) => p.id === id)?.label)
+            .filter(Boolean)
+            .join(', ');
+
+        const payload = {
+            ...formData,
+            interest: pillarsJoined,
+        };
 
         setIsSubmitting(true);
         setSubmitStatus(null);
@@ -95,13 +94,12 @@ const ContactForm = () => {
             if (status === 200) {
                 setSubmitStatus('success');
                 setFormData({
-                    interest: '',
-                    first_name: '',
-                    last_name: '',
+                    user_name: '',
                     user_email: '',
-                    user_phone: '',
+                    user_company: '',
                     message: ''
                 });
+                setSelectedPillars([]);
                 setErrors({});
                 setTouched({});
 
@@ -126,136 +124,144 @@ const ContactForm = () => {
         setSubmitStatus(null);
     };
 
+    const inputClass = (name) =>
+        `w-full bg-white/[0.06] border rounded-xl py-3.5 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-500 ${
+            errors[name] && touched[name] ? 'border-red-500/70' : 'border-white/[0.08]'
+        }`;
+
     return (
-        <div className="bg-[#0c0c0c] rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 py-10 relative border border-white/10 w-full">
+        <div className="bg-[#0c0c0c] rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 lg:p-12 relative border border-white/10 w-full">
 
-            <form onSubmit={handleSubmit} className="space-y-10">
-                <div className="grid grid-cols-2 md:gap-x-12 md:gap-y-10 gap-x-6 gap-y-5 pt-4">
+            <form onSubmit={handleSubmit} className="space-y-8">
 
+                {/* 3 Enterprise Pillars */}
+                <div className="space-y-3">
+                    <label className="text-sm font-medium text-gray-300">
+                        What are you exploring? <span className="text-[#4169E1]">(select all that apply)</span>
+                    </label>
+                    <div className="space-y-3">
+                        {PILLARS.map((pillar) => {
+                            const isSelected = selectedPillars.includes(pillar.id);
+                            return (
+                                <button
+                                    key={pillar.id}
+                                    type="button"
+                                    onClick={() => togglePillar(pillar.id)}
+                                    aria-pressed={isSelected}
+                                    className={`w-full flex items-start gap-4 text-left rounded-2xl p-4 transition-all duration-300 border ${
+                                        isSelected
+                                            ? 'bg-[#4169E1]/[0.08] border-[#4169E1]/50 shadow-[0_0_20px_rgba(65,105,225,0.08)]'
+                                            : 'bg-white/[0.03] border-white/[0.08] hover:border-white/20'
+                                    }`}
+                                >
+                                    <span
+                                        className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
+                                            isSelected
+                                                ? 'bg-[#4169E1] border-[#4169E1]'
+                                                : 'border-gray-500'
+                                        }`}
+                                    >
+                                        {isSelected && <FaCheck className="w-3 h-3 text-black" />}
+                                    </span>
+                                    <span>
+                                        <span className={`block text-sm font-semibold leading-snug ${isSelected ? 'text-white' : 'text-gray-200'}`}>
+                                            {pillar.label}
+                                        </span>
+                                        <span className="block text-xs text-gray-500 mt-0.5">{pillar.note}</span>
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                    {errors.pillars && (
+                        <p className="text-red-400 text-xs mt-1">{errors.pillars}</p>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-x-8 gap-y-6">
                     <div className="space-y-2">
-                        <label htmlFor="first_name" className="text-sm font-medium text-gray-300">First Name *</label>
+                        <label htmlFor="user_name" className="text-sm font-medium text-gray-300">Full Name</label>
                         <input
-                            id="first_name"
+                            id="user_name"
                             type="text"
-                            name="first_name"
-                            required
-                            value={formData.first_name}
+                            name="user_name"
+                            value={formData.user_name}
                             onChange={handleInputChange}
                             onBlur={handleBlur}
-                            className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-400 ${errors.first_name && touched.first_name ? 'border-red-500' : 'border-white/30'}`}
-                            placeholder="James"
+                            className={inputClass('user_name')}
+                            placeholder="James Whitfield"
                         />
-                        {errors.first_name && touched.first_name && (
-                            <p className="text-red-400 text-xs mt-1">{errors.first_name}</p>
+                        {errors.user_name && touched.user_name && (
+                            <p className="text-red-400 text-xs mt-1">{errors.user_name}</p>
                         )}
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="last_name" className="text-sm font-medium text-gray-300">Last Name *</label>
-                        <input
-                            id="last_name"
-                            type="text"
-                            name="last_name"
-                            required
-                            value={formData.last_name}
-                            onChange={handleInputChange}
-                            onBlur={handleBlur}
-                            className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-400 ${errors.last_name && touched.last_name ? 'border-red-500' : 'border-white/30'}`}
-                            placeholder="Whitfield"
-                        />
-                        {errors.last_name && touched.last_name && (
-                            <p className="text-red-400 text-xs mt-1">{errors.last_name}</p>
-                        )}
-                    </div>
-
-                    <div className="space-y-2 col-span-2">
-                        <label htmlFor="user_email" className="text-sm font-medium text-gray-300">Business Email *</label>
+                        <label htmlFor="user_email" className="text-sm font-medium text-gray-300">Work Email</label>
                         <input
                             id="user_email"
                             type="email"
                             name="user_email"
-                            required
                             value={formData.user_email}
                             onChange={handleInputChange}
                             onBlur={handleBlur}
+                            className={inputClass('user_email')}
                             placeholder="james@yourbrand.com"
-                            className={`w-full bg-white/15 border rounded-lg px-4 py-3 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-400 ${errors.user_email && touched.user_email ? 'border-red-500' : 'border-white/40'}`}
                         />
                         {errors.user_email && touched.user_email && (
                             <p className="text-red-400 text-xs mt-1">{errors.user_email}</p>
                         )}
                     </div>
-                    <div className="space-y-2 col-span-2">
-                        <label htmlFor="user_phone" className="text-sm font-medium text-gray-300">Phone — for a faster reply</label>
+
+                    <div className="space-y-2">
+                        <label htmlFor="user_company" className="text-sm font-medium text-gray-300">Company Name</label>
                         <input
-                            id="user_phone"
-                            type="tel"
-                            name="user_phone"
-                            value={formData.user_phone}
+                            id="user_company"
+                            type="text"
+                            name="user_company"
+                            value={formData.user_company}
                             onChange={handleInputChange}
                             onBlur={handleBlur}
-                            placeholder="+1 XXX XXX XXXX"
-                            className={`w-full bg-white/15 border rounded-lg px-4 py-3 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-400 ${errors.user_phone && touched.user_phone ? 'border-red-500' : 'border-white/40'}`}
+                            className={inputClass('user_company')}
+                            placeholder="Acme Corp"
                         />
-                        {errors.user_phone && touched.user_phone && (
-                            <p className="text-red-400 text-xs mt-1">{errors.user_phone}</p>
-                        )}
                     </div>
 
-                    <div className="space-y-2 col-span-2">
-                        <label htmlFor="interest" className="text-sm font-medium text-gray-300">Service Required *</label>
-                        <div className="relative border-b border-gray-500/80">
-                            <select
-                                id="interest"
-                                name="interest"
-                                value={formData.interest}
-                                onChange={handleInputChange}
-                                onBlur={handleBlur}
-                                className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base appearance-none cursor-pointer ${errors.interest && touched.interest ? 'border-red-500' : 'border-white/30'}`}
-                            >
-                                <option value="" className="bg-black">Select a service</option>
-                                {servicesList.map((service) => (
-                                    <option key={service} value={service} className="bg-black">{service}</option>
-                                ))}
-                            </select>
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                            </div>
-                        </div>
-                        {errors.interest && touched.interest && (
-                            <p className="text-red-400 text-xs mt-1">{errors.interest}</p>
+                    <div className="space-y-2 sm:col-span-2">
+                        <label htmlFor="message" className="text-sm font-medium text-gray-300">Project Brief</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            value={formData.message}
+                            onChange={handleInputChange}
+                            onBlur={handleBlur}
+                            placeholder="What are you building? Share the product type, target platforms (web / VR / AR), timeline, and the outcome you want — even a rough paragraph is enough."
+                            className={`${inputClass('message')} resize-none`}
+                        ></textarea>
+                        {errors.message && touched.message && (
+                            <p className="text-red-400 text-xs mt-1">{errors.message}</p>
                         )}
                     </div>
-                </div>
-
-                <div className="space-y-2 md:pb-12 pb-4">
-                    <label htmlFor="message" className="text-sm font-medium text-gray-300">Your Project Brief *</label>
-                    <textarea
-                        id="message"
-                        name="message"
-                        rows="4"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        onBlur={handleBlur}
-                        placeholder="Tell us what you're building — product type, target audience, platform, timeline, and any specific requirements…"
-                        className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-400 resize-none ${errors.message && touched.message ? 'border-red-500' : 'border-white/30'}`}
-                    ></textarea>
-                    {errors.message && touched.message && (
-                        <p className="text-red-400 text-xs mt-1">{errors.message}</p>
-                    )}
                 </div>
 
                 <div className="space-y-4">
-
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full flex items-center justify-center gap-2 text-center bg-[#4169E1] hover:bg-[#8ab4ff] text-black md:font-bold py-4 px-6 rounded-full text-sm md:text-base transition-all transform active:scale-[0.98] ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`w-full flex items-center justify-center gap-2 text-center bg-[#4169E1] hover:bg-[#5b7ff0] text-black font-bold py-4 px-6 rounded-full text-sm md:text-base transition-all transform active:scale-[0.98] ${
+                            isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
                     >
-                        {isSubmitting ? 'Sending...' : (<><FaPaperPlane className="flex-shrink-0" /> Get a Free Estimate</>)}
+                        {isSubmitting ? 'Sending...' : (<><FaPaperPlane className="flex-shrink-0" /> Submit Inquiry &amp; Get Personal 3D Teardown</>)}
                     </button>
-                    <p className="text-center text-gray-500 text-xs">
-                        <FaCheck className="inline -mt-0.5" /> 1 business day response &nbsp;·&nbsp; <FaCheck className="inline -mt-0.5" /> Free sample render available &nbsp;·&nbsp; <FaCheck className="inline -mt-0.5" /> No sales calls without permission
+                    <p className="text-center text-gray-500 text-xs leading-relaxed">
+                        <FaCheck className="inline -mt-0.5" /> Enterprise-grade security &nbsp;·&nbsp;
+                        <FaCheck className="inline -mt-0.5" /> NDA available on request &nbsp;·&nbsp;
+                        <FaCheck className="inline -mt-0.5" /> No sales pressure
+                    </p>
+                    <p className="text-center text-gray-500 text-xs leading-relaxed border-t border-white/10 pt-4">
+                        Want a preview first? Submit your link and our lead 3D engineer will send a 3-minute personalized Loom teardown within 2 hours.
                     </p>
                 </div>
             </form>
@@ -273,18 +279,18 @@ const ContactForm = () => {
                         </div>
 
                         <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-                            {submitStatus === 'success' ? 'Success!' : 'Oops!'}
+                            {submitStatus === 'success' ? 'Inquiry Received!' : 'Oops!'}
                         </h3>
 
                         <p className="text-gray-400 mb-8 text-sm md:text-base leading-relaxed">
                             {submitStatus === 'success'
-                                ? "Your inquiry has been sent successfully. We will reach out to you within 24 hours."
-                                : "We encountered an issue submitting your form. Please try again or reach out to us via WhatsApp."}
+                                ? "Thanks for reaching out — our lead 3D engineer will review your brief and reply within 1 business day."
+                                : "We encountered an issue submitting your form. Please try again or use the chat button below."}
                         </p>
 
                         <button
                             onClick={closeModal}
-                            className="w-full bg-[#4169E1] text-black font-bold py-4 rounded-full transition-transform active:scale-95 hover:bg-[#8ab4ff]"
+                            className="w-full bg-[#4169E1] text-black font-bold py-4 rounded-full transition-transform active:scale-95 hover:bg-[#5b7ff0]"
                         >
                             Close
                         </button>
@@ -292,41 +298,26 @@ const ContactForm = () => {
                 </div>
             )}
 
-            {/* Direct Contact Options for Mobile / Low-Effort */}
-            <div className="mt-12 pt-8 border-t border-white/10">
-                <p className="text-center text-gray-400 text-sm mb-6">Or reach out directly for a quicker response</p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* WhatsApp Link */}
-                    <a
-                        href="https://wa.me/923471245257"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-el-track="whatsapp-contact-page"
-                        className="flex items-center justify-center gap-4 bg-[#25D366]/5 hover:bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/20 py-5 px-8 rounded-2xl transition-all duration-300 group hover:shadow-[0_0_20px_rgba(37,211,102,0.15)]"
-                    >
-                        <FaWhatsapp className="w-7 h-7 group-hover:scale-110 transition-transform duration-300" />
-                        <div className="text-left">
-                            <p className="text-[11px] text-[#25D366]/70 font-semibold tracking-wider uppercase">Quick Chat</p>
-                            <p className="text-base font-bold text-white">Message on WhatsApp</p>
-                        </div>
-                    </a>
-
-                    {/* Calendly Link */}
-                    <a
-                        href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-el-track="schedule-intro-call-contact-page"
-                        className="flex items-center justify-center gap-4 bg-[#4169E1]/5 hover:bg-[#4169E1]/15 text-[#4169E1] border border-[#4169E1]/20 py-5 px-8 rounded-2xl transition-all duration-300 group hover:shadow-[0_0_20px_rgba(65,105,225,0.1)]"
-                    >
-                        <SiCalendly className="w-7 h-7 group-hover:scale-110 transition-transform duration-300" />
-                        <div className="text-left">
-                            <p className="text-[11px] text-[#4169E1]/70 font-semibold tracking-wider uppercase">Direct Booking</p>
-                            <p className="text-base font-bold text-white">Schedule an Intro Call</p>
-                        </div>
-                    </a>
+            {/* Calendly Inline Booking */}
+            <div className="mt-10 pt-8 border-t border-white/10">
+                <div className="flex items-center gap-3 mb-5">
+                    <span className="w-8 h-8 rounded-full bg-[#4169E1]/15 text-[#4169E1] flex items-center justify-center">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    </span>
+                    <div>
+                        <p className="text-sm md:text-base font-bold text-white">Prefer to talk it through?</p>
+                        <p className="text-xs text-gray-500">Book a 15-minute technical scoping call — no pitch, just answers.</p>
+                    </div>
                 </div>
+                <iframe
+                    src="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting?hide_gdpr_banner=1&background_color=0c0c0c&text_color=ffffff&primary_color=4169e1"
+                    title="Schedule a 15-minute technical scoping call"
+                    width="100%"
+                    height="640"
+                    frameBorder="0"
+                    scrolling="no"
+                    className="rounded-2xl bg-white/[0.03] border border-white/[0.08]"
+                />
             </div>
         </div>
     );

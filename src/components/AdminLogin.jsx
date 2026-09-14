@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiCall } from '../utils/api';
 import { setAdminToken, setAdminUser } from '../utils/auth';
-import { FiLock, FiMail, FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi';
+import { FiLock, FiMail, FiEye, FiEyeOff, FiLogIn } from '@/components/ui/Icons';
 import logoRaw from '../assets/images/logo.webp';
 import { getImgSrc } from '../utils/api';
 const logo = getImgSrc(logoRaw);

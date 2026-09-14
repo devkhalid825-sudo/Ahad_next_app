@@ -1,21 +1,9 @@
-// Service names for the contact form "Select Service" dropdown.
-// Mirrors the titles in ServicesPage.jsx / Header.jsx service menu.
+// Service pillars for contact forms & nav search.
+// Mirrors the 3-enterprise-pillar structure in Header.jsx / ServicesPage.jsx.
 export const servicesList = [
-    "Architectural Visualization",
-    "3D Product Visualization",
-    "3D Product Configurators",
-    "Interactive Web Experiences",
-    "VR Development",
-    "AR Development",
-    "3D Animation",
-    "3D Product Animation",
-    "VFX & Virtual Production",
+    "Interactive 3D Web & Product Configurators",
+    "Real-Time ArchViz & Spatial VR/AR",
+    "Cinematic 3D Product & Commercial Visuals",
     "Virtual Showrooms & Digital Twins",
-    "Custom Software Development",
-    "Website Development",
-    "Mobile App Development",
-    "Creative Services",
-    "Enterprise Solutions",
-    "Marketing",
-    "Others"
+    "VFX & Virtual Production"
 ];

@@ -553,3 +553,30 @@ body {
 .blog-content-dark { padding: 0; }
 .blog-content-dark h2 + *,
 .blog-content-dark h2 + h3 { margin-top: 1rem; }
+
+/* High-performance GPU Marquee (zero layout reflow) */
+@keyframes gpuMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-gpu-marquee {
+  display: flex;
+  width: max-content;
+  animation: gpuMarquee 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-gpu-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+  .animate-gpu-marquee {
+    animation-duration: 25s;
+  }
+}

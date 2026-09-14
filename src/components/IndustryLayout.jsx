@@ -1,10 +1,10 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { SITE_URL } from '../utils/api';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaThLarge, FaPaperPlane } from 'react-icons/fa';
+import { m as motion, AnimatePresence } from 'framer-motion';
+import { FaThLarge, FaPaperPlane } from '@/components/ui/Icons';
 import {
     HiOutlineBuildingOffice2,
     HiOutlineShoppingCart,

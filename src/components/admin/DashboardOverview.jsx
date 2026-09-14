@@ -38,12 +38,12 @@ const DashboardOverview = () => {
     })();
   }, [router]);
 
-    if (loading) return (
+  if (loading) return (
     <>
-      
+
       <div className="flex items-center justify-center py-20">
-      <div className="w-10 h-10 border-t-2 border-[#4169E1] border-solid rounded-full animate-spin" />
-    </div>
+        <div className="w-10 h-10 border-t-2 border-[#4169E1] border-solid rounded-full animate-spin" />
+      </div>
     </>
   );
 
@@ -60,7 +60,7 @@ const DashboardOverview = () => {
 
   return (
     <>
-      
+
       <header className="mb-6 md:mb-8">
         <h2 className="text-2xl md:text-4xl font-black tracking-tight uppercase bg-gradient-to-r from-[#4169E1] to-[#8B5CF6] bg-clip-text text-transparent">
           Dashboard Overview

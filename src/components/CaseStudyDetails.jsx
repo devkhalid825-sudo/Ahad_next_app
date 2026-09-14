@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArticleProgress } from './articles/articleHelpers';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft } from '@/components/ui/Icons';
 import { apiCall, getYoutubeEmbed, SITE_URL, BACKEND_ORIGIN } from '../utils/api';
 
 const absImage = (img) => {

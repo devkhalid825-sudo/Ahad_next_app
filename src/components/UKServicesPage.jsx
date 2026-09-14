@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { getImgSrc } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import _backgroundImage from '../assets/About-page/service.webp';

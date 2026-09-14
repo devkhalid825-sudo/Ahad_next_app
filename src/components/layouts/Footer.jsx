@@ -2,11 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FiFacebook, FiPhone, FiMail } from 'react-icons/fi';
-import { SiInstagram } from 'react-icons/si';
-import { TbBrandLinkedin } from 'react-icons/tb';
-import { RiYoutubeLine } from 'react-icons/ri';
-import { PiTiktokLogo } from 'react-icons/pi';
+import { FiFacebook, FiPhone, FiMail, SiInstagram, TbBrandLinkedin, RiYoutubeLine, PiTiktokLogo } from '@/components/ui/Icons';
 import { apiCall, getImgSrc } from '@/utils/api';
 
 import logo from '@/assets/images/Elipse2.webp';
@@ -110,17 +106,17 @@ const Footer = () => {
   ];
 
   const brandsImages = [
-    { img: brandsImg1 },
-    { img: brandsImg2 },
-    { img: brandsImg3 },
-    { img: brandsImg4 },
-    { img: brandsImg9, className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
-    { img: brandsImg6 },
-    { img: brandsImg7 },
-    { img: brandsImg8 },
-    { img: brandsImg10, className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
-    { img: brandsImgStudentLife, className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
-    { img: brandsImgCarbon, className: 'opacity-80 hover:opacity-100 scale-[1.5] md:scale-[1.8]' },
+    { img: brandsImg1, name: 'Tapal Tea' },
+    { img: brandsImg2, name: 'Rooh Afza' },
+    { img: brandsImg3, name: 'Searle Pharmaceuticals' },
+    { img: brandsImg4, name: 'Khoj Resorts' },
+    { img: brandsImg9, name: 'Amber Developments', className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
+    { img: brandsImg6, name: 'Omoré' },
+    { img: brandsImg7, name: 'ARY Laguna' },
+    { img: brandsImg8, name: 'Ahmed Foods' },
+    { img: brandsImg10, name: 'Hamdard Laboratories', className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
+    { img: brandsImgStudentLife, name: 'Student Life', className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
+    { img: brandsImgCarbon, name: 'Carbon Powered', className: 'opacity-80 hover:opacity-100 scale-[1.5] md:scale-[1.8]' },
   ];
 
   return (
@@ -132,7 +128,7 @@ const Footer = () => {
               <div key={index} className="flex-shrink-0 flex items-center justify-center px-8 md:px-16">
                 <img
                   src={typeof brand.img === 'string' ? brand.img : brand.img?.src}
-                  alt={`Brand logo ${index}`}
+                  alt={`${brand.name} Logo`}
                   width="120"
                   height="48"
                   loading="lazy"
@@ -217,9 +213,27 @@ const Footer = () => {
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services">All Services</Link>
                 </li>
+                <li className="pt-1 pb-0.5 text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium pointer-events-none">Interactive 3D Configurators</li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/services/3d-product-configurators">3D Product Configurators</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/services/interactive-web-experiences">Interactive Web Experiences</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/services/virtual-showrooms-digital-twins">Virtual Showrooms &amp; Digital Twins</Link>
+                </li>
+                <li className="pt-1 pb-0.5 text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium pointer-events-none">ArchViz &amp; VR/AR</li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services/architectural-visualization">Architectural Visualization</Link>
                 </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/services/vr-development">VR Development</Link>
+                </li>
+                <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                  <Link href="/services/ar-development">AR Development</Link>
+                </li>
+                <li className="pt-1 pb-0.5 text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium pointer-events-none">3D &amp; Commercial Visuals</li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services/3d-product-visualization">3D Product Visualization</Link>
                 </li>
@@ -227,13 +241,7 @@ const Footer = () => {
                   <Link href="/services/3d-animation">3D Animation</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/custom-software-development">Custom Software Development</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/website-development">Website Development</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/mobile-app-development">Mobile App Development</Link>
+                  <Link href="/services/vfx-virtual-production">VFX &amp; Virtual Production</Link>
                 </li>
               </ul>
             </FooterColumn>

@@ -1,6 +1,6 @@
 'use client';
 
-import { FiUpload, FiX, FiChevronUp, FiChevronDown, FiVideo } from 'react-icons/fi';
+import { FiUpload, FiX, FiChevronUp, FiChevronDown, FiVideo } from '@/components/ui/Icons';
 import { BACKEND_ORIGIN } from '../../utils/api';
 
 const SectionBuilder = ({ sections = [], onChange, onImageUpload, uploading }) => {

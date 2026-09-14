@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
@@ -175,6 +176,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                 longSwipes={true}
                 longSwipesRatio={0.3}
                 followFinger={true}
+                watchSlidesProgress={true}
                 onSwiper={(swiper) => (topSwiperRef.current = swiper)}
                 className="!overflow-visible"
               >
@@ -182,13 +184,14 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                   <SwiperSlide key={`top-${idx}`}>
                     <div className="w-full aspect-video relative overflow-hidden group cursor-pointer">
                       <Link href={study.path} className="absolute inset-0 w-full h-full block">
-                        <img
+                        <Image
                           src={study.image}
                           alt={study.title}
-                          width="800"
-                          height="450"
-                          loading={idx < 2 ? 'eager' : 'lazy'}
-                          className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-105"
+                          fill
+                          sizes="(max-width: 768px) 85vw, (max-width: 1200px) 50vw, 35vw"
+                          priority={idx === 0}
+                          loading={idx === 0 ? 'eager' : 'lazy'}
+                          className="object-cover object-center transition-all duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
                         <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 p-6">
@@ -224,6 +227,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                   longSwipes={true}
                   longSwipesRatio={0.3}
                   followFinger={true}
+                  watchSlidesProgress={true}
                   onSwiper={(swiper) => (bottomSwiperRef.current = swiper)}
                   className="!overflow-visible"
                 >
@@ -231,13 +235,13 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                     <SwiperSlide key={`bottom-${idx}`}>
                       <div className="w-full aspect-video relative overflow-hidden group cursor-pointer">
                         <Link href={study.path} className="absolute inset-0 w-full h-full block">
-                          <img
+                          <Image
                             src={study.image}
                             alt={study.title}
-                            width="400"
-                            height="225"
+                            fill
+                            sizes="(max-width: 768px) 65vw, (max-width: 1200px) 30vw, 25vw"
                             loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-105"
+                            className="object-cover object-center transition-all duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
                           <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 p-4">

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Hero from './Hero';
 import HeroCTA from './HeroCTA';
-import CaseStudies from './CaseStudies';
 import LatestWork from './LatestWork';
 import ClientReviews from './ClientReviews';
 import Solutions from './Solutions';
@@ -47,7 +46,6 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
       <HeroCTA />
 
       <div data-animate="s1" className={animClass('s1')}>
-        <CaseStudies initialFeatured={initialFeatured} />
         <LatestWork initialProjects={initialProjects} />
       </div>
 

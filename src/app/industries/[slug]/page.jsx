@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { buildMetadata, buildFaqSchema } from '@/lib/seo';
 import { SITE_URL } from '@/utils/api';
 import IndustryLayout from '@/components/IndustryLayout';
-import { industriesData } from '@/data/industriesData';
+import { industriesData, getIndustryBySlug } from '@/data/industriesData';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
 export const revalidate = 300;
@@ -60,7 +60,7 @@ function industrySchemas(slug, industry, description) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const industry = industriesData.find((i) => i.slug === slug);
+  const industry = await getIndustryBySlug(slug);
   if (!industry) {
     return buildMetadata({
       title: 'Industry Not Found',
@@ -90,7 +90,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
-  const industry = industriesData.find((i) => i.slug === slug);
+  const industry = await getIndustryBySlug(slug);
   if (!industry) notFound();
 
   const description = industry.meta?.metaDescription || industry.title;

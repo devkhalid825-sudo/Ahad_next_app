@@ -1,9 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect } from 'react';
 import { getImgSrc } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import Contact from './features/Contact';
@@ -11,102 +11,73 @@ import _backgroundImage from '../assets/About-page/service.webp';
 import serviceInnerImg from '../assets/About-page/service-inner.webp';
 const backgroundImage = getImgSrc(_backgroundImage);
 
+// Three enterprise pillars — commodity services removed
 const services = [
+    // ── Pillar 1: Interactive 3D Configurators ─────────────────────
     {
-        title: "Architectural Visualization",
-        slug: "architectural-visualization",
-        description: "Photorealistic architectural visualization for developers, architects, and design firms worldwide. 3D renderings, VR walkthroughs, and interactive platforms.",
-        icon: "🏛"
-    },
-    {
-        title: "3D Product Visualization",
-        slug: "3d-product-visualization",
-        description: "Photorealistic 3D product rendering for e-commerce, manufacturers, and DTC brands. Hero renders, 360° views, and lifestyle shots.",
-        icon: "📦"
-    },
-    {
+        pillar: 'Interactive 3D Configurators',
         title: "3D Product Configurators",
         slug: "3d-product-configurators",
-        description: "Custom 3D product configurators for e-commerce brands. Real-time customization with photoreal previews integrated with Shopify, WooCommerce, Magento.",
+        description: "Real-time web-based product configurators that let buyers customize, preview, and purchase — built with Unreal Engine, PlayCanvas, and WebGL. Integrates with Shopify, WooCommerce, and Magento.",
         icon: "⚙"
     },
     {
+        pillar: 'Interactive 3D Configurators',
         title: "Interactive Web Experiences",
         slug: "interactive-web-experiences",
-        description: "Immersive interactive web experiences combining 3D, motion, and WebGL. Award-quality digital campaigns for brands and agencies.",
+        description: "Immersive interactive web experiences combining real-time 3D, motion, and WebGL. Award-quality digital campaigns, product showcases, and sales tools for brands and agencies.",
         icon: "🌐"
     },
     {
+        pillar: 'Interactive 3D Configurators',
+        title: "Virtual Showrooms & Digital Twins",
+        slug: "virtual-showrooms-digital-twins",
+        description: "Immersive virtual showrooms and photorealistic digital twins for brands, developers, and enterprises — deployable on web, tablet, and kiosk without a native app.",
+        icon: "🔮"
+    },
+    // ── Pillar 2: Real-Time ArchViz & Spatial VR/AR ─────────────────
+    {
+        pillar: 'Real-Time ArchViz & Spatial VR/AR',
+        title: "Architectural Visualization",
+        slug: "architectural-visualization",
+        description: "Photorealistic architectural visualization for developers, architects, and design firms. 3D renderings, interactive virtual tours, day/night variations, and VR walkthroughs.",
+        icon: "🏛"
+    },
+    {
+        pillar: 'Real-Time ArchViz & Spatial VR/AR',
         title: "VR Development",
         slug: "vr-development",
-        description: "Custom VR development for enterprise training, sales, and marketing. Meta Quest 3, HTC Vive, Varjo XR-4 with Unreal Engine 5.",
+        description: "Custom VR development for enterprise sales, real estate, and training. Meta Quest 3, HTC Vive, Varjo XR-4, and PC VR — built with Unreal Engine 5 for maximum fidelity.",
         icon: "VR"
     },
     {
+        pillar: 'Real-Time ArchViz & Spatial VR/AR',
         title: "AR Development",
         slug: "ar-development",
-        description: "Custom AR development for retail, real estate, and marketing. ARKit, ARCore, and WebAR with no app download required.",
+        description: "Custom AR development for retail, real estate, and brand marketing. ARKit, ARCore, and WebAR experiences that work in-browser with no app download required.",
         icon: "AR"
     },
+    // ── Pillar 3: Cinematic 3D Product & Commercial Visuals ─────────
     {
-        title: "3D Animation",
+        pillar: 'Cinematic 3D Product & Commercial Visuals',
+        title: "3D Product Visualization",
+        slug: "3d-product-visualization",
+        description: "Photorealistic 3D product rendering for e-commerce, manufacturers, and DTC brands. Hero renders, 360° spin views, lifestyle shots, and packaging visualizations.",
+        icon: "📦"
+    },
+    {
+        pillar: 'Cinematic 3D Product & Commercial Visuals',
+        title: "3D Animation & Product Animation",
         slug: "3d-animation",
-        description: "Cinematic 3D animation and motion graphics for brands and enterprises. Architectural walkthroughs, product animation, explainer videos.",
+        description: "Cinematic 3D animation for brands and enterprises. Product hero videos, 360° spins, exploded-view mechanism animation, explainer videos, and CGI commercials.",
         icon: "▶"
     },
     {
-        title: "3D Product Animation",
-        slug: "product-animation",
-        description: "Photorealistic 3D product animation for launches and e-commerce. Hero videos, 360° spins, exploded views, and mechanism animation.",
-        icon: "🎥"
-    },
-    {
+        pillar: 'Cinematic 3D Product & Commercial Visuals',
         title: "VFX & Virtual Production",
         slug: "vfx-virtual-production",
-        description: "VFX and virtual production services for film, commercial, and brand content. CG visual effects, compositing, LED wall production.",
+        description: "VFX and virtual production for film, commercial, and brand content. CG visual effects, compositing, LED wall production, and post-production at studio quality.",
         icon: "🎬"
-    },
-    {
-        title: "Virtual Showrooms & Digital Twins",
-        slug: "virtual-showrooms-digital-twins",
-        description: "Immersive virtual showrooms and photorealistic digital twins for brands, developers, and enterprises worldwide.",
-        icon: "🔮"
-    },
-    {
-        title: "Custom Software Development",
-        slug: "custom-software-development",
-        description: "Custom software development for enterprises and startups. Web apps, SaaS platforms, ERP/CRM, APIs, and cloud-native architecture.",
-        icon: "💻"
-    },
-    {
-        title: "Website Development",
-        slug: "website-development",
-        description: "Custom website development with WordPress, Next.js, and JAMstack. SEO, mobile-first responsive design, and Core Web Vitals optimization.",
-        icon: "</>"
-    },
-    {
-        title: "Mobile App Development",
-        slug: "mobile-app-development",
-        description: "Custom mobile app development for iOS, Android, and cross-platform. Swift, Kotlin, React Native, Flutter.",
-        icon: "📱"
-    },
-    {
-        title: "Creative Services",
-        slug: "creative-services",
-        description: "Brand identity, motion graphics, video production, graphic design, UI/UX design, and photography & illustration.",
-        icon: "🎨"
-    },
-    {
-        title: "Enterprise Solutions",
-        slug: "enterprise-solutions",
-        description: "Scalable enterprise-grade solutions including cloud, ERP, custom software, data analytics, cybersecurity, and IT consulting.",
-        icon: "🏢"
-    },
-    {
-        title: "Marketing",
-        slug: "marketing",
-        description: "Data-driven marketing strategies including SEO/SEM, social media, content strategy, email marketing, and analytics.",
-        icon: "📊"
     }
 ];
 
@@ -147,10 +118,10 @@ return (
                             <div className="flex-1">
 
                                 <h1 className="text-[clamp(2.5rem,7vw,5rem)] font-bold text-[#F2F0EB] leading-[1.0] tracking-tight mb-6">
-                                    Digital solutions that move markets<span className="text-[#4169E1]">.</span>
+                                    Three enterprise-grade 3D disciplines<span className="text-[#4169E1]">.</span>
                                 </h1>
                                 <p className="text-base md:text-lg text-gray-400 max-w-2xl leading-relaxed mb-8">
-                                    From web and mobile to VR, AR, and animation — we build immersive digital experiences that engage audiences and drive results across every platform.
+                                    Interactive 3D configurators, real-time ArchViz &amp; VR/AR, and cinematic product visuals — built for brands, developers, and enterprises that demand the highest standard.
                                 </p>
                                 <div className="flex flex-row flex-wrap gap-3 md:gap-4">
                                     <button onClick={() => navigate('/contact')}

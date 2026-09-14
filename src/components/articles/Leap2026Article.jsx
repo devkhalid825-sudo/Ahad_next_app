@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import {
   FiShare2,
   FiCalendar,

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiCall, API_BASE_URL, BACKEND_ORIGIN, getYoutubeEmbed } from '../utils/api';
 import { getAdminToken } from '../utils/auth';
-import { FiPlus, FiEdit2, FiTrash2, FiX, FiImage, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiMove } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiImage, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiMove } from '@/components/ui/Icons';
 import HtmlEditor from './ui/HtmlEditor';
 import SectionBuilder from './ui/SectionBuilder';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';

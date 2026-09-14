@@ -26,13 +26,13 @@ const Hero = () => {
 
   const desktopBackgrounds = useMemo(
     () => [
-      HERO_ASSETS.videos.zarrar,
+      HERO_ASSETS.videos.jamSpread,
       HERO_ASSETS.videos.volvo,
       HERO_ASSETS.videos.khoj,
-      HERO_ASSETS.videos.jamSpread,
+      HERO_ASSETS.videos.zarrar,
+      HERO_ASSETS.videos.bombay,
       HERO_ASSETS.videos.vfx,
       HERO_ASSETS.videos.gabani,
-      HERO_ASSETS.videos.bombay,
       HERO_ASSETS.videos.inverex,
     ],
     []

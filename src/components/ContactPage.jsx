@@ -6,7 +6,7 @@ import Footer from './layouts/Footer';
 import ContactForm from './ContactForm';
 
 import { getImgSrc } from '../utils/api';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 import buildingImgRaw from '../assets/images/Background-Image.webp';
 const buildingImg = getImgSrc(buildingImgRaw);
@@ -28,16 +28,15 @@ const ContactPage = () => {
 
             {/* SECTION 1: CONNECT WITH US */}
             <section className="pt-32 md:pt-40 pb-24 px-6 md:px-16 max-w-[1750px] mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8 lg:gap-16 xl:gap-24 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-start">
                     {/* Left side text */}
-                    <div className="flex flex-col justify-center items-center lg:items-start h-full pt-8 lg:pt-0 pb-12 xl:pb-0 xl:pl-12">
-                        <h1 className="text-[#4169E1] text-4xl md:text-[56px] font-bold tracking-tight leading-[1.1] mb-10">
-                            Connect with Us
+                    <div className="flex flex-col justify-center items-center lg:items-start h-full pt-8 lg:pt-6 pb-12 xl:pb-0">
+                        <h1 className="text-[#4169E1] text-4xl md:text-[52px] font-bold tracking-tight leading-[1.1] mb-8">
+                            Schedule a<br />15-Minute Technical<br />Scoping Call
                         </h1>
-                        <p className="text-gray-200 text-lg md:text-[21px] font-light leading-relaxed max-w-lg text-left">
-                            We would love to hear from you. Share your production needs with us, or drop a note to say hello.
-                            Whether you are envisioning something bold or seeking inspiration for AR, VR, AI, or innovative
-                            interactive experiences, our team of experts can support you every step of the way.
+                        <p className="text-gray-200 text-lg md:text-[21px] font-light leading-relaxed text-left">
+                            Tell us what you&apos;re building and get a realistic timeline, budget ballpark, and a clear go/
+                            no-go recommendation — no spam, no pressure.
                         </p>
                     </div>
 

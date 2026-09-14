@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { FiCode, FiEye, FiMaximize2 } from 'react-icons/fi';
+import { FiCode, FiEye, FiMaximize2 } from '@/components/ui/Icons';
 
 const HtmlEditor = ({ value, onChange, label, minHeight = 300 }) => {
   const [mode, setMode] = useState('split');

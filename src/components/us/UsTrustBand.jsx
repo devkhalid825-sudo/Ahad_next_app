@@ -1,4 +1,4 @@
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck } from '@/components/ui/Icons';
 
 const UsTrustBand = ({ items = [] }) => (
   <div className="us-trustband">

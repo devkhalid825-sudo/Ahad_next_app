@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp } from '@/components/ui/Icons';
 import AuNav from './AuNav';
 import AuFooter from './AuFooter';
 

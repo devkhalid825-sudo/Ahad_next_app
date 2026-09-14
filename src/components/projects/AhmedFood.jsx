@@ -2,9 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
 import _still1 from '../../assets/Ahmed-food/stills/01.webp';
 const still1 = getImgSrc(_still1);
 import _still2 from '../../assets/Ahmed-food/stills/04.webp';
@@ -129,24 +126,13 @@ const RenderCard = ({ src, title }) => (
 );
 
 const AutoScrollRow = ({ children }) => {
-    const scrollRef = useRef(null);
-    useEffect(() => {
-        const el = scrollRef.current;
-        if (!el) return;
-        let animFrame;
-        const step = () => {
-            el.scrollLeft += 1;
-            if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
-            animFrame = requestAnimationFrame(step);
-        };
-        const timer = setTimeout(() => { animFrame = requestAnimationFrame(step); }, 2000);
-        return () => { clearTimeout(timer); cancelAnimationFrame(animFrame); };
-    }, []);
     return (
-        <div className="relative mt-[2rem]">
-            <div ref={scrollRef} className="flex overflow-x-hidden no-scrollbar gap-[15px] pb-4">
+        <div className="relative mt-[2rem] overflow-hidden w-full">
+            <div className="animate-gpu-marquee gap-[15px] pb-4 no-scrollbar">
                 {children}
-                {React.Children.map(children, (child) => React.cloneElement(child, { key: `dup-${child.key}` }))}
+                {React.Children.map(children, (child, idx) =>
+                    React.cloneElement(child, { key: `dup-${child.key || idx}` })
+                )}
             </div>
         </div>
     );
@@ -175,9 +161,12 @@ const AhmedFood = () => {
             <section className="bg-[#0D0D0D] px-8 py-[3.5rem] pb-[3rem] relative min-h-screen">
                 <Header />
 
-                <h1 className=" text-[clamp(2.5rem,7vw,5rem)] font-bold text-[#F2F0EB] leading-[1.0] tracking-tight max-w-[700px] mb-[2rem] pt-[4rem] sm:pt-[6rem]">
+                <h1 className=" text-[clamp(2.5rem,7vw,5rem)] font-bold text-[#F2F0EB] leading-[1.0] tracking-tight max-w-[700px] mb-[1rem] pt-[4rem] sm:pt-[6rem]">
                     Ahmed Foods<span className="text-[#4169E1]">.</span>
                 </h1>
+                <p className="text-zinc-400 text-sm sm:text-base md:text-lg font-light max-w-2xl mb-[2rem] leading-relaxed">
+                    High-fidelity 3D product visualization and CGI animation pipeline for Ahmed Food packaging, cutting campaign turnaround by 70%.
+                </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-1 border-t border-[#222] pt-[1.5rem] max-w-[680px]">
                     <div className="cs-hero-meta-item">
                         <label className="block text-[10px] font-medium tracking-[0.1em] uppercase text-[#555] mb-[4px]">Client</label>

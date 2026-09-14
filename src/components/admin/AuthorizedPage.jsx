@@ -28,9 +28,7 @@ const AuthorizedPage = () => {
     }
   };
 
-  // Standard fetch-on-mount: fetchData's setState calls only run after its
-  // awaited request settles, not synchronously within this effect.
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+
   useEffect(() => { fetchData(); }, [router]);
 
   const handleDelete = async (id) => {
@@ -44,18 +42,18 @@ const AuthorizedPage = () => {
     }
   };
 
-    if (loading) return (
+  if (loading) return (
     <>
-      
+
       <div className="flex items-center justify-center py-20">
-      <div className="w-10 h-10 border-t-2 border-[#4169E1] border-solid rounded-full animate-spin" />
-    </div>
+        <div className="w-10 h-10 border-t-2 border-[#4169E1] border-solid rounded-full animate-spin" />
+      </div>
     </>
   );
 
   return (
     <>
-      
+
       {successMsg && (
         <div className="fixed top-24 right-6 left-6 md:left-auto md:top-8 md:right-8 z-[60] bg-[#4169E1] text-white px-6 py-4 rounded-2xl shadow-lg font-bold flex items-center justify-center md:justify-start gap-3 text-[10px] uppercase tracking-widest">
           <FiCheckCircle size={18} /> {successMsg}

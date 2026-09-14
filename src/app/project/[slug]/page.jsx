@@ -6,6 +6,7 @@ import ProjectPage from '@/components/ProjectPage';
 import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
+import { getProjectValueProposition } from '@/constants/projectValueProps';
 
 export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
 
@@ -22,7 +23,8 @@ export function generateStaticParams() {
 }
 
 function staticProjectSchemas(slug, staticProject) {
-  const description = staticProject.meta?.find((m) => m.label === 'Description')?.value || staticProject.title;
+  const uniqueValueProp = getProjectValueProposition({ ...staticProject, slug });
+  const description = staticProject.meta?.find((m) => m.label === 'Description')?.value || uniqueValueProp || staticProject.title;
   const category = staticProject.meta?.find((m) => m.label === 'Service')?.value || 'Projects';
   const schema = {
     '@context': 'https://schema.org',
@@ -49,8 +51,9 @@ function staticProjectSchemas(slug, staticProject) {
 
 function apiProjectSchemas(slug, data) {
   const title = data.metaTitle || data.title;
+  const uniqueValueProp = getProjectValueProposition({ ...data, slug });
   const rawDesc = data.description ? data.description.replace(/<[^>]*>/g, '') : '';
-  const description = data.metaDescription || rawDesc.slice(0, 160);
+  const description = data.metaDescription || uniqueValueProp || rawDesc.slice(0, 160);
   const url = `${SITE_URL}${data.path || '/project/' + slug}`;
   const schema = {
     '@context': 'https://schema.org',
@@ -77,9 +80,20 @@ function apiProjectSchemas(slug, data) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { data } = await getProject(slug);
+  const safeSlug = String(slug || '').trim();
+
+  if (safeSlug === 'ahmed-food') {
+    const description = getProjectValueProposition({ slug: 'ahmed-food', title: 'Ahmed Food' });
+    return buildMetadata({
+      title: 'Ahmed Food - 3D Product Visualization & Animation | Elipse Studio',
+      description,
+      canonical: `${SITE_URL}/project/ahmed-food`,
+    });
+  }
+
+  const { data } = await getProject(safeSlug);
   if (data && data.title) {
-    const { title, description } = apiProjectSchemas(slug, data);
+    const { title, description } = apiProjectSchemas(safeSlug, data);
     return buildMetadata({
       title,
       description,

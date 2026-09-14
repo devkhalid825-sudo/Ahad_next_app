@@ -1,9 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FiSearch, FiArrowRight } from 'react-icons/fi';
+import { m as motion } from 'framer-motion';
+import { FiSearch, FiArrowRight } from '@/components/ui/Icons';
 import { getImgSrc } from '../utils/api';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';

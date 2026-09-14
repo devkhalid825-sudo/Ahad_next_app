@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { FaWhatsapp } from 'react-icons/fa';
-import { SiCalendly } from 'react-icons/si';
+import { SiCalendly } from '@/components/ui/Icons';
 import { apiCall } from '@/utils/api';
-import { servicesList } from '@/data/servicesList';
+
+const PILLARS = [
+  { id: 'configurators', label: 'Interactive 3D Web & Product Configurators' },
+  { id: 'archviz', label: 'Real-Time ArchViz & Spatial VR/AR' },
+  { id: 'commercial', label: 'Cinematic 3D Product & Commercial Visuals' },
+];
 
 const Contact = () => {
   const form = useRef();
@@ -12,14 +16,18 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [selectedPillars, setSelectedPillars] = useState([]);
 
   const [formData, setFormData] = useState({
-    interest: '',
     user_name: '',
     user_email: '',
-    user_phone: '',
+    user_company: '',
     message: '',
   });
+
+  const togglePillar = (id) => {
+    setSelectedPillars((prev) => (prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]));
+  };
 
   const validateField = (name, value) => {
     switch (name) {
@@ -28,12 +36,6 @@ const Contact = () => {
         return '';
       case 'user_email':
         if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email';
-        return '';
-      case 'user_phone':
-        if (!value || !/^\+?[\d\s\-()]{7,15}$/.test(value)) return 'Please enter a valid phone number';
-        return '';
-      case 'interest':
-        if (!value) return 'Please select a service';
         return '';
       case 'message':
         if (!value || value.trim().length < 10) return 'Message must be at least 10 characters';
@@ -51,7 +53,7 @@ const Contact = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    const fieldsToValidate = ['user_name', 'user_email', 'user_phone', 'interest', 'message'];
+    const fieldsToValidate = ['user_name', 'user_email', 'message'];
     fieldsToValidate.forEach((key) => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
@@ -66,10 +68,7 @@ const Contact = () => {
   };
 
   const handleInputChange = (e) => {
-    let { name, value } = e.target;
-    if (name === 'user_phone') {
-      value = value.replace(/\D/g, '');
-    }
+    const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (touched[name]) {
       setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
@@ -83,7 +82,15 @@ const Contact = () => {
 
     if (!validateForm()) return;
 
-    const payload = { ...formData };
+    const pillarsJoined = selectedPillars
+      .map((id) => PILLARS.find((p) => p.id === id)?.label)
+      .filter(Boolean)
+      .join(', ');
+
+    const payload = {
+      ...formData,
+      interest: pillarsJoined,
+    };
 
     setIsSubmitting(true);
     setSubmitStatus(null);
@@ -94,12 +101,12 @@ const Contact = () => {
       if (status === 200) {
         setSubmitStatus('success');
         setFormData({
-          interest: '',
           user_name: '',
           user_email: '',
-          user_phone: '',
+          user_company: '',
           message: '',
         });
+        setSelectedPillars([]);
         setErrors({});
         setTouched({});
       } else {
@@ -136,10 +143,48 @@ const Contact = () => {
 
           <div className="bg-[#0c0c0c] rounded-[2rem] md:rounded-[3rem] p-5 md:p-12 py-8 md:py-10 relative border border-white/10 w-full">
             <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 md:gap-x-10 md:gap-y-6 gap-x-5 gap-y-4 pt-4">
+              <div className="space-y-3">
+                <label className="text-sm font-medium text-gray-300">
+                  What are you exploring? <span className="text-[#4169E1]">(select all that apply)</span>
+                </label>
+                <div className="space-y-2">
+                  {PILLARS.map((pillar) => {
+                    const isSelected = selectedPillars.includes(pillar.id);
+                    return (
+                      <button
+                        key={pillar.id}
+                        type="button"
+                        onClick={() => togglePillar(pillar.id)}
+                        aria-pressed={isSelected}
+                        className={`w-full flex items-center gap-3 text-left rounded-xl p-3.5 transition-all duration-300 border ${
+                          isSelected
+                            ? 'bg-[#4169E1]/[0.08] border-[#4169E1]/50'
+                            : 'bg-white/[0.03] border-white/[0.08] hover:border-white/20'
+                        }`}
+                      >
+                        <span
+                          className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
+                            isSelected ? 'bg-[#4169E1] border-[#4169E1]' : 'border-gray-500'
+                          }`}
+                        >
+                          {isSelected && (
+                            <svg className="w-2.5 h-2.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </span>
+                        <span className="block text-sm font-medium leading-snug text-gray-200">{pillar.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                {errors.pillars && <p className="text-red-400 text-xs mt-1">{errors.pillars}</p>}
+              </div>
+
+              <div className="grid grid-cols-2 md:gap-x-10 md:gap-y-6 gap-x-5 gap-y-4">
                 <div className="space-y-2">
                   <label htmlFor="user_name" className="text-sm font-medium text-gray-300">
-                    Name
+                    Full Name
                   </label>
                   <input
                     id="user_name"
@@ -160,7 +205,7 @@ const Contact = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="user_email" className="text-sm font-medium text-gray-300">
-                    Email
+                    Work Email
                   </label>
                   <input
                     id="user_email"
@@ -179,70 +224,38 @@ const Contact = () => {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="user_phone" className="text-sm font-medium text-gray-300">
-                    Contact Number
+                  <label htmlFor="user_company" className="text-sm font-medium text-gray-300">
+                    Company Name
                   </label>
                   <input
-                    id="user_phone"
-                    type="tel"
-                    name="user_phone"
-                    value={formData.user_phone}
+                    id="user_company"
+                    type="text"
+                    name="user_company"
+                    value={formData.user_company}
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     className={`w-full bg-white/15 border rounded-lg px-4 py-3 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base ${
-                      errors.user_phone && touched.user_phone ? 'border-red-500' : 'border-white/40'
+                      errors.user_company && touched.user_company ? 'border-red-500' : 'border-white/40'
                     }`}
                   />
-                  {errors.user_phone && touched.user_phone && (
-                    <p className="text-red-400 text-xs mt-1">{errors.user_phone}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="interest" className="text-sm font-medium text-gray-300">
-                    Select Service
-                  </label>
-                  <div className="relative border-b border-gray-500/80">
-                    <select
-                      id="interest"
-                      name="interest"
-                      value={formData.interest}
-                      onChange={handleInputChange}
-                      onBlur={handleBlur}
-                      className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base appearance-none cursor-pointer ${
-                        errors.interest && touched.interest ? 'border-red-500' : 'border-white/30'
-                      }`}
-                    >
-                      <option value="" className="bg-black">
-                        Select a service
-                      </option>
-                      {servicesList.map((service) => (
-                        <option key={service} value={service} className="bg-black">
-                          {service}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {errors.interest && touched.interest && (
-                    <p className="text-red-400 text-xs mt-1">{errors.interest}</p>
-                  )}
                 </div>
               </div>
 
-              <div className="space-y-2 md:pb-12 pb-4">
+              <div className="space-y-2 md:pb-4 pb-4">
                 <label htmlFor="message" className="text-sm font-medium text-gray-300">
-                  Message
+                  Project Brief
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows="2"
+                  rows="3"
                   value={formData.message}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   className={`w-full bg-white/10 border rounded-lg py-3 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base resize-none ${
                     errors.message && touched.message ? 'border-red-500' : 'border-white/30'
                   }`}
+                  placeholder="What are you building? Product type, platforms, timeline — a rough paragraph is enough."
                 ></textarea>
                 {errors.message && touched.message && (
                   <p className="text-red-400 text-xs mt-1">{errors.message}</p>
@@ -257,28 +270,15 @@ const Contact = () => {
                     isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
-                  {isSubmitting ? 'Sending...' : 'Submit'}
+                  {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
                 </button>
               </div>
             </form>
 
             <div className="mt-8 pt-6 border-t border-white/10">
-              <p className="text-center text-gray-400 text-sm mb-6">Or reach out directly for a quicker response</p>
+              <p className="text-center text-gray-400 text-sm mb-6">Prefer to talk it through?</p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a
-                  href="https://wa.me/923471245257"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-4 bg-[#25D366]/5 hover:bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/20 py-4 md:py-5 px-5 md:px-8 rounded-2xl transition-all duration-300 group"
-                >
-                  <FaWhatsapp className="w-6 h-6 md:w-7 md:h-7 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="text-left">
-                    <p className="text-[11px] text-[#25D366]/70 font-semibold tracking-wider uppercase">Quick Chat</p>
-                    <p className="text-base font-bold text-white">Message on WhatsApp</p>
-                  </div>
-                </a>
-
+              <div className="grid grid-cols-1 gap-4">
                 <a
                   href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                   target="_blank"
@@ -321,8 +321,8 @@ const Contact = () => {
 
               <p className="text-gray-400 mb-8 text-sm md:text-base leading-relaxed">
                 {submitStatus === 'success'
-                  ? 'Your inquiry has been sent successfully. We will reach out to you within 24 hours.'
-                  : 'We encountered an issue submitting your form. Please try again or reach out to us via WhatsApp.'}
+                  ? 'Your inquiry has been sent successfully. Our lead 3D engineer will reply within 1 business day.'
+                  : 'We encountered an issue submitting your form. Please try again or use the chat button below.'}
               </p>
 
               <button

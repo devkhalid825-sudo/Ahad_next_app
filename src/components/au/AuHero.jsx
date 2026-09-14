@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck } from '@/components/ui/Icons';
 
 const AuHero = ({
   eyebrow,

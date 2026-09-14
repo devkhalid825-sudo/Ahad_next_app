@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { apiCall, API_BASE_URL } from '../utils/api';
 import { getAdminToken } from '../utils/auth';
-import { FiPlus, FiTrash2, FiX, FiSave, FiMove, FiEdit2 } from 'react-icons/fi';
+import { FiPlus, FiTrash2, FiX, FiSave, FiMove, FiEdit2 } from '@/components/ui/Icons';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';

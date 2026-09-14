@@ -1,18 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { FaWhatsapp, FaMapMarkerAlt, FaCheck, FaPaperPlane } from 'react-icons/fa';
-import { SiCalendly } from 'react-icons/si';
+import { FaWhatsapp, FaMapMarkerAlt, FaCheck, FaPaperPlane } from '@/components/ui/Icons';
+import { SiCalendly } from '@/components/ui/Icons';
 import { apiCall } from '../../utils/api';
 import { servicesList } from '../../data/servicesList';
 
 const validators = {
-  first_name: (v) => (v && v.trim().length >= 1 ? '' : 'First name is required'),
-  last_name: (v) => (v && v.trim().length >= 1 ? '' : 'Last name is required'),
-  user_email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Please enter a valid email'),
-  user_phone: (v) => (!v || /^\+?[\d\s\-()]{7,15}$/.test(v) ? '' : 'Please enter a valid phone number'),
-  interest: (v) => (v ? '' : 'Please select a service'),
-  message: (v) => (v && v.trim().length >= 10 ? '' : 'Message must be at least 10 characters'),
+  first_name: (v) => '',
+  last_name: (v) => '',
+  user_email: (v) => (v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? 'Please enter a valid email' : ''),
+  user_phone: (v) => (v && !/^\+?[\d\s\-()]{7,15}$/.test(v) ? 'Please enter a valid phone number' : ''),
+  interest: (v) => '',
+  message: (v) => '',
 };
 
 const AuContact = ({
@@ -92,22 +92,22 @@ const AuContact = ({
           <form id="contactForm" className="au-contact-form" noValidate onSubmit={handleSubmit}>
             <div className="au-contact-grid">
               <div className="au-field">
-                <label htmlFor="au_first_name">First Name *</label>
-                <input id="au_first_name" name="first_name" type="text" placeholder="James" required
+                <label htmlFor="au_first_name">First Name</label>
+                <input id="au_first_name" name="first_name" type="text" placeholder="James"
                   aria-invalid={errors.first_name ? 'true' : 'false'}
                   onChange={(e) => handleField('first_name', e.target.value)} />
                 <small className="au-field-error" data-for="first_name">{errors.first_name || ''}</small>
               </div>
               <div className="au-field">
-                <label htmlFor="au_last_name">Last Name *</label>
-                <input id="au_last_name" name="last_name" type="text" placeholder="Wilson" required
+                <label htmlFor="au_last_name">Last Name</label>
+                <input id="au_last_name" name="last_name" type="text" placeholder="Wilson"
                   aria-invalid={errors.last_name ? 'true' : 'false'}
                   onChange={(e) => handleField('last_name', e.target.value)} />
                 <small className="au-field-error" data-for="last_name">{errors.last_name || ''}</small>
               </div>
               <div className="au-field au-field-full">
-                <label htmlFor="au_email">Business Email *</label>
-                <input id="au_email" name="user_email" type="email" placeholder="james@yourbrand.com.au" required
+                <label htmlFor="au_email">Business Email</label>
+                <input id="au_email" name="user_email" type="email" placeholder="james@yourbrand.com.au"
                   aria-invalid={errors.user_email ? 'true' : 'false'}
                   onChange={(e) => handleField('user_email', e.target.value)} />
                 <small className="au-field-error" data-for="user_email">{errors.user_email || ''}</small>
@@ -120,8 +120,8 @@ const AuContact = ({
                 <small className="au-field-error" data-for="user_phone">{errors.user_phone || ''}</small>
               </div>
               <div className="au-field au-field-full">
-                <label htmlFor="au_interest">Service Required *</label>
-                <select id="au_interest" name="interest" required
+                <label htmlFor="au_interest">Service Required</label>
+                <select id="au_interest" name="interest"
                   aria-invalid={errors.interest ? 'true' : 'false'}
                   onChange={(e) => handleField('interest', e.target.value)}>
                   <option value="">Select a service</option>
@@ -130,8 +130,8 @@ const AuContact = ({
                 <small className="au-field-error" data-for="interest">{errors.interest || ''}</small>
               </div>
               <div className="au-field au-field-full">
-                <label htmlFor="au_message">Your Project Brief *</label>
-                <textarea id="au_message" name="message" rows="4" placeholder="Tell us what you're building — product type, target audience, platform, timeline, and any specific requirements for your Australian market…" required
+                <label htmlFor="au_message">Your Project Brief</label>
+                <textarea id="au_message" name="message" rows="4" placeholder="Tell us what you're building — product type, target audience, platform, timeline, and any specific requirements for your Australian market…"
                   aria-invalid={errors.message ? 'true' : 'false'}
                   onChange={(e) => handleField('message', e.target.value)} />
                 <small className="au-field-error" data-for="message">{errors.message || ''}</small>

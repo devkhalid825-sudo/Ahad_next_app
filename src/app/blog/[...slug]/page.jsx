@@ -4,39 +4,25 @@ import { buildMetadata, buildArticleSchema, buildBreadcrumbSchema, buildFaqSchem
 import BlogArticle from '@/components/BlogArticle';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 
-import ConfiguratorArticle from '@/components/articles/ConfiguratorArticle';
-import ARMarketingArticle from '@/components/articles/ARMarketingArticle';
-import IndustrialAnimationArticle from '@/components/articles/IndustrialAnimationArticle';
-import AutomotiveConfiguratorArticle from '@/components/articles/AutomotiveConfiguratorArticle';
-import VRReshapingWorldArticle from '@/components/articles/VRReshapingWorldArticle';
-import ImmersiveExperienceArticle from '@/components/articles/ImmersiveExperienceArticle';
-import ImmersiveTech2026Article from '@/components/articles/ImmersiveTech2026Article';
-import AnimatedVideosEngagementArticle from '@/components/articles/AnimatedVideosEngagementArticle';
-import FurnitureConfiguratorArticle from '@/components/articles/FurnitureConfiguratorArticle';
-import EducationalAnimationArticle from '@/components/articles/EducationalAnimationArticle';
-import VRServicesArticle from '@/components/articles/VRServicesArticle';
-import RealEstateConfiguratorArticle from '@/components/articles/RealEstateConfiguratorArticle';
-import ArchitecturalVisualization from '@/components/articles/ArchitecturalVisualization';
-import ApparelConfiguratorArticle from '@/components/articles/ApparelConfiguratorArticle';
-import Leap2026Article from '@/components/articles/Leap2026Article';
+import dynamic from 'next/dynamic';
 
 const staticArticles = {
-  'leap-2026-wrap-up': Leap2026Article,
-  'leap-2026-wrap-up-bilal-lania': Leap2026Article,
-  'web-based-configurator': ConfiguratorArticle,
-  'immersive-ar-marketing': ARMarketingArticle,
-  'industrial-animation': IndustrialAnimationArticle,
-  'automotive-configurator': AutomotiveConfiguratorArticle,
-  'vr-reshaping-world': VRReshapingWorldArticle,
-  'immersive-experience-design': ImmersiveExperienceArticle,
-  'immersive-tech-2026': ImmersiveTech2026Article,
-  'animated-videos-engagement': AnimatedVideosEngagementArticle,
-  'furniture-configurator-2026': FurnitureConfiguratorArticle,
-  'educational-animation-2026': EducationalAnimationArticle,
-  'vr-custom-development-2026': VRServicesArticle,
-  '3d-real-time-configurators-real-estate-dubai': RealEstateConfiguratorArticle,
-  'architectural-visualization-guide': ArchitecturalVisualization,
-  'apparel-configurator-fashion-brands-2026': ApparelConfiguratorArticle,
+  'leap-2026-wrap-up': dynamic(() => import('@/components/articles/Leap2026Article')),
+  'leap-2026-wrap-up-bilal-lania': dynamic(() => import('@/components/articles/Leap2026Article')),
+  'web-based-configurator': dynamic(() => import('@/components/articles/ConfiguratorArticle')),
+  'immersive-ar-marketing': dynamic(() => import('@/components/articles/ARMarketingArticle')),
+  'industrial-animation': dynamic(() => import('@/components/articles/IndustrialAnimationArticle')),
+  'automotive-configurator': dynamic(() => import('@/components/articles/AutomotiveConfiguratorArticle')),
+  'vr-reshaping-world': dynamic(() => import('@/components/articles/VRReshapingWorldArticle')),
+  'immersive-experience-design': dynamic(() => import('@/components/articles/ImmersiveExperienceArticle')),
+  'immersive-tech-2026': dynamic(() => import('@/components/articles/ImmersiveTech2026Article')),
+  'animated-videos-engagement': dynamic(() => import('@/components/articles/AnimatedVideosEngagementArticle')),
+  'furniture-configurator-2026': dynamic(() => import('@/components/articles/FurnitureConfiguratorArticle')),
+  'educational-animation-2026': dynamic(() => import('@/components/articles/EducationalAnimationArticle')),
+  'vr-custom-development-2026': dynamic(() => import('@/components/articles/VRServicesArticle')),
+  '3d-real-time-configurators-real-estate-dubai': dynamic(() => import('@/components/articles/RealEstateConfiguratorArticle')),
+  'architectural-visualization-guide': dynamic(() => import('@/components/articles/ArchitecturalVisualization')),
+  'apparel-configurator-fashion-brands-2026': dynamic(() => import('@/components/articles/ApparelConfiguratorArticle')),
 };
 
 const staticArticleMetadata = {

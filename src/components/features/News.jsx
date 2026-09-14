@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode } from 'swiper/modules';
-import { apiCall, getImgSrc, BACKEND_ORIGIN } from '@/utils/api';
+import { apiCall, getImgSrc, toCdnUrl } from '@/utils/api';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -24,8 +24,9 @@ const getImageSrc = (image) => {
   let src = image;
   if (typeof src === 'object') src = src.url || src.src || '';
   if (typeof src !== 'string' || !src.trim()) return articleImg1;
-  if (src.startsWith('http')) return src;
-  if (src.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${src}`;
+  // Always prefer the production CDN for upload images
+  const cdn = toCdnUrl(src);
+  if (cdn && cdn !== src) return cdn;
   return src;
 };
 

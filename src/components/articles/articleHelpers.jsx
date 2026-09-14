@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { m as motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { IoChevronDown } from 'react-icons/io5';
 import { FaPlus, FaArrowRight } from 'react-icons/fa';
 

@@ -4,6 +4,9 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 import { apiCall } from '@/utils/api';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { useInView } from '@/hooks/useInView';
+import MediaFacade from '../ui/MediaFacade';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -29,57 +32,31 @@ const isDirectVideo = (url) => {
   return /\.(mp4|webm|mov|avi|mkv)(\?|$)/i.test(url);
 };
 
-const VideoPlayer = ({ url, onEnded, videoRef }) => {
-  const youtubeId = useMemo(() => getYouTubeId(url), [url]);
-  const instagramUrl = useMemo(() => getInstagramEmbedUrl(url), [url]);
-  const direct = useMemo(() => isDirectVideo(url), [url]);
-
-  if (youtubeId) {
-    const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&fs=0`;
-    return (
-      <div className="w-full h-full relative" style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
-        <div style={{ position: 'absolute', top: '-15%', left: '-10%', width: '120%', height: '130%', pointerEvents: 'none', overflow: 'hidden' }}>
-          <iframe
-            ref={videoRef}
-            src={embedUrl}
-            className="w-full h-full"
-            style={{ border: 'none', background: '#000' }}
-            allow="autoplay; encrypted-media; picture-in-picture"
-            title="YouTube"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    );
-  }
-  if (instagramUrl)
-    return (
-      <iframe
-        src={instagramUrl}
-        className="w-full h-full"
-        allow="autoplay; encrypted-media"
-        title="Instagram"
-        loading="lazy"
-        style={{ overflow: 'hidden', borderRadius: '24px' }}
-      />
-    );
-  if (direct)
-    return (
-      <video
-        ref={videoRef}
-        src={url}
-        muted
-        autoPlay
-        loop
-        playsInline
-        onEnded={onEnded}
-        className="w-full h-full object-cover bg-black rounded-[24px]"
-        style={{ overflow: 'hidden' }}
-      />
-    );
+/**
+ * LazyDesktopVideoSlide
+ *
+ * Per-slide lazy-mount wrapper for the desktop marquee. Mounts the video/iframe
+ * only when the slide enters the viewport (rootMargin: '0px 200px'). This prevents
+ * 12-24 simultaneous decoder allocations that previously caused 7,700ms TBT.
+ */
+const LazyDesktopVideoSlide = ({ item }) => {
+  const [ref, inView] = useInView({ rootMargin: '0px 200px 0px 200px' });
   return (
-    <div className="w-full h-full flex items-center justify-center bg-black text-white/40 text-[10px] uppercase tracking-wider">
-      Unsupported URL
+    <div ref={ref} className="absolute inset-0 overflow-hidden">
+      {inView && item.videoUrl ? (
+        <MediaFacade
+          videoUrl={item.videoUrl}
+          title={item.projectName || 'Social Video'}
+          isActive={true}
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          controls={false}
+          className="w-full h-full"
+        />
+      ) : (
+        <div className="w-full h-full bg-[#1a1a1c]" />
+      )}
     </div>
   );
 };
@@ -131,6 +108,8 @@ const SocialMediaSection = ({ initialSocialMedia = [] }) => {
         }))
       : []
   );
+  const isMobile = useIsMobile();
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
   const mobileSwiperRef = useRef(null);
   const sectionRef = useRef(null);
   const [sectionVisible, setSectionVisible] = useState(false);
@@ -175,7 +154,7 @@ const SocialMediaSection = ({ initialSocialMedia = [] }) => {
           observer.disconnect();
         }
       },
-      { rootMargin: '400px' }
+      { rootMargin: '200px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -242,86 +221,111 @@ const SocialMediaSection = ({ initialSocialMedia = [] }) => {
           </div>
         </div>
 
-        <Swiper
-          ref={mobileSwiperRef}
-          onSwiper={(swiper) => {
-            mobileSwiperRef.current = swiper;
-          }}
-          modules={[Pagination, Autoplay]}
-          loop={true}
-          speed={600}
-          autoplay={{ delay: 9000, disableOnInteraction: false }}
-          slidesPerView={1}
-          spaceBetween={12}
-          grabCursor={true}
-          allowTouchMove={true}
-          pagination={{ clickable: true, el: '.mobile-social-pagination' }}
-          className="md:!hidden !px-[15px]"
-        >
-          {items.map((item, idx) => (
-            <SwiperSlide key={item.id} className="!w-full py-4">
-              <div
-                data-slide-id={idx}
-                className="relative w-full h-[420px] bg-[#1a1a1c] overflow-hidden"
-                style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7)' }}
-              >
-                  <div className="block w-full h-full">
-                    <div className="absolute inset-0 overflow-hidden">
-                      {item.videoUrl && sectionVisible && <VideoPlayer url={item.videoUrl} onEnded={handleVideoEnded} />}
-                      {item.videoUrl && !sectionVisible && <div className="w-full h-full bg-[#1a1a1c]" />}
+        {/* Mobile Swiper: ONLY rendered on mobile viewports (<768px) */}
+        {isMobile !== false && (
+          <>
+            <Swiper
+              ref={mobileSwiperRef}
+              onSwiper={(swiper) => {
+                mobileSwiperRef.current = swiper;
+              }}
+              onSlideChange={(swiper) => {
+                setActiveMobileIndex(swiper.realIndex);
+              }}
+              modules={[Pagination, Autoplay]}
+              loop={true}
+              speed={600}
+              autoplay={{ delay: 9000, disableOnInteraction: false }}
+              slidesPerView={1}
+              spaceBetween={12}
+              grabCursor={true}
+              allowTouchMove={true}
+              pagination={{ clickable: true, el: '.mobile-social-pagination' }}
+              className="md:!hidden !px-[15px]"
+            >
+              {items.map((item, idx) => (
+                <SwiperSlide key={item.id} className="!w-full py-4">
+                  <div
+                    data-slide-id={idx}
+                    className="relative w-full h-[420px] bg-[#1a1a1c] overflow-hidden rounded-[24px]"
+                    style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7)' }}
+                  >
+                    <div className="block w-full h-full">
+                      <div className="absolute inset-0 overflow-hidden">
+                        {item.videoUrl && sectionVisible && (
+                          <MediaFacade
+                            videoUrl={item.videoUrl}
+                            title={item.projectName || 'Social Video'}
+                            isActive={activeMobileIndex === idx}
+                            autoPlay={activeMobileIndex === idx}
+                            muted={true}
+                            loop={true}
+                            onEnded={handleVideoEnded}
+                            className="w-full h-full"
+                          />
+                        )}
+                        {(!item.videoUrl || !sectionVisible) && <div className="w-full h-full bg-[#1a1a1c]" />}
+                      </div>
                     </div>
                   </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <div className="mobile-social-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="mobile-social-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
+          </>
+        )}
 
-        <Swiper
-          modules={[Autoplay, FreeMode]}
-          loop={true}
-          speed={8000}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: true,
-            pauseOnMouseEnter: true,
-          }}
-          slidesPerView="auto"
-          spaceBetween={10}
-          freeMode={{
-            enabled: true,
-            momentum: true,
-            sticky: false,
-          }}
-          grabCursor={true}
-          allowTouchMove={true}
-          className="!overflow-visible px-0 marquee-swiper max-md:!hidden"
-        >
-          {[...items, ...items].map((item, index) => (
-            <SwiperSlide key={`${item.id}-${index}`} className="!w-[160px] md:!w-[440px] py-2 md:py-4">
-              <div className="block w-full h-full">
-                <div
-                  className="relative w-full h-[280px] md:h-[780px] bg-[#1a1a1c] overflow-hidden group cursor-pointer"
-                  style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7)' }}
-                  onClick={() => item.videoUrl && window.open(item.videoUrl, '_blank', 'noopener,noreferrer')}
-                >
-                  <div className="absolute inset-0 overflow-hidden">
-                    {item.videoUrl && sectionVisible && <VideoPlayer url={item.videoUrl} />}
-                    {item.videoUrl && !sectionVisible && <div className="w-full h-full bg-[#1a1a1c]" />}
+        {/* Desktop Swiper: ONLY rendered on desktop (>=768px). Completely unmounted on mobile to prevent 12+ video decoders */}
+        {isMobile !== true && (
+          <Swiper
+            modules={[Autoplay, FreeMode]}
+            loop={true}
+            speed={8000}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: true,
+              pauseOnMouseEnter: true,
+            }}
+            slidesPerView="auto"
+            spaceBetween={10}
+            freeMode={{
+              enabled: true,
+              momentum: true,
+              sticky: false,
+            }}
+            grabCursor={true}
+            allowTouchMove={true}
+            className="!overflow-visible px-0 marquee-swiper max-md:!hidden"
+          >
+            {[...items, ...items].map((item, index) => (
+              <SwiperSlide key={`${item.id}-${index}`} className="!w-[160px] md:!w-[440px] py-2 md:py-4">
+                <div className="block w-full h-full">
+                  <div
+                    className="relative w-full h-[280px] md:h-[780px] bg-[#1a1a1c] overflow-hidden group cursor-pointer rounded-[24px]"
+                    style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.7)' }}
+                    onClick={() => item.videoUrl && window.open(item.videoUrl, '_blank', 'noopener,noreferrer')}
+                  >
+                    {sectionVisible ? (
+                      <LazyDesktopVideoSlide item={item} />
+                    ) : (
+                      <div className="absolute inset-0 overflow-hidden">
+                        <div className="w-full h-full bg-[#1a1a1c]" />
+                      </div>
+                    )}
+
+                    {item.projectName && (
+                      <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 py-4 md:py-6 bg-gradient-to-t from-black/90 to-transparent group-hover:bg-gradient-to-t group-hover:from-[#4169E1]/80 transition-all duration-300">
+                        <span className="hidden md:block text-white text-[11px] md:text-sm font-semibold tracking-tight truncate">
+                          {item.projectName}
+                        </span>
+                      </div>
+                    )}
                   </div>
-
-                  {item.projectName && (
-                    <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 py-4 md:py-6 bg-gradient-to-t from-black/90 to-transparent group-hover:bg-gradient-to-t group-hover:from-[#4169E1]/80 transition-all duration-300">
-                      <span className="hidden md:block text-white text-[11px] md:text-sm font-semibold tracking-tight truncate">
-                        {item.projectName}
-                      </span>
-                    </div>
-                  )}
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
     </section>
   );

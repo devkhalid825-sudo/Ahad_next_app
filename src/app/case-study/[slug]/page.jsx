@@ -4,6 +4,7 @@ import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
 import ProjectPage from '@/components/ProjectPage';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
+import { getProjectValueProposition } from '@/constants/projectValueProps';
 
 export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
 
@@ -13,7 +14,8 @@ const getCaseStudy = cache(async (slug) => {
 });
 
 function caseStudySchemas(slug, data) {
-  const description = data.metaDescription || (data.description || data.content || '').replace(/<[^>]*>/g, '').slice(0, 160);
+  const uniqueValueProp = getProjectValueProposition({ ...data, slug });
+  const description = data.metaDescription || uniqueValueProp || (data.description || data.content || '').replace(/<[^>]*>/g, '').slice(0, 160);
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -48,9 +50,10 @@ export async function generateMetadata({ params }) {
   const safeSlug = String(slug || '').trim();
 
   if (safeSlug === 'ahmed-food') {
+    const description = getProjectValueProposition({ slug: 'ahmed-food', title: 'Ahmed Food' });
     return buildMetadata({
       title: 'Ahmed Food - Case Study | Elipse Studio',
-      description: 'Ahmed Food 3D animation, visuals, and brand case study by Elipse Studio.',
+      description,
       canonical: `${SITE_URL}/case-study/ahmed-food`,
     });
   }

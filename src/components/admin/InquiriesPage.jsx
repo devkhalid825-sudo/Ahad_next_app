@@ -94,13 +94,19 @@ const InquiriesPage = () => {
                         <span className="flex items-center gap-1.5 truncate max-w-full group-hover:text-[#4169E1] transition-colors"><FiMail className="shrink-0" /> {contact.user_email}</span>
                         {contact.user_phone && <span className="flex items-center gap-1.5"><FiPhone className="shrink-0" /> {contact.user_phone}</span>}
                         {contact.user_company && <span className="flex items-center gap-1.5"><FiBriefcase className="shrink-0" /> {contact.user_company}</span>}
+                        {contact.budget && <span className="flex items-center gap-1.5"><FiGlobe className="shrink-0" /> Budget: {contact.budget}</span>}
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 ml-auto sm:ml-0">
                     <span className="px-2.5 md:px-3 py-1 md:py-1.5 bg-[#0D0D0D]/10 border border-[#0D0D0D]/20 rounded-full text-[7px] md:text-[8px] font-bold uppercase tracking-widest text-[#0D0D0D]/70 whitespace-nowrap">
-                      {contact.interest}
+                      {contact.interest || 'General'}
                     </span>
+                    {contact.pillars && contact.pillars !== contact.interest && (
+                      <span className="px-2.5 md:px-3 py-1 md:py-1.5 bg-[#4169E1]/10 border border-[#4169E1]/20 rounded-full text-[7px] md:text-[8px] font-bold uppercase tracking-widest text-[#4169E1]/80 max-w-[180px] truncate">
+                        Pillars: {contact.pillars}
+                      </span>
+                    )}
                     <button
                       onClick={() => handleDelete(contact.id)}
                       className="p-2.5 md:p-3 bg-red-500/5 text-red-500/40 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"

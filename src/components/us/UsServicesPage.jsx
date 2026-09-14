@@ -4,8 +4,8 @@ import UsPage from './UsPage';
 import UsConfigurator from './UsConfigurator';
 import { YACHT_COLORS } from './UsPageData';
 import {
-  FaCog, FaCogs, FaVrCardboard, FaLandmark, FaCamera, FaFilm, FaMagic, FaStore, FaGlobe, FaMobileAlt, FaBolt as FaMotionBolt,
-  FaMapMarkerAlt, FaDollarSign, FaLink, FaRulerCombined, FaBolt, FaGift,
+  FaCog, FaCogs, FaVrCardboard, FaLandmark, FaCamera, FaFilm, FaMagic, FaStore, FaGlobe, FaMobileAlt, FaBolt,
+  FaMapMarkerAlt, FaDollarSign, FaLink, FaRulerCombined, FaGift,
   FaHome, FaCouch, FaCar, FaShoppingCart, FaHospital, FaGraduationCap, FaTshirt, FaHotel, FaHardHat, FaShoppingBag,
   FaPhoneAlt, FaClock, FaArrowRight, FaStar,
 } from 'react-icons/fa';
@@ -68,7 +68,7 @@ const SERVICE_ITEMS = [
     linkLabel: 'Explore 3D Animation USA →',
   },
   {
-    icon: <FaMotionBolt />,
+    icon: <FaBolt />,
     title: 'Motion Graphics USA',
     desc: '2D/3D motion graphics, kinetic typography, and animated brand explainers for US marketing teams. Social ad creative, animated logo stings, and broadcast/OTT commercial graphics from an After Effects + Cinema 4D pipeline.',
     tags: ['After Effects', 'Cinema 4D', 'Kinetic type', 'Social ad creative', 'Broadcast/OTT'],

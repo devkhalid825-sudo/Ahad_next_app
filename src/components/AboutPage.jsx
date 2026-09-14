@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { getImgSrc } from '../utils/api';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';

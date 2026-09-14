@@ -7,6 +7,7 @@ import AhmedFoodLayout from "./AhmedFoodLayout";
 import { OverviewSection, ResultsSection, ProcessSection, GallerySection } from "./projects/projectSections";
 import { projectList, caseStudyEntries } from "./projects/projectData";
 import { apiCall, getYoutubeEmbed, BACKEND_ORIGIN } from "../utils/api";
+import { getProjectValueProposition } from "@/constants/projectValueProps";
 
 // Normalize backend image URLs — handles both full URLs and relative /uploads/ paths
 const resolveImg = (img) => {
@@ -60,23 +61,29 @@ const StaticProjectView = ({ project }) => (
 );
 
 
-const DynamicProjectView = ({ data, type }) => {
+const DynamicProjectView = ({ data, type = 'project' }) => {
   const isCaseStudy = type === 'case-study';
   const [nextProject, setNextProject] = useState(null);
 
   useEffect(() => {
-    if (!data || !data.id) return;
+    let cancelled = false;
     const listEndpoint = isCaseStudy ? '/case-studies' : '/projects';
-    apiCall(listEndpoint, 'GET').then(({ data: list, status }) => {
-      if (status === 200 && Array.isArray(list)) {
-        const idx = list.findIndex((item) => item.id === data.id);
-        if (idx === -1) return;
-        const next = idx < list.length - 1 ? list[idx + 1] : list[0];
-        if (!next) return;
-        const path = isCaseStudy ? `/case-study/${next.slug}` : (next.path || `/project/${next.slug}`);
-        setNextProject({ path, name: next.title });
-      }
-    }).catch(() => { });
+    apiCall(listEndpoint, 'GET', null, null, false, { next: { revalidate: 60 } })
+      .then(({ data: list, status }) => {
+        if (cancelled || status !== 200 || !Array.isArray(list)) return;
+        const currentPath = data.path || `/project/${data.slug}`;
+        const currentIdx = list.findIndex(p => (p.path || `/project/${p.slug}`) === currentPath);
+        if (currentIdx !== -1 && list.length > 1) {
+          const next = list[(currentIdx + 1) % list.length];
+          setNextProject({
+            title: next.title,
+            path: next.path || (isCaseStudy ? `/case-study/${next.slug}` : `/project/${next.slug}`),
+            image: next.image || next.heroImage || next.largeBanner,
+          });
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
   }, [data, isCaseStudy]);
 
   const meta = [
@@ -104,9 +111,12 @@ const DynamicProjectView = ({ data, type }) => {
     url: getYoutubeEmbed(t.url) || t.url,
   }));
 
+  const subtitle = data.subtitle || data.metaDescription || getProjectValueProposition({ ...data, slug: data.slug || data.path });
+
   return (
     <AhmedFoodLayout
       title={data.title}
+      subtitle={subtitle}
       meta={meta}
       heroVideo={heroVideo}
       heroImage={heroImage}

@@ -1,9 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { apiCall } from '../utils/api';
-import { FiLock, FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
+import { FiLock, FiArrowLeft, FiCheckCircle } from '@/components/ui/Icons';
 import logoRaw from '../assets/images/logo.webp';
 import { getImgSrc } from '../utils/api';
 const logo = getImgSrc(logoRaw);

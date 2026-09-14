@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft } from '@/components/ui/Icons';
 import { apiCall, getYoutubeEmbed, BACKEND_ORIGIN } from '../utils/api';
 import AhmedFoodLayout from './AhmedFoodLayout';
 

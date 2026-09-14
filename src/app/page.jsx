@@ -35,7 +35,7 @@ const breadcrumb = {
 };
 
 export function generateMetadata() {
-  return buildMetadata({
+  const base = buildMetadata({
     title: '3D Visualization & VR Studio',
     description:
       'Elipse Studio delivers premium 3D rendering, walkthrough animation, interactive configurators, and AR/VR experiences for global developers and brands.',
@@ -43,6 +43,12 @@ export function generateMetadata() {
     ogImage: `${SITE_URL}/assets/logo-og.webp`,
     ogImageAlt: 'Elipse Studio — 3D Visualization & AR/VR Studio',
   });
+  // Override the browser-tab title to the exact required string
+  // while keeping all other metadata (OG, Twitter, canonical, etc.) intact.
+  return {
+    ...base,
+    title: { absolute: 'Elipse Studio - Interactive Digital Experiences' },
+  };
 }
 
 export default async function Page() {

@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 import path from "path";
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
+const withAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 // Resolve the compat shim absolute path once
 const routerCompatPath = path.resolve(__dirname, "src/lib/router-compat.js");
@@ -161,7 +166,19 @@ const nextConfig: NextConfig = {
   // Allow images from the configured backend host & production domain
   images: {
     disableStaticImages: false,
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 2592000, // 30 days cache for optimized images
+    dangerouslyAllowLocalIP: true, // allow localhost backend during dev
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
+      // Local backend during development
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "5005",
+        pathname: "/**",
+      },
       {
         protocol: "https",
         hostname: "elipsestudio.com",
@@ -179,6 +196,12 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
+      // YouTube Video Posters
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/**",
+      },
     ],
   },
 
@@ -190,6 +213,29 @@ const nextConfig: NextConfig = {
     },
   },
 
+  // Optimize package imports for large libraries: tree-shake icons and motion libraries
+  experimental: {
+    optimizePackageImports: [
+      "react-icons",
+      "react-icons/fa",
+      "react-icons/fi",
+      "react-icons/si",
+      "react-icons/hi2",
+      "react-icons/lu",
+      "react-icons/tb",
+      "react-icons/ri",
+      "react-icons/pi",
+      "react-icons/io5",
+      "react-icons/md",
+      "framer-motion",
+      "gsap",
+      "swiper",
+      "@dnd-kit/core",
+      "@dnd-kit/sortable",
+      "@dnd-kit/utilities",
+    ],
+  },
+
   // Webpack alias (production build)
   webpack(config) {
     config.resolve.alias["react-router-dom"] = routerCompatPath;
@@ -197,4 +243,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withAnalyzer(nextConfig);

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaThLarge, FaPaperPlane } from 'react-icons/fa';
+import { FaThLarge, FaPaperPlane } from '@/components/ui/Icons';
 import Header from './layouts/Header';
 import LatestWork from './features/LatestWork';
 import ClientReviews from './features/ClientReviews';
@@ -50,6 +50,7 @@ const AutoScrollRow = ({ children }) => {
 
 const AhmedFoodLayout = ({
   title,
+  subtitle,
   meta = [],
   heroVideo,
   heroImage,
@@ -88,55 +89,60 @@ const AhmedFoodLayout = ({
       <section className="bg-[#0D0D0D] px-8 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 md:pb-10 relative">
         <Header />
 
-          {/* Heading */}
-          <div className="pt-2 sm:pt-4 mb-4 sm:mb-6">
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F2F0EB] leading-[1.1] tracking-tight">
-              {title}<span className="text-[#4169E1]">.</span>
-            </h1>
-          </div>
-
-          {meta.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 border-t border-white/10 pt-4 sm:pt-6 mb-6 max-w-3xl">
-              {meta.map((item, i) => (
-                <div key={i} className="cs-hero-meta-item">
-                  <label className="block text-[9px] sm:text-[10px] font-semibold tracking-[0.15em] uppercase text-zinc-500 mb-1">{item.label}</label>
-                  <p className="text-xs sm:text-sm font-medium text-[#F2F0EB] leading-snug">{item.value}</p>
-                </div>
-              ))}
-            </div>
+        {/* Heading */}
+        <div className="pt-2 sm:pt-4 mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F2F0EB] leading-[1.1] tracking-tight">
+            {title}<span className="text-[#4169E1]">.</span>
+          </h1>
+          {subtitle && (
+            <p className="text-zinc-400 text-sm sm:text-base md:text-lg font-light max-w-3xl mt-2 sm:mt-3 leading-relaxed">
+              {subtitle}
+            </p>
           )}
+        </div>
 
-          {hasVideoTabs && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {videoTabs.map((tab) => (
-                <button
-                  key={tab.id ?? tab.label}
-                  onClick={() => setActiveVideo(tab.id ?? videoTabs.indexOf(tab))}
-                  className={`text-xs sm:text-[13px] font-medium px-4 py-2 rounded-full border transition-all duration-200 cursor-pointer ${activeVideo === (tab.id ?? videoTabs.indexOf(tab))
-                    ? 'bg-[#4169E1] text-white border-[#4169E1]'
-                    : 'bg-transparent text-[#888] border-[#333] hover:border-[#666] hover:text-[#ccc]'
-                    }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className="w-full relative aspect-[4/3] sm:aspect-video rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-black">
-            {currentVideoUrl ? (
-              <iframe
-                src={currentVideoUrl}
-                title={title}
-                frameBorder="0"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            ) : heroImage ? (
-              <img src={heroImage} alt={title} width="1200" height="700" className="w-full h-full object-cover" />
-            ) : null}
+        {meta.length > 0 && (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 border-t border-white/10 pt-4 sm:pt-6 mb-6 max-w-3xl">
+            {meta.map((item, i) => (
+              <div key={i} className="cs-hero-meta-item">
+                <label className="block text-[9px] sm:text-[10px] font-semibold tracking-[0.15em] uppercase text-zinc-500 mb-1">{item.label}</label>
+                <p className="text-xs sm:text-sm font-medium text-[#F2F0EB] leading-snug">{item.value}</p>
+              </div>
+            ))}
           </div>
+        )}
+
+        {hasVideoTabs && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {videoTabs.map((tab) => (
+              <button
+                key={tab.id ?? tab.label}
+                onClick={() => setActiveVideo(tab.id ?? videoTabs.indexOf(tab))}
+                className={`text-xs sm:text-[13px] font-medium px-4 py-2 rounded-full border transition-all duration-200 cursor-pointer ${activeVideo === (tab.id ?? videoTabs.indexOf(tab))
+                  ? 'bg-[#4169E1] text-white border-[#4169E1]'
+                  : 'bg-transparent text-[#888] border-[#333] hover:border-[#666] hover:text-[#ccc]'
+                  }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="w-full relative aspect-[4/3] sm:aspect-video rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-black">
+          {currentVideoUrl ? (
+            <iframe
+              src={currentVideoUrl}
+              title={title}
+              frameBorder="0"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          ) : heroImage ? (
+            <img src={heroImage} alt={title} width="1200" height="700" className="w-full h-full object-cover" />
+          ) : null}
+        </div>
       </section>
 
       {/* OVERVIEW + CHALLENGE */}

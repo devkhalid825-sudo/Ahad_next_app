@@ -3,40 +3,25 @@ import { SITE_URL } from '@/utils/api';
 import { buildMetadata, buildBreadcrumbSchema, buildFaqSchema, buildVideoObjectSchema } from '@/lib/seo';
 import { SERVICE_FAQS } from '@/seo/serviceFaqs';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
-import ArchitecturalVisualizationPage from '@/components/services/ArchitecturalVisualizationPage';
-import ProductVisualizationPage from '@/components/services/ProductVisualizationPage';
-import ProductConfiguratorsPage from '@/components/services/ProductConfiguratorsPage';
-import InteractiveWebExperiencesPage from '@/components/services/InteractiveWebExperiencesPage';
-import VrDevelopmentPage from '@/components/services/VrDevelopmentPage';
-import ArDevelopmentPage from '@/components/services/ArDevelopmentPage';
-import AnimationPage from '@/components/services/AnimationPage';
-import ProductAnimationPage from '@/components/services/ProductAnimationPage';
-import VfxVirtualProductionPage from '@/components/services/VfxVirtualProductionPage';
-import VirtualShowroomsDigitalTwinsPage from '@/components/services/VirtualShowroomsDigitalTwinsPage';
-import CustomSoftwareDevelopmentPage from '@/components/services/CustomSoftwareDevelopmentPage';
-import WebsiteDevelopmentPage from '@/components/services/WebsiteDevelopmentPage';
-import MobileAppDevelopmentPage from '@/components/services/MobileAppDevelopmentPage';
-import CreativeServicesPage from '@/components/services/CreativeServicesPage';
-import EnterpriseSolutionsPage from '@/components/services/EnterpriseSolutionsPage';
-import MarketingPage from '@/components/services/MarketingPage';
+import dynamic from 'next/dynamic';
 
 const servicePages = {
-  'architectural-visualization': ArchitecturalVisualizationPage,
-  '3d-product-visualization': ProductVisualizationPage,
-  '3d-product-configurators': ProductConfiguratorsPage,
-  'interactive-web-experiences': InteractiveWebExperiencesPage,
-  'vr-development': VrDevelopmentPage,
-  'ar-development': ArDevelopmentPage,
-  '3d-animation': AnimationPage,
-  'product-animation': ProductAnimationPage,
-  'vfx-virtual-production': VfxVirtualProductionPage,
-  'virtual-showrooms-digital-twins': VirtualShowroomsDigitalTwinsPage,
-  'custom-software-development': CustomSoftwareDevelopmentPage,
-  'website-development': WebsiteDevelopmentPage,
-  'mobile-app-development': MobileAppDevelopmentPage,
-  'creative-services': CreativeServicesPage,
-  'enterprise-solutions': EnterpriseSolutionsPage,
-  marketing: MarketingPage,
+  'architectural-visualization': dynamic(() => import('@/components/services/ArchitecturalVisualizationPage')),
+  '3d-product-visualization': dynamic(() => import('@/components/services/ProductVisualizationPage')),
+  '3d-product-configurators': dynamic(() => import('@/components/services/ProductConfiguratorsPage')),
+  'interactive-web-experiences': dynamic(() => import('@/components/services/InteractiveWebExperiencesPage')),
+  'vr-development': dynamic(() => import('@/components/services/VrDevelopmentPage')),
+  'ar-development': dynamic(() => import('@/components/services/ArDevelopmentPage')),
+  '3d-animation': dynamic(() => import('@/components/services/AnimationPage')),
+  'product-animation': dynamic(() => import('@/components/services/ProductAnimationPage')),
+  'vfx-virtual-production': dynamic(() => import('@/components/services/VfxVirtualProductionPage')),
+  'virtual-showrooms-digital-twins': dynamic(() => import('@/components/services/VirtualShowroomsDigitalTwinsPage')),
+  'custom-software-development': dynamic(() => import('@/components/services/CustomSoftwareDevelopmentPage')),
+  'website-development': dynamic(() => import('@/components/services/WebsiteDevelopmentPage')),
+  'mobile-app-development': dynamic(() => import('@/components/services/MobileAppDevelopmentPage')),
+  'creative-services': dynamic(() => import('@/components/services/CreativeServicesPage')),
+  'enterprise-solutions': dynamic(() => import('@/components/services/EnterpriseSolutionsPage')),
+  marketing: dynamic(() => import('@/components/services/MarketingPage')),
 };
 
 const serviceMeta = {

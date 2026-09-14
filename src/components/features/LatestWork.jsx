@@ -2,9 +2,11 @@
 
 import React, { useState, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch } from '@/components/ui/Icons';
 import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
+import { getProjectValueProposition } from '@/constants/projectValueProps';
 
 const categories = ['ALL', 'Animation', 'Web', 'Configurator', 'VR', 'AR', 'Architecture', 'Tour 360'];
 
@@ -17,6 +19,8 @@ const mapProjects = (data) =>
       category: p.category,
       image: p.image,
       path: p.path,
+      description: p.description,
+      metaDescription: p.metaDescription,
     }));
 
 const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
@@ -218,39 +222,27 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
               }`}
             >
               <div className="relative h-full w-full overflow-hidden">
-                <img
-                  src={
-                    project.image
-                      ? project.image.startsWith('http')
+                {project.image ? (
+                  <Image
+                    src={
+                      project.image.startsWith('http')
                         ? project.image
                         : `${BACKEND_ORIGIN}${project.image}`
-                      : ''
-                  }
-                  alt={project.title}
-                  width="600"
-                  height="400"
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                    }
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading="lazy"
+                    decoding="async"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-zinc-900" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
                   <h3 className="text-lg md:text-xl font-bold text-white mb-2">{project.title}</h3>
                   <p className="text-zinc-300 text-xs md:text-sm mb-2 line-clamp-2">
-                    {project.category === 'Configurator'
-                      ? 'Interactive configurator that drives engagement and conversions'
-                      : project.category === 'VR'
-                      ? 'Immersive VR experience that captivates audiences'
-                      : project.category === 'AR'
-                      ? 'Augmented reality that bridges digital and physical'
-                      : project.category === 'Animation'
-                      ? 'Cinematic animation that tells your brand story'
-                      : project.category === 'Web'
-                      ? 'High-performance web experience built for results'
-                      : project.category === 'Architecture'
-                      ? 'Photoreal architectural visualization that sells'
-                      : project.category === 'Tour 360'
-                      ? 'Immersive 360 tour that showcases every detail'
-                      : 'Real results delivered through immersive technology'}
+                    {getProjectValueProposition(project)}
                   </p>
                   <div className="pt-3 border-t border-zinc-700/50">
                     <span className="inline-flex items-center text-xs font-semibold text-white group-hover:text-[#4169E1] transition-colors uppercase tracking-widest">

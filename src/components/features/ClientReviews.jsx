@@ -9,6 +9,10 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { useInView } from '@/hooks/useInView';
+import MediaFacade from '../ui/MediaFacade';
+
 const getYouTubeEmbedUrl = (url, muted = true) => {
   if (!url) return null;
   const muteParam = muted ? '1' : '0';
@@ -19,6 +23,64 @@ const getYouTubeEmbedUrl = (url, muted = true) => {
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
   if (match) return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1&mute=${muteParam}&enablejsapi=1&playsinline=1&rel=0&modestbranding=1`;
   return null;
+};
+
+/**
+ * LazyReviewSlide
+ *
+ * Per-slide lazy-mount wrapper for the desktop marquee. The actual video/iframe
+ * is only mounted when the slide enters the viewport (with a 300px horizontal
+ * pre-load margin). This prevents 24 simultaneous decoder allocations.
+ */
+const LazyReviewSlide = ({ review, isMuted, onToggleMute }) => {
+  const [ref, inView] = useInView({ rootMargin: '0px 300px 0px 300px' });
+  const videoRef = useRef(null);
+
+  return (
+    <div
+      ref={ref}
+      className="w-full h-[140px] md:h-[380px] rounded-[12px] md:rounded-[36px] overflow-hidden border border-white/5 group relative"
+    >
+      {inView && review.video ? (
+        <MediaFacade
+          videoUrl={review.video}
+          title={`${review.clientName} review`}
+          isActive={true}
+          autoPlay={true}
+          muted={isMuted}
+          loop={true}
+          controls={false}
+          setRef={(el) => { videoRef.current = el; }}
+          className="w-full h-full"
+        />
+      ) : (
+        <div className="w-full h-full bg-[#323235]" />
+      )}
+      {review.video && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleMute(`dt-${review.id}`);
+          }}
+          className="absolute bottom-3 right-3 z-20 w-9 h-9 rounded-full bg-black/60 backdrop-blur flex items-center justify-center hover:bg-black/80 transition-colors"
+          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+        >
+          {isMuted ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          )}
+        </button>
+      )}
+    </div>
+  );
 };
 
 // No static fallback — section is hidden until real backend data loads.
@@ -36,6 +98,8 @@ const mapReviews = (data) =>
 const ClientReviews = ({ initialReviews = null }) => {
   const [reviews, setReviews] = useState(initialReviews ? mapReviews(initialReviews) : []);
   const [mutedStates, setMutedStates] = useState({});
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+  const isMobile = useIsMobile();
   const mobileSwiperRef = useRef(null);
   const marqueeSwiperRef = useRef(null);
   const playerRefs = useRef({});
@@ -180,261 +244,146 @@ const ClientReviews = ({ initialReviews = null }) => {
           </h2>
         </div>
 
-        <Swiper
-          ref={mobileSwiperRef}
-          onSwiper={(swiper) => {
-            mobileSwiperRef.current = swiper;
-          }}
-          modules={[Pagination, Autoplay]}
-          loop={true}
-          speed={600}
-          slidesPerView={1}
-          spaceBetween={12}
-          grabCursor={true}
-          allowTouchMove={true}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          pagination={{ clickable: true, el: '.mobile-review-pagination' }}
-          className="md:!hidden !px-[15px]"
-        >
-          {reviews.map((review) => {
-            const isMuted = getIsMuted(review.id);
-            const ytUrl = getYouTubeEmbedUrl(review.video, isMuted);
-            return (
-              <SwiperSlide key={review.id} className="!w-full py-4">
-                <div
-                  className="w-full h-[380px] bg-[#323235] rounded-[24px] flex flex-col p-4 ring-[6px] ring-[#2b2b2d]"
-                  style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
-                >
-                  <div className="w-full h-full rounded-[16px] overflow-hidden border border-white/5 relative">
-                    {review.video && ytUrl ? (
-                      <div className="relative w-full h-full">
-                        <iframe
-                          src={`${ytUrl}&rel=0&modestbranding=1&iv_load_policy=3`}
-                          data-review-id={review.id}
-                          className="w-full h-full"
-                          style={{ border: 'none', background: '#000', borderRadius: '16px', pointerEvents: 'none' }}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          title={`${review.clientName} review`}
-                          loading="lazy"
-                        />
-                      </div>
-                    ) : review.video ? (
-                      <video
-                        ref={setPlayerRef(review.id)}
-                        src={review.video}
-                        muted={isMuted}
-                        autoPlay
-                        loop
-                        playsInline
-                        controls
-                        onCanPlay={(e) => {
-                          e.currentTarget.muted = isMuted;
-                          const playPromise = e.currentTarget.play();
-                          if (playPromise !== undefined) {
-                            playPromise.catch(() => { });
-                          }
-                        }}
-                        onEnded={handleVideoEnded}
-                        className="w-full h-full object-contain bg-black rounded-[16px]"
-                      />
-                    ) : null}
-                    {review.video && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMute(review.id, !!ytUrl);
-                        }}
-                        className="absolute bottom-3 right-3 z-20 w-9 h-9 rounded-full bg-black/60 backdrop-blur flex items-center justify-center hover:bg-black/80 transition-colors"
-                        aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-                      >
-                        {isMuted ? (
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4"
-                          >
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <line x1="23" y1="9" x2="17" y2="15"></line>
-                            <line x1="17" y1="9" x2="23" y2="15"></line>
-                          </svg>
-                        ) : (
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="w-4 h-4"
-                          >
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                          </svg>
-                        )}
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-        <div className="mobile-review-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
+        {/* Mobile Swiper: ONLY rendered on mobile viewports (<768px). Prevents desktop duplicate nodes */}
+        {isMobile !== false && (
+          <>
+            <Swiper
+              ref={mobileSwiperRef}
+              onSwiper={(swiper) => {
+                mobileSwiperRef.current = swiper;
+              }}
+              onSlideChange={(swiper) => {
+                setActiveMobileIndex(swiper.realIndex);
+              }}
+              modules={[Pagination, Autoplay]}
+              loop={true}
+              speed={600}
+              slidesPerView={1}
+              spaceBetween={12}
+              grabCursor={true}
+              allowTouchMove={true}
+              autoplay={{
+                delay: 6000,
+                disableOnInteraction: false,
+              }}
+              pagination={{ clickable: true, el: '.mobile-review-pagination' }}
+              className="md:!hidden !px-[15px]"
+            >
+              {reviews.map((review, idx) => {
+                const isMuted = getIsMuted(review.id);
+                const isActive = activeMobileIndex === idx;
 
-        <div
-          className="max-md:!hidden"
-          onMouseEnter={() => {
-            const swiper = marqueeSwiperRef.current;
-            if (!swiper || swiper.destroyed) return;
-            // Freeze the in-flight transition at its current position instantly,
-            // then hand off to Swiper's own pause() so its internal state stays
-            // consistent (a raw stop()/start() here left autoplay unable to resume).
-            const translate = swiper.getTranslate();
-            swiper.setTransition(0);
-            swiper.setTranslate(translate);
-            swiper.animating = false;
-            swiper.autoplay.pause(true, true);
-          }}
-          onMouseLeave={() => {
-            const swiper = marqueeSwiperRef.current;
-            if (!swiper || swiper.destroyed) return;
-            swiper.autoplay.resume();
-          }}
-        >
-        <Swiper
-          onSwiper={(swiper) => {
-            marqueeSwiperRef.current = swiper;
-          }}
-          modules={[Autoplay, FreeMode]}
-          loop={true}
-          speed={8000}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
-          slidesPerView="auto"
-          spaceBetween={10}
-          freeMode={{
-            enabled: true,
-            momentum: false,
-          }}
-          grabCursor={true}
-          allowTouchMove={true}
-          className="!overflow-visible px-0 marquee-swiper"
-        >
-          {displayReviews.map((review) => {
-            const isDtMuted = getIsMuted(`dt-${review.id}`);
-            const dtYtUrl = getYouTubeEmbedUrl(review.video, isDtMuted);
-            return (
-              <SwiperSlide key={review.id} className="!w-[220px] md:!w-[577px] py-2 md:py-4">
-                <div className="w-full h-full">
-                  <div
-                    className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[16px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d]"
-                    style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
-                  >
-                    <div className="w-full h-[140px] md:h-[380px] rounded-[12px] md:rounded-[36px] overflow-hidden border border-white/5 group relative">
-                      {review.video && dtYtUrl ? (
-                        <iframe
-                          src={`${dtYtUrl}&rel=0&modestbranding=1&iv_load_policy=3`}
-                          data-review-id={`dt-${review.id}`}
-                          className="w-full h-full"
-                          style={{ border: 'none', background: '#000', borderRadius: '12px', pointerEvents: 'none' }}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          title={`${review.clientName} review`}
-                          loading="lazy"
-                        />
-                      ) : review.video ? (
-                        <video
-                          ref={setPlayerRef(`dt-${review.id}`)}
-                          src={review.video}
-                          muted={isDtMuted}
-                          autoPlay
-                          loop
-                          playsInline
-                          controls
-                          onCanPlay={(e) => {
-                            e.currentTarget.muted = isDtMuted;
-                            const playPromise = e.currentTarget.play();
-                            if (playPromise !== undefined) {
-                              playPromise.catch(() => { });
-                            }
-                          }}
-                          className="w-full h-full object-contain bg-black rounded-[12px] md:rounded-[36px]"
-                        />
-                      ) : null}
-                      {review.video && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleMute(`dt-${review.id}`, !!dtYtUrl);
-                          }}
-                          className="absolute bottom-3 right-3 z-20 w-9 h-9 rounded-full bg-black/60 backdrop-blur flex items-center justify-center hover:bg-black/80 transition-colors"
-                          aria-label={isDtMuted ? 'Unmute video' : 'Mute video'}
-                        >
-                          {isDtMuted ? (
-                            <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="white"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="w-4 h-4"
-                            >
-                              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                              <line x1="23" y1="9" x2="17" y2="15"></line>
-                              <line x1="17" y1="9" x2="23" y2="15"></line>
-                            </svg>
-                          ) : (
-                            <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="white"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="w-4 h-4"
-                            >
-                              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                            </svg>
-                          )}
-                        </button>
-                      )}
-                    </div>
-                    <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
-                      <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
-                        <span>{review.clientName}</span>
-                        {review.company && (
-                          <>
-                            <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
-                            <span>{review.company}</span>
-                          </>
-                        )}
+                return (
+                  <SwiperSlide key={review.id} className="!w-full py-4">
+                    <div
+                      className="w-full h-[380px] bg-[#323235] rounded-[24px] flex flex-col p-4 ring-[6px] ring-[#2b2b2d]"
+                      style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
+                    >
+                      <div className="w-full h-full rounded-[16px] overflow-hidden border border-white/5 relative">
+                        {review.video ? (
+                          <MediaFacade
+                            videoUrl={review.video}
+                            title={`${review.clientName} review`}
+                            isActive={isActive}
+                            autoPlay={isActive}
+                            muted={isMuted}
+                            loop={false}
+                            onEnded={handleVideoEnded}
+                            setRef={setPlayerRef(review.id)}
+                            className="w-full h-full"
+                          />
+                        ) : null}
                       </div>
-                      <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
-                        {review.projectName || review.clientName}
-                      </h3>
-                      {review.quote && (
-                        <p className="text-zinc-400 text-xs md:text-sm mt-2 italic leading-relaxed line-clamp-2">
-                          &ldquo;{review.quote}&rdquo;
-                        </p>
-                      )}
                     </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-        </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+            <div className="mobile-review-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
+          </>
+        )}
+
+        {/* Desktop Marquee: ONLY rendered on desktop (>=768px). Completely unmounted on mobile to prevent 12+ video decoders */}
+        {isMobile !== true && (
+          <div
+            className="max-md:!hidden"
+            onMouseEnter={() => {
+              const swiper = marqueeSwiperRef.current;
+              if (!swiper || swiper.destroyed) return;
+              const translate = swiper.getTranslate();
+              swiper.setTransition(0);
+              swiper.setTranslate(translate);
+              swiper.animating = false;
+              swiper.autoplay.pause(true, true);
+            }}
+            onMouseLeave={() => {
+              const swiper = marqueeSwiperRef.current;
+              if (!swiper || swiper.destroyed) return;
+              swiper.autoplay.resume();
+            }}
+          >
+            <Swiper
+              onSwiper={(swiper) => {
+                marqueeSwiperRef.current = swiper;
+              }}
+              modules={[Autoplay, FreeMode]}
+              loop={true}
+              speed={8000}
+              autoplay={{
+                delay: 0,
+                disableOnInteraction: false,
+              }}
+              slidesPerView="auto"
+              spaceBetween={10}
+              freeMode={{
+                enabled: true,
+                momentum: false,
+              }}
+              grabCursor={true}
+              allowTouchMove={true}
+              className="!overflow-visible px-0 marquee-swiper"
+            >
+              {displayReviews.map((review) => {
+                const isDtMuted = getIsMuted(`dt-${review.id}`);
+                return (
+                  <SwiperSlide key={review.id} className="!w-[220px] md:!w-[577px] py-2 md:py-4">
+                    <div className="w-full h-full">
+                      <div
+                        className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[16px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d]"
+                        style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
+                      >
+                        <LazyReviewSlide
+                          review={review}
+                          isMuted={isDtMuted}
+                          onToggleMute={(key) => toggleMute(key, true)}
+                        />
+                        <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
+                          <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
+                            <span>{review.clientName}</span>
+                            {review.company && (
+                              <>
+                                <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
+                                <span>{review.company}</span>
+                              </>
+                            )}
+                          </div>
+                          <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
+                            {review.projectName || review.clientName}
+                          </h3>
+                          {review.quote && (
+                            <p className="text-zinc-400 text-xs md:text-sm mt-2 italic leading-relaxed line-clamp-2">
+                              &ldquo;{review.quote}&rdquo;
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+        )}
       </div>
     </section>
   );

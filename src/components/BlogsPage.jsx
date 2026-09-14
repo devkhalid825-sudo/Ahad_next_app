@@ -7,14 +7,14 @@ import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
-import { motion } from 'framer-motion';
-import { FiEye, FiSearch } from 'react-icons/fi';
+import { m as motion } from 'framer-motion';
+import { FiEye, FiSearch } from '@/components/ui/Icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
-import { apiCall, getImgSrc } from '../utils/api';
+import { apiCall, getImgSrc, toCdnUrl } from '../utils/api';
 
 // Assets — only import what is actually used
 import elephantImgRaw from '../assets/ElipseImages/projects/Animation4.webp';
@@ -198,15 +198,15 @@ const staticPosts = [
 const getImageSrc = (image) => {
     if (!image) return '';
     if (typeof image === 'string') {
-        if (image.startsWith('http')) return image;
-        if (image.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${image}`;
+        const cdn = toCdnUrl(image);
+        if (cdn && cdn !== image) return cdn;
         return image;
     }
     if (typeof image === 'object') {
         const u = image.url || image.src || image.srcSet;
         if (typeof u === 'string') {
-            if (u.startsWith('http')) return u;
-            if (u.startsWith('/uploads/')) return `${BACKEND_ORIGIN}${u}`;
+            const cdn = toCdnUrl(u);
+            if (cdn && cdn !== u) return cdn;
             return u;
         }
     }

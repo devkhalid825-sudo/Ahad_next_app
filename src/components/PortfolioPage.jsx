@@ -6,7 +6,7 @@ import Footer from './layouts/Footer';
 import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
 import CaseStudies from './features/CaseStudies';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 const PortfolioPage = () => {
     useEffect(() => {

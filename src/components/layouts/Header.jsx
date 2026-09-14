@@ -79,23 +79,21 @@ const Header = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
+  // Three enterprise pillars — commodity services removed
   const serviceSubItems = [
-    { name: 'Architectural Visualization', href: '/services/architectural-visualization' },
-    { name: '3D Product Visualization', href: '/services/3d-product-visualization' },
+    // Pillar 1: Interactive 3D Configurators
     { name: '3D Product Configurators', href: '/services/3d-product-configurators' },
     { name: 'Interactive Web Experiences', href: '/services/interactive-web-experiences' },
+    { name: 'Virtual Showrooms & Digital Twins', href: '/services/virtual-showrooms-digital-twins' },
+    // Pillar 2: Real-Time ArchViz & Spatial VR/AR
+    { name: 'Architectural Visualization', href: '/services/architectural-visualization' },
     { name: 'VR Development', href: '/services/vr-development' },
     { name: 'AR Development', href: '/services/ar-development' },
+    // Pillar 3: Cinematic 3D Product & Commercial Visuals
+    { name: '3D Product Visualization', href: '/services/3d-product-visualization' },
     { name: '3D Animation', href: '/services/3d-animation' },
     { name: '3D Product Animation', href: '/services/product-animation' },
     { name: 'VFX & Virtual Production', href: '/services/vfx-virtual-production' },
-    { name: 'Virtual Showrooms & Digital Twins', href: '/services/virtual-showrooms-digital-twins' },
-    { name: 'Custom Software Development', href: '/services/custom-software-development' },
-    { name: 'Website Development', href: '/services/website-development' },
-    { name: 'Mobile App Development', href: '/services/mobile-app-development' },
-    { name: 'Creative Services', href: '/services/creative-services' },
-    { name: 'Enterprise Solutions', href: '/services/enterprise-solutions' },
-    { name: 'Marketing', href: '/services/marketing' },
   ];
 
   return (
@@ -237,15 +235,22 @@ const Header = () => {
                   <>
                     <button
                       onClick={() => setServicesOpen(!servicesOpen)}
-                      className="text-white text-2xl md:text-4xl lg:text-5xl max-h-[900px]:text-xs max-h-[900px]:sm:text-sm max-h-[900px]:md:text-base max-h-[900px]:lg:text-lg font-bold hover:text-[#4169E1] transition-colors duration-300 relative inline-block leading-tight font-sans bg-transparent border-none cursor-pointer text-left"
+                      className="text-white text-2xl md:text-4xl lg:text-5xl max-h-[900px]:text-xs max-h-[900px]:sm:text-sm max-h-[900px]:md:text-base max-h-[900px]:lg:text-lg font-bold hover:text-[#4169E1] transition-colors duration-300 relative inline-flex items-center gap-2 leading-tight font-sans bg-transparent border-none cursor-pointer text-left"
                     >
-                      {item.name}
-                      <span
-                        className="ml-2 text-[#4169E1] text-base md:text-lg max-h-[900px]:text-[10px] max-h-[900px]:sm:text-xs font-light transition-transform duration-300 inline-block select-none"
-                        style={{ transform: servicesOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+                      <span>{item.name}</span>
+                      <svg
+                        className="w-4 h-4 md:w-6 md:h-6 text-[#4169E1] transition-transform duration-300 select-none flex-shrink-0"
+                        style={{ transform: servicesOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
                       >
-                        +
-                      </span>
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
                     </button>
                     <div
                       className={`overflow-hidden transition-all duration-300 ${
@@ -276,9 +281,6 @@ const Header = () => {
                     className="text-white text-2xl md:text-4xl lg:text-5xl max-h-[900px]:text-xs max-h-[900px]:sm:text-sm max-h-[900px]:md:text-base max-h-[900px]:lg:text-lg font-bold hover:text-[#4169E1] transition-colors duration-300 relative inline-block leading-tight font-sans"
                   >
                     {item.name}
-                    <span className="absolute -top-1 -right-5 md:-right-6 text-[#4169E1] text-xs md:text-sm max-h-[900px]:text-[8px] max-h-[900px]:sm:text-[10px] font-light opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 select-none">
-                      +
-                    </span>
                   </Link>
                 )}
               </li>

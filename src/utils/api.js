@@ -13,11 +13,10 @@ export const BACKEND_ORIGIN = normalizeUrl(process.env.NEXT_PUBLIC_BACKEND_URL |
 export const SITE_URL = normalizeUrl(defaultSiteUrl, 'https://elipsestudio.com');
 export const FRONTEND_HOST = 'https://elipsestudio.com';
 export const BACKEND_HOST = BACKEND_ORIGIN;
-// Browser: use relative /api (proxied by Next.js rewrites → backend, no CORS)
-// Server/build-time: use direct backend origin (no proxy available)
-export const API_BASE_URL = typeof window !== 'undefined'
-  ? '/api'
-  : `${BACKEND_ORIGIN}/api`;
+// Always call the backend origin directly (api.elipsestudio.com in production),
+// so requests never stop at the Next.js proxy / dev server. The backend CORS
+// allowlist includes elipsestudio.com, localhost:3000 and localhost:5173.
+export const API_BASE_URL = `${BACKEND_ORIGIN}/api`;
 
 export function getImgSrc(img) {
   if (!img) return '';
@@ -25,6 +24,27 @@ export function getImgSrc(img) {
     return img.src || (img.default && img.default.src) || img.default || '';
   }
   return img;
+}
+
+// Images always come from the production CDN origin (api.elipsestudio.com),
+// regardless of which backend the form/API calls target during development.
+export const IMAGE_ORIGIN = 'https://api.elipsestudio.com';
+
+// Normalize any upload image URL (relative /uploads/*, or any origin) to the
+// canonical CDN URL so blog/project/case-study cards never rely on the dev
+// backend. Non-upload/absolute URLs (YouTube, Cloudinary) pass through.
+export function toCdnUrl(img) {
+  if (!img) return img;
+  let str = img;
+  if (typeof str !== 'string') {
+    str = str.url || str.src || str.srcSet || '';
+  }
+  if (typeof str !== 'string' || !str) return img;
+  if (str.startsWith('data:')) return str;
+  if (str.startsWith('/uploads/')) return `${IMAGE_ORIGIN}${str}`;
+  const m = str.match(/^https?:\/\/[^/]+(\/.*)$/);
+  if (m && m[1].startsWith('/uploads/')) return `${IMAGE_ORIGIN}${m[1]}`;
+  return str;
 }
 
 // Convert any upload image URL to a relative /uploads/* path so the
