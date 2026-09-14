@@ -1,104 +1,214 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { SiUnrealengine, SiAutodesk, SiCoronarenderer, SiUnity, SiBlender, SiPlaycanvas, TbBrandAdobePhotoshop, TbBrandAdobeAfterEffect, HiOutlineBolt, LuPaintbrush, LuDroplet, LuBox } from '@/components/ui/Icons';
 
-const YACHT_COLORS = [
-  { id: 'LaserBlack:', name: 'Laser Black', hex: '#1d181f' },
-  { id: 'PearlyWhite:', name: 'Pearly White', hex: '#edd0bd' },
-  { id: 'TealRainbow:', name: 'Teal Rainbow', hex: '#162f31' },
-  { id: 'RoseGrey:', name: 'Rose Grey', hex: '#502e20' },
+const PLAYCANVAS_SRC = 'https://playcanv.as/e/p/77f02e22/';
+
+const CAR_COLORS = [
+  { id: '#000000', name: 'Obsidian Pearl Metallic', hex: '#0F0F0F' },
+  { id: '#ffffff', name: 'Pure White', hex: '#ffffff' },
+  { id: '#2A4858', name: 'Ocean Blue', hex: '#2A4858' },
+  { id: '#4D3D1A', name: 'Desert Gold', hex: '#4D3D1A' },
 ];
 
-const LiveDemo = ({ src }) => {
-  const [active, setActive] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const [isActivated, setIsActivated] = useState(false);
-  const isMobile = useIsMobile();
+const LiveDemo = () => {
+  const [activated, setActivated] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [activeColor, setActiveColor] = useState(CAR_COLORS[0].id);
   const frameRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const unloadTimer = useRef(null);
 
-  const shouldMountIframe = isMobile === false ? true : isActivated;
-
-  const sendColor = (colorId) => {
+  // Send postMessage to PlayCanvas
+  const sendMsg = useCallback((msg) => {
     const frame = frameRef.current;
     if (!frame || !frame.contentWindow) return;
-    frame.contentWindow.postMessage(colorId, '*');
+    try {
+      frame.contentWindow.postMessage(msg, '*');
+    } catch (e) {
+      console.error('Error posting message to PlayCanvas:', e);
+    }
+  }, []);
+
+  const sendStudio = useCallback(() => {
+    sendMsg({ action: 'customAction4', buttonId: 'Studio' });
+  }, [sendMsg]);
+
+  // Continuously send Studio message as soon as Launch is clicked
+  // Retries every 300ms for 10s to ensure PlayCanvas engine picks it up the exact millisecond its scripts initialize
+  useEffect(() => {
+    if (!activated) return;
+
+    // Send immediately
+    sendStudio();
+
+    const interval = setInterval(() => {
+      sendStudio();
+    }, 300);
+
+    // Stop polling after 10 seconds (PlayCanvas fully ready by then)
+    const stopTimer = setTimeout(() => {
+      clearInterval(interval);
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(stopTimer);
+    };
+  }, [activated, sendStudio]);
+
+  // Ensure 3D assets & Studio cubemap fully apply before fading out the loading screen (1.8s buffer)
+  useEffect(() => {
+    if (!iframeLoaded) {
+      setIsReady(false);
+      return;
+    }
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, [iframeLoaded]);
+
+  // Listen for PlayCanvas ready notification
+  useEffect(() => {
+    if (!activated) return;
+    const handleWindowMessage = (event) => {
+      try {
+        const d = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (d && (d.event === 'ready' || d.action === 'ready' || d === 'ready')) {
+          sendStudio();
+        }
+      } catch (_) { }
+    };
+    window.addEventListener('message', handleWindowMessage);
+    return () => window.removeEventListener('message', handleWindowMessage);
+  }, [activated, sendStudio]);
+
+  const handleLaunch = () => {
+    setActivated(true);
+    setIframeLoaded(false);
+    setIsReady(false);
   };
 
+  // Color swatch click
+  const handleColorClick = useCallback((colorId) => {
+    setActiveColor(colorId);
+    sendMsg({ action: 'changeColor', color: colorId });
+  }, [sendMsg]);
+
+  // Scroll-away unload after 5.5s when out of viewport
+  useEffect(() => {
+    if (!activated) return;
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (unloadTimer.current) {
+            clearTimeout(unloadTimer.current);
+            unloadTimer.current = null;
+          }
+        } else {
+          unloadTimer.current = setTimeout(() => {
+            setActivated(false);
+            setIframeLoaded(false);
+            setIsReady(false);
+          }, 5500);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (unloadTimer.current) clearTimeout(unloadTimer.current);
+    };
+  }, [activated]);
+
   return (
-    <div className="flex flex-col gap-3.5 h-full">
+    <div ref={wrapperRef} className="flex flex-col gap-3.5 h-full">
+      {/* Iframe / Launch area */}
       <div className="relative w-full h-full min-h-[320px] lg:min-h-[420px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-[#0d0f1c]">
-        {shouldMountIframe ? (
+        {activated ? (
           <>
-            <div className={`absolute inset-0 z-[2] flex items-center justify-center bg-[#0d0f1c] transition-opacity duration-300 ${loaded ? 'opacity-0 pointer-events-none' : ''}`}>
-              <div className="w-8 h-8 rounded-full border-[3px] border-white/15 border-t-[#4169E1] animate-spin" />
+            {/* Spinner with optimal timing for Studio transition */}
+            <div className={`absolute inset-0 z-[2] flex items-center justify-center bg-[#0d0f1c] transition-opacity duration-700 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              <div className="flex flex-col items-center gap-3.5">
+                <div className="relative w-10 h-10 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full border-[3px] border-white/10" />
+                  <div className="absolute inset-0 rounded-full border-[3px] border-transparent border-t-[#4169E1] animate-spin" />
+                </div>
+                <div className="flex flex-col items-center gap-1 text-center px-4">
+                  <p className="text-white/80 text-xs font-medium tracking-wide">Preparing Studio Environment</p>
+                  <p className="text-white/30 text-[11px]">Loading 3D assets & lighting…</p>
+                </div>
+              </div>
             </div>
             <iframe
               ref={frameRef}
-              src={src}
-              title="Live 3D Configurator Demo"
-              loading="lazy"
-              allow="fullscreen"
+              src={PLAYCANVAS_SRC}
+              title="Elipse Studio 3D Car Configurator"
+              allow="autoplay; fullscreen; xr-spatial-tracking"
+              allowFullScreen
               className="absolute inset-0 w-full h-full border-0 z-[1] bg-[#0d0f1c]"
               onLoad={() => {
-                setLoaded(true);
-                if (YACHT_COLORS[0]) sendColor(YACHT_COLORS[0].id);
+                setIframeLoaded(true);
+                sendStudio();
               }}
             />
           </>
         ) : (
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => setIsActivated(true)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                setIsActivated(true);
-              }
-            }}
-            className="w-full h-full min-h-[320px] lg:min-h-[420px] flex flex-col items-center justify-center bg-[#151517] text-white p-6 cursor-pointer group select-none relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-black to-zinc-900 opacity-90" />
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <span className="text-[11px] font-semibold text-[#4169E1] bg-[#4169E1]/10 border border-[#4169E1]/30 px-3 py-1 rounded-full uppercase tracking-widest mb-4">
-                Live Configurator
-              </span>
-              <div className="w-13 h-13 rounded-full bg-[#4169E1] text-white flex items-center justify-center shadow-lg shadow-[#4169E1]/40 mb-3 group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                </svg>
-              </div>
-              <h4 className="text-base font-medium text-white mb-1">Live 3D Configurator Demo</h4>
-              <p className="text-xs text-zinc-400 max-w-xs">Tap to launch real-time 3D model in browser</p>
+          /* Launch button overlay */
+          <div className="w-full h-full min-h-[320px] lg:min-h-[420px] flex flex-col items-center justify-center bg-[#0a0b12] relative overflow-hidden">
+            {/* Ambient glow */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-[#4169E1]/6 rounded-full blur-3xl" />
             </div>
+            {/* Play icon */}
+            <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#4169E1]/10 border border-[#4169E1]/20 flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 md:w-9 md:h-9 text-[#4169E1] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            <div className="relative z-10 text-center px-4 mb-5">
+              <p className="text-white/80 text-sm md:text-base font-medium mb-1">Interactive 3D Car Configurator</p>
+              <p className="text-white/35 text-xs font-light">Powered by PlayCanvas — loads on demand</p>
+            </div>
+            <button
+              onClick={handleLaunch}
+              className="relative z-10 px-7 py-2.5 md:px-9 md:py-3.5 bg-[#4169E1] hover:bg-[#3558c8] text-white text-sm font-semibold uppercase tracking-widest rounded-full transition-all duration-300 shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 hover:scale-105 active:scale-100"
+            >
+              Launch Configurator
+            </button>
           </div>
         )}
       </div>
-      {YACHT_COLORS.length > 0 && (
+
+      {/* Color swatches — visible only after launch */}
+      {activated && (
         <div className="px-4 py-4 bg-[#0b0d16] border border-white/10 rounded-2xl flex flex-col gap-2.5">
           <div className="text-[11px] font-bold uppercase tracking-widest text-[#9aa3d6]">
-            Finish — <span className="text-white">{YACHT_COLORS[active]?.name}</span>
+            Colour —{' '}
+            <span className="text-white">
+              {CAR_COLORS.find((c) => c.id === activeColor)?.name}
+            </span>
           </div>
           <div className="flex gap-2.5 flex-wrap items-center">
-            {YACHT_COLORS.map((c, i) => (
+            {CAR_COLORS.map((c) => (
               <button
                 key={c.id}
                 type="button"
-                className={`w-7 h-7 rounded-full border-2 transition-all duration-150 ${i === active ? 'border-[#4169E1] scale-110' : 'border-white/20'}`}
-                style={{ background: c.hex }}
                 title={c.name}
                 aria-label={c.name}
-                onClick={() => {
-                  setActive(i);
-                  if (shouldMountIframe) {
-                    sendColor(c.id);
-                  } else {
-                    setIsActivated(true);
-                  }
-                }}
+                onClick={() => handleColorClick(c.id)}
+                className={`w-7 h-7 rounded-full border-2 transition-all duration-150 ${activeColor === c.id ? 'border-[#4169E1] scale-110' : 'border-white/20'
+                  }`}
+                style={{ background: c.hex }}
               />
             ))}
           </div>
@@ -129,7 +239,7 @@ const Technology = () => {
       <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch relative z-10">
         <div className="space-y-8 md:space-y-12 flex flex-col justify-center h-full text-center lg:text-left">
           <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-white">
-            Cinematic Real‑Time Technology
+            Cinematic Real&#8209;Time Technology
           </h2>
 
           <p className="text-gray-300 text-sm md:text-base leading-relaxed font-light max-w-md lg:max-w-lg lg:mx-0 mx-auto">
@@ -159,16 +269,11 @@ const Technology = () => {
             >
               Get a Free Estimate
             </Link>
-            <Link
-              href="/project/volvo-configurator"
-              className="inline-block px-6 py-2.5 md:px-8 md:py-3.5 border border-white/20 text-white/80 hover:text-white hover:border-white/40 rounded-full text-sm md:text-base font-semibold transition-all"
-            >
-              View Volvo Case Study
-            </Link>
+
           </div>
         </div>
 
-        <LiveDemo src="https://playcanv.as/e/p/B6sx93V1/" />
+        <LiveDemo />
       </div>
     </section>
   );

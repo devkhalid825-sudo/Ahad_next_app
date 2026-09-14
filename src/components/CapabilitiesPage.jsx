@@ -455,7 +455,7 @@ const CapabilitiesPage = () => {
               className="text-center"
             >
               <span className="text-[#4169E1] text-xs md:text-sm tracking-[0.3em] uppercase font-medium">Technology</span>
-              <h2 className="mt-4 md:mt-6 text-3xl md:text-6xl font-semibold tracking-tighter">Tools & Technologies</h2>
+              <h2 className="mt-4 md:mt-6 text-3xl md:text-6xl font-semibold tracking-tighter">Tools &amp; Technologies</h2>
               <p className="mt-4 md:mt-6 text-white/70 text-base md:text-lg font-light max-w-2xl mx-auto">
                 Industry-leading software and frameworks powering every project we deliver.
               </p>
@@ -516,7 +516,6 @@ const CapabilitiesPage = () => {
         <Contact />
         <Footer />
       </motion.div>
-
 
     </>
 
