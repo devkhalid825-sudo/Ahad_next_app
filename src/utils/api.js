@@ -41,13 +41,13 @@ export function toCdnUrl(img) {
   }
   if (typeof str !== 'string' || !str) return img;
   if (str.startsWith('data:')) return str;
-  if (str.startsWith('/uploads/')) return `${IMAGE_ORIGIN}${str}`;
+  if (str.startsWith('/uploads/') || str.startsWith('/media/')) return `${IMAGE_ORIGIN}${str}`;
   const m = str.match(/^https?:\/\/[^/]+(\/.*)$/);
-  if (m && m[1].startsWith('/uploads/')) return `${IMAGE_ORIGIN}${m[1]}`;
+  if (m && (m[1].startsWith('/uploads/') || m[1].startsWith('/media/'))) return `${IMAGE_ORIGIN}${m[1]}`;
   return str;
 }
 
-// Convert any upload image URL to a relative /uploads/* path so the
+// Convert any upload image URL to a relative /uploads/* or /media/* path so the
 // Next.js rewrite proxy (next.config.ts) serves it — this avoids CORS issues.
 function toRelativeUpload(url) {
   if (!url || typeof url !== 'string') return url;
@@ -56,11 +56,14 @@ function toRelativeUpload(url) {
   if (str.includes('api.elipsestudio.com')) {
     str = str.replace('https://api.elipsestudio.com', '');
   }
+  if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+    str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
+  }
   // Already relative
-  if (str.startsWith('/uploads/')) return str;
-  // Absolute URL pointing to any backend /uploads/
-  const match = str.match(/^https?:\/\/[^/]+(\/.*)$/);
-  if (match && match[1].startsWith('/uploads/')) return match[1];
+  if (str.startsWith('/uploads/') || str.startsWith('/media/')) return str;
+  // Absolute URL pointing to any backend /uploads/ or /media/
+  const match = str.match(/^https?:\/\/[^/]+(\/(?:uploads|media)\/.*)$/);
+  if (match) return match[1];
   return str;
 }
 
@@ -70,6 +73,9 @@ export function fixUrls(obj) {
     // Strip api.elipsestudio.com origin to get relative /uploads/* path
     if (str.includes('api.elipsestudio.com')) {
       str = str.replace('https://api.elipsestudio.com', '');
+    }
+    if (str.includes('mediumseagreen-crocodile-699024.hostingersite.com')) {
+      str = str.replace('https://mediumseagreen-crocodile-699024.hostingersite.com', '');
     }
     const relative = toRelativeUpload(str);
     if (relative !== str) return relative;

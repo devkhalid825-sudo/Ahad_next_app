@@ -200,6 +200,7 @@ const getImageSrc = (image) => {
     if (typeof image === 'string') {
         const cdn = toCdnUrl(image);
         if (cdn && cdn !== image) return cdn;
+        if (image.startsWith('/uploads/') || image.startsWith('/media/')) return `${BACKEND_ORIGIN}${image}`;
         return image;
     }
     if (typeof image === 'object') {
@@ -207,6 +208,7 @@ const getImageSrc = (image) => {
         if (typeof u === 'string') {
             const cdn = toCdnUrl(u);
             if (cdn && cdn !== u) return cdn;
+            if (u.startsWith('/uploads/') || u.startsWith('/media/')) return `${BACKEND_ORIGIN}${u}`;
             return u;
         }
     }

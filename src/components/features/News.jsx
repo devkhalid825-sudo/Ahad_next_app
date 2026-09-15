@@ -24,9 +24,10 @@ const getImageSrc = (image) => {
   let src = image;
   if (typeof src === 'object') src = src.url || src.src || '';
   if (typeof src !== 'string' || !src.trim()) return articleImg1;
-  // Always prefer the production CDN for upload images
+// Always prefer the production CDN for upload images
   const cdn = toCdnUrl(src);
   if (cdn && cdn !== src) return cdn;
+  if (src.startsWith('/uploads/') || src.startsWith('/media/')) return `${BACKEND_ORIGIN}${src}`;
   return src;
 };
 

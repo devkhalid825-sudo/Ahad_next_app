@@ -69,6 +69,7 @@ const smartProxy = createProxyMiddleware({
     if (
       req.url.startsWith("/api/") ||
       req.url.startsWith("/uploads/") ||
+      req.url.startsWith("/media/") ||
       req.url.startsWith("/sitemap") ||
       req.url.startsWith("/robots.txt")
     ) {

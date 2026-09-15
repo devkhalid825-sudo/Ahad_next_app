@@ -195,7 +195,7 @@ const nextConfig: NextConfig = {
         hostname: "api.elipsestudio.com",
         pathname: "/**",
       },
-      // Cloudinary Global CDN
+// Cloudinary Global CDN
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
@@ -205,6 +205,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "i.ytimg.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "mediumseagreen-crocodile-699024.hostingersite.com",
         pathname: "/**",
       },
     ],
