@@ -1,362 +1,612 @@
-﻿'use client';
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
-import Contact from "../features/Contact";
-import LatestWork from "../features/LatestWork";
-import ServiceRelatedLinks from "./ServiceRelatedLinks";
-import ClientReviews from "../features/ClientReviews";
+import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import Header from '../layouts/Header';
+import Footer from '../layouts/Footer';
+import Contact from '../features/Contact';
+import ClientReviews from '../features/ClientReviews';
+import SocialMediaSection from '../features/SocialMediaSection';
+import { getImgSrc } from '../../utils/api';
 
-// Aap in 3 placeholders ko apni marzi ke mutabik real paths se replace kar sakte hain:
-// Sahi format mein imported images:
-import _solutionsImg from "../../assets/emerled/Bathroom.webp";
-import _whyUsImg from "../../assets/emerled/Kithcen.webp";
-import _stackImg from "../../assets/emerled/Reception.webp";
-import _emerledBathroom from "../../assets/emerled/Bathroom.webp";
-import _emerledBedroom from "../../assets/emerled/Bedroom.webp";
-import _emerledKitchen from "../../assets/emerled/Kithcen.webp";
-import _emerledLiving from "../../assets/emerled/Living.webp";
-import _emerledReception from "../../assets/emerled/Reception.webp";
-import { getImgSrc } from "../../utils/api";
-const solutionsImg = getImgSrc(_solutionsImg);
-const whyUsImg = getImgSrc(_whyUsImg);
-const stackImg = getImgSrc(_stackImg);
-const emerledBathroom = getImgSrc(_emerledBathroom);
-const emerledBedroom = getImgSrc(_emerledBedroom);
-const emerledKitchen = getImgSrc(_emerledKitchen);
-const emerledLiving = getImgSrc(_emerledLiving);
-const emerledReception = getImgSrc(_emerledReception);
+import loveImgRaw from '../../assets/About-page/love.webp';
+import zenithImgRaw from '../../assets/About-page/zenith.webp';
+import khojImgRaw from '../../assets/About-page/khoj.webp';
+import timBarthImgRaw from '../../assets/About-page/tim-barth.webp';
+import penthouseImgRaw from '../../assets/About-page/penthouse.webp';
+import villaImgRaw from '../../assets/About-page/modern-villas.webp';
+import kumarImgRaw from '../../assets/About-page/kumar.webp';
+import villasImgRaw from '../../assets/About-page/villas.webp';
 
-const galleryImages = [emerledBathroom, emerledBedroom, emerledKitchen, emerledLiving, emerledReception];
+const loveImg = getImgSrc(loveImgRaw);
+const zenithImg = getImgSrc(zenithImgRaw);
+const khojImg = getImgSrc(khojImgRaw);
+const timBarthImg = getImgSrc(timBarthImgRaw);
+const penthouseImg = getImgSrc(penthouseImgRaw);
+const villaImg = getImgSrc(villaImgRaw);
+const kumarImg = getImgSrc(kumarImgRaw);
+const classicVillaImg = getImgSrc(villasImgRaw);
 
-const CTA = ({ label, to = "/contact", className = "" }) =>
-  !label ? null : (
-    <Link to={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>
-      {label} <span aria-hidden="true">?</span>
-    </Link>
-  );
+// Selected Real Estate & Archviz Portfolio Builds
+const ARCHVIZ_BUILDS = [
+  {
+    title: 'Love Apartment | 3D Visualization & VR Experience',
+    category: 'Luxury Residential',
+    desc: 'High-end interior & exterior 3D visualization and immersive virtual reality experience crafted for modern luxury apartment marketing.',
+    image: loveImg,
+    tech: 'Interior CGI · VR Experience',
+    behanceLink: 'https://www.behance.net/gallery/254406943/Love-Apartment-3D-Visualization-VR-Experience',
+  },
+  {
+    title: 'Zenith By Amber',
+    category: 'High-Rise Tower',
+    desc: 'Complete exterior architectural visualization package for a signature luxury high-rise tower, emphasizing structural geometry and urban skyline presence.',
+    image: zenithImg,
+    tech: 'Tower CGI · Exterior Stills',
+    driveLink: 'https://drive.google.com/drive/folders/1n3qM1CtEY1jB9Q079IDLvF5qu6IudXbo?usp=sharing',
+    youtubeLink: 'https://youtu.be/Vf6C8e-hLXE?si=A0nV1wfUfoXx2cbu',
+  },
+  {
+    title: 'Khoj Resort Architectural Edit',
+    category: 'Cinematic Film',
+    desc: 'A cinematic architectural animation reel showcasing a serene eco-resort development nestled in nature, integrating natural sunlight and tranquil waterside living.',
+    image: khojImg,
+    tech: '4K Film · Hospitality',
+    youtubeLink: 'https://youtu.be/ugd5UTGFQ8U?si=76n7Bg-7sI1JFzEl',
+  },
+  {
+    title: 'Interactive Virtual Tour & Flythrough',
+    category: 'Unreal Engine 5',
+    desc: 'Interactive real-time property walkthrough built in Unreal Engine. Allows prospective buyers to explore interiors with dynamic lighting and interactive fixtures.',
+    image: timBarthImg,
+    tech: 'Unreal Engine 5 · Lumen GI',
+    behanceLink: 'https://www.behance.net/gallery/240770789/Interactive-Virtual-Tour-Unreal-Engine',
+    youtubeLink: 'https://www.youtube.com/watch?v=YzLNRBsug_Q',
+  },
+  {
+    title: ' 360° Virtual Tour',
+    category: 'Web 360° Tour',
+    desc: 'Full web-based panoramic tour of an architectural modern residence. Enables instant interactive walkthroughs on client phones and tablets without software installation.',
+    image: kumarImg,
+    tech: 'Web 360° · Luxury Residence',
+    liveLink: 'https://elipsestudio.com/kumar-residence-360-vitrual-tour/',
+  },
+  {
+    title: 'Penthouse VR Walkthrough',
+    category: 'VR Walkthrough',
+    desc: 'Immersive VR showcase for luxury off-plan penthouses. Allows international buyers to walk through bedrooms, balconies, and living areas with real-scale spatial perception.',
+    image: penthouseImg,
+    tech: 'Meta Quest VR · Off-Plan Sales',
+    behanceLink: 'https://www.behance.net/gallery/254721427/VR-Apartment-Walkthrough',
+  },
+  {
+    title: 'Modern Villa | VR & 3D Visualization',
+    category: 'Modern Villa',
+    desc: 'Complete exterior architecture and interior living suite CGI for an ultra-modern minimalist villa, accompanied by real-time VR walk simulation.',
+    image: villaImg,
+    tech: 'Villa CGI · VR Capture',
+    behanceLink: 'https://www.behance.net/gallery/221374735/Modern-Villa-Virtual-Reality',
+  },
+  {
+    title: 'Classic Villa | VR & 3D Visualization',
+    category: 'Classic Architecture',
+    desc: 'Intricate classical stone detailing, grand porticos, symmetrical colonnades, and opulent European estate rendering for private development marketing.',
+    image: classicVillaImg,
+    tech: 'Neoclassical · Estate CGI',
+    behanceLink: 'https://www.behance.net/gallery/220332665/Classic-Villa-Visualization',
+  },
+];
 
-const Eyebrow = ({ children }) => (
-  <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">{children}</p>
-);
+// Archviz Capabilities Cards
+const CAPABILITIES = [
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
+    title: 'Exterior CGI & Tower Visualizations',
+    desc: 'Towering skyline integration, architectural facade drama, and atmospheric dawn, dusk, and night lighting that command buyer attention.',
+    features: ['Accurate solar orientation & local reflections', 'Pedestrian, podium & helicopter aerial vistas', 'Multi-seasonal lighting (Day, Golden Hour, Night)'],
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    ),
+    title: 'Luxury Interior CGI & Digital Staging',
+    desc: 'Bespoke styling and interior design staging. Tactile textures, physically accurate fabrics, natural light dispersion, and premium finishes.',
+    features: ['Curated luxury FF&E (Furniture & Fixtures)', 'Kitchen, master ensuite & living area hero shots', 'Material accuracy matching your project schedule'],
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+    ),
+    title: 'Cinematic Films & Drone Matchmoving',
+    desc: 'Hollywood-grade architectural storytelling. We blend real aerial drone footage with 3D models to show your project seamlessly rooted in its neighborhood.',
+    features: ['4K UHD 60FPS camera motion & color grading', '3D camera matchmoving over live site drone shots', 'Lifestyle integration (people, vehicles, landscaping)'],
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+    title: 'Unreal Engine 5 Real-Time Sales Apps',
+    desc: 'Allow high-net-worth investors to wander freely through unbuilt properties on touchscreens, sales center video walls, and VR headsets.',
+    features: ['Instant daylight change & interactive finishes', 'Interactive floor plan & viewline simulator', 'Meta Quest VR & PC standalone kiosk builds'],
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+      </svg>
+    ),
+    title: 'Browser-Based 360° Virtual Tours',
+    desc: 'Zero friction for remote buyers. Lightweight, lightning-fast 360° panoramic tours that open instantly on mobile devices, tablets, and desktop browsers.',
+    features: ['Interactive hotspot room-to-room navigation', 'Embedded floorplans, spec sheets & enquiry buttons', 'Seamless embed into your existing website or portal'],
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      </svg>
+    ),
+    title: 'Master Plans & Community Developments',
+    desc: 'Visualize large-scale mixed-use master plans, residential communities, golf resorts, civic amenities, and infrastructure phases.',
+    features: ['Comprehensive bird’s eye master plan animations', 'Phased construction staging animations', 'Amenity spotlights (clubhouses, lakes, promenades)'],
+  },
+];
 
-const SectionTitle = ({ children, className = "" }) => (
-  <h2 className={`text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB] ${className}`}>{children}</h2>
-);
-
-const ReadText = ({ text }) => (
-  <p className="text-base md:text-lg lg:text-xl font-light leading-relaxed text-white/70 mb-6 last:mb-0">{text}</p>
-);
-
-const SolutionItem = ({ title, desc }) => (
-  <li className="flex gap-3 md:gap-4 py-3 md:py-5 border-b border-[#1A1A1A] last:border-0">
-    <span className="text-[#4169E1] mt-1 shrink-0">?</span>
-    <p className="text-sm md:text-lg font-light leading-relaxed text-white/70">
-      <span className="text-[#F2F0EB] font-semibold">{title}</span>
-      {desc ? <span className="text-white/60"> � {desc}</span> : null}
-    </p>
-  </li>
-);
-
-const FeatureCard = ({ icon, title, desc }) => (
-  <div className="bg-[#111] rounded-lg p-4 md:p-[2rem] border border-white/5 hover:border-[#4169E1]/40 transition-colors">
-    {icon && <span className="text-2xl text-[#4169E1] mb-4 block">{icon}</span>}
-    <h3 className="text-base md:text-lg font-semibold text-[#F2F0EB] mb-2">{title}</h3>
-    {desc && <p className="text-white/60 text-xs md:text-sm leading-relaxed">{desc}</p>}
-  </div>
-);
-
-const StatCard = ({ number, label, desc }) => (
-  <div className="bg-[#111] p-5 md:p-[2.5rem] flex flex-col justify-center">
-    <div className="text-2xl md:text-[3.5rem] font-bold text-[#4169E1] leading-[1] mb-[8px]">{number}</div>
-    <div className="font-semibold text-[#F2F0EB] mb-[8px] text-sm md:text-base">{label}</div>
-    {desc && <div className="text-xs md:text-lg font-light leading-relaxed text-white/70">{desc}</div>}
-  </div>
-);
-
-const ProcessCard = ({ step, phase, title, desc }) => (
-  <div className="bg-[#1A1A1A] rounded-2xl p-4 md:p-8 border border-white/5">
-    <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
-      <span className="text-2xl md:text-4xl font-bold text-[#4169E1]">{step}</span>
-      {phase && (
-        <span className="text-[10px] md:text-[12px] font-semibold text-[#4169E1] bg-[#4169E1]/10 px-2 md:px-3 py-1 rounded-full uppercase tracking-[0.08em]">{phase}</span>
-      )}
+/**
+ * Cinematic Architectural Reel Video Player
+ */
+const ArchvizVideoPlayer = () => {
+  return (
+    <div className="relative w-full max-w-5xl mx-auto aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_50px_rgba(0,0,0,0.8)] bg-[#0E0E10]">
+      <iframe
+        className="w-full h-full border-0"
+        src="https://www.youtube.com/embed/YzLNRBsug_Q?rel=0&modestbranding=1"
+        title="Elipse Studio Architectural Visualization Reel"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
     </div>
-    <h4 className="text-sm md:text-[20px] font-semibold text-[#F2F0EB] mb-2 md:mb-3">{title}</h4>
-    {desc && <p className="text-xs md:text-[15px] font-light leading-[1.6] md:leading-[1.7] text-white/70">{desc}</p>}
-  </div>
-);
+  );
+};
 
-const UseCaseCard = ({ title, desc }) => (
-  <div className="bg-[#111] rounded-lg p-4 md:p-[2rem] border border-white/5">
-    <h3 className="text-base md:text-lg font-semibold text-[#F2F0EB] mb-2">{title}</h3>
-    {desc && <p className="text-white/60 text-xs md:text-sm leading-relaxed">{desc}</p>}
-  </div>
-);
+/**
+ * 6-Card Static Grid for Capabilities (3 Top, 3 Bottom)
+ */
+const CapabilitiesGrid = () => {
+  return (
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+        {CAPABILITIES.map((cap, i) => (
+          <div
+            key={i}
+            className="p-7 sm:p-8 rounded-2xl bg-[#0D0F14] border border-white/10 hover:border-[#4169E1]/60 transition-all duration-300 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.6)] min-h-[420px] group"
+          >
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#4169E1]/15 text-[#4169E1] border border-[#4169E1]/25 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(65,105,225,0.2)] group-hover:scale-105 group-hover:border-[#4169E1]/50 transition-all duration-300">
+                {cap.icon}
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 tracking-tight leading-snug">
+                {cap.title}
+              </h3>
+              <p className="text-sm text-zinc-400 font-normal leading-relaxed mb-6">
+                {cap.desc}
+              </p>
+            </div>
 
-const FaqItem = ({ q, a, isOpen, onToggle }) => (
-  <div className="border-b border-[#1A1A1A]">
-    <button type="button" onClick={onToggle} className="w-full flex items-center justify-between gap-4 py-5 md:py-6 text-left">
-      <span className="text-base md:text-lg text-[#F2F0EB] font-medium pr-2">{q}</span>
-      <span className={`text-[#4169E1] text-2xl transition-transform shrink-0 ${isOpen ? "rotate-45" : ""}`}>+</span>
-    </button>
-    {isOpen && <p className="text-base md:text-lg font-light leading-relaxed text-white/70 pb-5 md:pb-6">{a}</p>}
-  </div>
-);
-
-const TextCarousel = ({ texts }) => { const [current, setCurrent] = useState(0); const [touchStart, setTouchStart] = useState(null); const onTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX); const onTouchEnd = (e) => { if (touchStart === null) return; const diff = touchStart - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) { if (diff > 0 && current < texts.length - 1) setCurrent(current + 1); if (diff < 0 && current > 0) setCurrent(current - 1); } setTouchStart(null); }; return (<div><div className="relative min-h-[140px]" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>{texts.map((text, i) => (<div key={i} className={`transition-all duration-500 ${i === current ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"}`}><ReadText text={text} /></div>))}</div><div className="flex gap-2 mt-6">{texts.map((_, i) => (<button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${i === current ? "bg-[#4169E1] w-6" : "bg-[#333] w-2"}`} />))}</div></div>);
+            <ul className="space-y-3 pt-5 border-t border-white/10">
+              {cap.features.map((f, fi) => (
+                <li key={fi} className="flex items-start gap-3 text-xs sm:text-[13px] text-zinc-300 font-normal leading-normal">
+                  <span className="text-[#4169E1] font-bold text-sm shrink-0">✓</span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const ArchitecturalVisualizationPage = () => {
-  const navigate = useNavigate();
-  const [openFaq, setOpenFaq] = useState(null);
+  const router = useRouter();
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  const handleStartProject = () => navigate('/contact');
-  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-return (
-  <>
-    <div className="w-full overflow-x-hidden bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-[#F2F0EB]">
+  return (
+    <div
+      data-nav="dark"
+      className="min-h-screen font-sans bg-black text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-white"
+    >
+      <Header />
 
-      {/* Hero Section */}
-      <section className="bg-[#0D0D0D] px-5 md:px-8 pt-[100px] md:pt-[140px] pb-[3rem] relative md:min-h-screen">
-        <Header />
-        <h1 className="text-[clamp(1.6rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">
-          Architectural Visualization Services for Developers and Architects Worldwide<span className="text-[#4169E1]">.</span>
-        </h1>
-        <div className="flex flex-wrap gap-[8px] mt-[3rem]">
-  <button
-    onClick={handleStartProject}
-    className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto"
-  >
-    Start a Project ?
-  </button>
-</div>
-        
-        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] overflow-hidden">
-          <iframe 
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/ugd5UTGFQ8U?si=NxfPeaX0KUY-mHH6" 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerPolicy="strict-origin-when-cross-origin" 
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
+      {/* ======================================================== */}
+      {/* 1. HERO SECTION (CENTERED FULL-WIDTH DESIGN)             */}
+      {/* ======================================================== */}
+      <section
+        className="relative min-h-[90vh] lg:min-h-[95vh] pt-[110px] sm:pt-[130px] pb-14 sm:pb-20 px-4 sm:px-6 md:px-8 border-b border-white/10 bg-black flex flex-col justify-center items-center text-center overflow-hidden"
+      >
+        {/* Ambient radial lighting */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_30%,rgba(65,105,225,0.12)_0%,transparent_60%)]" />
+
+        <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center">
+          {/* Top Badge (Hidden on mobile) */}
+          <div className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase font-mono bg-[#4169E1]/10 border border-[#4169E1]/25 text-[#4169E1] mb-5 sm:mb-6">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            <span>Architectural Visualization &amp; Real-Time Real Estate</span>
+          </div>
+
+          {/* Hero Title */}
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-bold tracking-tight leading-[1.1] text-white">
+            Turn Off-Plan Real Estate Into{' '}
+            <span className="bg-gradient-to-r from-white via-[#8ca8ff] to-[#4169E1] bg-clip-text text-transparent">
+              Irresistible Pre-Sales.
+            </span>
+          </h1>
+
+          {/* Hero Subtitle */}
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl font-light text-zinc-300 mx-auto">
+            We bridge the gap between imagination and reality. From hyper-realistic high-rise CGI and cinematic drone flythroughs to immersive <strong className="text-white font-medium">Unreal Engine 5 virtual tours</strong>, Elipse Studio empowers property developers to sell out developments before construction starts.
+          </p>
+
+          {/* Hero Action Buttons (Single compact row on mobile, full on desktop) */}
+          <div className="mt-6 sm:mt-9 flex flex-row items-center justify-center gap-1.5 sm:gap-3 w-full max-w-xl sm:max-w-none">
+            <a
+              href="#archviz-gallery"
+              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2 sm:py-3.5 bg-white hover:bg-[#4169E1] text-black hover:text-white font-semibold text-[10px] sm:text-xs md:text-sm rounded-full transition-all duration-300 shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:shadow-[0_4px_25px_rgba(65,105,225,0.4)] hover:scale-[1.02] cursor-pointer text-center whitespace-nowrap flex items-center justify-center gap-1 sm:gap-2"
+            >
+              <svg className="w-3 sm:w-4 h-3 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <span><span className="hidden sm:inline">View Real Estate </span>Portfolio</span>
+            </a>
+            <button
+              onClick={() => router.push('/contact')}
+              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2 sm:py-3.5 border font-medium text-[10px] sm:text-xs md:text-sm rounded-full transition-all duration-300 text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-[#4169E1] text-zinc-200 hover:text-white hover:scale-[1.02] whitespace-nowrap cursor-pointer flex items-center justify-center gap-1 sm:gap-2"
+            >
+              <svg className="w-3 sm:w-4 h-3 sm:h-4 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span><span className="hidden sm:inline">Book Project </span>Consultation</span>
+            </button>
+            <a
+              href="https://drive.google.com/drive/folders/1n3qM1CtEY1jB9Q079IDLvF5qu6IudXbo?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2 sm:py-3.5 border font-medium text-[10px] sm:text-xs md:text-sm rounded-full transition-all duration-300 text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-[#4169E1] text-zinc-200 hover:text-white hover:scale-[1.02] whitespace-nowrap cursor-pointer flex items-center justify-center gap-1 sm:gap-2"
+            >
+              <svg className="w-3 sm:w-4 h-3 sm:h-4 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+              </svg>
+              <span><span className="hidden sm:inline">Sample Client </span>Drive Archive</span>
+            </a>
+          </div>
+
+          {/* Key Metrics / Stats Bar (3 columns) */}
+          <div className="mt-12 sm:mt-16 w-full grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 p-5 sm:p-7 rounded-2xl bg-[#0E0E10] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+            <div className="flex flex-col items-center text-center p-2">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#4169E1]">
+                40%
+              </span>
+              <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1 text-zinc-400">
+                Faster Pre-Sales Cycle
+              </span>
+            </div>
+            <div className="flex flex-col items-center text-center p-2 border-t sm:border-t-0 sm:border-l border-white/10">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
+                100+
+              </span>
+              <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1 text-zinc-400">
+                Projects Visualized Worldwide
+              </span>
+            </div>
+            <div className="flex flex-col items-center text-center p-2 border-t sm:border-t-0 sm:border-l border-white/10">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#4169E1]">
+                UE5
+              </span>
+              <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1 text-zinc-400">
+                Real-Time Interactive Digital Twins
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Overview Section */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-[3rem] items-stretch">
-          <div className="flex-1">
-            <Eyebrow>Architectural Visualization</Eyebrow>
-            <SectionTitle>Overview</SectionTitle>
-            <div className="md:hidden"><TextCarousel texts={["Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results.", "Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy.", "Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2021, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti."]} /></div>
-            <div className="hidden md:block">
-              <ReadText text="Launching an off-plan development or design competition? See how Elipse Studio's architectural visualization services deliver sales-driving results." />
-              <ReadText text="Architectural visualization has become the deciding factor in whether developments sell before construction, whether architectural competitions get won, and whether stakeholder approvals happen smoothly. Buyers, jury members, and investors no longer make decisions from 2D drawings � they need photorealistic 3D representations that capture spatial experience, material quality, and lighting behavior with genuine accuracy." />
-              <ReadText text="Elipse Studio delivers architectural visualization services that meet the exacting standards premium projects require. Founded in 2021, our team has produced visualization for real estate developers, architects, and design firms worldwide � including landmark developments like Burj Binghatti." />
-            </div>
+      {/* ======================================================== */}
+      {/* 2. INTERACTIVE COMPARISON SLIDER & WHY US GRID           */}
+      {/* ======================================================== */}
+      <section id="comparison" className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black">
+        <div className="max-w-4xl mx-auto text-center mb-10 sm:mb-14">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase font-mono bg-[#4169E1]/10 border border-[#4169E1]/25 text-[#4169E1] mb-4">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+            <span>Uncompromising Visual Precision</span>
           </div>
-          <div className="flex-1 bg-[#111] rounded-lg p-5 md:p-[2rem] text-[#F2F0EB]">
-            <Eyebrow>TL;DR</Eyebrow>
-            <SectionTitle className="text-xl md:text-3xl lg:text-[34px] mb-4 md:mb-10">Quick answer</SectionTitle>
-            <div className="text-sm md:text-lg font-light leading-relaxed text-white/70">
-              Elipse Studio delivers photorealistic architectural visualization services to real estate developers, architects, and design firms worldwide. Since 2021, our team has produced 3D renderings, cinematic walkthroughs, VR architectural experiences, and interactive presentation platforms for premium developments including Burj Binghatti.
-            </div>
-            <div className="mt-4 md:mt-6"><CTA label="Get Started" to="/contact" /></div>
-          </div>
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-bold tracking-tight leading-[1.1] text-white">
+            From Raw CAD Blueprint to{' '}
+            <span className="bg-gradient-to-r from-white via-[#8ca8ff] to-[#4169E1] bg-clip-text text-transparent">
+              Interactive Virtual Tour
+            </span>
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg mt-3 leading-relaxed font-light text-zinc-300 max-w-2xl mx-auto">
+            Experience our geometric precision, physically-based materials, and natural atmospheric lighting calibrated specifically for high-net-worth real estate buyers.
+          </p>
         </div>
-      </section>
 
-      {/* 1. "What we do" section with Solutions Image */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1">
-            <Eyebrow>What we do</Eyebrow>
-            <SectionTitle>Our Complete Architectural Visualization Solutions</SectionTitle>
-            <ul className="max-w-[680px]">
+        {/* Video Player */}
+        <ArchvizVideoPlayer />
+
+        {/* Comparison Grid: Traditional vs Elipse Studio */}
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 sm:mt-16">
+          {/* Left: Traditional Shops */}
+          <div className="p-6 sm:p-8 rounded-2xl bg-[#0E0E10] border border-white/10">
+            <h3 className="text-lg font-semibold text-zinc-300 mb-2 flex items-center gap-2">
+              <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Traditional 3D Archviz Shops</span>
+            </h3>
+            <p className="text-xs sm:text-sm text-zinc-400 font-light mb-5">
+              Offline CPU rendering shops that deliver static flat images with high revision friction.
+            </p>
+            <ul className="space-y-3">
               {[
-                { title: "Exterior Renderings", desc: "Photorealistic exterior visualization for hero marketing shots, brochures, and website assets." },
-                { title: "Interior Renderings", desc: "Editorial-quality interior visualization for residential, hospitality, and commercial spaces." },
-                { title: "Aerial and Contextual Renderings", desc: "Drone-perspective visualization showing developments within their urban context." },
-                { title: "Architectural Walkthroughs", desc: "Cinematic camera-driven animation traversing designed spaces." },
-                { title: "VR Architectural Experiences", desc: "Immersive VR walkthroughs for sales centers and design reviews." },
-                { title: "Interactive Presentation Platforms", desc: "Real-time architectural experiences for investor pitches and stakeholder engagement." },
-                { title: "Master Plan Visualization", desc: "Large-scale visualization for master-planned communities and mixed-use developments." },
-                { title: "Day/Night Variations", desc: "Multiple lighting conditions from a single 3D asset pipeline." },
-              ].map((s, i) => <SolutionItem key={i} title={s.title} desc={s.desc} />)}
+                'Long wait times for simple camera angle and daylight adjustments',
+                'Buyers can only look at 2-3 fixed vantage points',
+                'Expensive physical sales suite mockups still required',
+                'Disconnected files that do not scale across web, mobile, or VR',
+              ].map((text, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-400">
+                  <span className="text-red-500 font-bold shrink-0">✕</span>
+                  <span>{text}</span>
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden">
-            <img src={solutionsImg} alt="Our architectural solutions showcase" className="w-full h-full object-cover" style={{ marginTop: '100px' }} loading="lazy" width="800" height="600"/>
-          </div>
-        </div>
-      </section>
 
-      {/* Capabilities */}
-      <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#111]">
-        <Eyebrow>Capabilities</Eyebrow>
-        <SectionTitle>What We Deliver</SectionTitle>
-        <div className="flex flex-wrap gap-3 md:gap-6">
-          {[
-            { title: "Photorealistic Renderings", desc: "V-Ray and Corona quality output for print and digital marketing." },
-            { title: "Cinematic Animation", desc: "Camera-driven architectural storytelling for launches." },
-            { title: "VR Experiences", desc: "Immersive walkthroughs for sales centers and reviews." },
-            { title: "Real-Time Platforms", desc: "Unreal Engine 5 interactive presentations." },
-            { title: "Interactive Web", desc: "Browser-based 3D experiences for global reach." },
-            { title: "AR Mobile", desc: "Augmented reality property visualization." },
-          ].map((f, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-16px)]"><FeatureCard title={f.title} desc={f.desc} /></div>)}
-        </div>
-      </section>
-
-      {/* Measurable impact */}
-      <section className="bg-[#111] px-5 md:px-8 py-8 md:py-[6rem]">
-        <Eyebrow>Measurable impact</Eyebrow>
-        <SectionTitle>Results that moved the business</SectionTitle>
-        <div className="flex flex-wrap gap-px  border border-white/5 rounded-xl overflow-hidden">
-          {[
-            { number: "500+", label: "Projects Delivered", desc: "Visualization projects for global clients." },
-            { number: "5+", label: "Years Experience", desc: "Since 2021 delivering production output." },
-            { number: "98%", label: "Client Retention", desc: "Clients return for additional projects." },
-          ].map((s, i) => <div key={i} className="w-full sm:w-[calc(50%-1px)] lg:w-[calc(33.333%-1px)]"><StatCard number={s.number} label={s.label} desc={s.desc} /></div>)}
-        </div>
-      </section>
-
-      {/* 2. "Why Elipse Studio" section with WhyUs Image */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1">
-            <Eyebrow>Why Elipse Studio</Eyebrow>
-            <SectionTitle>Why Developers and Architects Worldwide Choose Elipse Studio</SectionTitle>
-            <div className="space-y-4 md:space-y-6">
-              <ReadText text="Real estate developers and architectural firms select Elipse Studio because our team combines photorealistic craft with genuine commercial understanding. Our visualization is engineered to achieve specific business outcomes: closing off-plan sales, winning architectural competitions, and securing stakeholder approvals." />
-              <ReadText text="The strategic advantage of working with our team is integrated capability across every visualization format. Rather than coordinating multiple vendors, you work with one experienced partner that produces every deliverable from a single 3D asset pipeline." />
-              <div className="pt-2 md:pt-4"><CTA label="View Portfolio" to="/portfolio" /></div>
+          {/* Right: Elipse Studio Edge */}
+          <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-[#4169E1]/10 to-[#0E0E10] border border-[#4169E1]/40 shadow-[0_10px_30px_rgba(65,105,225,0.1)]">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase font-mono bg-[#4169E1]/15 text-[#4169E1] mb-3">
+              <span>⚡ The Elipse Studio Edge</span>
             </div>
-          </div>
-          <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why developers choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
-          </div>
-        </div>
-      </section>
-
-      {/* Applications */}
-      <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#111]">
-        <Eyebrow>Applications</Eyebrow>
-        <SectionTitle>Use Cases for Architectural Visualization Services</SectionTitle>
-        <div className="flex flex-wrap gap-3 md:gap-6">
-          {[
-            { title: "Off-Plan Sales", desc: "Exterior renderings and interior walkthroughs for international buyer outreach." },
-            { title: "Design Competitions", desc: "Competition-quality visualization against global competitors." },
-            { title: "Stakeholder Approvals", desc: "Real-time experiences for investor pitches." },
-            { title: "Marketing Campaigns", desc: "Cinematic animation for premium launches." },
-            { title: "Sales Centers", desc: "VR walkthroughs for immersive property tours." },
-            { title: "Master Planning", desc: "Large-scale visualization for mixed-use developments." },
-          ].map((u, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-16px)]"><UseCaseCard title={u.title} desc={u.desc} /></div>)}
-        </div>
-      </section>
-
-      {/* 3. "Our stack" section with Stack Image */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1">
-            <Eyebrow>Our stack</Eyebrow>
-            <SectionTitle>Our Technology and Production Approach</SectionTitle>
-            <ReadText text="Elipse Studio's architectural visualization pipeline uses industry-leading tools: Unreal Engine 5 for photorealistic real-time rendering, V-Ray and Corona for offline cinematic-quality rendering, Rhino and Revit integration for architectural workflow compatibility, and specialized VR platforms including Meta Quest 3 and Varjo XR-4 for immersive experiences." />
-          </div>
-          <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our technology and production pipeline" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
+            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+              <span>Real-Time Unreal Engine 5 &amp; Hybrid CGI</span>
+            </h3>
+            <p className="text-xs sm:text-sm text-zinc-300 font-light mb-5">
+              Cinematic artistry combined with next-generation real-time interactive game engine technology.
+            </p>
+            <ul className="space-y-3">
+              {[
+                'Real-time lighting & camera manipulation in minutes, not days',
+                'Interactive digital walkthroughs allowing buyers to roam every square foot',
+                'Finish & material configurators to swap marble, timber, and layouts on the fly',
+                'Touchscreen & VR sales gallery ready for international investor roadshows',
+              ].map((text, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-200">
+                  <span className="text-[#4169E1] font-bold shrink-0">✓</span>
+                  <span><strong className="text-white font-medium">{text.split(' in ')[0]}</strong> {text.includes(' in ') ? `in ${text.split(' in ')[1]}` : ''}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* How we did it */}
-      <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#0D0D0D]">
-        <Eyebrow>How we did it</Eyebrow>
-        <SectionTitle>Our Architectural Visualization Process</SectionTitle>
-        <div className="flex flex-wrap gap-3 md:gap-8" style={{ justifyContent: 'center' }}>
-          {[
-            { step: "01", phase: "Discovery", title: "Strategic Scoping", desc: "Understanding commercial goals, target audience, and delivery timeline." },
-            { step: "02", phase: "Production", title: "3D Asset Preparation", desc: "Building and optimizing 3D geometry from architectural source files." },
-            { step: "03", phase: "Review", title: "Camera Composition", desc: "Initial camera angles and compositions with client approval gates." },
-            { step: "04", phase: "Refinement", title: "Materials & Lighting", desc: "Developing physically-accurate materials and cinematic lighting." },
-            { step: "05", phase: "Iteration", title: "Refinement Rounds", desc: "Iterative feedback and polish based on client review." },
-            { step: "06", phase: "Delivery", title: "Final Production", desc: "High-resolution rendering with post-production polish." },
-          ].map((p, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard {...p} /></div>)}
+      {/* ======================================================== */}
+      {/* 3. CAPABILITIES (3-CARD LOOPING CAROUSEL SLIDER)         */}
+      {/* ======================================================== */}
+      <section id="services" className="w-full py-16 sm:py-24 border-b border-white/10 bg-black">
+        <div className="mb-12 text-center max-w-3xl mx-auto px-4 sm:px-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4169E1] mb-2">
+            Comprehensive Archviz Capabilities
+          </p>
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
+            Built for Property Developers, Architects &amp; Sales Galleries
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg mt-3 leading-relaxed font-light text-zinc-300">
+            From master-planned townships to single trophy penthouses, we supply the complete visual and interactive arsenal needed to market off-plan luxury real estate.
+          </p>
         </div>
+
+        {/* 6-Card Static Grid (3 Top, 3 Bottom) */}
+        <CapabilitiesGrid />
       </section>
 
-      {/* Selected Work Gallery - Auto Scroll */}
-      <section className="bg-[#111] py-10 md:py-[6rem] overflow-hidden">
-        <div className="px-5 md:px-8 mb-10 md:mb-20">
-          <Eyebrow>Visual output</Eyebrow>
-          <SectionTitle>Selected work</SectionTitle>
+      {/* ======================================================== */}
+      {/* 4. RECENT ARCHVIZ BUILDS (MAIN SHOWCASE GALLERY)         */}
+      {/* ======================================================== */}
+      <section
+        className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black"
+        id="archviz-gallery"
+      >
+        <div className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase font-mono bg-[#4169E1]/10 border border-[#4169E1]/25 text-[#4169E1] mb-3">
+            <span>Proven Track Record</span>
+          </div>
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
+            Selected Real Estate &amp; Archviz Portfolio
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg mt-2.5 sm:mt-3 leading-relaxed font-light text-zinc-300">
+            Explore real client projects delivered by Elipse Studio across towers, luxury villas, master communities, and interactive real-time environments.
+          </p>
         </div>
-        <div className="relative">
-          <div className="flex animate-marquee-gallery gap-3 md:gap-[15px] w-max">
-            {[...galleryImages, ...galleryImages].map((src, i) => (
-              <div key={i} className="flex-shrink-0 w-[70vw] sm:w-[55vw] md:w-[45vw] lg:w-[35vw] aspect-[16/9] overflow-hidden">
-                <img src={src} alt={`Architectural showcase ${(i % galleryImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" width="640" height="400"/>
+
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
+          {ARCHVIZ_BUILDS.map((item, idx) => (
+            <div
+              key={idx}
+              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
+            >
+              {/* Image Preview Container (16:9 HD Size) */}
+              <div className="relative aspect-video overflow-hidden bg-black/40">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  width="1280"
+                  height="720"
+                  loading={idx < 3 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={idx === 0 ? "high" : "auto"}
+                  onError={(e) => {
+                    if (item.fallbackImg && e.currentTarget.src !== item.fallbackImg) {
+                      e.currentTarget.src = item.fallbackImg;
+                    }
+                  }}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 will-change-transform"
+                />
               </div>
-            ))}
-          </div>
+
+              {/* Card Body */}
+              <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-medium group-hover:text-[#4169E1] transition-colors duration-300 text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed font-light text-zinc-400">
+                    {item.desc}
+                  </p>
+                </div>
+
+                {/* Card Action Section & Buttons */}
+                <div className="mt-6 pt-4 border-t border-white/10 flex flex-col gap-3.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#4169E1] font-semibold">{item.tech}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    {item.liveLink && (
+                      <a
+                        href={item.liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
+                      >
+                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        <span>Launch 360° Tour</span>
+                      </a>
+                    )}
+
+                    {item.reelLink && (
+                      <a
+                        href={item.reelLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                      >
+                        <svg className="w-3.5 h-3.5 text-pink-500 fill-current shrink-0" viewBox="0 0 24 24">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                        <span>Watch Reel</span>
+                      </a>
+                    )}
+
+                    {item.driveLink && (
+                      <a
+                        href={item.driveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
+                      >
+                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                        </svg>
+                        <span>Open Drive Archive</span>
+                      </a>
+                    )}
+
+                    {item.behanceLink && (
+                      <a
+                        href={item.behanceLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                      >
+                        <svg className="w-3.5 h-3.5 text-[#4169E1] fill-current shrink-0" viewBox="0 0 24 24">
+                          <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.076 0-5.625-3.045-5.625-6.046 0-3.418 1.944-5.954 5.375-5.954 3.737 0 5.099 2.766 4.908 6.136h-7.795c.094 1.797 1.134 3.464 3.271 3.464 1.455 0 2.453-.787 2.871-1.6h2.096zm-7.726-4.5c.083-1.428.983-2.646 2.652-2.646 1.583 0 2.508 1.144 2.585 2.646h-5.237zm-11.456 7.5h-4.544v-16h4.868c2.973 0 5.132 1.411 5.132 4.316 0 1.637-.841 2.915-2.227 3.528 1.761.642 2.771 2.158 2.771 4.148 0 3.208-2.483 4.008-6 4.008zm-2.044-6.877h2.247c1.474 0 2.464-.539 2.464-1.929 0-1.258-.871-1.794-2.246-1.794h-2.465v3.723zm0-5.323h2.122c1.237 0 2.053-.48 2.053-1.639 0-1.121-.77-1.561-1.968-1.561h-2.207v3.2z" />
+                        </svg>
+                        <span>View Behance</span>
+                      </a>
+                    )}
+
+                    {item.youtubeLink && (
+                      <a
+                        href={item.youtubeLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                      >
+                        <svg className="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24">
+                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                        </svg>
+                        <span>Demo</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 2 CTAs Directly Below Portfolio Gallery */}
+        <div className="mt-14 sm:mt-16 flex flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full">
+          <button
+            onClick={() => router.push('/contact')}
+            className="px-6 sm:px-8 py-3.5 bg-[#4169E1] hover:bg-[#3158D4] text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-lg shadow-[#4169E1]/25 hover:shadow-[#4169E1]/40 hover:scale-[1.03] cursor-pointer flex items-center gap-2"
+          >
+            <span>Book a Free Consultation</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+          <button
+            onClick={() => router.push('/contact')}
+            className="px-6 sm:px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer flex items-center gap-2"
+          >
+            <span>Schedule a 15-Min Technical Call</span>
+            <svg className="w-4 h-4 text-[#4169E1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </button>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="max-w-[800px] mx-auto">
-          
-          <SectionTitle>Frequently Asked Questions</SectionTitle>
-          <div className="max-w-[680px]">
-            {[
-              { q: "What are architectural visualization services and how do they help my project?", a: "Architectural visualization services create photorealistic 3D representations of buildings and spaces before physical construction begins. They help by enabling off-plan property sales, winning architectural competitions, securing stakeholder approvals, and marketing developments to international audiences. Elipse Studio has delivered architectural visualization worldwide since 2021." },
-              { q: "Can Elipse Studio work directly from Revit, Rhino, or SketchUp files?", a: "Yes. Elipse Studio's architectural visualization pipeline works with all major architectural design formats including Revit, Rhino, SketchUp, AutoCAD, and ArchiCAD. Our team handles file translation and geometry cleanup so architects deliver source files in their native workflow." },
-              { q: "Do you deliver both static renderings and VR walkthroughs?", a: "Yes. Elipse Studio delivers photorealistic renderings, cinematic architectural animation, browser-based virtual tours, immersive VR walkthroughs, and AR mobile experiences � all from an integrated 3D asset pipeline." },
-              { q: "How long does a typical architectural visualization project take?", a: "Focused exterior and interior renderings typically deliver in 3-5 weeks. Full presentation packages span 8-14 weeks. VR experiences and interactive presentations require 12-20 weeks." },
-              { q: "How do I start an architectural visualization project with Elipse Studio?", a: "Contact Elipse Studio with a brief description of your development � property type, target audience, timeline, and visualization scope needed. A senior team member responds within one business day with a scoped approach." },
-            ].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Footer Section */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="rounded-lg border border-[#1A1A1A] bg-[#111] p-6 md:p-14 text-center">
-          <h2 className="text-xl md:text-4xl font-medium tracking-tight text-[#F2F0EB] mb-4 max-w-2xl mx-auto">Ready to elevate your development with photoreal visualization?</h2>
-          <p className="text-sm md:text-lg font-light leading-relaxed text-white/70 mb-8 max-w-2xl mx-auto">Tell Elipse Studio about your project. Our team will respond within one business day with a scoped approach for your architectural visualization needs.</p>
-          <div className="flex justify-center"><CTA label="Discuss Your Project" to="/contact" /></div>
-        </div>
-      </section>
-
-      <footer className="px-5 md:px-8 py-[3rem] bg-[#0D0D0D] flex flex-col sm:flex-row items-center justify-end gap-[1.5rem] border-t border-[#1A1A1A]">
-        <div className="flex items-center justify-between flex-wrap gap-[10px] w-full">
-          <div className="flex gap-[10px] flex-wrap">
-            <button className="inline-flex items-center gap-[8px] text-[13px] font-medium px-[20px] py-[10px] border border-[#333] rounded-[6px] hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-[#888] bg-transparent cursor-pointer" onClick={() => navigate("/")}>
-              <span aria-hidden="true">?</span> All work
-            </button>
-            <button className="inline-flex items-center gap-[8px] text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer" onClick={handleStartProject}>
-              <span aria-hidden="true">?</span> Start a project
-            </button>
-          </div>
-        </div>
-      </footer>
-      <ServiceRelatedLinks relatedServices={[{label:"3D Product Visualization",to:"/services/3d-product-visualization"},{label:"Virtual Showrooms",to:"/services/virtual-showrooms-digital-twins"},{label:"3D Animation",to:"/services/3d-animation"}]} relatedArticles={[{label:"Architectural Visualization: The Complete Guide",to:"/blog/architectural-visualization-guide"},{label:"3D Real-Time Configurators for Real Estate in Dubai",to:"/blog/3d-real-time-configurators-real-estate-dubai"}]} />
-      <LatestWork />
+      {/* ======================================================== */}
+      {/* 5. CLIENT REVIEWS & TESTIMONIALS                        */}
+      {/* ======================================================== */}
       <ClientReviews />
-      <div id="contact"><Contact /></div>
+
+      {/* ======================================================== */}
+      {/* 6. SOCIAL MEDIA SECTION                                 */}
+      {/* ======================================================== */}
+      <SocialMediaSection />
+
+      {/* ======================================================== */}
+      {/* 7. CONTACT FORM                                         */}
+      {/* ======================================================== */}
+      <div id="contact">
+        <Contact />
+      </div>
+
       <Footer />
     </div>
-  
-
-  </>
-
   );
 };
 

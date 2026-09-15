@@ -166,138 +166,110 @@ const Footer = () => {
 
         <div className="border-t border-white/50 mb-10 w-full"></div>
 
-        <div className="w-full flex lg:flex-row flex-col justify-between gap-8 py-8">
-          <div className="w-full xl:w-[85%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-8 relative">
-            <FooterColumn
-              as="nav"
-              ariaLabel="Company"
-              title="Company"
-              sectionKey="company"
-              isOpen={!!openSections.company}
-              onToggle={toggleSection}
-            >
-              <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/about">About Us</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/capabilities">Capabilities</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/portfolio">Portfolio</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/industries">Industries</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/case-studies">Case Studies</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/blog">Blogs</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/contact">Contact</Link>
-                </li>
-              </ul>
-            </FooterColumn>
+        <div className="w-full flex lg:flex-row flex-col justify-between items-start gap-10 lg:gap-8 py-8">
+          {/* Left Group: Logo + Nav Columns */}
+          <div className="flex flex-col lg:flex-row items-start gap-10 sm:gap-14 lg:gap-16 xl:gap-24">
+            {/* Logo on the left */}
+            <div className="flex-shrink-0 pt-1">
+              <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
+                <img
+                  src="/assets/logo.webp"
+                  alt="Elipse Studio"
+                  width="180"
+                  height="80"
+                  className="h-9 sm:h-11 md:h-12 w-auto object-contain"
+                />
+              </Link>
+            </div>
 
-            <FooterColumn
-              as="nav"
-              ariaLabel="Our Services"
-              title="Our Services"
-              sectionKey="services"
-              isOpen={!!openSections.services}
-              onToggle={toggleSection}
-            >
-              <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services">All Services</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/3d-product-configurators">Interactive 3D Web &amp; Product Configurators</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/architectural-visualization">Real-Time ArchViz &amp; Spatial VR/AR</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/3d-product-visualization">Cinematic 3D Product &amp; Commercial Visuals</Link>
-                </li>
-              </ul>
-            </FooterColumn>
+            {/* Nav & Info Columns: Company, Our Services, Contact Us */}
+            <div className="flex flex-col sm:flex-row flex-wrap gap-10 sm:gap-14 md:gap-16 lg:gap-16 xl:gap-20">
+              <FooterColumn
+                as="nav"
+                ariaLabel="Company"
+                title="Company"
+                sectionKey="company"
+                isOpen={!!openSections.company}
+                onToggle={toggleSection}
+              >
+                <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/about">About Us</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/capabilities">Capabilities</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/portfolio">Portfolio</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/industries">Industries</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/case-studies">Case Studies</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/blog">Blogs</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/contact">Contact</Link>
+                  </li>
+                </ul>
+              </FooterColumn>
 
-            {/* Regional / South Asia Column */}
-            <FooterColumn
-              title="South Asia Operations"
-              sectionKey="southAsia"
-              alwaysOpen
-              isOpen={!!openSections.southAsia}
-              onToggle={toggleSection}
-            >
-              <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
-                <p>Regional Development Hub</p>
-                <p>Worldwide Project Delivery</p>
-                <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
-                  <a href="tel:+923471245257" className="hover:text-white transition-colors">
-                    +92 3471245257
-                  </a>
-                  <a href="tel:+923323141556" className="hover:text-white transition-colors">
-                    +92 3323141556
-                  </a>
-                </p>
-                <p className="pt-1 text-white font-medium break-all sm:break-normal">
-                  <a href="mailto:info@elipsestudio.com" className="hover:text-white transition-colors">
-                    info@elipsestudio.com
-                  </a>
-                </p>
-              </div>
-            </FooterColumn>
+              <FooterColumn
+                as="nav"
+                ariaLabel="Our Services"
+                title="Our Services"
+                sectionKey="services"
+                isOpen={!!openSections.services}
+                onToggle={toggleSection}
+              >
+                <ul className="space-y-2 text-[13px] sm:text-[14px] font-light text-white/80">
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/services">All Services</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/services/3d-product-configurators">3D Product Configurators</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/services/architectural-visualization">Real-Time ArchViz & VR</Link>
+                  </li>
+                  <li className="hover:text-white cursor-pointer transition-colors w-fit">
+                    <Link href="/services/3d-product-visualization">Cinematic 3D Product Visuals</Link>
+                  </li>
+                </ul>
+              </FooterColumn>
 
-            {/* United States Column */}
-            <FooterColumn
-              title="United States"
-              sectionKey="unitedStates"
-              alwaysOpen
-              isOpen={!!openSections.unitedStates}
-              onToggle={toggleSection}
-            >
-              <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
-                <p>1812 McCormick Ln</p>
-                <p>Hanover Park, IL 60133</p>
-                <p>United States</p>
-                <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
-                  <a href="tel:+16302970428" className="hover:text-white transition-colors">
-                    +1 630-297-0428
-                  </a>
-                </p>
-              </div>
-            </FooterColumn>
-
-            {/* United Kingdom Column */}
-            <FooterColumn
-              title="United Kingdom"
-              sectionKey="unitedKingdom"
-              alwaysOpen
-              isOpen={!!openSections.unitedKingdom}
-              onToggle={toggleSection}
-            >
-              <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-1.5">
-                <p>Elipse Studio UK</p>
-                <p>London, United Kingdom</p>
-                <p className="pt-2 text-white/90 font-medium flex flex-col space-y-1">
-                  <a href="tel:+442046343117" className="hover:text-white transition-colors">
-                    +44 20 4634 3117
-                  </a>
-                </p>
-                <p className="pt-1 text-white font-medium break-all sm:break-normal">
-
-                </p>
-              </div>
-            </FooterColumn>
+              <FooterColumn
+                title="Contact Us"
+                sectionKey="contactUs"
+                alwaysOpen
+                isOpen={!!openSections.contactUs}
+                onToggle={toggleSection}
+              >
+                <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-2">
+                  <p>1812 McCormick Ln</p>
+                  <p>Hanover Park, IL 60133</p>
+                  <p className="pt-1 text-white/90 font-medium">
+                    <a href="tel:+16302970428" className="hover:text-white transition-colors">
+                      +1 630-297-0428
+                    </a>
+                  </p>
+                  <p className="pt-0.5 text-white font-medium">
+                    <a href="mailto:info@elipsestudio.com" className="hover:text-[#4169E1] transition-colors">
+                      info@elipsestudio.com
+                    </a>
+                  </p>
+                </div>
+              </FooterColumn>
+            </div>
           </div>
 
-          <div className="w-full lg:w-1/5 flex flex-col justify-between lg:items-end gap-6">
+          {/* Social and Back to top on the right */}
+          <div className="flex flex-col justify-between lg:items-end gap-6 sm:gap-10">
             <div className="flex flex-col gap-4 lg:items-end">
-              <span className="text-white lg:text-right text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
+              <span className="text-white lg:text-right text-xs sm:text-sm tracking-[0.2em] uppercase font-medium border-white/50 inline-block w-fit">
                 Social
               </span>
               <div className="flex gap-4">
@@ -307,7 +279,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={data.label}
-                    className="text-2xl hover:text-white transition-colors"
+                    className="text-xl sm:text-2xl hover:text-white transition-colors"
                     key={i}
                   >
                     {data.img}
@@ -318,7 +290,7 @@ const Footer = () => {
             <button
               onClick={scrollToTop}
               suppressHydrationWarning
-              className="flex w-fit xl:mt-0 mt-6 items-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-full px-8 py-3 text-xs uppercase tracking-widest hover:bg-white/20 transition-all group cursor-pointer text-white"
+              className="flex w-fit xl:mt-0 mt-4 items-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-full px-7 py-2.5 sm:px-8 sm:py-3 text-xs uppercase tracking-widest hover:bg-white/20 transition-all group cursor-pointer text-white"
             >
               Back to top
               <svg

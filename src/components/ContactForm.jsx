@@ -125,53 +125,53 @@ const ContactForm = () => {
     };
 
     const inputClass = (name) =>
-        `w-full bg-white/[0.06] border rounded-xl py-3.5 px-4 focus:border-[#4169E1] outline-none transition-colors text-sm md:text-base placeholder:text-gray-500 ${
+        `w-full bg-white/[0.06] border rounded-xl py-3 px-3.5 sm:py-3.5 sm:px-4 focus:border-[#4169E1] outline-none transition-colors text-xs sm:text-sm md:text-base placeholder:text-gray-500 ${
             errors[name] && touched[name] ? 'border-red-500/70' : 'border-white/[0.08]'
         }`;
 
     const [activeTab, setActiveTab] = useState('form'); // 'form' | 'calendly'
 
     return (
-        <div className="bg-[#0c0c0c] rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 lg:p-12 relative border border-white/10 w-full shadow-2xl">
+        <div className="bg-[#0c0c0c] rounded-2xl sm:rounded-[2rem] md:rounded-[3rem] p-4 sm:p-7 md:p-10 lg:p-12 relative border border-white/10 w-full shadow-2xl">
             {/* Mode Switcher Tabs */}
-            <div className="flex p-1.5 bg-white/[0.04] border border-white/10 rounded-2xl mb-8 gap-1.5">
+            <div className="flex p-1 sm:p-1.5 bg-white/[0.04] border border-white/10 rounded-xl sm:rounded-2xl mb-6 sm:mb-8 gap-1 sm:gap-1.5">
                 <button
                     type="button"
                     onClick={() => setActiveTab('form')}
-                    className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer ${
+                    className={`flex-1 py-2.5 sm:py-3 px-2 sm:px-4 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                         activeTab === 'form'
                             ? 'bg-[#4169E1] text-white shadow-lg shadow-[#4169E1]/30'
                             : 'text-gray-400 hover:text-white hover:bg-white/[0.02]'
                     }`}
                 >
-                    <FaPaperPlane className="w-3.5 h-3.5 shrink-0" />
-                    <span>Send Project Brief</span>
+                    <FaPaperPlane className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                    <span className="truncate">Send Project Brief</span>
                 </button>
 
                 <button
                     type="button"
                     onClick={() => setActiveTab('calendly')}
-                    className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer ${
+                    className={`flex-1 py-2.5 sm:py-3 px-2 sm:px-4 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                         activeTab === 'calendly'
                             ? 'bg-[#4169E1] text-white shadow-lg shadow-[#4169E1]/30'
                             : 'text-gray-400 hover:text-white hover:bg-white/[0.02]'
                     }`}
                 >
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span>Book 15-Min Call</span>
+                    <span className="truncate">Book 15-Min Call</span>
                 </button>
             </div>
 
             {activeTab === 'form' ? (
-                <form onSubmit={handleSubmit} className="space-y-7">
+                <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-7">
                     {/* 3 Enterprise Pillars */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-medium text-gray-300">
+                    <div className="space-y-2.5 sm:space-y-3">
+                        <label className="text-xs sm:text-sm font-medium text-gray-300">
                             What are you exploring? <span className="text-[#4169E1] font-semibold">(select all that apply)</span>
                         </label>
-                        <div className="space-y-2.5">
+                        <div className="space-y-2 sm:space-y-2.5">
                             {PILLARS.map((pillar) => {
                                 const isSelected = selectedPillars.includes(pillar.id);
                                 return (
@@ -180,26 +180,26 @@ const ContactForm = () => {
                                         type="button"
                                         onClick={() => togglePillar(pillar.id)}
                                         aria-pressed={isSelected}
-                                        className={`w-full flex items-start gap-3.5 text-left rounded-xl p-3.5 sm:p-4 transition-all duration-300 border cursor-pointer ${
+                                        className={`w-full flex items-start gap-2.5 sm:gap-3.5 text-left rounded-xl p-3 sm:p-4 transition-all duration-300 border cursor-pointer ${
                                             isSelected
                                                 ? 'bg-[#4169E1]/10 border-[#4169E1] shadow-[0_0_20px_rgba(65,105,225,0.12)]'
                                                 : 'bg-white/[0.03] border-white/[0.08] hover:border-white/20'
                                         }`}
                                     >
                                         <span
-                                            className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
+                                            className={`mt-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
                                                 isSelected
                                                     ? 'bg-[#4169E1] border-[#4169E1]'
                                                     : 'border-gray-500'
                                             }`}
                                         >
-                                            {isSelected && <FaCheck className="w-3 h-3 text-white" />}
+                                            {isSelected && <FaCheck className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />}
                                         </span>
                                         <span>
                                             <span className={`block text-xs sm:text-sm font-semibold leading-snug ${isSelected ? 'text-white' : 'text-gray-200'}`}>
                                                 {pillar.label}
                                             </span>
-                                            <span className="block text-[11px] sm:text-xs text-gray-400 mt-0.5">{pillar.note}</span>
+                                            <span className="block text-[10px] sm:text-xs text-gray-400 mt-0.5">{pillar.note}</span>
                                         </span>
                                     </button>
                                 );
@@ -210,9 +210,9 @@ const ContactForm = () => {
                         )}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-x-6 gap-y-5">
-                        <div className="space-y-2">
-                            <label htmlFor="user_name" className="text-sm font-medium text-gray-300">Full Name</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-x-6 gap-y-4 sm:gap-y-5">
+                        <div className="space-y-1.5 sm:space-y-2">
+                            <label htmlFor="user_name" className="text-xs sm:text-sm font-medium text-gray-300">Full Name</label>
                             <input
                                 id="user_name"
                                 type="text"
@@ -228,8 +228,8 @@ const ContactForm = () => {
                             )}
                         </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="user_email" className="text-sm font-medium text-gray-300">Work Email</label>
+                        <div className="space-y-1.5 sm:space-y-2">
+                            <label htmlFor="user_email" className="text-xs sm:text-sm font-medium text-gray-300">Work Email</label>
                             <input
                                 id="user_email"
                                 type="email"
@@ -245,8 +245,8 @@ const ContactForm = () => {
                             )}
                         </div>
 
-                        <div className="space-y-2 sm:col-span-2">
-                            <label htmlFor="user_company" className="text-sm font-medium text-gray-300">Company Name</label>
+                        <div className="space-y-1.5 sm:space-y-2 sm:col-span-2">
+                            <label htmlFor="user_company" className="text-xs sm:text-sm font-medium text-gray-300">Company Name</label>
                             <input
                                 id="user_company"
                                 type="text"
@@ -259,8 +259,8 @@ const ContactForm = () => {
                             />
                         </div>
 
-                        <div className="space-y-2 sm:col-span-2">
-                            <label htmlFor="message" className="text-sm font-medium text-gray-300">Project Brief</label>
+                        <div className="space-y-1.5 sm:space-y-2 sm:col-span-2">
+                            <label htmlFor="message" className="text-xs sm:text-sm font-medium text-gray-300">Project Brief</label>
                             <textarea
                                 id="message"
                                 name="message"
@@ -277,25 +277,25 @@ const ContactForm = () => {
                         </div>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4 pt-1">
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className={`w-full flex items-center justify-center gap-2 text-center bg-[#4169E1] hover:bg-[#3558c8] text-white font-bold py-4 px-6 rounded-full text-sm md:text-base transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 cursor-pointer transform active:scale-[0.98] ${
+                            className={`w-full flex items-center justify-center gap-2 text-center bg-[#4169E1] hover:bg-[#3558c8] text-white font-bold py-3.5 sm:py-4 px-4 sm:px-6 rounded-full text-xs sm:text-sm md:text-base transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 cursor-pointer transform active:scale-[0.98] ${
                                 isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                             }`}
                         >
-                            {isSubmitting ? 'Sending...' : (<><FaPaperPlane className="flex-shrink-0" /> Submit Inquiry &amp; Get Personal 3D Teardown</>)}
+                            {isSubmitting ? 'Sending...' : (<><FaPaperPlane className="flex-shrink-0 text-xs sm:text-sm" /> Submit Inquiry &amp; Get Personal 3D Teardown</>)}
                         </button>
-                        <p className="text-center text-gray-400 text-xs leading-relaxed">
-                            <FaCheck className="inline -mt-0.5 text-emerald-400" /> Enterprise-grade security &nbsp;·&nbsp;
-                            <FaCheck className="inline -mt-0.5 text-emerald-400" /> NDA available on request &nbsp;·&nbsp;
+                        <p className="text-center text-gray-400 text-[10px] sm:text-xs leading-relaxed">
+                            <FaCheck className="inline -mt-0.5 text-emerald-400" /> Enterprise security &nbsp;·&nbsp;
+                            <FaCheck className="inline -mt-0.5 text-emerald-400" /> NDA on request &nbsp;·&nbsp;
                             <FaCheck className="inline -mt-0.5 text-emerald-400" /> No sales pressure
                         </p>
                     </div>
 
                     {/* Quick switch to Calendly prompt */}
-                    <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                    <div className="pt-4 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
                         <div>
                             <p className="text-xs sm:text-sm font-semibold text-white">Prefer talking directly?</p>
                             <p className="text-[11px] sm:text-xs text-gray-400">Skip the form and pick a 15-minute slot on our calendar.</p>
@@ -303,7 +303,7 @@ const ContactForm = () => {
                         <button
                             type="button"
                             onClick={() => setActiveTab('calendly')}
-                            className="px-4 py-2 rounded-full border border-[#4169E1]/40 bg-[#4169E1]/10 hover:bg-[#4169E1]/20 text-[#4169E1] text-xs font-semibold transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
+                            className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#4169E1]/40 bg-[#4169E1]/10 hover:bg-[#4169E1]/20 text-[#4169E1] text-[11px] sm:text-xs font-semibold transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
                         >
                             <span>Book Direct Call</span>
                             <span>→</span>
@@ -312,22 +312,22 @@ const ContactForm = () => {
                 </form>
             ) : (
                 /* Calendly Tab View */
-                <div className="space-y-6">
-                    <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3.5">
-                            <span className="w-10 h-10 rounded-xl bg-[#4169E1]/15 text-[#4169E1] flex items-center justify-center shrink-0">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="space-y-4 sm:space-y-6">
+                    <div className="bg-white/[0.03] border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex items-center justify-between gap-3 sm:gap-4">
+                        <div className="flex items-center gap-2.5 sm:gap-3.5">
+                            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#4169E1]/15 text-[#4169E1] flex items-center justify-center shrink-0">
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </span>
-                            <div>
-                                <h3 className="text-sm sm:text-base font-bold text-white">15-Min Technical Scoping Call</h3>
-                                <p className="text-xs text-gray-400">Directly with Bilal Lania · Lead 3D Pipeline Engineer</p>
+                            <div className="text-left">
+                                <h3 className="text-xs sm:text-base font-bold text-white">15-Min Technical Scoping Call</h3>
+                                <p className="text-[10px] sm:text-xs text-gray-400">Directly with Bilal Lania · Lead 3D Pipeline Engineer</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0c0c0c] min-h-[660px]">
+                    <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-[#0c0c0c] min-h-[580px] sm:min-h-[660px]">
                         <iframe
                             src="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting?hide_gdpr_banner=1&background_color=0c0c0c&text_color=ffffff&primary_color=4169e1"
                             title="Schedule a 15-minute technical scoping call"
@@ -335,15 +335,15 @@ const ContactForm = () => {
                             height="660"
                             frameBorder="0"
                             scrolling="no"
-                            className="w-full"
+                            className="w-full min-h-[580px] sm:min-h-[660px]"
                         />
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left pt-2">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-center sm:text-left pt-1 sm:pt-2">
                         <button
                             type="button"
                             onClick={() => setActiveTab('form')}
-                            className="text-xs text-gray-400 hover:text-white transition-colors cursor-pointer"
+                            className="text-[11px] sm:text-xs text-gray-400 hover:text-white transition-colors cursor-pointer"
                         >
                             ← Back to Project Brief Form
                         </button>
@@ -351,7 +351,7 @@ const ContactForm = () => {
                             href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-[#4169E1] hover:underline"
+                            className="text-[11px] sm:text-xs text-[#4169E1] hover:underline"
                         >
                             Open directly in Calendly ↗
                         </a>

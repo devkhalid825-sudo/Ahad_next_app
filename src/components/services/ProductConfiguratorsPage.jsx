@@ -1,354 +1,466 @@
-﻿'use client';
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
-import Contact from "../features/Contact";
-import LatestWork from "../features/LatestWork";
-import ServiceRelatedLinks from "./ServiceRelatedLinks";
-import ClientReviews from "../features/ClientReviews";
+import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import Header from '../layouts/Header';
+import Footer from '../layouts/Footer';
+import Contact from '../features/Contact';
+import ClientReviews from '../features/ClientReviews';
+import SocialMediaSection from '../features/SocialMediaSection';
+import { getImgSrc } from '../../utils/api';
 
-import _solutionsImg from "../../assets/ElipseImages/hero/volve-configrator.webp";
-import _whyUsImg from "../../assets/ElipseImages/projects/seat-2-1.webp";
-import _stackImg from "../../assets/ElipseImages/blogs/alnoor1.webp";
-import _clubPro1 from "../../assets/ElipseImages/hero/volve-configrator.webp";
-import _clubPro2 from "../../assets/ElipseImages/blogs/alnoor1.webp";
-import _clubPro3 from "../../assets/ElipseImages/blogs/alnoor2.webp";
-import _clubPro4 from "../../assets/ElipseImages/blogs/alnoor3.webp";
-import _clubPro5 from "../../assets/ElipseImages/blogs/alnoor4.webp";
-import _clubPro6 from "../../assets/ElipseImages/projects/seat-2-1.webp";
-import { getImgSrc } from "../../utils/api";
-const solutionsImg = getImgSrc(_solutionsImg);
-const whyUsImg = getImgSrc(_whyUsImg);
-const stackImg = getImgSrc(_stackImg);
-const clubPro1 = getImgSrc(_clubPro1);
-const clubPro2 = getImgSrc(_clubPro2);
-const clubPro3 = getImgSrc(_clubPro3);
-const clubPro4 = getImgSrc(_clubPro4);
-const clubPro5 = getImgSrc(_clubPro5);
-const clubPro6 = getImgSrc(_clubPro6);
+// Project images
+import steeringImgRaw from '../../assets/ElipseImages/projects/Steering-1.webp';
+import volvoImgRaw from '../../assets/ElipseImages/hero/volve-configrator.webp';
+import inverexImgRaw from '../../assets/ElipseImages/projects/G-1.webp';
+import seatImgRaw from '../../assets/ElipseImages/projects/seat-2-1.webp';
 
-const galleryImages = [clubPro1, clubPro2, clubPro3, clubPro4, clubPro5, clubPro6];
+import sharkImgRaw from '../../assets/About-page/shark.webp';
+import kiaImgRaw from '../../assets/About-page/kia.webp';
+import marineImgRaw from '../../assets/About-page/marine.webp';
+import inverxImgRaw from '../../assets/About-page/inverx.webp';
+import tshirtImgRaw from '../../assets/About-page/t-shirt.webp';
 
-const CTA = ({ label, to = "/contact", className = "" }) =>
-  !label ? null : (
-    <Link to={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>
-      {label} <span aria-hidden="true">→</span>
-    </Link>
-  );
+const steeringImg = getImgSrc(steeringImgRaw);
+const volvoImg = getImgSrc(volvoImgRaw);
+const inverexImg = getImgSrc(inverexImgRaw);
+const sharkImg = getImgSrc(sharkImgRaw);
+const kiaImg = getImgSrc(kiaImgRaw);
+const marineImg = getImgSrc(marineImgRaw);
+const inverxImg = getImgSrc(inverxImgRaw);
+const tshirtImg = getImgSrc(tshirtImgRaw);
+const seatImg = getImgSrc(seatImgRaw);
 
-const Eyebrow = ({ children }) => (
-  <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">{children}</p>
-);
+// Configurator Gallery Builds (Direct from Latest Work Configurator Section)
+const CONFIGURATOR_BUILDS = [
+  {
+    title: 'BMW Steering Wheel Configurator',
+    category: 'Automotive WebGL',
+    desc: 'Real-time 3D browser customization for stickers, colors, and carbon textures powered by PlayCanvas.',
+    image: steeringImg,
+    tech: 'PlayCanvas · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://steering-configurator.netlify.app/',
+    reelLink: 'https://youtube.com/shorts/Rm2SXb_reVI?si=cNPmF7I7lDLglhNb',
+  },
+  {
+    title: 'Volvo Vehicle Walkthrough',
+    category: 'Vehicle Configurator',
+    desc: 'Interactive 3D exterior and interior configurator with photoreal material switching and camera presets.',
+    image: volvoImg,
+    tech: 'Unreal Engine · WebGL',
+    link: '/portfolio',
+    reelLink: 'https://youtu.be/rO1sg3y3TF0?si=9yv7WSm0m5AwqG0p',
+  },
+  {
+    title: 'Costa Golf Cart Configurator',
+    category: 'Electric Vehicle 3D',
+    desc: 'Real-time 3D golf cart customization with live color switching, accessories, and instant interactive preview.',
+    image: inverexImg,
+    tech: 'PlayCanvas · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://costa-carts.netlify.app/',
+  },
+  {
+    title: 'Kia Sportage 3D Configurator',
+    category: 'Automotive WebGL',
+    desc: 'Interactive 3D vehicle configurator with day/night environment switching, exterior paints, and interior trims.',
+    image: kiaImg,
+    tech: 'Unreal Engine · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://legacy.elipsestudio.com/Kia/',
+  },
+  {
+    title: 'BYD Shark 6 Configurator',
+    category: 'Vehicle Customizer',
+    desc: 'Interactive multi-angle vehicle builder with dynamic accessory packs, bullbars, colors, and live pricing.',
+    image: sharkImg,
+    tech: 'PlayCanvas · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://legacy.elipsestudio.com/Zeus-Configurator/',
+  },
+  {
+    title: 'Inverex E-Bike Configurator',
+    category: 'Motorcycle & EV 3D',
+    desc: 'Real-time 3D electric motorcycle configurator with dynamic color switching, accessories, and studio lighting.',
+    image: inverxImg,
+    tech: 'PlayCanvas · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://legacy.elipsestudio.com/Bike-Configurator/',
+  },
+  {
+    title: 'Automotive Seat Customizer',
+    category: 'Material & Trim 3D',
+    desc: 'Browser-based 3D automotive seating customizer delivering photoreal textures, stitching, and ergonomic views.',
+    image: seatImg,
+    tech: 'PlayCanvas · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://seat-cover-configurator.inknalgorithm.com/',
+  },
+  {
+    title: 'Pursuit 288 Yacht Configurator',
+    category: 'Luxury Marine 3D',
+    desc: 'High-fidelity real-time marine vessel customizer with custom wraps, deck materials, and interactive 3D navigation.',
+    image: marineImg,
+    tech: 'Unreal 5 · WebGL',
+    link: '/portfolio',
+    liveLink: 'https://legacy.elipsestudio.com/Yacht_Configurator/',
+    reelLink: 'https://youtube.com/shorts/YD_TWiIeL5U?si=aXBtfAFGUwsoPVzS',
+  },
+  {
+    title: 'Custom T-Shirt 3D Configurator',
+    category: 'Apparel & Fashion 3D',
+    desc: 'Interactive 3D garment customization with real-time print placement, fabric textures, colorways, and instant preview.',
+    image: tshirtImg,
+    tech: 'WebGL · Three.js',
+    link: '/portfolio',
+    liveLink: 'https://legacy.elipsestudio.com/T-Shirt/',
+  },
+];
 
-const SectionTitle = ({ children, className = "" }) => (
-  <h2 className={`text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB] ${className}`}>{children}</h2>
-);
+// PlayCanvas Golf Cart Live Configurator
+const GOLF_CART_SRC = 'https://playcanv.as/e/p/JOJu0DAt/';
 
-const ReadText = ({ text }) => (
-  <p className="text-base md:text-lg lg:text-xl font-light leading-relaxed text-white/70 mb-6 last:mb-0">{text}</p>
-);
+const GOLF_CART_COLORS = [
+  { id: 'glossWhitePaint', name: 'Gloss White', hex: '#FFFFFF' },
+  { id: 'blackDiamondPaint', name: 'Black Diamond', hex: '#111113' },
+  { id: 'glossRedPaint', name: 'Gloss Red', hex: '#cc0000' },
+  { id: 'glossTealPaint', name: 'Gloss Teal', hex: '#008080' },
+];
 
-const SolutionItem = ({ title, desc }) => (
-  <li className="flex gap-3 md:gap-4 py-3 md:py-5 border-b border-[#1A1A1A] last:border-0">
-    <span className="text-[#4169E1] mt-1 shrink-0">◆</span>
-    <p className="text-sm md:text-lg font-light leading-relaxed text-white/70">
-      <span className="text-[#F2F0EB] font-semibold">{title}</span>
-      {desc ? <span className="text-white/60"> — {desc}</span> : null}
-    </p>
-  </li>
-);
+/**
+ * Interactive Live PlayCanvas Golf Cart Configurator Component
+ */
+const GolfCartConfiguratorViewer = ({ isDark = true }) => {
+  const [activeColor, setActiveColor] = useState(GOLF_CART_COLORS[0].id);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const frameRef = useRef(null);
 
-const FeatureCard = ({ icon, title, desc }) => (
-  <div className="bg-[#111] rounded-lg p-4 md:p-[2rem] border border-white/5 hover:border-[#4169E1]/40 transition-colors">
-    {icon && <span className="text-2xl text-[#4169E1] mb-4 block">{icon}</span>}
-    <h3 className="text-base md:text-lg font-semibold text-[#F2F0EB] mb-2">{title}</h3>
-    {desc && <p className="text-white/60 text-xs md:text-sm leading-relaxed">{desc}</p>}
-  </div>
-);
+  const sendColor = (colorId) => {
+    setActiveColor(colorId);
+    const frame = frameRef.current;
+    if (!frame || !frame.contentWindow) return;
+    try {
+      // Send raw colorId string and structured message for full compatibility
+      frame.contentWindow.postMessage(colorId, '*');
+      frame.contentWindow.postMessage({ type: 'CHANGE_COLOR', color: colorId, buttonId: colorId }, '*');
+    } catch (e) {
+      console.error('Error posting message to PlayCanvas:', e);
+    }
+  };
 
-const StatCard = ({ number, label, desc }) => (
-  <div className="bg-[#111] p-5 md:p-[2.5rem] flex flex-col justify-center">
-    <div className="text-2xl md:text-[3.5rem] font-bold text-[#4169E1] leading-[1] mb-[8px]">{number}</div>
-    <div className="font-semibold text-[#F2F0EB] mb-[8px] text-sm md:text-base">{label}</div>
-    {desc && <div className="text-xs md:text-lg font-light leading-relaxed text-white/70">{desc}</div>}
-  </div>
-);
+  const handleIframeLoad = () => {
+    setIsLoaded(true);
+    // Send initial color with small delay to let PlayCanvas scripts initialize
+    setTimeout(() => {
+      sendColor(activeColor);
+    }, 600);
+  };
 
-const ProcessCard = ({ step, phase, title, desc }) => (
-  <div className="bg-[#1A1A1A] rounded-2xl p-4 md:p-8 border border-white/5">
-    <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
-      <span className="text-2xl md:text-4xl font-bold text-[#4169E1]">{step}</span>
-      {phase && (
-        <span className="text-[10px] md:text-[12px] font-semibold text-[#4169E1] bg-[#4169E1]/10 px-2 md:px-3 py-1 rounded-full uppercase tracking-[0.08em]">{phase}</span>
+  return (
+    <div
+      className="relative w-full h-[250px] xs:h-[280px] sm:h-[380px] md:h-[460px] lg:h-[calc(100vh-170px)] lg:max-h-[560px] rounded-2xl sm:rounded-3xl overflow-hidden group transition-all duration-500 bg-[#0E0E10] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
+    >
+      {/* Loading Spinner */}
+      {!isLoaded && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2.5 sm:gap-3 bg-[#0E0E10]">
+          <div className="w-7 h-7 sm:w-10 sm:h-10 border-2 border-[#4169E1]/20 border-t-[#4169E1] rounded-full animate-spin" />
+          <p className="text-[9px] sm:text-xs font-medium tracking-wide uppercase text-zinc-400">
+            Initializing 3D Engine...
+          </p>
+        </div>
       )}
-    </div>
-    <h4 className="text-sm md:text-[20px] font-semibold text-[#F2F0EB] mb-2 md:mb-3">{title}</h4>
-    {desc && <p className="text-xs md:text-[15px] font-light leading-[1.6] md:leading-[1.7] text-white/70">{desc}</p>}
-  </div>
-);
 
-const UseCaseCard = ({ title, desc }) => (
-  <div className="bg-[#111] rounded-lg p-4 md:p-[2rem] border border-white/5">
-    <h3 className="text-base md:text-lg font-semibold text-[#F2F0EB] mb-2">{title}</h3>
-    {desc && <p className="text-white/60 text-xs md:text-sm leading-relaxed">{desc}</p>}
-  </div>
-);
+      {/* PlayCanvas iframe Viewport */}
+      <iframe
+        ref={frameRef}
+        src={GOLF_CART_SRC}
+        title="Golf Cart 3D Configurator"
+        loading="eager"
+        allow="fullscreen; xr-spatial-tracking"
+        onLoad={handleIframeLoad}
+        className="w-full h-full border-0 relative z-0 bg-transparent"
+      />
 
-const FaqItem = ({ q, a, isOpen, onToggle }) => (
-  <div className="border-b border-[#1A1A1A]">
-    <button type="button" onClick={onToggle} className="w-full flex items-center justify-between gap-4 py-5 md:py-6 text-left">
-      <span className="text-base md:text-lg text-[#F2F0EB] font-medium pr-2">{q}</span>
-      <span className={`text-[#4169E1] text-2xl transition-transform shrink-0 ${isOpen ? "rotate-45" : ""}`}>+</span>
-    </button>
-    {isOpen && <p className="text-base md:text-lg font-light leading-relaxed text-white/70 pb-5 md:pb-6">{a}</p>}
-  </div>
-);
-
-const TextCarousel = ({ texts }) => { const [current, setCurrent] = useState(0); const [touchStart, setTouchStart] = useState(null); const onTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX); const onTouchEnd = (e) => { if (touchStart === null) return; const diff = touchStart - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) { if (diff > 0 && current < texts.length - 1) setCurrent(current + 1); if (diff < 0 && current > 0) setCurrent(current - 1); } setTouchStart(null); }; return (<div><div className="relative min-h-[140px]" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>{texts.map((text, i) => (<div key={i} className={`transition-all duration-500 ${i === current ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"}`}><ReadText text={text} /></div>))}</div><div className="flex gap-2 mt-6">{texts.map((_, i) => (<button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${i === current ? "bg-[#4169E1] w-6" : "bg-[#333] w-2"}`} />))}</div></div>);
-};
-
-const ProductConfiguratorsPage = () => {
-  const navigate = useNavigate();
-  const [openFaq, setOpenFaq] = useState(null);
-
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  const handleStartProject = () => navigate('/contact');
-    return (
-
-  <>
-    <div className="w-full overflow-x-hidden bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-[#F2F0EB]">
-
-      {/* Hero Section */}
-      <section className="bg-[#0D0D0D] px-5 md:px-8 pt-[100px] md:pt-[140px] pb-[3rem] relative md:min-h-screen">
-        <Header />
-        <h1 className="text-[clamp(1.6rem,4vw,3rem)] font-medium text-[#F2F0EB] leading-[1.1] tracking-tight max-w-[800px] mb-[2rem] pt-[2rem] sm:pt-[3rem]">
-          Custom 3D Product Configurator Development for E-Commerce Brands<span className="text-[#4169E1]">.</span>
-        </h1>
-        <div className="flex flex-wrap gap-[8px] mt-[3rem]">
-          <button onClick={handleStartProject} className="text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 cursor-pointer ml-0 md:ml-auto">Start a Project →</button>
-        </div>
-        <div className="w-full mt-[1.5rem] h-[40vh] sm:h-[55vh] md:h-[65vh] overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src="https://www.youtube.com/embed/QGNO3iS2ojo"
-            title="Volvo 3D Product Configurator"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
-        </div>
-      </section>
-
-      {/* Overview Section */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-[3rem] items-stretch">
-          <div className="flex-1">
-            <Eyebrow>3D Product Configurators</Eyebrow>
-            <SectionTitle>Overview</SectionTitle>
-            <div className="md:hidden"><TextCarousel texts={["Launching a customizable product line? See how Elipse Studio builds 3D product configurators that convert browsers into buyers.", "Static product pages with dropdown color pickers no longer convert the way they used to. Modern shoppers expect to actively design, customize, and visualize their purchase in real time before committing. 3D product configurators deliver exactly this — transforming e-commerce product pages from passive browsing into engaged product design experiences.", "Elipse Studio builds custom 3D product configurators for e-commerce brands, manufacturers, and DTC companies worldwide. Every configurator we build is engineered for measurable commercial results — higher conversion rates, lifted average order values, reduced return rates — not just impressive technology in isolation."]} /></div>
-            <div className="hidden md:block">
-              <ReadText text="Launching a customizable product line? See how Elipse Studio builds 3D product configurators that convert browsers into buyers." />
-              <ReadText text="Static product pages with dropdown color pickers no longer convert the way they used to. Modern shoppers expect to actively design, customize, and visualize their purchase in real time before committing. 3D product configurators deliver exactly this — transforming e-commerce product pages from passive browsing into engaged product design experiences." />
-              <ReadText text="Elipse Studio builds custom 3D product configurators for e-commerce brands, manufacturers, and DTC companies worldwide. Every configurator we build is engineered for measurable commercial results — higher conversion rates, lifted average order values, reduced return rates — not just impressive technology in isolation." />
-            </div>
+      {/* Centered Floating Luxury Color Dock */}
+      <div className="absolute bottom-2.5 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 pointer-events-auto max-w-[95%] sm:max-w-[92%]">
+        <div className="flex items-center gap-1.5 sm:gap-3.5 bg-black/85 backdrop-blur-2xl px-2.5 py-1 sm:px-5 sm:py-2.5 rounded-full border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
+          <div className="flex items-center gap-1 sm:gap-2 pr-1.5 sm:pr-3 border-r border-white/15">
+            <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+            <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white whitespace-nowrap">
+              {GOLF_CART_COLORS.find((c) => c.id === activeColor)?.name || 'Gloss White'}
+            </span>
           </div>
-          <div className="flex-1 bg-[#111] rounded-lg p-5 md:p-[2rem] text-[#F2F0EB]">
-            <Eyebrow>TL;DR</Eyebrow>
-            <SectionTitle className="text-xl md:text-3xl lg:text-[34px] mb-4 md:mb-10">Quick answer</SectionTitle>
-            <div className="text-sm md:text-lg font-light leading-relaxed text-white/70">
-              Elipse Studio builds custom 3D product configurators for e-commerce brands, manufacturers, and DTC companies worldwide. Our configurators let customers customize products in real time with photrealistic previews — driving higher conversion, larger average orders, and dramatically reduced returns. Integrated with Shopify Plus, WooCommerce, Magento, BigCommerce, and enterprise commerce platforms. Powered by WebGL through Three.js and Babylon.js, or Unreal Engine 5 for premium fidelity.
-            </div>
-            <div className="mt-4 md:mt-6"><CTA label="Get Started" to="/contact" /></div>
-          </div>
-        </div>
-      </section>
-
-      {/* What we do with Solutions Image */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1">
-            <Eyebrow>What we do</Eyebrow>
-            <SectionTitle>Our 3D Product Configurator Solutions</SectionTitle>
-            <ul className="max-w-[680px]">
-              {[
-                { title: "Furniture Configurators", desc: "Sofas, chairs, tables, wardrobes, kitchens with material and dimension customization." },
-                { title: "Automotive Configurators", desc: "Vehicle exterior, interior, wheels, packages with photreal previews." },
-                { title: "Fashion and Apparel Configurators", desc: "Custom clothing, footwear, accessories with fabric and color options." },
-                { title: "Jewelry Configurators", desc: "Custom ring, necklace, and specialty jewelry design with stone selection." },
-                { title: "Manufacturing Product Configurators", desc: "Complex technical products with engineering-accurate options." },
-                { title: "Real Estate Property Configurators", desc: "Finishes, layouts, and options for property buyers." },
-                { title: "Sports and Specialty Equipment", desc: "Bikes, skis, golf clubs with performance customization." },
-                { title: "AR-Enabled Configurators", desc: "Configurators that generate AR views for in-context product visualization." },
-              ].map((s, i) => <SolutionItem key={i} title={s.title} desc={s.desc} />)}
-            </ul>
-          </div>
-          <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[600px] overflow-hidden" style={{ marginTop: '100px' }}>
-            <img src={solutionsImg} alt="Our configurator solutions showcase" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
-          </div>
-        </div>
-      </section>
-
-      {/* Capabilities */}
-      <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#111]">
-        <Eyebrow>Capabilities</Eyebrow>
-        <SectionTitle>What We Deliver</SectionTitle>
-        <div className="flex flex-wrap gap-3 md:gap-6">
-          {[
-            { title: "Real-Time Customization", desc: "Customers see changes instantly in photreal 3D." },
-            { title: "Commerce Integration", desc: "Shopify, WooCommerce, Magento, BigCommerce." },
-            { title: "AR Preview", desc: "See configured products in real environments." },
-            { title: "Analytics Dashboard", desc: "Track configuration preferences and conversion." },
-            { title: "Multi-Platform", desc: "WebGL browsers plus native mobile apps." },
-            { title: "Variant Management", desc: "Unlimited configurations from asset libraries." },
-          ].map((f, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-16px)]"><FeatureCard title={f.title} desc={f.desc} /></div>)}
-        </div>
-      </section>
-
-      {/* Measurable impact */}
-      <section className="bg-[#111] px-5 md:px-8 py-8 md:py-[6rem]">
-        <Eyebrow>Measurable impact</Eyebrow>
-        <SectionTitle>Results that moved the business</SectionTitle>
-        <div className="flex flex-wrap gap-px border border-white/5 rounded-xl overflow-hidden">
-          {[
-            { number: "30-80%", label: "Conversion Lift", desc: "On configurator-touched sessions." },
-            { number: "25%", label: "AOV Increase", desc: "Through premium upgrade adoption." },
-            { number: "40%", label: "Return Reduction", desc: "Customers see exactly what they buy." },
-          ].map((s, i) => <div key={i} className="w-full sm:w-[calc(50%-1px)] lg:w-[calc(33.333%-1px)]"><StatCard number={s.number} label={s.label} desc={s.desc} /></div>)}
-        </div>
-      </section>
-
-      {/* Why Elipse Studio with Image */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1">
-            <Eyebrow>Why Elipse Studio</Eyebrow>
-            <SectionTitle>Why Brands Worldwide Choose Elipse Studio for Configurators</SectionTitle>
-            <div className="space-y-4 md:space-y-6">
-              <ReadText text="E-commerce brands select Elipse Studio because our configurators deliver measurable results, not novelty. Every 3D product configurator we build integrates cleanly with existing commerce infrastructure — Shopify Plus, WooCommerce, Magento, BigCommerce, or custom backends." />
-              <ReadText text="The commercial benefits of 3D product configurators are substantial. Conversion rates typically lift 30-80% on configurator-touched sessions. Average order values increase through premium upgrade adoption. Return rates drop because customers see exactly what they are buying." />
-              <div className="pt-2 md:pt-4"><CTA label="View Portfolio" to="/portfolio" /></div>
-            </div>
-          </div>
-          <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[550px] overflow-hidden">
-            <img src={whyUsImg} alt="Why brands choose Elipse Studio" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
-          </div>
-        </div>
-      </section>
-
-      {/* Applications */}
-      <section className="px-5 md:px-8 py-8 md:py-[6rem] bg-[#111]">
-        <Eyebrow>Applications</Eyebrow>
-        <SectionTitle>Configurator Use Cases and Industries</SectionTitle>
-        <div className="flex flex-wrap gap-3 md:gap-6">
-          {[
-            { title: "Furniture Retail", desc: "Made-to-order custom pieces without physical showrooms." },
-            { title: "Automotive", desc: "Pre-order vehicle customization with photreal previews." },
-            { title: "Fashion & Footwear", desc: "Personalization services with live 3D preview." },
-            { title: "Jewelry", desc: "Custom design commissioning with stone selection." },
-            { title: "Manufacturing", desc: "B2B sales tools for complex technical products." },
-            { title: "Real Estate", desc: "Off-plan buyer engagement with finish selection." },
-          ].map((u, i) => <div key={i} className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-16px)]"><UseCaseCard title={u.title} desc={u.desc} /></div>)}
-        </div>
-      </section>
-
-      {/* Our stack with Image */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1">
-            <Eyebrow>Our stack</Eyebrow>
-            <SectionTitle>Our Configurator Technology Stack</SectionTitle>
-            <ReadText text="Elipse Studio's configurator platform uses WebGL through Three.js and Babylon.js for maximum browser reach, or Unreal Engine 5 for premium photreal fidelity. Backend integration handles Shopify Plus, WooCommerce, Magento, BigCommerce, and custom enterprise commerce platforms. AR-enabled configurators use ARKit and ARCore for native mobile quality, or WebAR for frictionless no-app deployment." />
-          </div>
-          <div className="flex-1 w-full h-[300px] sm:h-[400px] lg:h-full lg:min-h-[500px] overflow-hidden">
-            <img src={stackImg} alt="Our configurator technology stack" className="w-full h-full object-cover" loading="lazy" width="800" height="600"/>
-          </div>
-        </div>
-      </section>
-
-      {/* How we did it */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <Eyebrow>How we did it</Eyebrow>
-        <SectionTitle>Our Configurator Development Process</SectionTitle>
-        <div className="flex flex-wrap gap-3 md:gap-8 justify-center">
-          <div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="01" phase="Discovery" title="Commercial Scoping" desc="Understanding conversion targets, customization scope, and integration requirements." /></div>
-          <div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="02" phase="Production" title="3D Asset Libraries" desc="Building configurable product component libraries." /></div>
-          <div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="03" phase="Design" title="Configurator UX & Flows" desc="Designing intuitive configuration interfaces." /></div>
-          <div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="04" phase="Development" title="Integration Architecture" desc="Connecting with commerce platforms and backends." /></div>
-          <div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="05" phase="Testing" title="User Testing & QA" desc="Iterative refinement based on user behavior." /></div>
-          <div className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-21px)]"><ProcessCard step="06" phase="Launch" title="Deploy & Optimize" desc="Analytics tracking and post-launch optimization." /></div>
-        </div>
-      </section>
-
-      {/* Selected Work Gallery - Auto Scroll */}
-      <section className="bg-[#111] py-10 md:py-[6rem] overflow-hidden">
-        <div className="px-5 md:px-8 mb-10 md:mb-20">
-          <Eyebrow>Visual output</Eyebrow>
-          <SectionTitle>Selected work</SectionTitle>
-        </div>
-        <div className="relative">
-          <div className="flex animate-marquee-gallery gap-3 md:gap-[15px] w-max">
-            {[...galleryImages, ...galleryImages].map((src, i) => (
-              <div key={i} className="flex-shrink-0 w-[70vw] sm:w-[55vw] md:w-[45vw] lg:w-[35vw] aspect-[16/9] overflow-hidden">
-                <img src={src} alt={`Product configurator showcase ${(i % galleryImages.length) + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" width="640" height="400"/>
-              </div>
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            {GOLF_CART_COLORS.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => sendColor(c.id)}
+                title={c.name}
+                className={`w-5 h-5 sm:w-8 sm:h-8 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer ${activeColor === c.id
+                  ? 'scale-110 ring-2 ring-white shadow-[0_0_16px_rgba(255,255,255,0.8)]'
+                  : 'opacity-70 hover:opacity-100 hover:scale-105 ring-1 ring-white/20'
+                  }`}
+                style={{ backgroundColor: c.hex }}
+                aria-label={c.name}
+              >
+                {activeColor === c.id && (
+                  <span className={`w-1.5 h-1.5 rounded-full ${c.hex === '#FFFFFF' ? 'bg-black' : 'bg-white'}`} />
+                )}
+              </button>
             ))}
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  );
+};
 
-      {/* FAQ */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="max-w-[800px] mx-auto">
-          <SectionTitle>Frequently Asked Questions</SectionTitle>
-          <div className="max-w-[680px]">
-            {[
-              { q: "What is a 3D product configurator?", a: "A 3D product configurator is an interactive online tool that lets customers customize products in real time with photrealistic 3D previews. Customers can change colors, materials, dimensions, and options while seeing exactly how their configured product will look." },
-              { q: "Can 3D product configurators integrate with Shopify?", a: "Yes. Our configurators integrate seamlessly with Shopify Plus, standard Shopify, WooCommerce, Magento, BigCommerce, and custom commerce platforms. Configured product orders flow into standard checkout, payment, and fulfillment workflows automatically." },
-              { q: "Which industries benefit most from 3D product configurators?", a: "Custom-order product categories deliver the strongest results: furniture, automotive, fashion, footwear, jewelry, sports equipment, specialty manufacturing, and real estate." },
-              { q: "Do you build configurators with AR viewing?", a: "Yes. We build configurators with integrated AR viewing — letting customers configure a product and then see it placed in their actual environment via smartphone." },
-              { q: "How long does 3D product configurator development take?", a: "Focused configurators deploy in 8-14 weeks. Multi-product platforms span 14-20 weeks. Enterprise configurators extend to 6+ months." },
-            ].map((f, i) => <FaqItem key={i} q={f.q} a={f.a} isOpen={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />)}
+const ProductConfiguratorsPage = () => {
+  const router = useRouter();
+  const [theme, setTheme] = useState('dark');
+
+  const isDark = theme === 'dark';
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div
+      data-nav="dark"
+      className="min-h-screen font-sans bg-black text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-white"
+    >
+      <Header />
+
+      {/* ======================================================== */}
+      {/* 1. HERO SECTION (100VH FIRST FOLD: FULL WIDTH)          */}
+      {/* ======================================================== */}
+      <section
+        className="relative min-h-[100svh] lg:h-[100svh] pt-[72px] sm:pt-[95px] md:pt-[105px] pb-6 sm:pb-8 px-3.5 sm:px-6 md:px-8 border-b border-white/10 bg-black flex flex-col justify-center overflow-hidden"
+      >
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 xl:gap-14 items-center my-auto">
+          {/* Left Column: Large Heading, Subtitle, CTAs & Stats */}
+          <div className="lg:col-span-6 flex flex-col justify-center items-center text-center lg:items-start lg:text-left">
+            <h1
+              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[54px] font-semibold tracking-tight leading-[1.2] text-white"
+            >
+              Real-time 3D that sells,<br className="hidden xs:inline" />
+              {' '}before your buyer clicks a thing.
+            </h1>
+
+            <p
+              className="mt-2.5 sm:mt-5 text-xs sm:text-base md:text-lg leading-relaxed max-w-xl font-light text-zinc-300 mx-auto lg:mx-0"
+            >
+              We build custom 3D WebGL and Unreal-driven configurators for automotive, luxury DTC, and enterprise eCommerce brands — orbit, recolor, swap parts, and checkout directly on the product page.
+            </p>
+
+            {/* Mobile-optimized Buttons */}
+            <div className="mt-4 sm:mt-7 flex flex-row items-center justify-center lg:justify-start gap-2 sm:gap-4 w-full sm:w-auto max-w-md lg:max-w-none">
+              <button
+                onClick={() => router.push('/contact')}
+                className="flex-1 sm:flex-initial px-3 sm:px-8 py-2.5 sm:py-3.5 bg-[#4169E1] hover:bg-[#3158D4] text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] cursor-pointer text-center whitespace-nowrap"
+              >
+                Schedule a 15-Min Call
+              </button>
+              <a
+                href="#configurator-gallery"
+                className="flex-1 sm:flex-initial px-3 sm:px-8 py-2.5 sm:py-3.5 border font-medium text-xs sm:text-sm rounded-full transition-all duration-300 text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-zinc-200 whitespace-nowrap"
+              >
+                See Live Builds ↓
+              </a>
+            </div>
+
+            {/* Stats row */}
+            <div
+              className="mt-4 sm:mt-8 pt-3.5 sm:pt-6 border-t border-white/10 grid grid-cols-3 gap-2 sm:gap-8 w-full max-w-xl mx-auto lg:mx-0 text-center"
+            >
+              <div className="flex flex-col items-center lg:items-start">
+                <span className="text-lg sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white">
+                  Sub-2s
+                </span>
+                <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-0.5 sm:mt-1 text-zinc-400">
+                  Load Speed
+                </span>
+              </div>
+              <div className="flex flex-col items-center lg:items-start border-l border-white/10 pl-2 sm:pl-8">
+                <span className="text-lg sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white">
+                  +40%
+                </span>
+                <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-0.5 sm:mt-1 text-zinc-400">
+                  Conversion Lift
+                </span>
+              </div>
+              <div className="flex flex-col items-center lg:items-start border-l border-white/10 pl-2 sm:pl-8">
+                <span className="text-lg sm:text-3xl lg:text-4xl font-semibold text-[#4169E1] tracking-tight">
+                  Shopify
+                </span>
+                <span className="text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-0.5 sm:mt-1 text-zinc-400">
+                  &amp; Headless
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Live Golf Cart 3D Configurator */}
+          <div className="lg:col-span-6 w-full flex items-center justify-center">
+            <GolfCartConfiguratorViewer isDark={true} />
           </div>
         </div>
       </section>
 
-      {/* CTA Footer Section */}
-      <section className="px-5 md:px-8 py-10 md:py-[6rem] bg-[#0D0D0D]">
-        <div className="rounded-lg border border-[#1A1A1A] bg-[#111] p-6 md:p-14 text-center">
-          <h2 className="text-xl md:text-4xl font-medium tracking-tight text-[#F2F0EB] mb-4 max-w-2xl mx-auto">Convert more customers with 3D product configurators</h2>
-          <p className="text-sm md:text-lg font-light leading-relaxed text-white/70 mb-8 max-w-2xl mx-auto">Tell Elipse Studio about your product line, target audience, and commerce platform. Our team responds within one business day.</p>
-          <div className="flex justify-center"><CTA label="Discuss Your Project" to="/contact" /></div>
+      {/* ======================================================== */}
+      {/* 2. RECENT CONFIGURATOR BUILDS (MAIN SHOWCASE GALLERY)   */}
+      {/* ======================================================== */}
+      <section
+        className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black"
+        id="configurator-gallery"
+      >
+        <div className="mb-8 sm:mb-12 text-center sm:text-left max-w-3xl mx-auto sm:mx-0">
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
+            Featured 3D Configurator Builds
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg mt-2.5 sm:mt-3 leading-relaxed font-light text-zinc-300">
+            Explore our real-time WebGL, PlayCanvas, and Unreal Engine interactive product configurators built for automotive, luxury, and enterprise brands.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {CONFIGURATOR_BUILDS.map((item, idx) => (
+            <div
+              key={idx}
+              className="group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
+            >
+              {/* Image Preview Container (16:9 HD Size) */}
+              <div className="relative aspect-video overflow-hidden bg-black/40">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  width="1280"
+                  height="720"
+                  loading={idx < 3 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={idx === 0 ? "high" : "auto"}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 will-change-transform"
+                />
+              </div>
+
+              {/* Text Card Content */}
+              <div className="p-6 text-left flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-medium group-hover:text-[#4169E1] transition-colors duration-300 text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed font-light text-zinc-400">
+                    {item.desc}
+                  </p>
+                </div>
+
+                {/* Card Action Section & Buttons */}
+                <div className="mt-6 pt-4 border-t border-white/10 flex flex-col gap-3.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#4169E1] font-semibold">{item.tech}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5">
+                    {item.liveLink && (
+                      <a
+                        href={item.liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
+                      >
+                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        <span>View Live</span>
+                      </a>
+                    )}
+
+                    {item.reelLink && (
+                      <a
+                        href={item.reelLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                      >
+                        <svg className="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24">
+                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                        </svg>
+                        <span>Watch Reel</span>
+                      </a>
+                    )}
+
+                    {!item.liveLink && !item.reelLink && (
+                      <button
+                        onClick={() => router.push(item.link || '/contact')}
+                        className="w-full flex items-center justify-between py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:border-[#4169E1] cursor-pointer bg-white/5 hover:bg-white/10 border-white/10 text-zinc-300 hover:text-white"
+                      >
+                        <span>Explore Project</span>
+                        <span>→</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <footer className="px-5 md:px-8 py-[3rem] bg-[#0D0D0D] flex flex-col sm:flex-row items-center justify-end gap-[1.5rem] border-t border-[#1A1A1A]">
-        <div className="flex items-center justify-between flex-wrap gap-[10px] w-full">
-          <div className="flex gap-[10px] flex-wrap">
-            <button className="inline-flex items-center gap-[8px] text-[13px] font-medium px-[20px] py-[10px] border border-[#333] rounded-[6px] hover:border-[#F2F0EB] hover:text-[#F2F0EB] transition-all duration-200 text-[#888] bg-transparent cursor-pointer" onClick={() => navigate("/")}>
-              <span aria-hidden="true">▦</span> All work
+      {/* ======================================================== */}
+      {/* 3. THREE CORE PILLARS HEADER & 2 CTAS                   */}
+      {/* ======================================================== */}
+      <div className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black">
+        <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4169E1] mb-2">
+            Core Disciplines
+          </p>
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
+            Three things we&apos;re genuinely the best at.
+          </h2>
+          <p className="text-base sm:text-lg mt-4 leading-relaxed font-light max-w-2xl text-zinc-300">
+            Not sixteen. We turned down the generalist menu on purpose — every project below sits inside one of these three enterprise disciplines.
+          </p>
+
+          {/* 2 CTAs */}
+          <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
+            <button
+              onClick={() => router.push('/contact')}
+              className="px-6 sm:px-8 py-3.5 bg-[#4169E1] hover:bg-[#3158D4] text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-lg shadow-[#4169E1]/25 hover:shadow-[#4169E1]/40 hover:scale-[1.03] cursor-pointer flex items-center gap-2"
+            >
+              <span>Book a Free Consultation</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </button>
-            <button className="inline-flex items-center gap-[8px] text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] hover:bg-[#3158D4] transition-all duration-200 border-none cursor-pointer" onClick={handleStartProject}>
-              <span aria-hidden="true">➤</span> Start a project
+            <button
+              onClick={() => router.push('/contact')}
+              className="px-6 sm:px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer flex items-center gap-2"
+            >
+              <span>Schedule a 15-Min Technical Call</span>
+              <svg className="w-4 h-4 text-[#4169E1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
             </button>
           </div>
         </div>
-      </footer>
-      <ServiceRelatedLinks relatedServices={[{label:"3D Product Visualization",to:"/services/3d-product-visualization"},{label:"Interactive Web Experiences",to:"/services/interactive-web-experiences"},{label:"AR Development",to:"/services/ar-development"}]} relatedArticles={[{label:"How Web-Based Configurators Transform Sales",to:"/blog/web-based-configurator"},{label:"Automotive 3D Configurator",to:"/blog/automotive-configurator"},{label:"Furniture 3D Configurator",to:"/blog/furniture-configurator-2026"}]} />
-      <LatestWork />
+      </div>
+
+
       <ClientReviews />
-      <div id="contact"><Contact /></div>
+
+
+      <SocialMediaSection />
+
+
+      <div id="contact">
+        <Contact />
+      </div>
+
       <Footer />
     </div>
-  
-
-  </>
-
   );
 };
 
 export default ProductConfiguratorsPage;
-

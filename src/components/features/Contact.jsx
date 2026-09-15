@@ -127,22 +127,22 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-10 md:py-16 bg-black text-white overflow-hidden">
-      <div className="mx-auto px-6 md:px-16 max-w-8xl">
-        <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1]">
+      <div className="mx-auto px-4 sm:px-6 md:px-16 max-w-8xl">
+        <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-center sm:text-left">
           Contact Us
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-start">
-          <div className="flex flex-col justify-center items-center lg:items-start h-full pt-4 lg:pt-0 pb-8 xl:pb-0 xl:pl-12">
-            <h3 className="text-2xl lg:text-4xl xl:text-5xl md:font-medium font-light leading-[1.2] tracking-tight text-left">
+          <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left h-full pt-2 lg:pt-0 pb-6 xl:pb-0 xl:pl-12">
+            <h3 className="text-2xl lg:text-4xl xl:text-5xl md:font-medium font-light leading-[1.2] tracking-tight">
               Let’s build something remarkable.
             </h3>
-            <h3 className="mt-4 text-sm lg:text-2xl xl:text-3xl font-light leading-relaxed tracking-tight text-left text-gray-300">
+            <h3 className="mt-3 sm:mt-4 text-xs sm:text-sm lg:text-2xl xl:text-3xl font-light leading-relaxed tracking-tight text-zinc-300 max-w-lg">
               Share your project details and we’ll craft an experience your audience will remember.
             </h3>
           </div>
 
-          <div className="bg-[#0c0c0c] rounded-[2rem] md:rounded-[3rem] p-5 md:p-12 py-8 md:py-10 relative border border-white/10 w-full">
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-[#0c0c0c] rounded-2xl sm:rounded-[2rem] md:rounded-[3rem] p-4 sm:p-8 md:p-12 py-6 md:py-10 relative border border-white/10 w-full shadow-2xl">
+            <form ref={form} onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
               <div className="space-y-3">
                 <label className="text-sm font-medium text-gray-300">
                   What are you exploring? <span className="text-[#4169E1]">(select all that apply)</span>

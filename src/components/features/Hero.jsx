@@ -26,6 +26,7 @@ const Hero = () => {
 
   const desktopBackgrounds = useMemo(
     () => [
+      HERO_ASSETS.videos.vr,
       HERO_ASSETS.videos.jamSpread,
       HERO_ASSETS.videos.volvo,
       HERO_ASSETS.videos.khoj,
@@ -33,7 +34,6 @@ const Hero = () => {
       HERO_ASSETS.videos.bombay,
       HERO_ASSETS.videos.vfx,
       HERO_ASSETS.videos.gabani,
-      HERO_ASSETS.videos.inverex,
     ],
     []
   );

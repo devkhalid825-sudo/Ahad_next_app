@@ -7,7 +7,7 @@ export const HERO_ASSETS = {
     jamSpread: '/assets/ElipseImages/videos/JamSpread15Sec.webm',
     gabani: '/assets/ElipseImages/videos/Gabani.webm',
     bombay: '/assets/ElipseImages/videos/Bombay05Sec.webm',
-    inverex: '/assets/ElipseImages/videos/Inverex.webm',
+    vr: '/assets/ElipseImages/videos/VR.webm',
     mobile: '/assets/ElipseImages/videos/mobile.webm',
   },
   images: {

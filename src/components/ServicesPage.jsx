@@ -147,6 +147,9 @@ const ServicesPage = () => {
                     </div>
                 </section>
 
+                <div id="contact">
+                    <Contact />
+                </div>
                 <Footer />
             </motion.div>
         </>
