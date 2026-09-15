@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '../layouts/Header';
+import ArchVizHeader from '../layouts/ArchVizHeader';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
 import ClientReviews from '../features/ClientReviews';
@@ -229,7 +229,7 @@ const ArchitecturalVisualizationPage = () => {
       data-nav="dark"
       className="min-h-screen font-sans bg-black text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-white"
     >
-      <Header />
+      <ArchVizHeader />
 
       {/* ======================================================== */}
       {/* 1. HERO SECTION (CENTERED FULL-WIDTH DESIGN)             */}
@@ -589,20 +589,83 @@ const ArchitecturalVisualizationPage = () => {
       </section>
 
       {/* ======================================================== */}
-      {/* 5. CLIENT REVIEWS & TESTIMONIALS                        */}
+      {/* 5. PRODUCTION PIPELINE SECTION                           */}
       {/* ======================================================== */}
-      <ClientReviews />
+      <section id="pipeline" className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black">
+        <div className="max-w-4xl mx-auto text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase font-mono bg-[#4169E1]/10 border border-[#4169E1]/25 text-[#4169E1] mb-3">
+            <span>Methodical Execution</span>
+          </div>
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-bold tracking-tight leading-[1.1] text-white">
+            Our Architectural Visualization Pipeline
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg mt-3 leading-relaxed font-light text-zinc-300 max-w-2xl mx-auto">
+            From initial CAD ingestion to interactive digital twin deployment, our phased delivery ensures pixel-perfect fidelity and on-time launches.
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              step: '01',
+              title: 'CAD & BIM Ingestion',
+              desc: 'Importing Revit, Rhino, SketchUp, and DWG drawings with 1:1 scale accuracy and clean topology optimization.',
+            },
+            {
+              step: '02',
+              title: 'PBR Materials & Staging',
+              desc: 'Custom FF&E virtual staging, physically accurate lighting, fabric textures, marble, and natural landscape dressing.',
+            },
+            {
+              step: '03',
+              title: 'Unreal 5 & VR Setup',
+              desc: 'Dynamic Lumen real-time illumination, Nanite geometry, interactive material switchers, and Meta Quest VR builds.',
+            },
+            {
+              step: '04',
+              title: 'Multi-Channel Delivery',
+              desc: 'Master 8K stills, 4K cinematic flythroughs, web-based 360° interactive tours, and touchscreen kiosk packages.',
+            },
+          ].map((pipe, i) => (
+            <div
+              key={i}
+              className="p-6 sm:p-7 rounded-2xl bg-[#0E0E10] border border-white/10 hover:border-[#4169E1]/50 transition-all duration-300 flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-3xl sm:text-4xl font-mono font-bold text-[#4169E1]/40 group-hover:text-[#4169E1] transition-colors duration-300">
+                  {pipe.step}
+                </span>
+                <h3 className="text-lg sm:text-xl font-semibold text-white mt-4 mb-2">
+                  {pipe.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 font-light leading-relaxed">
+                  {pipe.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* ======================================================== */}
-      {/* 6. SOCIAL MEDIA SECTION                                 */}
+      {/* 6. CLIENT REVIEWS & TESTIMONIALS                        */}
+      {/* ======================================================== */}
+      <div id="testimonials">
+        <ClientReviews />
+      </div>
+
+      {/* ======================================================== */}
+      {/* 7. SOCIAL MEDIA SECTION                                 */}
       {/* ======================================================== */}
       <SocialMediaSection />
 
       {/* ======================================================== */}
-      {/* 7. CONTACT FORM                                         */}
+      {/* 8. CONTACT & SCOPE ESTIMATOR FORM                       */}
       {/* ======================================================== */}
       <div id="contact">
-        <Contact />
+        <div id="scope-estimator">
+          <Contact />
+        </div>
       </div>
 
       <Footer />

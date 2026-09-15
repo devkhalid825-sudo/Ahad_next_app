@@ -13,7 +13,16 @@ const LOCATIONS = [
   { name: 'United States', href: '/us/services' },
 ];
 
-const Header = () => {
+const ARCHVIZ_NAV_LINKS = [
+  { id: 'services', label: 'Services' },
+  { id: 'archviz-gallery', label: 'Real Estate Portfolio' },
+  { id: 'why-us', label: 'Why Us' },
+  { id: 'pipeline', label: 'Pipeline' },
+  { id: 'scope-estimator', label: 'Scope Estimator' },
+  { id: 'testimonials', label: 'Testimonials' },
+];
+
+const ArchVizHeader = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -21,13 +30,45 @@ const Header = () => {
   const [locationOpen, setLocationOpen] = useState(false);
   const [mobileLocationOpen, setMobileLocationOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const headerRef = useRef(null);
   const locationRef = useRef(null);
+
+  const scrollToSection = (e, id) => {
+    e.preventDefault();
+    setActiveSection(id);
+    const targetId = id === 'why-us' ? 'comparison' : id === 'scope-estimator' ? 'contact' : id;
+    const el = document.getElementById(targetId);
+    if (el) {
+      const yOffset = -90;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      const scrollY = window.scrollY + 180;
+      const sectionMapping = [
+        { id: 'contact', navId: 'scope-estimator' },
+        { id: 'testimonials', navId: 'testimonials' },
+        { id: 'pipeline', navId: 'pipeline' },
+        { id: 'archviz-gallery', navId: 'archviz-gallery' },
+        { id: 'services', navId: 'services' },
+        { id: 'comparison', navId: 'why-us' },
+      ];
+
+      for (const section of sectionMapping) {
+        const el = document.getElementById(section.id);
+        if (el && el.offsetTop <= scrollY) {
+          setActiveSection(section.navId);
+          break;
+        }
+      }
     };
+
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -89,7 +130,6 @@ const Header = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
-  // Three enterprise pillars
   const serviceSubItems = [
     { name: 'Interactive 3D Web & Product Configurators', href: '/services/3d-product-configurators' },
     { name: 'Real-Time ArchViz & Spatial VR/AR', href: '/services/architectural-visualization' },
@@ -114,6 +154,7 @@ const Header = () => {
         className="w-full flex items-center"
       >
         <div className="w-full flex justify-between items-center relative z-50">
+          {/* Logo */}
           <Link
             href="/"
             className="cursor-pointer relative z-50 flex items-center shrink-0 my-auto pt-1 sm:pt-1.5 md:pt-2"
@@ -129,35 +170,27 @@ const Header = () => {
             />
           </Link>
 
+          {/* In-Page Navigation Links for Architectural Visualization */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8 mx-auto my-auto">
+            {ARCHVIZ_NAV_LINKS.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => scrollToSection(e, item.id)}
+                  className={`text-xs xl:text-[13px] font-medium tracking-wide uppercase transition-colors duration-200 cursor-pointer ${
+                    isActive ? 'text-[#8ca8ff] font-semibold' : isLightSection ? 'text-zinc-700 hover:text-black' : 'text-zinc-300 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Right actions: Contact & Hamburger menu */}
           <div className="flex items-center gap-4 sm:gap-6 relative z-50 shrink-0 my-auto">
-            <div className="hidden" ref={locationRef}>
-              <button
-                onClick={() => setLocationOpen((prev) => !prev)}
-                className={`w-[130px] h-11 flex items-center justify-center gap-1.5 border ${isLightSection
-                  ? 'border-black/20 hover:border-[#4169E1] text-black hover:text-[#4169E1]'
-                  : 'border-white/20 hover:border-[#4169E1] text-white hover:text-[#4169E1]'
-                  } bg-transparent rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-md`}
-                aria-haspopup="true"
-                aria-expanded={locationOpen}
-              >
-                Location
-                <span className={`text-[10px] transition-transform duration-200 ${locationOpen ? 'rotate-180' : ''}`}>▾</span>
-              </button>
-              {locationOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 rounded-2xl border border-white/10 bg-black/70 backdrop-blur-xl overflow-hidden">
-                  {LOCATIONS.map((loc) => (
-                    <Link
-                      key={loc.href}
-                      href={loc.href}
-                      onClick={() => setLocationOpen(false)}
-                      className="block px-5 py-3.5 text-sm font-semibold text-white/90 hover:bg-white/10 hover:text-[#4169E1] transition-colors"
-                    >
-                      {loc.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
             <button
               onClick={() => {
                 setIsMenuOpen(false);
@@ -191,6 +224,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Full screen menu drawer */}
         <div
           className={`fixed inset-0 bg-black transition-all duration-500 ease-in-out z-40 overflow-y-auto flex flex-col pt-24 md:pt-32 pb-8 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
             }`}
@@ -202,35 +236,6 @@ const Header = () => {
           )}
 
           <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-20 mt-auto mb-auto">
-            <div className="hidden">
-              <button
-                onClick={() => setMobileLocationOpen((prev) => !prev)}
-                className="flex items-center gap-2 border border-white/20 text-white/90 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:border-[#4169E1] hover:text-[#4169E1] transition-colors"
-              >
-                Location
-                <span className={`text-[10px] transition-transform duration-200 ${mobileLocationOpen ? 'rotate-180' : ''}`}>▾</span>
-              </button>
-              <div
-                className={`overflow-hidden transition-all duration-300 ${mobileLocationOpen ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'
-                  }`}
-              >
-                <div className="flex flex-col gap-1 pl-1">
-                  {LOCATIONS.map((loc) => (
-                    <Link
-                      key={loc.href}
-                      href={loc.href}
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setMobileLocationOpen(false);
-                      }}
-                      className="text-white/80 text-sm font-medium hover:text-[#4169E1] transition-colors py-1"
-                    >
-                      {loc.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
             <ul className="grid grid-cols-1 max-h-[900px]:grid-cols-2 gap-x-16 gap-y-1 max-h-[900px]:gap-y-0.5">
               {menuItems.map((item, index) => (
                 <li key={index} className="group">
@@ -295,4 +300,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default ArchVizHeader;
