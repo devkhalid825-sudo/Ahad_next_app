@@ -6,7 +6,6 @@ import ArchVizHeader from '../layouts/ArchVizHeader';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
 import ClientReviews from '../features/ClientReviews';
-import SocialMediaSection from '../features/SocialMediaSection';
 import { getImgSrc } from '../../utils/api';
 
 import loveImgRaw from '../../assets/About-page/love.webp';
@@ -408,27 +407,7 @@ const ArchitecturalVisualizationPage = () => {
       </section>
 
       {/* ======================================================== */}
-      {/* 3. CAPABILITIES (3-CARD LOOPING CAROUSEL SLIDER)         */}
-      {/* ======================================================== */}
-      <section id="services" className="w-full py-16 sm:py-24 border-b border-white/10 bg-black">
-        <div className="mb-12 text-center max-w-3xl mx-auto px-4 sm:px-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4169E1] mb-2">
-            Comprehensive Archviz Capabilities
-          </p>
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
-            Built for Property Developers, Architects &amp; Sales Galleries
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg mt-3 leading-relaxed font-light text-zinc-300">
-            From master-planned townships to single trophy penthouses, we supply the complete visual and interactive arsenal needed to market off-plan luxury real estate.
-          </p>
-        </div>
-
-        {/* 6-Card Static Grid (3 Top, 3 Bottom) */}
-        <CapabilitiesGrid />
-      </section>
-
-      {/* ======================================================== */}
-      {/* 4. RECENT ARCHVIZ BUILDS (MAIN SHOWCASE GALLERY)         */}
+      {/* 3. RECENT ARCHVIZ BUILDS (MAIN SHOWCASE GALLERY)         */}
       {/* ======================================================== */}
       <section
         className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black"
@@ -589,6 +568,26 @@ const ArchitecturalVisualizationPage = () => {
       </section>
 
       {/* ======================================================== */}
+      {/* 4. CAPABILITIES (6-CARD STATIC GRID)                     */}
+      {/* ======================================================== */}
+      <section id="services" className="w-full py-16 sm:py-24 border-b border-white/10 bg-black">
+        <div className="mb-12 text-center max-w-3xl mx-auto px-4 sm:px-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#4169E1] mb-2">
+            Comprehensive Archviz Capabilities
+          </p>
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
+            Built for Property Developers, Architects &amp; Sales Galleries
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg mt-3 leading-relaxed font-light text-zinc-300">
+            From master-planned townships to single trophy penthouses, we supply the complete visual and interactive arsenal needed to market off-plan luxury real estate.
+          </p>
+        </div>
+
+        {/* 6-Card Static Grid (3 Top, 3 Bottom) */}
+        <CapabilitiesGrid />
+      </section>
+
+      {/* ======================================================== */}
       {/* 5. PRODUCTION PIPELINE SECTION                           */}
       {/* ======================================================== */}
       <section id="pipeline" className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black">
@@ -655,12 +654,7 @@ const ArchitecturalVisualizationPage = () => {
       </div>
 
       {/* ======================================================== */}
-      {/* 7. SOCIAL MEDIA SECTION                                 */}
-      {/* ======================================================== */}
-      <SocialMediaSection />
-
-      {/* ======================================================== */}
-      {/* 8. CONTACT & SCOPE ESTIMATOR FORM                       */}
+      {/* 7. CONTACT & SCOPE ESTIMATOR FORM                       */}
       {/* ======================================================== */}
       <div id="contact">
         <div id="scope-estimator">

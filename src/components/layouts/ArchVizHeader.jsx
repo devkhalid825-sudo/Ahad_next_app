@@ -55,8 +55,8 @@ const ArchVizHeader = () => {
         { id: 'contact', navId: 'scope-estimator' },
         { id: 'testimonials', navId: 'testimonials' },
         { id: 'pipeline', navId: 'pipeline' },
-        { id: 'archviz-gallery', navId: 'archviz-gallery' },
         { id: 'services', navId: 'services' },
+        { id: 'archviz-gallery', navId: 'archviz-gallery' },
         { id: 'comparison', navId: 'why-us' },
       ];
 
