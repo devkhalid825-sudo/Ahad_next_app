@@ -145,8 +145,8 @@ const Hero = () => {
                     lazy={!isActive && !isNext}
                     onEnded={nextSlide}
                     loop={backgrounds.length === 1}
-                    preload={isActive ? 'metadata' : 'none'}
-                    fetchPriority={isActive ? 'high' : 'low'}
+                    preload={isActive ? 'auto' : isNext ? 'metadata' : 'none'}
+                    fetchPriority={isActive ? 'high' : isNext ? 'auto' : 'low'}
                   />
                 </Suspense>
               ) : (

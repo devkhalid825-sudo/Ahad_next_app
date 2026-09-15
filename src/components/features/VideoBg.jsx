@@ -50,6 +50,9 @@ const VideoBg = ({
         if (!video) return;
 
         if (shouldShow && isActive) {
+            try {
+                video.currentTime = 0;
+            } catch (e) {}
             const playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise.catch(() => {

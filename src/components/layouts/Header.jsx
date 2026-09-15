@@ -100,15 +100,15 @@ const Header = () => {
     ? 'bg-black'
     : isScrolled
       ? isLightSection
-        ? 'bg-white/85 backdrop-blur-xl border-b border-black/10 shadow-sm'
-        : 'bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
+        ? 'bg-white/40 backdrop-blur-xl border-b border-black/5 shadow-sm'
+        : 'bg-black/10 backdrop-blur-xl border-b border-white/10'
       : 'bg-transparent';
 
   const headerPaddingClass = 'py-3 sm:py-4 md:py-5';
   const logoSizeClass = 'h-10 sm:h-14 md:h-16 lg:h-20';
 
   return (
-    <header className={`fixed top-0 left-0 w-full px-4 sm:px-6 md:px-8 ${headerPaddingClass} ${headerBgClass} z-50 transition-colors duration-300`}>
+    <header className={`fixed top-0 left-0 w-full px-4 sm:px-6 md:px-8 ${headerPaddingClass} ${headerBgClass} z-50 transition-all duration-300`}>
     <nav
       ref={headerRef}
       className="w-full"
