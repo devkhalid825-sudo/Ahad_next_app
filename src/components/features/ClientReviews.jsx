@@ -240,7 +240,7 @@ const ClientReviews = ({ initialReviews = null }) => {
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => marqueeSwiperRef.current?.slidePrev()}
-              className="w-11 h-11 rounded-full border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all"
+              className="w-11 h-11 rounded-full border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all active:scale-95"
               aria-label="Previous review"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
@@ -249,7 +249,7 @@ const ClientReviews = ({ initialReviews = null }) => {
             </button>
             <button
               onClick={() => marqueeSwiperRef.current?.slideNext()}
-              className="w-11 h-11 rounded-full border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all"
+              className="w-11 h-11 rounded-full border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all active:scale-95"
               aria-label="Next review"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
@@ -261,7 +261,7 @@ const ClientReviews = ({ initialReviews = null }) => {
 
         {/* Mobile Swiper: ONLY rendered on mobile viewports (<768px). Prevents desktop duplicate nodes */}
         {isMobile !== false && (
-          <>
+          <div className="relative md:hidden">
             <Swiper
               ref={mobileSwiperRef}
               onSwiper={(swiper) => {
@@ -271,26 +271,26 @@ const ClientReviews = ({ initialReviews = null }) => {
                 setActiveMobileIndex(swiper.realIndex);
               }}
               modules={[Pagination]}
-              loop={false}
+              loop={reviews.length > 1}
               speed={600}
               slidesPerView={1}
               spaceBetween={12}
               grabCursor={true}
               allowTouchMove={true}
               pagination={{ clickable: true, el: '.mobile-review-pagination' }}
-              className="md:!hidden !px-[15px]"
+              className="!px-[15px]"
             >
               {reviews.map((review, idx) => {
                 const isMuted = getIsMuted(review.id);
                 const isActive = activeMobileIndex === idx;
 
                 return (
-                  <SwiperSlide key={review.id} className="!w-full py-4">
+                  <SwiperSlide key={review.id} className="!w-full py-3 sm:py-4">
                     <div
-                      className="w-full h-[380px] bg-[#323235] rounded-[24px] flex flex-col p-4 ring-[6px] ring-[#2b2b2d] relative"
+                      className="w-full h-[380px] xs:h-[420px] sm:h-[460px] bg-[#323235] rounded-[20px] sm:rounded-[24px] flex flex-col p-3 sm:p-4 ring-[4px] sm:ring-[6px] ring-[#2b2b2d] relative"
                       style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
                     >
-                      <div className="w-full h-full rounded-[16px] overflow-hidden border border-white/5 relative">
+                      <div className="w-full h-full rounded-[14px] sm:rounded-[16px] overflow-hidden border border-white/5 relative">
                         {review.video ? (
                           <MediaFacade
                             videoUrl={review.video}
@@ -313,7 +313,7 @@ const ClientReviews = ({ initialReviews = null }) => {
                             e.stopPropagation();
                             toggleMute(review.id, false);
                           }}
-                          className="absolute bottom-6 right-6 z-20 w-9 h-9 rounded-full bg-black/70 backdrop-blur flex items-center justify-center hover:bg-black/90 transition-colors shadow-lg text-white"
+                          className="absolute bottom-5 sm:bottom-6 right-5 sm:right-6 z-20 w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-black/70 backdrop-blur flex items-center justify-center hover:bg-black/90 transition-colors shadow-lg text-white"
                           aria-label={isMuted ? 'Unmute video' : 'Mute video'}
                         >
                           {isMuted ? (
@@ -335,8 +335,32 @@ const ClientReviews = ({ initialReviews = null }) => {
                 );
               })}
             </Swiper>
-            <div className="mobile-review-pagination flex justify-center gap-1.5 mt-3 md:hidden"></div>
-          </>
+
+            {/* Bottom Controls with Left/Right Arrows and Pointer Dots */}
+            <div className="flex items-center justify-center gap-4 mt-4 px-4">
+              <button
+                onClick={() => mobileSwiperRef.current?.slidePrev()}
+                className="w-8 h-8 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 flex items-center justify-center text-white active:scale-90 transition-all shadow-md"
+                aria-label="Previous review"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+
+              <div className="mobile-review-pagination flex justify-center gap-2"></div>
+
+              <button
+                onClick={() => mobileSwiperRef.current?.slideNext()}
+                className="w-8 h-8 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 flex items-center justify-center text-white active:scale-90 transition-all shadow-md"
+                aria-label="Next review"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4 h-4">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
         )}
 
         {/* Desktop Swiper: Smooth manual draggable slider with navigation */}

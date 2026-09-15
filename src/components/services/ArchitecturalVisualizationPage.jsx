@@ -261,38 +261,27 @@ const ArchitecturalVisualizationPage = () => {
             We bridge the gap between imagination and reality. From hyper-realistic high-rise CGI and cinematic drone flythroughs to immersive <strong className="text-white font-medium">Unreal Engine 5 virtual tours</strong>, Elipse Studio empowers property developers to sell out developments before construction starts.
           </p>
 
-          {/* Hero Action Buttons (Single compact row on mobile, full on desktop) */}
-          <div className="mt-6 sm:mt-9 flex flex-row items-center justify-center gap-1.5 sm:gap-3 w-full max-w-xl sm:max-w-none">
+          {/* Hero Action Buttons (Single compact row on all screens) */}
+          <div className="mt-6 sm:mt-9 flex flex-row items-center justify-center gap-2 sm:gap-4 w-full max-w-sm sm:max-w-xl mx-auto px-2">
             <a
               href="#archviz-gallery"
-              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2 sm:py-3.5 bg-white hover:bg-[#4169E1] text-black hover:text-white font-semibold text-[10px] sm:text-xs md:text-sm rounded-full transition-all duration-300 shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:shadow-[0_4px_25px_rgba(65,105,225,0.4)] hover:scale-[1.02] cursor-pointer text-center whitespace-nowrap flex items-center justify-center gap-1 sm:gap-2"
+              className="flex-1 sm:flex-initial px-3.5 sm:px-8 py-2.5 sm:py-3.5 bg-white hover:bg-[#4169E1] text-black hover:text-white font-semibold text-[11px] sm:text-sm rounded-full transition-all duration-300 shadow-[0_4px_20px_rgba(255,255,255,0.15)] hover:shadow-[0_4px_25px_rgba(65,105,225,0.4)] hover:scale-[1.02] cursor-pointer text-center whitespace-nowrap flex items-center justify-center gap-1.5 sm:gap-2"
             >
-              <svg className="w-3 sm:w-4 h-3 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 sm:w-4 h-3.5 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
-              <span><span className="hidden sm:inline">View Real Estate </span>Portfolio</span>
+              <span>View Portfolio</span>
             </a>
             <button
               onClick={() => router.push('/contact')}
-              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2 sm:py-3.5 border font-medium text-[10px] sm:text-xs md:text-sm rounded-full transition-all duration-300 text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-[#4169E1] text-zinc-200 hover:text-white hover:scale-[1.02] whitespace-nowrap cursor-pointer flex items-center justify-center gap-1 sm:gap-2"
+              className="flex-1 sm:flex-initial px-3.5 sm:px-8 py-2.5 sm:py-3.5 border font-medium text-[11px] sm:text-sm rounded-full transition-all duration-300 text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-[#4169E1] text-zinc-200 hover:text-white hover:scale-[1.02] whitespace-nowrap cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2"
             >
-              <svg className="w-3 sm:w-4 h-3 sm:h-4 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span><span className="hidden sm:inline">Book Project </span>Consultation</span>
+              <span>Book Consultation</span>
             </button>
-            <a
-              href="https://drive.google.com/drive/folders/1n3qM1CtEY1jB9Q079IDLvF5qu6IudXbo?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2 sm:py-3.5 border font-medium text-[10px] sm:text-xs md:text-sm rounded-full transition-all duration-300 text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-[#4169E1] text-zinc-200 hover:text-white hover:scale-[1.02] whitespace-nowrap cursor-pointer flex items-center justify-center gap-1 sm:gap-2"
-            >
-              <svg className="w-3 sm:w-4 h-3 sm:h-4 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-              </svg>
-              <span><span className="hidden sm:inline">Sample Client </span>Drive Archive</span>
-            </a>
           </div>
 
           {/* Key Metrics / Stats Bar (3 columns) */}
@@ -556,7 +545,7 @@ const ArchitecturalVisualizationPage = () => {
             </svg>
           </button>
           <button
-            onClick={() => router.push('/contact')}
+            onClick={() => window.open('https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting', '_blank')}
             className="px-6 sm:px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer flex items-center gap-2"
           >
             <span>Schedule a 15-Min Technical Call</span>
