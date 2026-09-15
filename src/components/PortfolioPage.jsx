@@ -1,67 +1,80 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { m as motion } from 'framer-motion';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
 import CaseStudies from './features/CaseStudies';
-import { m as motion } from 'framer-motion';
+import { getImgSrc } from '../utils/api';
+
+import portfolioImgRaw from '../assets/About-page/porfolio.webp';
+
+const portfolioImg = getImgSrc(portfolioImgRaw);
 
 const PortfolioPage = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    return (
+  return (
+    <div className="bg-black min-h-screen text-white font-sans selection:bg-[#4169E1]/30 selection:text-white overflow-x-hidden">
+      <Header />
 
-    <>
-
-        
-
-        <div className="bg-white min-h-screen text-black font-sans selection:bg-[#4169E1]/20 selection:text-black overflow-x-hidden">
-
-            {/* HERO SECTION */}
-            <section className="relative w-full bg-white ">
-                <div className="relative mx-auto min-h-[50vh] md:min-h-[60vh] w-full overflow-hidden bg-black rounded-none shadow-2xl flex flex-col p-4 md:p-8">
-                    <Header />
-
-                    {/* Hero Content */}
-                    <div className="relative z-10 px-5 sm:px-8 md:px-14 lg:px-16 w-full flex-1 flex flex-col justify-center items-center text-center pt-24 pb-16">
-                        <motion.div
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="max-w-xl mx-auto flex flex-col items-center"
-                        >
-                            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[50px] font-medium tracking-tight leading-[1.15] uppercase mb-4">
-                                <span className="text-white block">Portfolio</span>
-                                <span className="text-[#4169E1] block mt-1">Our Work &amp; Case Studies</span>
-                            </h1>
-
-                            <p className="text-white/65 text-xs sm:text-sm md:text-base leading-relaxed max-w-lg mx-auto font-normal">
-                                Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
-                            </p>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-
-            {/* FEATURED CASE STUDIES */}
-            <CaseStudies isLight={true} />
-
-            {/* LATEST WORK INTEGRATION */}
-            <LatestWork isLight={true} />
-
-            {/* CONTACT & FOOTER SECTIONS */}
-            <Contact />
-            <Footer />
+      {/* ══════════════════════════════════════════════════════════
+          HERO SECTION WITH FULL-WIDTH BACKGROUND IMAGE
+      ══════════════════════════════════════════════════════════ */}
+      <section className="relative w-full min-h-[55vh] sm:min-h-[65vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-black">
+        {/* Full-width background image */}
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={portfolioImg}
+            alt="Portfolio Background"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark Gradient Overlays for Readability */}
+          <div className="absolute inset-0 bg-black/45 backdrop-brightness-90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/50" />
         </div>
-    
 
-    </>
+        {/* Ambient blue glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[#4169E1]/15 rounded-full blur-[140px] pointer-events-none" />
 
-    );
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-12 py-32 sm:py-40 md:py-48 flex flex-col justify-center items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-4xl"
+          >
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white leading-[1.12] uppercase">
+              Transforming Ideas<br />
+              Into Immersive<br />
+              3D Realities.
+            </h1>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════
+          FEATURED CASE STUDIES
+      ══════════════════════════════════════════════════════════ */}
+      <CaseStudies isLight={false} />
+
+      {/* ══════════════════════════════════════════════════════════
+          LATEST WORK INTEGRATION
+      ══════════════════════════════════════════════════════════ */}
+      <LatestWork isLight={false} />
+
+      {/* ══════════════════════════════════════════════════════════
+          CONTACT & FOOTER SECTIONS
+      ══════════════════════════════════════════════════════════ */}
+      <Contact />
+      <Footer />
+    </div>
+  );
 };
 
 export default PortfolioPage;

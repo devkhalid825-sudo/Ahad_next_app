@@ -24,21 +24,11 @@ const MobileMenu = ({ isOpen, onClose }) => {
         { name: "Contact", href: "/contact" }
     ];
 
-    // Three enterprise pillars — commodity services removed
+    // Three enterprise pillars
     const serviceSubItems = [
-        // Pillar 1: Interactive 3D Configurators
-        { name: "3D Product Configurators", href: "/services/3d-product-configurators" },
-        { name: "Interactive Web Experiences", href: "/services/interactive-web-experiences" },
-        { name: "Virtual Showrooms & Digital Twins", href: "/services/virtual-showrooms-digital-twins" },
-        // Pillar 2: Real-Time ArchViz & Spatial VR/AR
-        { name: "Architectural Visualization", href: "/services/architectural-visualization" },
-        { name: "VR Development", href: "/services/vr-development" },
-        { name: "AR Development", href: "/services/ar-development" },
-        // Pillar 3: Cinematic 3D Product & Commercial Visuals
-        { name: "3D Product Visualization", href: "/services/3d-product-visualization" },
-        { name: "3D Animation", href: "/services/3d-animation" },
-        { name: "3D Product Animation", href: "/services/product-animation" },
-        { name: "VFX & Virtual Production", href: "/services/vfx-virtual-production" },
+        { name: "Interactive 3D Web & Product Configurators", href: "/services/3d-product-configurators" },
+        { name: "Real-Time ArchViz & Spatial VR/AR", href: "/services/architectural-visualization" },
+        { name: "Cinematic 3D Product & Commercial Visuals", href: "/services/3d-product-visualization" },
     ];
 
     const handleNavigation = (item, e) => {

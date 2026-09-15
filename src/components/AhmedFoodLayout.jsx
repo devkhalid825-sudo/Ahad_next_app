@@ -82,11 +82,30 @@ const AhmedFoodLayout = ({
   const hasVideoTabs = videoTabs.length > 0;
   const currentVideoUrl = hasVideoTabs ? videoTabs[activeVideo]?.url : heroVideo;
 
+  const cleanContent = React.useMemo(() => {
+    if (!content || typeof content !== 'string') return '';
+    return content
+      .replaceAll('max-w-3xl', 'w-full')
+      .replaceAll('max-w-4xl', 'w-full')
+      .replaceAll('max-w-2xl', 'w-full')
+      .replaceAll('max-w-xl', 'w-full')
+      .replaceAll('max-w-lg', 'w-full')
+      .replaceAll('max-w-5xl', 'w-full')
+      .replaceAll('max-w-6xl', 'w-full')
+      .replaceAll('max-w-7xl', 'w-full')
+      .replaceAll('max-w-[700px]', 'w-full')
+      .replaceAll('max-w-[800px]', 'w-full')
+      .replaceAll('max-w-[900px]', 'w-full')
+      .replaceAll('max-w-[1000px]', 'w-full')
+      .replaceAll('max-w-[1200px]', 'w-full')
+      .replace(/max-width\s*:\s*\d+px/gi, 'max-width: 100%');
+  }, [content]);
+
   return (
     <div className="w-full overflow-x-hidden bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30 selection:text-[#F2F0EB]">
 
       {/* HERO */}
-      <section className="bg-[#0D0D0D] px-8 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 md:pb-10 relative">
+      <section className="bg-[#0D0D0D] px-4 sm:px-6 md:px-8 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 md:pb-10 relative">
         <Header />
 
         {/* Heading */}
@@ -95,14 +114,14 @@ const AhmedFoodLayout = ({
             {title}<span className="text-[#4169E1]">.</span>
           </h1>
           {subtitle && (
-            <p className="text-zinc-400 text-sm sm:text-base md:text-lg font-light max-w-3xl mt-2 sm:mt-3 leading-relaxed">
+            <p className="text-zinc-400 text-sm sm:text-base md:text-lg font-light w-full mt-2 sm:mt-3 leading-relaxed">
               {subtitle}
             </p>
           )}
         </div>
 
         {meta.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 border-t border-white/10 pt-4 sm:pt-6 mb-6 max-w-3xl">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 border-t border-white/10 pt-4 sm:pt-6 mb-6 w-full">
             {meta.map((item, i) => (
               <div key={i} className="cs-hero-meta-item">
                 <label className="block text-[9px] sm:text-[10px] font-semibold tracking-[0.15em] uppercase text-zinc-500 mb-1">{item.label}</label>
@@ -129,25 +148,33 @@ const AhmedFoodLayout = ({
           </div>
         )}
 
-        <div className="w-full relative aspect-[4/3] sm:aspect-video rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-black">
+        <div className="w-full relative rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black flex items-center justify-center">
           {currentVideoUrl ? (
-            <iframe
-              src={currentVideoUrl}
-              title={title}
-              frameBorder="0"
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            <div className="w-full aspect-video">
+              <iframe
+                src={currentVideoUrl}
+                title={title}
+                frameBorder="0"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
           ) : heroImage ? (
-            <img src={heroImage} alt={title} width="1200" height="700" className="w-full h-full object-cover" />
+            <img
+              src={heroImage}
+              alt={title}
+              width="1920"
+              height="1080"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
+            />
           ) : null}
         </div>
       </section>
 
       {/* OVERVIEW + CHALLENGE */}
       {(overview || challenge) && (
-        <section className="px-8 py-8 md:py-16 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch ">
+        <section className="px-4 sm:px-6 md:px-8 py-8 md:py-16 bg-[#0D0D0D] grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-stretch">
           {overview && (
             <div className="p-4 sm:p-6 md:p-8 bg-[#111] rounded-xl border border-[#222]">
               <p className="text-xs sm:text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Overview</p>
@@ -176,11 +203,11 @@ const AhmedFoodLayout = ({
       )}
 
       {/* HTML CONTENT (from editor) */}
-      {content && (
-        <section className="px-8 py-4 bg-[#0D0D0D] ">
+      {cleanContent && (
+        <section className="px-4 sm:px-6 md:px-8 py-6 bg-[#0D0D0D]">
           <div
-            className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-left w-full text-zinc-300 [&_h1]:text-[#F2F0EB] [&_h2]:text-[#F2F0EB] [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-[#F2F0EB] [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h4]:text-[#F2F0EB] [&_p]:mb-4 [&_strong]:text-[#F2F0EB] [&_a]:text-[#4169E1] [&_a:hover]:text-[#3158D4] [&_img]:rounded-lg [&_img]:border [&_img]:border-[#1E1E1E] [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#4169E1] [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-zinc-400 [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-2"
-            dangerouslySetInnerHTML={{ __html: content }}
+            className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-left w-full text-zinc-300 [&_*]:!max-w-none [&_div]:!max-w-none [&_section]:!max-w-none [&_p]:!max-w-none [&_div]:!w-full [&_section]:!w-full [&_h1]:text-[#F2F0EB] [&_h2]:text-[#F2F0EB] [&_h2]:text-xl sm:[&_h2]:text-2xl md:[&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-[#F2F0EB] [&_h3]:text-lg sm:[&_h3]:text-xl md:[&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h4]:text-[#F2F0EB] [&_p]:mb-4 [&_strong]:text-[#F2F0EB] [&_a]:text-[#4169E1] [&_a:hover]:text-[#3158D4] [&_img]:rounded-xl [&_img]:border [&_img]:border-[#1E1E1E] [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#4169E1] [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-zinc-400 [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-2"
+            dangerouslySetInnerHTML={{ __html: cleanContent }}
           />
         </section>
       )}
@@ -190,8 +217,8 @@ const AhmedFoodLayout = ({
         if (!section.content && !section.image && !section.video) return null;
         const hasBoth = section.content && section.image;
         return (
-          <section key={i} className={`px-8 py-8 md:py-14 ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
-            <div className={` ${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
+          <section key={i} className={`px-4 sm:px-6 md:px-8 py-8 md:py-14 ${i % 2 === 0 ? 'bg-[#0D0D0D]' : 'bg-[#111]'}`}>
+            <div className={`${hasBoth ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center' : ''}`}>
               {section.content && (
                 <div className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-zinc-300 whitespace-pre-line">
                   {section.content}
@@ -204,7 +231,7 @@ const AhmedFoodLayout = ({
               )}
             </div>
             {section.video && (
-              <div className=" w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
+              <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#222] mt-6">
                 <iframe
                   src={`https://www.youtube.com/embed/${section.video}`}
                   title={`Section ${i + 2} video`}
@@ -221,8 +248,8 @@ const AhmedFoodLayout = ({
 
       {/* RESULTS */}
       {results.length > 0 && (
-        <section className="bg-[#111] px-8 py-8 md:py-16">
-          <div className="">
+        <section className="bg-[#111] px-4 sm:px-6 md:px-8 py-8 md:py-16">
+          <div className="w-full">
             <div className="mb-6 md:mb-10">
               <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Measurable impact</p>
               <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium tracking-tight leading-tight text-[#F2F0EB]">
@@ -244,8 +271,8 @@ const AhmedFoodLayout = ({
 
       {/* PROCESS */}
       {process.length > 0 && (
-        <section className="px-8 py-8 md:py-16 bg-[#0D0D0D]">
-          <div className="">
+        <section className="px-4 sm:px-6 md:px-8 py-8 md:py-16 bg-[#0D0D0D]">
+          <div className="w-full">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">How we did it</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-tight text-[#F2F0EB]">
               Our process
@@ -268,8 +295,8 @@ const AhmedFoodLayout = ({
 
       {/* GALLERY — categorized auto-scroll rows or single image */}
       {galleryCategories.length > 0 ? (
-        <section className="bg-[#111] px-8 py-8 md:py-16 overflow-hidden">
-          <div className="">
+        <section className="bg-[#111] px-4 sm:px-6 md:px-8 py-8 md:py-16 overflow-hidden">
+          <div className="w-full">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-tight text-[#F2F0EB]">
               Selected renders
@@ -291,14 +318,14 @@ const AhmedFoodLayout = ({
           </div>
         </section>
       ) : gallery.length > 0 && (
-        <section className="bg-[#111] px-8 py-8 md:py-16 overflow-hidden">
-          <div className="">
+        <section className="bg-[#111] px-4 sm:px-6 md:px-8 py-8 md:py-16 overflow-hidden">
+          <div className="w-full">
             <p className="text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-2">Visual output</p>
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-tight text-[#F2F0EB]">
               Selected renders
             </h2>
-            <div className="w-full rounded-xl overflow-hidden border border-[#222] bg-[#0D0D0D] aspect-video">
-              <img src={gallery[0]} alt={`${title} showcase`} width="1280" height="720" className="w-full h-full object-cover" loading="lazy" />
+            <div className="w-full rounded-xl overflow-hidden border border-[#222] bg-[#0D0D0D] flex items-center justify-center">
+              <img src={gallery[0]} alt={`${title} showcase`} width="1920" height="1080" className="w-full h-auto max-h-[85vh] object-contain" loading="lazy" />
             </div>
           </div>
         </section>
@@ -306,8 +333,8 @@ const AhmedFoodLayout = ({
 
       {/* EXTRA CONTENT (children) */}
       {children && (
-        <section className="px-8 py-6 md:py-12 bg-[#0D0D0D]">
-          <div className="max-w-4xl mx-auto">
+        <section className="px-4 sm:px-6 md:px-8 py-6 md:py-12 bg-[#0D0D0D]">
+          <div className="w-full">
             {children}
           </div>
         </section>
@@ -315,15 +342,15 @@ const AhmedFoodLayout = ({
 
       {/* SMALL BANNER */}
       {smallBanner && (
-        <section className="px-8 py-6 md:py-10 bg-[#0D0D0D]">
-          <div className=" w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
+        <section className="px-4 sm:px-6 md:px-8 py-6 md:py-10 bg-[#0D0D0D]">
+          <div className="w-full rounded-xl overflow-hidden border border-[#222] shadow-2xl">
             <img src={smallBanner} alt={title || "Project banner"} width="1200" height="600" className="w-full h-auto object-contain" />
           </div>
         </section>
       )}
 
       {/* CTA / BOTTOM NAVIGATION */}
-      <footer className="px-8 py-6 md:py-10 bg-[#0D0D0D] border-t border-[#1A1A1A]">
+      <footer className="px-4 sm:px-6 md:px-8 py-6 md:py-10 bg-[#0D0D0D] border-t border-[#1A1A1A]">
         <div className="flex flex-wrap items-center justify-between gap-3 w-full">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button

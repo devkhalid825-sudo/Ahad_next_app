@@ -213,35 +213,14 @@ const Footer = () => {
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
                   <Link href="/services">All Services</Link>
                 </li>
-                <li className="pt-1 pb-0.5 text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium pointer-events-none">Interactive 3D Configurators</li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/3d-product-configurators">3D Product Configurators</Link>
+                  <Link href="/services/3d-product-configurators">Interactive 3D Web &amp; Product Configurators</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/interactive-web-experiences">Interactive Web Experiences</Link>
+                  <Link href="/services/architectural-visualization">Real-Time ArchViz &amp; Spatial VR/AR</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/virtual-showrooms-digital-twins">Virtual Showrooms &amp; Digital Twins</Link>
-                </li>
-                <li className="pt-1 pb-0.5 text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium pointer-events-none">ArchViz &amp; VR/AR</li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/architectural-visualization">Architectural Visualization</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/vr-development">VR Development</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/ar-development">AR Development</Link>
-                </li>
-                <li className="pt-1 pb-0.5 text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium pointer-events-none">3D &amp; Commercial Visuals</li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/3d-product-visualization">3D Product Visualization</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/3d-animation">3D Animation</Link>
-                </li>
-                <li className="hover:text-white cursor-pointer transition-colors w-fit">
-                  <Link href="/services/vfx-virtual-production">VFX &amp; Virtual Production</Link>
+                  <Link href="/services/3d-product-visualization">Cinematic 3D Product &amp; Commercial Visuals</Link>
                 </li>
               </ul>
             </FooterColumn>

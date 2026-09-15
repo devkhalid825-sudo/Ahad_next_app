@@ -75,7 +75,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
   return (
     <section
       id="portfolio"
-      className={`hidden md:block pt-6 pb-3 md:pt-16 md:pb-10 transition-colors duration-300 ${
+      className={`block pt-6 pb-3 md:pt-16 md:pb-10 transition-colors duration-300 ${
         isLight ? 'bg-white text-black' : 'bg-black text-white'
       }`}
     >

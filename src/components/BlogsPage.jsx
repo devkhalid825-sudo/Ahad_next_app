@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { BACKEND_ORIGIN } from '../utils/api';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
-import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
 import { m as motion } from 'framer-motion';
 import { FiEye, FiSearch } from '@/components/ui/Icons';
@@ -274,7 +273,7 @@ const BlogCard = ({ post, eager = false }) => (
                 />
             ) : (
                 <Link
-                    to={post.url}
+                    href={post.url}
                     className="absolute inset-0 z-10"
                 />
             )}
@@ -376,16 +375,14 @@ const BlogsPage = ({ initialBlogs }) => {
             post.category.toLowerCase().includes(term)
         );
         setFilteredPosts(filtered);
-    };return (
+    };
 
-    <>
-
-        
-
+    return (
         <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-[#4169E1] selection:text-black overflow-x-hidden">
-
-            {/* HERO SECTION */}
-            <section className="relative w-full bg-black ">
+            {/* ══════════════════════════════════════════════════════════
+                HERO SECTION WITH FEATURED CARDS ON TOP OF BG
+            ══════════════════════════════════════════════════════════ */}
+            <section className="relative w-full bg-black">
                 <div className="relative mx-auto min-h-screen w-full overflow-hidden bg-zinc-900 shadow-2xl flex flex-col">
                     <Header />
                     <div className="absolute inset-0 z-0">
@@ -395,13 +392,13 @@ const BlogsPage = ({ initialBlogs }) => {
                             fetchPriority="high"
                             loading="eager"
                             decoding="async"
-                            className="w-full h-full object-cover opacity-100"
-                            style={{ willChange: 'transform' }}
+                            className="w-full h-full object-cover object-center opacity-100"
                         />
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+                        <div className="absolute inset-0 bg-black/40" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30" />
                     </div>
 
-                    <div className="relative z-10 px-8 md:px-20 w-full flex-1 flex flex-col justify-center md:justify-start pt-24 md:pt-44 pb-20">
+                    <div className="relative z-10 px-6 sm:px-12 md:px-20 w-full flex-1 flex flex-col justify-center md:justify-start pt-28 md:pt-40 pb-20">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -410,22 +407,22 @@ const BlogsPage = ({ initialBlogs }) => {
                         >
                             <h1 className="text-5xl md:text-[84px] tracking-tighter mb-2 leading-[0.9] font-extralight">
                                 <span className="text-white opacity-100 block">Blogs</span>
-                                <span className="text-[#4169E1] opacity-90 block">tech & trends</span>
+                                <span className="text-[#4169E1] opacity-90 block">tech &amp; trends</span>
                             </h1>
                         </motion.div>
 
-                        {/* FEATURED CARDS - SWIPER SCROLL */}
-                        <div className="w-full mt-8 md:mt-12 featured-swiper-container">
+                        {/* FEATURED CARDS - SWIPER SCROLL DIRECTLY ON TOP OF BG */}
+                        <div className="w-full mt-4 md:mt-6 featured-swiper-container">
                             <style>{`
                                 .featured-swiper .swiper-pagination-bullet {
-                                    background: rgba(34, 211, 238, 0.5);
+                                    background: rgba(65, 105, 225, 0.4);
                                     width: 12px;
                                     height: 4px;
                                     border-radius: 2px;
                                     transition: all 0.3s ease;
                                 }
                                 .featured-swiper .swiper-pagination-bullet-active {
-                                    background: #22d3ee;
+                                    background: #4169E1;
                                     width: 24px;
                                 }
                                 .featured-swiper {
@@ -464,11 +461,15 @@ const BlogsPage = ({ initialBlogs }) => {
                 </div>
             </section>
 
-
+            {/* ══════════════════════════════════════════════════════════
+                LATEST ARTICLES GRID & SEARCH
+            ══════════════════════════════════════════════════════════ */}
             <section className="py-12 md:py-24 bg-black">
-                <div className="w-full px-8 md:px-20">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter uppercase">Latest Articles</h2>
+                <div className="w-full px-6 sm:px-12 md:px-20">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-16">
+                        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter uppercase text-white">
+                            Latest Articles
+                        </h2>
 
                         {/* SEARCH BAR */}
                         <div className="relative w-full md:w-[450px]">
@@ -498,7 +499,6 @@ const BlogsPage = ({ initialBlogs }) => {
                             ))
                         )}
                     </div>
-
                     {!loading && filteredPosts.length === 0 && (
                         <div className="text-center py-20 text-zinc-500 text-xl font-light">
                             {error ? error : (searchTerm ? `No articles found matching "${searchTerm}"` : 'No articles yet. Check back soon for new content.')}
@@ -507,19 +507,10 @@ const BlogsPage = ({ initialBlogs }) => {
                 </div>
             </section>
 
-            {/* LATEST WORK INTEGRATION */}
-            <div className="border-t border-zinc-900">
-                <LatestWork />
-            </div>
-
             {/* CONTACT SECTION */}
             <Contact />
             <Footer />
         </div>
-    
-
-    </>
-
     );
 };
 

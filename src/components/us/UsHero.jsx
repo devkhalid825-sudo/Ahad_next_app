@@ -12,7 +12,7 @@ const UsHero = ({
   trust = [],
   visual,
   primaryHref = '/contact',
-  primaryLabel = 'Get a Free Estimate',
+  primaryLabel = 'Book Project Consultation',
   secondaryLabel = 'Schedule a Call',
   secondaryHref = 'https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting',
 }) => {

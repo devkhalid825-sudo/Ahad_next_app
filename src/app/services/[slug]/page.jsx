@@ -6,9 +6,12 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const servicePages = {
-  'architectural-visualization': dynamic(() => import('@/components/services/ArchitecturalVisualizationPage')),
-  '3d-product-visualization': dynamic(() => import('@/components/services/ProductVisualizationPage')),
   '3d-product-configurators': dynamic(() => import('@/components/services/ProductConfiguratorsPage')),
+  'interactive-3d-web-product-configurators': dynamic(() => import('@/components/services/ProductConfiguratorsPage')),
+  'architectural-visualization': dynamic(() => import('@/components/services/ArchitecturalVisualizationPage')),
+  'real-time-archviz-spatial-vr-ar': dynamic(() => import('@/components/services/ArchitecturalVisualizationPage')),
+  '3d-product-visualization': dynamic(() => import('@/components/services/ProductVisualizationPage')),
+  'cinematic-3d-product-commercial-visuals': dynamic(() => import('@/components/services/ProductVisualizationPage')),
   'interactive-web-experiences': dynamic(() => import('@/components/services/InteractiveWebExperiencesPage')),
   'vr-development': dynamic(() => import('@/components/services/VrDevelopmentPage')),
   'ar-development': dynamic(() => import('@/components/services/ArDevelopmentPage')),
@@ -32,6 +35,13 @@ const serviceMeta = {
     ogImage: `${SITE_URL}/assets/services/og-architectural-visualization.jpg`,
     schemaType: 'Service',
   },
+  'real-time-archviz-spatial-vr-ar': {
+    title: 'Real-Time ArchViz & Spatial VR/AR',
+    description: 'Unreal Engine 5 virtual walkthroughs, immersive VR sales galleries, digital twins, and WebAR architectural visualization built specifically for property developers, architects, and luxury real estate pre-sales.',
+    keywords: 'archviz, spatial vr, ar development, architectural visualization, unreal engine 5, vr walkthrough',
+    ogImage: `${SITE_URL}/assets/services/og-architectural-visualization.jpg`,
+    schemaType: 'Service',
+  },
   '3d-product-visualization': {
     title: '3D Product Visualization',
     description: 'Photorealistic 3D product rendering, CGI visuals, and 360-degree views for e-commerce brands and manufacturers worldwide.',
@@ -39,10 +49,24 @@ const serviceMeta = {
     ogImage: `${SITE_URL}/assets/services/og-3d-product-visualization.jpg`,
     schemaType: 'Service',
   },
+  'cinematic-3d-product-commercial-visuals': {
+    title: 'Cinematic 3D Product & Commercial Visuals',
+    description: 'Photorealistic 3D product rendering, CGI commercials, and cinematic animations for brands, luxury DTC products, and enterprise campaigns.',
+    keywords: '3d product visualization, cinematic 3d, cgi commercials, 3d product animation',
+    ogImage: `${SITE_URL}/assets/services/og-3d-product-visualization.jpg`,
+    schemaType: 'Service',
+  },
   '3d-product-configurators': {
     title: '3D Product Configurators',
     description: 'Custom interactive 3D product configurators for Shopify and enterprise platforms. Real-time customization for global brands.',
     keywords: '3d product configurator, web configurator, interactive 3d configurator, custom product configurator, e-commerce configurator',
+    ogImage: `${SITE_URL}/assets/services/og-3d-product-configurators.jpg`,
+    schemaType: 'Product',
+  },
+  'interactive-3d-web-product-configurators': {
+    title: 'Interactive 3D Web & Product Configurators',
+    description: 'Real-time WebGL, PlayCanvas, Three.js, and Unreal Engine interactive tools for automotive, luxury goods, and high-ticket eCommerce brands.',
+    keywords: 'interactive 3d configurator, 3d product configurator, webgl configurator, playcanvas 3d',
     ogImage: `${SITE_URL}/assets/services/og-3d-product-configurators.jpg`,
     schemaType: 'Product',
   },

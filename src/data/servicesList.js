@@ -3,7 +3,5 @@
 export const servicesList = [
     "Interactive 3D Web & Product Configurators",
     "Real-Time ArchViz & Spatial VR/AR",
-    "Cinematic 3D Product & Commercial Visuals",
-    "Virtual Showrooms & Digital Twins",
-    "VFX & Virtual Production"
+    "Cinematic 3D Product & Commercial Visuals"
 ];

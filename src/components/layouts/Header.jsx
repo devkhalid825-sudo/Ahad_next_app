@@ -20,8 +20,18 @@ const Header = () => {
   const [isLightSection, setIsLightSection] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
   const [mobileLocationOpen, setMobileLocationOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef(null);
   const locationRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (!locationOpen) return;
@@ -79,30 +89,29 @@ const Header = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
-  // Three enterprise pillars — commodity services removed
+  // Three enterprise pillars
   const serviceSubItems = [
-    // Pillar 1: Interactive 3D Configurators
-    { name: '3D Product Configurators', href: '/services/3d-product-configurators' },
-    { name: 'Interactive Web Experiences', href: '/services/interactive-web-experiences' },
-    { name: 'Virtual Showrooms & Digital Twins', href: '/services/virtual-showrooms-digital-twins' },
-    // Pillar 2: Real-Time ArchViz & Spatial VR/AR
-    { name: 'Architectural Visualization', href: '/services/architectural-visualization' },
-    { name: 'VR Development', href: '/services/vr-development' },
-    { name: 'AR Development', href: '/services/ar-development' },
-    // Pillar 3: Cinematic 3D Product & Commercial Visuals
-    { name: '3D Product Visualization', href: '/services/3d-product-visualization' },
-    { name: '3D Animation', href: '/services/3d-animation' },
-    { name: '3D Product Animation', href: '/services/product-animation' },
-    { name: 'VFX & Virtual Production', href: '/services/vfx-virtual-production' },
+    { name: 'Interactive 3D Web & Product Configurators', href: '/services/3d-product-configurators' },
+    { name: 'Real-Time ArchViz & Spatial VR/AR', href: '/services/architectural-visualization' },
+    { name: 'Cinematic 3D Product & Commercial Visuals', href: '/services/3d-product-visualization' },
   ];
 
+  const headerBgClass = isMenuOpen
+    ? 'bg-black'
+    : isScrolled
+      ? isLightSection
+        ? 'bg-white/85 backdrop-blur-xl border-b border-black/10 shadow-sm'
+        : 'bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
+      : 'bg-transparent';
+
+  const headerPaddingClass = 'py-3 sm:py-4 md:py-5';
+  const logoSizeClass = 'h-10 sm:h-14 md:h-16 lg:h-20';
+
   return (
-    <header className="fixed top-0 left-0 w-full px-4 sm:px-6 md:px-8 py-3 sm:py-5 z-50 transition-all duration-300">
+    <header className={`fixed top-0 left-0 w-full px-4 sm:px-6 md:px-8 ${headerPaddingClass} ${headerBgClass} z-50 transition-colors duration-300`}>
     <nav
       ref={headerRef}
-      className={`w-full transition-all duration-300 ${
-        isMenuOpen ? '' : 'bg-transparent'
-      }`}
+      className="w-full"
     >
       <div className="flex justify-between items-center relative z-50">
         <Link
@@ -115,7 +124,7 @@ const Header = () => {
             alt="Elipse Studio"
             width="230"
             height="105"
-            className={`h-10 sm:h-14 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-105 ${
+            className={`${logoSizeClass} w-auto object-contain transition-transform duration-300 hover:scale-105 ${
               isLightSection ? 'invert' : ''
             }`}
           />

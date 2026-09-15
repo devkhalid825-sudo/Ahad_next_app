@@ -1,149 +1,85 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Hero from './features/Hero';
-import HeroCTA from './features/HeroCTA';
+import React, { useEffect } from 'react';
+import { m as motion } from 'framer-motion';
+import Header from './layouts/Header';
 import Footer from './layouts/Footer';
-import Contact from './features/Contact';
-import Solutions from './features/Solutions';
-import News from './features/News';
-import SocialMediaSection from './features/SocialMediaSection';
 import CaseStudies from './features/CaseStudies';
-import { apiCall, BACKEND_ORIGIN } from '../utils/api';
+import LatestWork from './features/LatestWork';
+import Contact from './features/Contact';
+import { getImgSrc } from '../utils/api';
+
+import casestudyImgRaw from '../assets/About-page/casestudy.webp';
+
+const casestudyImg = getImgSrc(casestudyImgRaw);
 
 const CaseStudiesPage = () => {
-    const [caseStudies, setCaseStudies] = useState([]);
-    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        const fetchCaseStudies = async () => {
-            const { data, status } = await apiCall('/case-studies', 'GET');
-            if (status === 200 && Array.isArray(data)) {
-                setCaseStudies(data);
-            }
-            setLoading(false);
-        };
-        fetchCaseStudies();
-    }, []);
+  return (
+    <div className="bg-black min-h-screen text-white font-sans selection:bg-[#4169E1]/30 selection:text-white overflow-x-hidden">
+      <Header />
 
-    return (
-        <>
-        
-
-        <div className="bg-black min-h-screen text-white font-sans selection:bg-[#4169E1]/20 selection:text-white overflow-x-hidden">
-
-            {/* HOME HERO */}
-            <Hero />
-            <HeroCTA />
-
-            {/* CASE STUDIES SECTION */}
-            <section className="w-full bg-[black] py-8 md:py-14 overflow-hidden font-sans flex flex-col justify-center relative">
-                <div className="w-full relative">
-                    {/* HEADER */}
-                    <div className="flex flex-col md:flex-row md:items-end justify-between px-[15px] md:px-[40px] mb-6 md:mb-8 gap-4">
-                        <div>
-                            <h1 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
-                                Case Studies
-                            </h1>
-                            <p className="text-white/60 text-sm md:text-base max-w-2xl leading-relaxed mt-2 md:mt-3">
-                                Real results from real projects. See how we help property developers, automotive brands, and ecommerce companies increase engagement, reduce returns, and accelerate sales through immersive 3D, VR, and interactive configurator solutions.
-                            </p>
-                        </div>
-                        <Link
-                            href="/case-studies"
-                            className="rounded-full text-[11px] md:text-sm bg-white text-[#4169E1] font-bold py-2 px-6 shadow-sm hover:scale-105 transition flex items-center justify-center whitespace-nowrap shrink-0 self-start md:self-end"
-                        >
-                            View All
-                        </Link>
-                    </div>
-
-                    {/* CARDS */}
-                    {loading ? null : caseStudies.length > 0 ? (
-                        <div className="flex overflow-x-auto no-scrollbar gap-[15px] px-[15px] md:px-[40px] pb-4 snap-x snap-mandatory">
-                            {caseStudies.map((cs, ci) => (
-                                <Link
-                                    key={cs.id}
-                                    href={`/case-study/${cs.slug}`}
-                                    className="group snap-start shrink-0 w-[220px] md:w-[577px] py-2 md:py-4 cursor-pointer"
-                                >
-                                    <div className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d] will-change-transform"
-                                        style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
-                                    >
-                                        {/* Image */}
-                                        <div className="w-full h-[150px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5">
-                                            <img
-                                                src={cs.largeBanner
-                                                    ? (cs.largeBanner.startsWith('http') ? cs.largeBanner : `${BACKEND_ORIGIN}${cs.largeBanner}`)
-                                                    : ''}
-                                                alt={cs.title}
-                                                width="577"
-                                                height="380"
-                                                loading="lazy"
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
-                                            />
-                                        </div>
-
-                                        {/* Body */}
-                                        <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
-                                            <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
-                                                {cs.client && <span>{cs.client}</span>}
-                                                {cs.client && cs.category && <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>}
-                                                {cs.category && <span>{cs.category}</span>}
-                                                {cs.category && cs.service && <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>}
-                                                {cs.service && <span>{cs.service}</span>}
-                                            </div>
-                                            <div className="md:hidden flex items-center gap-2 text-white/80 text-[11px] mb-4">
-                                                {cs.category && <span>{cs.category}</span>}
-                                                {cs.category && cs.service && <span className="w-1.5 h-1.5 rounded-full bg-[#4169E1]"></span>}
-                                                {cs.service && <span>{cs.service}</span>}
-                                            </div>
-                                            <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
-                                                {cs.title}
-                                            </h3>
-                                            <div className="mt-auto">
-                                                <span className="group/link flex items-center justify-between w-full text-white text-[13px] md:text-md mt-4">
-                                                    <span>View Case Study</span>
-                                                    <div className="bg-white/10 p-1.5 md:p-3 rounded-full border border-white/10 group-hover/link:translate-x-1 transition">
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 md:w-7 md:h-7">
-                                                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                                                            <polyline points="7 7 17 7 17 17"></polyline>
-                                                        </svg>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="py-16 text-center">
-                            <p className="text-white/50 text-lg font-light">No case studies available right now.</p>
-                        </div>
-                    )}
-                </div>
-            </section>
-
-            {/* FEATURED CASE STUDIES WITH PAGINATION */}
-            <CaseStudies initialFeatured={null} />
-
-            {/* SOLUTION & CAPABILITIES */}
-            <Solutions isLight={false} />
-
-            {/* NEWS & BLOGS */}
-            <News isLight={false} />
-
-            <SocialMediaSection />
-
-            {/* CONTACT & FOOTER */}
-            <div id="contact"><Contact /></div>
-            <Footer />
+      {/* ══════════════════════════════════════════════════════════
+          HERO SECTION WITH FULL-WIDTH BACKGROUND IMAGE
+      ══════════════════════════════════════════════════════════ */}
+      <section className="relative w-full min-h-[55vh] sm:min-h-[65vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-black">
+        {/* Full-width background image */}
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={casestudyImg}
+            alt="Case Studies Background"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Elegant Dark Gradient Overlays for High Contrast Readability */}
+          <div className="absolute inset-0 bg-black/45 backdrop-brightness-90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/50" />
         </div>
-    
-        </>
-        );
+
+        {/* Ambient subtle blue glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[#4169E1]/15 rounded-full blur-[140px] pointer-events-none" />
+
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-12 py-32 sm:py-40 md:py-48 flex flex-col justify-center items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-4xl"
+          >
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white leading-[1.12] uppercase">
+              We work with<br />
+              amazing clients to<br />
+              bring their vision<br />
+              to life.
+            </h1>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════
+          FEATURED CASE STUDIES SECTION
+      ══════════════════════════════════════════════════════════ */}
+      <CaseStudies isLight={false} />
+
+      {/* ══════════════════════════════════════════════════════════
+          LATEST WORK SECTION
+      ══════════════════════════════════════════════════════════ */}
+      <LatestWork isLight={false} />
+
+      {/* ══════════════════════════════════════════════════════════
+          CONTACT FORM SECTION
+      ══════════════════════════════════════════════════════════ */}
+      <Contact />
+
+      {/* ══════════════════════════════════════════════════════════
+          FOOTER
+      ══════════════════════════════════════════════════════════ */}
+      <Footer />
+    </div>
+  );
 };
 
 export default CaseStudiesPage;

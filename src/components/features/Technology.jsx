@@ -4,6 +4,10 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { SiUnrealengine, SiAutodesk, SiCoronarenderer, SiUnity, SiBlender, SiPlaycanvas, TbBrandAdobePhotoshop, TbBrandAdobeAfterEffect, HiOutlineBolt, LuPaintbrush, LuDroplet, LuBox } from '@/components/ui/Icons';
+import { getImgSrc } from '@/utils/api';
+import technologyImgRaw from '@/assets/About-page/technology.webp';
+
+const technologyImg = getImgSrc(technologyImgRaw);
 
 const PLAYCANVAS_SRC = 'https://playcanv.as/e/p/77f02e22/';
 
@@ -163,27 +167,28 @@ const LiveDemo = () => {
             />
           </>
         ) : (
-          /* Launch button overlay */
-          <div className="w-full h-full min-h-[320px] lg:min-h-[420px] flex flex-col items-center justify-center bg-[#0a0b12] relative overflow-hidden">
-            {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-[#4169E1]/6 rounded-full blur-3xl" />
-            </div>
-            {/* Play icon */}
-            <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#4169E1]/10 border border-[#4169E1]/20 flex items-center justify-center mb-4">
-              <svg className="w-7 h-7 md:w-9 md:h-9 text-[#4169E1] ml-1" fill="currentColor" viewBox="0 0 24 24">
+          /* Preview image with Live Demo button */
+          <div className="relative w-full h-full min-h-[320px] lg:min-h-[420px] flex items-center justify-center overflow-hidden group">
+            <img
+              src={technologyImg}
+              alt="Technology 3D Demo Preview"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            {/* Dark overlay for contrast */}
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] transition-colors duration-300 group-hover:bg-black/30" />
+
+            <button
+              type="button"
+              onClick={handleLaunch}
+              className="relative z-10 px-8 py-3.5 md:px-10 md:py-4 bg-[#4169E1] hover:bg-[#3558c8] active:bg-[#2e4fba] text-white text-sm md:text-base font-semibold tracking-wide rounded-full transition-all duration-300 shadow-lg shadow-[#4169E1]/40 hover:shadow-[#4169E1]/60 hover:scale-105 active:scale-95 flex items-center gap-2.5 cursor-pointer"
+            >
+              <svg
+                className="w-4 h-4 md:w-5 md:h-5 fill-current"
+                viewBox="0 0 24 24"
+              >
                 <path d="M8 5v14l11-7z" />
               </svg>
-            </div>
-            <div className="relative z-10 text-center px-4 mb-5">
-              <p className="text-white/80 text-sm md:text-base font-medium mb-1">Interactive 3D Car Configurator</p>
-              <p className="text-white/35 text-xs font-light">Powered by PlayCanvas — loads on demand</p>
-            </div>
-            <button
-              onClick={handleLaunch}
-              className="relative z-10 px-7 py-2.5 md:px-9 md:py-3.5 bg-[#4169E1] hover:bg-[#3558c8] text-white text-sm font-semibold uppercase tracking-widest rounded-full transition-all duration-300 shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 hover:scale-105 active:scale-100"
-            >
-              Launch Configurator
+              <span>Live Demo</span>
             </button>
           </div>
         )}
@@ -267,7 +272,7 @@ const Technology = () => {
               href="/contact"
               className="inline-block bg-[#4169E1] hover:bg-[#3558c8] text-white px-6 py-2.5 md:px-8 md:py-3.5 rounded-full text-sm md:text-base font-semibold transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 transform hover:-translate-y-0.5"
             >
-              Get a Free Estimate
+              Book Project Consultation
             </Link>
 
           </div>

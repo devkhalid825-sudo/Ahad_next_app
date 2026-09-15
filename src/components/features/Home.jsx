@@ -75,7 +75,7 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
                 href="/contact"
                 className="inline-block bg-[#4169E1] hover:bg-[#3558c8] text-white px-6 py-2.5 md:px-10 md:py-4 rounded-full text-sm md:text-base font-semibold transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 transform hover:-translate-y-0.5"
               >
-                Get a Free Estimate
+                Book Project Consultation
               </Link>
               <a
                 href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
