@@ -5,10 +5,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 /**
  * VideoBg - Optimized hero background video
  *
- * - Fast-start MP4 and WebM sources for instant hardware-accelerated playback.
+ * - Direct src handling for 100% reliable HTML5 playback across Desktop & Mobile.
  * - Explicit JS muted and playsInline for mobile Safari & Chrome autoplay compatibility.
  * - Listens to loadeddata/canplay/play/playing so first frame renders immediately.
- * - Smooth, quick transition without lag.
+ * - Smooth transition with instant response.
  */
 const VideoBg = ({
     videoFile,
@@ -43,19 +43,7 @@ const VideoBg = ({
 
     const shouldShow = videoReady && !videoError;
 
-    // Determine MP4 and WebM sources
-    const { mp4Src, webmSrc } = React.useMemo(() => {
-        if (!videoFile) return { mp4Src: null, webmSrc: null };
-        if (typeof videoFile !== 'string') return { mp4Src: null, webmSrc: null };
-
-        if (videoFile.toLowerCase().includes('.mp4')) {
-            return { mp4Src: videoFile, webmSrc: null };
-        }
-        const mp4 = videoFile.replace(/\.webm(\?.*)?$/i, '.mp4$1');
-        return { mp4Src: mp4, webmSrc: videoFile };
-    }, [videoFile]);
-
-    // Handle playback and mobile autoplay requirements
+    // Handle playback and mobile/desktop autoplay requirements
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
@@ -76,7 +64,7 @@ const VideoBg = ({
                 playPromise
                     .then(() => setVideoReady(true))
                     .catch(() => {
-                        // Autoplay prevented / waiting
+                        // Autoplay handled
                     });
             }
         } else {
@@ -140,6 +128,7 @@ const VideoBg = ({
                     transition: 'opacity 0.4s ease-out',
                     pointerEvents: 'none',
                 }}
+                src={lazy ? undefined : videoFile}
                 autoPlay={isActive}
                 loop={loop}
                 muted={muted}
@@ -154,10 +143,7 @@ const VideoBg = ({
                 onPlaying={handleReady}
                 onError={handleError}
                 onEnded={handleEnded}
-            >
-                {!lazy && mp4Src && <source src={mp4Src} type="video/mp4" />}
-                {!lazy && webmSrc && <source src={webmSrc} type="video/webm" />}
-            </video>
+            />
 
             {/* Optional dark overlay */}
             {darken && (
