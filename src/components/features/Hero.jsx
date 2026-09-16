@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useMemo, useSyncExternalStore, Suspense, lazy } from 'react';
 import Header from '../layouts/Header';
+import VideoBg from './VideoBg';
 import { HERO_ASSETS } from '@/constants/assets';
 
-const VideoBg = lazy(() => import('./VideoBg'));
 const CarouselIndicators = lazy(() => import('../ui/CarouselIndicators'));
 
 const firstSlidePosterMobile = HERO_ASSETS.images.mobilePoster;
@@ -127,34 +127,19 @@ const Hero = () => {
               style={{ visibility: isActive ? 'visible' : 'hidden' }}
             >
               {isVideo ? (
-                <Suspense
-                  fallback={
-                    <img
-                      src={poster}
-                      alt="Hero Background"
-                      width={posterWidth}
-                      height={posterHeight}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      fetchPriority={isSlide0 ? 'high' : 'auto'}
-                      loading="eager"
-                      decoding={isSlide0 ? 'sync' : 'async'}
-                    />
-                  }
-                >
-                  <VideoBg
-                    videoFile={bg}
-                    darken={false}
-                    overlay={false}
-                    className="absolute inset-0 w-full h-full object-cover z-10"
-                    videoPoster={poster}
-                    isActive={isActive}
-                    lazy={!isActive && !isNext}
-                    onEnded={nextSlide}
-                    loop={backgrounds.length === 1}
-                    preload={isActive ? 'auto' : isNext ? 'metadata' : 'none'}
-                    fetchPriority={isActive ? 'high' : isNext ? 'auto' : 'low'}
-                  />
-                </Suspense>
+                <VideoBg
+                  videoFile={bg}
+                  darken={false}
+                  overlay={false}
+                  className="absolute inset-0 w-full h-full object-cover z-10"
+                  videoPoster={poster}
+                  isActive={isActive}
+                  lazy={!isActive && !isNext}
+                  onEnded={nextSlide}
+                  loop={backgrounds.length === 1}
+                  preload={isActive ? 'auto' : isNext ? 'metadata' : 'none'}
+                  fetchPriority={isActive ? 'high' : isNext ? 'auto' : 'low'}
+                />
               ) : (
                 <img
                   src={bg}

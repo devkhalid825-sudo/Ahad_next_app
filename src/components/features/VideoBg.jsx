@@ -5,11 +5,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 /**
  * VideoBg - Optimized hero background video
  *
- * - Poster image is always rendered underneath the video.
- * - Video starts at opacity 0, fades to 1 once canplay fires.
- * - If video fails to load, poster stays fully visible.
- * - Only one controlled play() path (via shouldShow guard + IntersectionObserver).
- * - Does NOT block the global page loader.
+ * - Fast-start MP4 and WebM sources for instant hardware-accelerated playback.
+ * - Explicit JS muted and playsInline for mobile Safari & Chrome autoplay compatibility.
+ * - Listens to loadeddata/canplay/play/playing so first frame renders immediately.
+ * - Smooth, quick transition without lag.
  */
 const VideoBg = ({
     videoFile,
@@ -29,7 +28,7 @@ const VideoBg = ({
     const [videoReady, setVideoReady] = useState(false);
     const [videoError, setVideoError] = useState(false);
 
-    const handleCanPlay = useCallback(() => {
+    const handleReady = useCallback(() => {
         setVideoReady(true);
     }, []);
 
@@ -44,27 +43,48 @@ const VideoBg = ({
 
     const shouldShow = videoReady && !videoError;
 
-    // Single controlled play/pause via useEffect — no double play() calls.
+    // Determine MP4 and WebM sources
+    const { mp4Src, webmSrc } = React.useMemo(() => {
+        if (!videoFile) return { mp4Src: null, webmSrc: null };
+        if (typeof videoFile !== 'string') return { mp4Src: null, webmSrc: null };
+
+        if (videoFile.toLowerCase().includes('.mp4')) {
+            return { mp4Src: videoFile, webmSrc: null };
+        }
+        const mp4 = videoFile.replace(/\.webm(\?.*)?$/i, '.mp4$1');
+        return { mp4Src: mp4, webmSrc: videoFile };
+    }, [videoFile]);
+
+    // Handle playback and mobile autoplay requirements
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
 
-        if (shouldShow && isActive) {
+        video.muted = true;
+        video.defaultMuted = true;
+
+        if (isActive) {
+            if (video.readyState >= 2) {
+                setVideoReady(true);
+            }
             try {
                 video.currentTime = 0;
             } catch (e) {}
+
             const playPromise = video.play();
             if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    // Autoplay prevented — poster stays visible, no action needed.
-                });
+                playPromise
+                    .then(() => setVideoReady(true))
+                    .catch(() => {
+                        // Autoplay prevented / waiting
+                    });
             }
         } else {
             video.pause();
         }
-    }, [shouldShow, isActive]);
+    }, [isActive]);
 
-    // IntersectionObserver: pause when off-screen, resume when visible.
+    // IntersectionObserver: pause when off-screen, resume when visible
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
@@ -74,10 +94,11 @@ const VideoBg = ({
                 entries.forEach((entry) => {
                     if (!entry.isIntersecting) {
                         video.pause();
-                    } else if (shouldShow && isActive) {
+                    } else if (isActive) {
+                        video.muted = true;
                         const playPromise = video.play();
                         if (playPromise !== undefined) {
-                            playPromise.catch(() => { });
+                            playPromise.then(() => setVideoReady(true)).catch(() => {});
                         }
                     }
                 });
@@ -87,11 +108,11 @@ const VideoBg = ({
 
         observer.observe(video);
         return () => observer.disconnect();
-    }, [shouldShow, isActive]);
+    }, [isActive]);
 
     return (
         <div className={className}>
-            {/* Poster image - always visible, sits underneath the video */}
+            {/* Poster image - always visible underneath until video plays */}
             {videoPoster && (
                 <img
                     src={videoPoster}
@@ -103,34 +124,40 @@ const VideoBg = ({
                     style={{
                         zIndex: shouldShow ? 0 : 1,
                         opacity: shouldShow ? 0 : 1,
-                        transition: 'opacity 0.9s ease-in-out',
+                        transition: 'opacity 0.4s ease-out',
                         pointerEvents: 'none',
                     }}
                 />
             )}
 
-            {/* Video layer - fades in when ready */}
+            {/* Video layer */}
             <video
                 ref={videoRef}
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{
                     zIndex: shouldShow ? 1 : 0,
                     opacity: shouldShow ? 1 : 0,
-                    transition: 'opacity 0.9s ease-in-out',
+                    transition: 'opacity 0.4s ease-out',
                     pointerEvents: 'none',
                 }}
-                src={lazy ? undefined : videoFile}
-                poster={undefined}
                 autoPlay={isActive}
                 loop={loop}
                 muted={muted}
                 playsInline
+                webkit-playsinline="true"
+                x5-playsinline="true"
                 preload={preload}
                 fetchPriority={fetchPriority}
-                onCanPlay={handleCanPlay}
+                onLoadedData={handleReady}
+                onCanPlay={handleReady}
+                onPlay={handleReady}
+                onPlaying={handleReady}
                 onError={handleError}
                 onEnded={handleEnded}
-            />
+            >
+                {!lazy && mp4Src && <source src={mp4Src} type="video/mp4" />}
+                {!lazy && webmSrc && <source src={webmSrc} type="video/webm" />}
+            </video>
 
             {/* Optional dark overlay */}
             {darken && (
