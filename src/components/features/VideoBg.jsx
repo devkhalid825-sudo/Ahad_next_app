@@ -3,12 +3,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 /**
- * VideoBg - Optimized hero background video
+ * VideoBg - High-Performance Hero Background Video
  *
- * - Direct src handling for 100% reliable HTML5 playback across Desktop & Mobile.
- * - Explicit JS muted and playsInline for mobile Safari & Chrome autoplay compatibility.
- * - Listens to loadeddata/canplay/play/playing so first frame renders immediately.
- * - Smooth transition with instant response.
+ * - Hardware-accelerated H.264 playback optimized for iOS Safari & Android Chrome.
+ * - Hardware layer promotion (translate3d) to eliminate composite lag/stutter.
+ * - Robust iOS autoplay handling with user-gesture fallback for Low-Power Mode.
+ * - Instant frame reveal on loadeddata/canplay/playing.
  */
 const VideoBg = ({
     videoFile,
@@ -48,8 +48,13 @@ const VideoBg = ({
         const video = videoRef.current;
         if (!video) return;
 
+        // Force native DOM properties required by iOS WebKit
         video.muted = true;
         video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('x5-playsinline', '');
 
         if (isActive) {
             if (video.readyState >= 2) {
@@ -57,14 +62,21 @@ const VideoBg = ({
             }
             try {
                 video.currentTime = 0;
-            } catch (e) {}
+            } catch (e) { }
 
             const playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise
                     .then(() => setVideoReady(true))
                     .catch(() => {
-                        // Autoplay handled
+                        // Autoplay blocked by iOS Low-Power Mode — resume on first user touch/click
+                        const handleFirstInteraction = () => {
+                            video.play().then(() => setVideoReady(true)).catch(() => { });
+                            window.removeEventListener('touchstart', handleFirstInteraction);
+                            window.removeEventListener('click', handleFirstInteraction);
+                        };
+                        window.addEventListener('touchstart', handleFirstInteraction, { passive: true, once: true });
+                        window.addEventListener('click', handleFirstInteraction, { passive: true, once: true });
                     });
             }
         } else {
@@ -86,7 +98,7 @@ const VideoBg = ({
                         video.muted = true;
                         const playPromise = video.play();
                         if (playPromise !== undefined) {
-                            playPromise.then(() => setVideoReady(true)).catch(() => {});
+                            playPromise.then(() => setVideoReady(true)).catch(() => { });
                         }
                     }
                 });
@@ -112,8 +124,10 @@ const VideoBg = ({
                     style={{
                         zIndex: shouldShow ? 0 : 1,
                         opacity: shouldShow ? 0 : 1,
-                        transition: 'opacity 0.4s ease-out',
+                        transition: 'opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                         pointerEvents: 'none',
+                        willChange: 'opacity',
+                        transform: 'translateZ(0)',
                     }}
                 />
             )}
@@ -125,8 +139,11 @@ const VideoBg = ({
                 style={{
                     zIndex: shouldShow ? 1 : 0,
                     opacity: shouldShow ? 1 : 0,
-                    transition: 'opacity 0.4s ease-out',
+                    transition: 'opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                     pointerEvents: 'none',
+                    willChange: 'opacity',
+                    transform: 'translateZ(0)',
+                    backfaceVisibility: 'hidden',
                 }}
                 src={lazy ? undefined : videoFile}
                 autoPlay={isActive}
@@ -135,8 +152,11 @@ const VideoBg = ({
                 playsInline
                 webkit-playsinline="true"
                 x5-playsinline="true"
+                disablePictureInPicture
+                disableRemotePlayback
                 preload={preload}
                 fetchPriority={fetchPriority}
+                onLoadedMetadata={handleReady}
                 onLoadedData={handleReady}
                 onCanPlay={handleReady}
                 onPlay={handleReady}
