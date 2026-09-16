@@ -98,25 +98,34 @@ const ARCHVIZ_BUILDS = [
 
 // Archviz Capabilities Cards
 const CAPABILITIES = [
+  // Row 1: Interactive & Immersive Sales Technology
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M21 9a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h3l2 2h4l2-2h3a2 2 0 002-2V9zM7 13a2 2 0 110-4 2 2 0 010 4zm10 0a2 2 0 110-4 2 2 0 010 4z" />
       </svg>
     ),
-    title: 'Exterior CGI & Tower Visualizations',
-    desc: 'Towering skyline integration, architectural facade drama, and atmospheric dawn, dusk, and night lighting that command buyer attention.',
-    features: ['Accurate solar orientation & local reflections', 'Pedestrian, podium & helicopter aerial vistas', 'Multi-seasonal lighting (Day, Golden Hour, Night)'],
+    title: 'Immersive VR Experiences & Walkthroughs',
+    desc: 'Put high-net-worth investors and buyers directly inside unbuilt penthouses, luxury villas, and towers at true 1:1 human scale. Fully untethered immersion across Meta Quest and PCVR headsets that turns passive viewing into an emotional purchase decision.',
+    features: [
+      '1:1 scale spatial walkthroughs for Meta Quest & PCVR',
+      'True physical depth, ceiling heights & balcony viewline simulation',
+      'Turnkey setup for sales galleries, roadshows & VIP investor pitches',
+    ],
   },
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-    title: 'Luxury Interior CGI & Digital Staging',
-    desc: 'Bespoke styling and interior design staging. Tactile textures, physically accurate fabrics, natural light dispersion, and premium finishes.',
-    features: ['Curated luxury FF&E (Furniture & Fixtures)', 'Kitchen, master ensuite & living area hero shots', 'Material accuracy matching your project schedule'],
+    title: 'Unreal Engine Interactive Virtual Tours',
+    desc: 'Empower buyers to explore unbuilt architecture freely with real-time ray-traced graphics. Engineered for sales center touchscreens, multi-display video walls, and Cloud Pixel Streaming directly to remote buyers\' web browsers.',
+    features: [
+      'Instant daylight shifts (Day, Golden Hour, Night) & finish swaps',
+      'Interactive floor plan navigation & unit availability integration',
+      'Sales gallery touchscreen kiosks & Cloud Pixel Streaming to web',
+    ],
   },
   {
     icon: (
@@ -125,28 +134,41 @@ const CAPABILITIES = [
       </svg>
     ),
     title: 'Cinematic Films & Drone Matchmoving',
-    desc: 'Hollywood-grade architectural storytelling. We blend real aerial drone footage with 3D models to show your project seamlessly rooted in its neighborhood.',
-    features: ['4K UHD 60FPS camera motion & color grading', '3D camera matchmoving over live site drone shots', 'Lifestyle integration (people, vehicles, landscaping)'],
+    desc: 'Hollywood-grade architectural storytelling that anchors your project into its real-world neighborhood. We seamlessly composite photoreal 3D models into live aerial drone footage with flawless camera tracking and color grading.',
+    features: [
+      '4K UHD 60FPS cinematic camera choreography & narrative pacing',
+      'Frame-accurate 3D camera matchmoving over live site drone footage',
+      'Realistic lifestyle integration (animated people, vehicles, landscaping)',
+    ],
+  },
+  // Row 2: Photoreal Marketing & Visual Assets
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
+    title: 'Exterior CGI & Tower Visualizations',
+    desc: 'Dramatic architectural presence engineered to dominate billboards, investor prospectuses, and international marketing launches. We craft atmospheric facades, accurate glass reflections, and contextually grounded skyline views.',
+    features: [
+      'Accurate solar orientation, atmospheric haze & local reflections',
+      'Pedestrian eye-level, podium entry & helicopter aerial vistas',
+      'Multi-seasonal mood lighting (Crisp Daylight, Golden Hour, Twilight)',
+    ],
   },
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
     ),
-    title: 'Unreal Engine 5 Real-Time Sales Apps',
-    desc: 'Allow high-net-worth investors to wander freely through unbuilt properties on touchscreens, sales center video walls, and VR headsets.',
-    features: ['Instant daylight change & interactive finishes', 'Interactive floor plan & viewline simulator', 'Meta Quest VR & PC standalone kiosk builds'],
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-      </svg>
-    ),
-    title: 'Browser-Based 360° Virtual Tours',
-    desc: 'Zero friction for remote buyers. Lightweight, lightning-fast 360° panoramic tours that open instantly on mobile devices, tablets, and desktop browsers.',
-    features: ['Interactive hotspot room-to-room navigation', 'Embedded floorplans, spec sheets & enquiry buttons', 'Seamless embed into your existing website or portal'],
+    title: 'Luxury Interior CGI & Digital Staging',
+    desc: 'Bespoke interior styling that sells the aspirational lifestyle. We replicate tactile textures, custom marble veining, natural light dispersion, and physically accurate designer fabrics to make off-plan residences feel immediately livable.',
+    features: [
+      'Curated luxury FF&E (Furniture, Fixtures & Equipment) digital staging',
+      'Hero vignettes for kitchens, master suites & entertainment spaces',
+      'Exact material and finish schedule compliance with interior design',
+    ],
   },
   {
     icon: (
@@ -155,8 +177,12 @@ const CAPABILITIES = [
       </svg>
     ),
     title: 'Master Plans & Community Developments',
-    desc: 'Visualize large-scale mixed-use master plans, residential communities, golf resorts, civic amenities, and infrastructure phases.',
-    features: ['Comprehensive bird’s eye master plan animations', 'Phased construction staging animations', 'Amenity spotlights (clubhouses, lakes, promenades)'],
+    desc: 'Bring visionary multi-hectare mixed-use master plans, waterfront developments, golf resorts, and civic infrastructure to life. Clarify scale, connectivity, and development phases for municipal approvals and institutional investment.',
+    features: [
+      'Expansive bird’s-eye aerial views & contextual terrain modeling',
+      'Phased construction timelines & infrastructure sequencing',
+      'Amenity spotlights (marinas, clubhouses, parks & retail boulevards)',
+    ],
   },
 ];
 
@@ -325,9 +351,9 @@ const ArchitecturalVisualizationPage = () => {
             </svg>
             <span>Uncompromising Visual Precision</span>
           </div>
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-bold tracking-tight leading-[1.1] text-white">
-            From Raw CAD Blueprint to{' '}
-            <span className="bg-gradient-to-r from-white via-[#8ca8ff] to-[#4169E1] bg-clip-text text-transparent">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-bold tracking-tight leading-[1.2] text-white">
+            From Raw CAD Blueprint to<br />
+            <span className="bg-gradient-to-r from-white via-[#8ca8ff] to-[#4169E1] bg-clip-text text-transparent whitespace-nowrap inline-block">
               Interactive Virtual Tour
             </span>
           </h2>

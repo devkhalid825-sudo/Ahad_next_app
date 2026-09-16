@@ -6,7 +6,6 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
 import ClientReviews from '../features/ClientReviews';
-import SocialMediaSection from '../features/SocialMediaSection';
 import { getImgSrc } from '../../utils/api';
 
 // Project images
@@ -118,21 +117,22 @@ const CONFIGURATOR_BUILDS = [
   },
 ];
 
-// PlayCanvas Golf Cart Live Configurator
-const GOLF_CART_SRC = 'https://playcanv.as/e/p/JOJu0DAt/';
+// PlayCanvas Live 3D Configurator (Direct App URL so postMessage reaches the canvas without nested iframe blockage)
+const CAR_CONFIGURATOR_SRC = 'https://playcanv.as/apps/254d39fc/index.html';
 
-const GOLF_CART_COLORS = [
-  { id: 'glossWhitePaint', name: 'Gloss White', hex: '#FFFFFF' },
-  { id: 'blackDiamondPaint', name: 'Black Diamond', hex: '#111113' },
-  { id: 'glossRedPaint', name: 'Gloss Red', hex: '#cc0000' },
-  { id: 'glossTealPaint', name: 'Gloss Teal', hex: '#008080' },
+const CAR_CONFIGURATOR_COLORS = [
+  { id: 'blue', name: 'Gravity Blue', hex: '#1C3857' },
+  { id: 'black', name: 'Fusion Black', hex: '#121214' },
+  { id: 'white', name: 'Clear White', hex: '#FFFFFF' },
+  { id: 'Igrey', name: 'Interstellar Grey', hex: '#3E4148' },
+  { id: 'grey', name: 'Gravity Grey', hex: '#9CA0A5' },
 ];
 
 /**
- * Interactive Live PlayCanvas Golf Cart Configurator Component
+ * Interactive Live PlayCanvas 3D Configurator Component
  */
-const GolfCartConfiguratorViewer = ({ isDark = true }) => {
-  const [activeColor, setActiveColor] = useState(GOLF_CART_COLORS[0].id);
+const CarConfiguratorViewer = ({ isDark = true }) => {
+  const [activeColor, setActiveColor] = useState(CAR_CONFIGURATOR_COLORS[0].id);
   const [isLoaded, setIsLoaded] = useState(false);
   const frameRef = useRef(null);
 
@@ -141,9 +141,14 @@ const GolfCartConfiguratorViewer = ({ isDark = true }) => {
     const frame = frameRef.current;
     if (!frame || !frame.contentWindow) return;
     try {
-      // Send raw colorId string and structured message for full compatibility
-      frame.contentWindow.postMessage(colorId, '*');
-      frame.contentWindow.postMessage({ type: 'CHANGE_COLOR', color: colorId, buttonId: colorId }, '*');
+      // The PlayCanvas script in this build strictly checks for commands with a trailing colon:
+      // "blue:", "black:", "white:", "Igrey:", "grey:"
+      const msgWithColon = colorId.endsWith(':') ? colorId : `${colorId}:`;
+      const msgRaw = colorId.replace(/:$/, '');
+
+      frame.contentWindow.postMessage(msgWithColon, '*');
+      frame.contentWindow.postMessage(msgRaw, '*');
+      frame.contentWindow.postMessage({ type: 'CHANGE_COLOR', color: msgWithColon, buttonId: msgRaw, value: msgRaw }, '*');
     } catch (e) {
       console.error('Error posting message to PlayCanvas:', e);
     }
@@ -154,7 +159,7 @@ const GolfCartConfiguratorViewer = ({ isDark = true }) => {
     // Send initial color with small delay to let PlayCanvas scripts initialize
     setTimeout(() => {
       sendColor(activeColor);
-    }, 600);
+    }, 1000);
   };
 
   return (
@@ -174,8 +179,8 @@ const GolfCartConfiguratorViewer = ({ isDark = true }) => {
       {/* PlayCanvas iframe Viewport */}
       <iframe
         ref={frameRef}
-        src={GOLF_CART_SRC}
-        title="Golf Cart 3D Configurator"
+        src={CAR_CONFIGURATOR_SRC}
+        title="Interactive 3D Product Configurator"
         loading="eager"
         allow="fullscreen; xr-spatial-tracking"
         onLoad={handleIframeLoad}
@@ -184,20 +189,20 @@ const GolfCartConfiguratorViewer = ({ isDark = true }) => {
 
       {/* Centered Floating Luxury Color Dock */}
       <div className="absolute bottom-2.5 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 pointer-events-auto max-w-[95%] sm:max-w-[92%]">
-        <div className="flex items-center gap-1.5 sm:gap-3.5 bg-black/85 backdrop-blur-2xl px-2.5 py-1 sm:px-5 sm:py-2.5 rounded-full border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
-          <div className="flex items-center gap-1 sm:gap-2 pr-1.5 sm:pr-3 border-r border-white/15">
+        <div className="flex items-center gap-1.5 sm:gap-3 bg-black/85 backdrop-blur-2xl px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
+          <div className="flex items-center gap-1 sm:gap-2 pr-1.5 sm:pr-2.5 border-r border-white/15">
             <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
             <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white whitespace-nowrap">
-              {GOLF_CART_COLORS.find((c) => c.id === activeColor)?.name || 'Gloss White'}
+              {CAR_CONFIGURATOR_COLORS.find((c) => c.id === activeColor)?.name || 'Gravity Blue'}
             </span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            {GOLF_CART_COLORS.map((c) => (
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {CAR_CONFIGURATOR_COLORS.map((c) => (
               <button
                 key={c.id}
                 onClick={() => sendColor(c.id)}
                 title={c.name}
-                className={`w-5 h-5 sm:w-8 sm:h-8 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer ${activeColor === c.id
+                className={`w-5 h-5 sm:w-7 sm:h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer ${activeColor === c.id
                   ? 'scale-110 ring-2 ring-white shadow-[0_0_16px_rgba(255,255,255,0.8)]'
                   : 'opacity-70 hover:opacity-100 hover:scale-105 ring-1 ring-white/20'
                   }`}
@@ -302,9 +307,9 @@ const ProductConfiguratorsPage = () => {
             </div>
           </div>
 
-          {/* Right Column: Live Golf Cart 3D Configurator */}
+          {/* Right Column: Live 3D Configurator */}
           <div className="lg:col-span-6 w-full flex items-center justify-center">
-            <GolfCartConfiguratorViewer isDark={true} />
+            <CarConfiguratorViewer isDark={true} />
           </div>
         </div>
       </section>
@@ -449,10 +454,6 @@ const ProductConfiguratorsPage = () => {
 
 
       <ClientReviews />
-
-
-      <SocialMediaSection />
-
 
       <div id="contact">
         <Contact />

@@ -27,18 +27,24 @@ const Hero = () => {
   const desktopBackgrounds = useMemo(
     () => [
       HERO_ASSETS.videos.vr,
-      HERO_ASSETS.videos.jamSpread,
       HERO_ASSETS.videos.volvo,
+      HERO_ASSETS.videos.jamSpread,
       HERO_ASSETS.videos.khoj,
       HERO_ASSETS.videos.zarrar,
-      HERO_ASSETS.videos.bombay,
-      HERO_ASSETS.videos.vfx,
       HERO_ASSETS.videos.gabani,
+      HERO_ASSETS.videos.virtualTour,
     ],
     []
   );
 
-  const mobileBackgrounds = useMemo(() => [HERO_ASSETS.videos.mobile], []);
+  const mobileBackgrounds = useMemo(
+    () => [
+      HERO_ASSETS.videos.love,
+      HERO_ASSETS.videos.volvoReel,
+      HERO_ASSETS.videos.mobile,
+    ],
+    []
+  );
 
   const backgrounds = isMobile ? mobileBackgrounds : desktopBackgrounds;
 
@@ -102,7 +108,7 @@ const Hero = () => {
           const isNext = index === (activeIndex + 1) % backgrounds.length;
           const isSlide0 = index === 0;
 
-          if (!isActive && (!isNext || isMobile)) return null;
+          if (!isActive && !isNext) return null;
 
           const poster =
             bg === HERO_ASSETS.videos.volvo

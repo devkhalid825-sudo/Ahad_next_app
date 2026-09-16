@@ -3,8 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import logoRaw from '@/assets/images/khalid.png';
+import { getImgSrc } from '@/utils/api';
 
-const logo = '/assets/logo.webp';
+const logo = getImgSrc(logoRaw);
 
 const LOCATIONS = [
   { name: 'Global', href: '/' },
@@ -104,11 +106,11 @@ const Header = () => {
         : 'bg-black/40 backdrop-blur-xl'
       : 'bg-transparent';
 
-  const headerPaddingClass = 'py-3 sm:py-4 md:py-5';
-  const logoSizeClass = 'h-10 sm:h-14 md:h-16 lg:h-20';
+  const headerPaddingClass = 'px-7 sm:px-6 md:px-8 pt-6 pb-3 sm:py-3.5 md:py-4';
+  const logoSizeClass = 'h-6 sm:h-8 md:h-10 lg:h-12';
 
   return (
-    <header className={`fixed top-0 left-0 w-full px-4 sm:px-6 md:px-8 ${headerPaddingClass} ${headerBgClass} z-50 transition-all duration-300 flex items-center`}>
+    <header className={`fixed top-0 left-0 w-full ${headerPaddingClass} ${headerBgClass} z-50 transition-all duration-300 flex items-center`}>
       <nav
         ref={headerRef}
         className="w-full flex items-center"
@@ -116,7 +118,7 @@ const Header = () => {
         <div className="w-full flex justify-between items-center relative z-50">
           <Link
             href="/"
-            className="cursor-pointer relative z-50 flex items-center shrink-0 my-auto pt-1 sm:pt-1.5 md:pt-2"
+            className="cursor-pointer relative z-50 flex items-center justify-center shrink-0 self-center"
             onClick={() => setIsMenuOpen(false)}
           >
             <img
@@ -124,19 +126,19 @@ const Header = () => {
               alt="Elipse Studio"
               width="230"
               height="105"
-              className={`${logoSizeClass} w-auto object-contain transition-transform duration-300 hover:scale-105 block ${isLightSection ? 'invert' : ''
+              className={`${logoSizeClass} w-auto object-contain transition-transform duration-300 hover:scale-105 block self-center ${isLightSection ? 'invert' : ''
                 }`}
             />
           </Link>
 
-          <div className="flex items-center gap-4 sm:gap-6 relative z-50 shrink-0 my-auto">
+          <div className="flex items-center gap-3 sm:gap-5 relative z-50 shrink-0 self-center">
             <div className="hidden" ref={locationRef}>
               <button
                 onClick={() => setLocationOpen((prev) => !prev)}
-                className={`w-[130px] h-11 flex items-center justify-center gap-1.5 border ${isLightSection
+                className={`px-4 h-8 sm:h-8.5 flex items-center justify-center gap-1.5 border ${isLightSection
                   ? 'border-black/20 hover:border-[#4169E1] text-black hover:text-[#4169E1]'
                   : 'border-white/20 hover:border-[#4169E1] text-white hover:text-[#4169E1]'
-                  } bg-transparent rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 backdrop-blur-md`}
+                  } bg-transparent rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-300 backdrop-blur-md`}
                 aria-haspopup="true"
                 aria-expanded={locationOpen}
               >
@@ -163,22 +165,22 @@ const Header = () => {
                 setIsMenuOpen(false);
                 router.push('/contact');
               }}
-              className={`hidden md:flex w-[130px] h-11 items-center justify-center border ${isLightSection
+              className={`hidden md:flex px-6 sm:px-7 h-10 sm:h-11 items-center justify-center border ${isLightSection
                 ? 'border-black/20 hover:border-[#4169E1] text-black hover:text-[#4169E1]'
                 : 'border-white/20 hover:border-[#4169E1] text-white hover:text-[#4169E1]'
-                } bg-transparent rounded-full text-xs font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(65,105,225,0.3)] transition-all duration-300 backdrop-blur-md`}
+                } bg-transparent rounded-full text-xs sm:text-[13px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(65,105,225,0.3)] transition-all duration-300 backdrop-blur-md`}
             >
               Contact
             </button>
             <button
               onClick={toggleMenu}
-              className={`focus:outline-none hover:scale-110 active:scale-95 p-1 sm:p-1.5 flex items-center justify-center rounded-full transition-transform ${isLightSection ? 'text-black' : 'text-white'
+              className={`focus:outline-none hover:scale-110 active:scale-95 p-1.5 flex items-center justify-center rounded-full transition-transform ${isLightSection ? 'text-black' : 'text-white'
                 }`}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 sm:h-9 sm:w-9"
+                className="h-7 w-7 sm:h-8 sm:w-8"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

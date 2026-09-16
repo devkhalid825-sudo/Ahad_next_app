@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import logoRaw from '../assets/images/logo.webp';
+import logoRaw from '../assets/images/khalid.png';
 import { getImgSrc } from '../utils/api';
 const logo = getImgSrc(logoRaw);
 

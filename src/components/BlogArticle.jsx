@@ -25,7 +25,7 @@ const BlogArticle = ({ slug, initialData }) => {
   const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState('');
 
-    useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   useEffect(() => {
     if (!slug || initialData) return;
@@ -68,7 +68,7 @@ const BlogArticle = ({ slug, initialData }) => {
 
   let sections = [];
   if (blog.sections) {
-    try { sections = typeof blog.sections === 'string' ? JSON.parse(blog.sections) : blog.sections; } catch (e) {}
+    try { sections = typeof blog.sections === 'string' ? JSON.parse(blog.sections) : blog.sections; } catch (e) { }
   }
 
   const gallery = sections.filter(s => s.image).map(s => resolveBlogImg(s.image));

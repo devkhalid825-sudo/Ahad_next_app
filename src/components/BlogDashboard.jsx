@@ -25,8 +25,8 @@ const SortableBlogItem = ({ blog, onEdit, onDelete, onMoveUp, onMoveDown, isFirs
 
   const blogImgSrc = blog.image
     ? (blog.image.startsWith('http') || blog.image.startsWith('blob:')
-        ? blog.image
-        : `${BACKEND_ORIGIN}${blog.image}`)
+      ? blog.image
+      : `${BACKEND_ORIGIN}${blog.image}`)
     : '';
 
   return (
@@ -291,8 +291,8 @@ const BlogDashboard = () => {
     <div>
       {msg && (
         <div className="fixed top-24 right-6 left-6 md:left-auto md:top-8 md:right-8 z-[60] bg-[#4169E1] text-white px-6 py-4 rounded-2xl shadow-[0_0_30px_rgba(65,105,225,0.3)] font-bold flex items-center gap-3 animate-in fade-in text-[10px] uppercase tracking-widest">
-           <FiSave size={18} /> {msg}
-         </div>
+          <FiSave size={18} /> {msg}
+        </div>
       )}
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 md:mb-8">
@@ -369,8 +369,8 @@ const BlogDashboard = () => {
                     {['image', 'image2', 'image3', 'image4'].map((imgKey, idx) => {
                       const displaySrc = form[imgKey]
                         ? (form[imgKey].startsWith('http') || form[imgKey].startsWith('blob:')
-                            ? form[imgKey]
-                            : `${BACKEND_ORIGIN}${form[imgKey]}`)
+                          ? form[imgKey]
+                          : `${BACKEND_ORIGIN}${form[imgKey]}`)
                         : '';
                       return (
                         <div key={imgKey}>
