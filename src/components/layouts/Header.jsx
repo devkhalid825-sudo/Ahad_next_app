@@ -77,7 +77,7 @@ const Header = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const hamburgerPath = isMenuOpen ? 'M6 6l12 12M6 18L18 6' : 'M4 8h16M4 16h16';
+  const hamburgerPath = isMenuOpen ? 'M6 6l12 12M6 18L18 6' : 'M12 5v14M5 12h14';
 
   const menuItems = [
     { name: 'Home', href: '/' },
@@ -166,11 +166,11 @@ const Header = () => {
                 router.push('/contact');
               }}
               className={`hidden md:flex px-6 sm:px-7 h-10 sm:h-11 items-center justify-center border ${isLightSection
-                ? 'border-black/20 hover:border-[#4169E1] text-black hover:text-[#4169E1]'
-                : 'border-white/20 hover:border-[#4169E1] text-white hover:text-[#4169E1]'
-                } bg-transparent rounded-full text-xs sm:text-[13px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(65,105,225,0.3)] transition-all duration-300 backdrop-blur-md`}
+                ? 'border-black/30 hover:border-black text-black hover:bg-black/5'
+                : 'border-white/30 hover:border-white text-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
+                } bg-transparent rounded-full text-xs sm:text-[13px] font-semibold tracking-wider transition-all duration-300 backdrop-blur-md cursor-pointer`}
             >
-              Contact
+              Contact Us
             </button>
             <button
               onClick={toggleMenu}
@@ -180,7 +180,7 @@ const Header = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-7 w-7 sm:h-8 sm:w-8"
+                className="h-7 w-7 sm:h-8 sm:w-8 text-current"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

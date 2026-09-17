@@ -129,14 +129,14 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
     <section
       id="latest-work"
       className={`relative transition-colors duration-300 ${
-        isLight ? 'bg-white pt-8 md:pt-16 pb-10 md:pb-16 text-zinc-900' : 'bg-black text-white'
-      }`}
+        isLight ? 'bg-white text-zinc-900' : 'bg-black text-white'
+      } pt-4 md:pt-6 lg:pt-8 pb-12 md:pb-20`}
     >
       {isLight && (
         <div className="absolute bottom-0 left-0 w-full h-24 md:h-32 bg-gradient-to-b from-transparent to-black pointer-events-none"></div>
       )}
 
-      <div className="w-full mx-auto px-[15px] md:px-[40px] pt-8 md:pt-12">
+      <div className="w-full mx-auto px-[15px] md:px-[40px] pt-2 md:pt-4">
         <div className="flex items-center justify-between gap-4 mb-6 md:mb-6">
           <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1]">
             Latest Work

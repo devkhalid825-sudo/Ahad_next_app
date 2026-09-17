@@ -18,11 +18,16 @@ const CAR_COLORS = [
   { id: '#4D3D1A', name: 'Desert Gold', hex: '#4D3D1A' },
 ];
 
+const FALLBACK_PREVIEW_IMG = '/assets/About-page/technology.webp';
+const SECONDARY_FALLBACK = '/assets/ElipseImages/hero/volve-configrator.webp';
+
 const LiveDemo = () => {
   const [activated, setActivated] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [iframeError, setIframeError] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [activeColor, setActiveColor] = useState(CAR_COLORS[0].id);
+  const [imgSrc, setImgSrc] = useState(technologyImg || FALLBACK_PREVIEW_IMG);
   const frameRef = useRef(null);
   const wrapperRef = useRef(null);
   const unloadTimer = useRef(null);
@@ -45,7 +50,7 @@ const LiveDemo = () => {
   // Continuously send Studio message as soon as Launch is clicked
   // Retries every 300ms for 10s to ensure PlayCanvas engine picks it up the exact millisecond its scripts initialize
   useEffect(() => {
-    if (!activated) return;
+    if (!activated || iframeError) return;
 
     // Send immediately
     sendStudio();
@@ -63,7 +68,18 @@ const LiveDemo = () => {
       clearInterval(interval);
       clearTimeout(stopTimer);
     };
-  }, [activated, sendStudio]);
+  }, [activated, iframeError, sendStudio]);
+
+  // Timeout protection: If iframe takes longer than 14 seconds and hasn't loaded, flag error gracefully
+  useEffect(() => {
+    if (!activated || iframeLoaded || iframeError) return;
+    const timeout = setTimeout(() => {
+      if (!iframeLoaded) {
+        setIframeError(true);
+      }
+    }, 14000);
+    return () => clearTimeout(timeout);
+  }, [activated, iframeLoaded, iframeError]);
 
   // Ensure 3D assets & Studio cubemap fully apply before fading out the loading screen (1.8s buffer)
   useEffect(() => {
@@ -95,6 +111,14 @@ const LiveDemo = () => {
   const handleLaunch = () => {
     setActivated(true);
     setIframeLoaded(false);
+    setIframeError(false);
+    setIsReady(false);
+  };
+
+  const handleClose = () => {
+    setActivated(false);
+    setIframeLoaded(false);
+    setIframeError(false);
     setIsReady(false);
   };
 
@@ -121,6 +145,7 @@ const LiveDemo = () => {
           unloadTimer.current = setTimeout(() => {
             setActivated(false);
             setIframeLoaded(false);
+            setIframeError(false);
             setIsReady(false);
           }, 5500);
         }
@@ -140,38 +165,83 @@ const LiveDemo = () => {
       <div className="relative w-full h-full min-h-[320px] lg:min-h-[420px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-[#0d0f1c]">
         {activated ? (
           <>
-            {/* Spinner with optimal timing for Studio transition */}
-            <div className={`absolute inset-0 z-[2] flex items-center justify-center bg-[#0d0f1c] transition-opacity duration-700 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-              <div className="flex flex-col items-center gap-3.5">
-                <div className="relative w-10 h-10 flex items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border-[3px] border-white/10" />
-                  <div className="absolute inset-0 rounded-full border-[3px] border-transparent border-t-[#4169E1] animate-spin" />
+            {/* Close Demo Button */}
+            <button
+              type="button"
+              onClick={handleClose}
+              aria-label="Close 3D Configurator"
+              className="absolute top-4 right-4 z-30 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg hover:scale-105 active:scale-95"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {iframeError ? (
+              /* Graceful Fallback if 3D Configurator Fails to Load */
+              <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center bg-[#0d0f1c] text-white p-6 text-center">
+                <div className="relative w-full h-full max-h-[220px] mb-4 overflow-hidden rounded-2xl border border-white/10">
+                  <img
+                    src={imgSrc}
+                    alt="Configurator Fallback Preview"
+                    className="w-full h-full object-cover filter brightness-75"
+                  />
+                  <div className="absolute inset-0 bg-black/40" />
                 </div>
-                <div className="flex flex-col items-center gap-1 text-center px-4">
-                  <p className="text-white/80 text-xs font-medium tracking-wide">Preparing Studio Environment</p>
-                  <p className="text-white/30 text-[11px]">Loading 3D assets & lighting…</p>
-                </div>
+                <p className="text-sm font-medium text-white/90 mb-1.5">3D Interactive Configurator Unavailable</p>
+                <p className="text-xs text-white/50 mb-4 max-w-xs">Viewing static preview model.</p>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="px-6 py-2.5 bg-[#4169E1] hover:bg-[#3558c8] text-white text-xs font-semibold rounded-full transition-all cursor-pointer shadow-md"
+                >
+                  Return to Preview
+                </button>
               </div>
-            </div>
-            <iframe
-              ref={frameRef}
-              src={PLAYCANVAS_SRC}
-              title="Elipse Studio 3D Car Configurator"
-              allow="autoplay; fullscreen; xr-spatial-tracking"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full border-0 z-[1] bg-[#0d0f1c]"
-              onLoad={() => {
-                setIframeLoaded(true);
-                sendStudio();
-              }}
-            />
+            ) : (
+              <>
+                {/* Spinner with optimal timing for Studio transition */}
+                <div className={`absolute inset-0 z-[2] flex items-center justify-center bg-[#0d0f1c] transition-opacity duration-700 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                  <div className="flex flex-col items-center gap-3.5">
+                    <div className="relative w-10 h-10 flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-[3px] border-white/10" />
+                      <div className="absolute inset-0 rounded-full border-[3px] border-transparent border-t-[#4169E1] animate-spin" />
+                    </div>
+                    <div className="flex flex-col items-center gap-1 text-center px-4">
+                      <p className="text-white/80 text-xs font-medium tracking-wide">Preparing Studio Environment</p>
+                      <p className="text-white/30 text-[11px]">Loading 3D assets & lighting…</p>
+                    </div>
+                  </div>
+                </div>
+                <iframe
+                  ref={frameRef}
+                  src={PLAYCANVAS_SRC}
+                  title="Elipse Studio 3D Car Configurator"
+                  allow="autoplay; fullscreen; xr-spatial-tracking"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full border-0 z-[1] bg-[#0d0f1c]"
+                  onError={() => setIframeError(true)}
+                  onLoad={() => {
+                    setIframeLoaded(true);
+                    sendStudio();
+                  }}
+                />
+              </>
+            )}
           </>
         ) : (
-          /* Preview image with Live Demo button */
+          /* Preview image with Live Demo button and safe fallback */
           <div className="relative w-full h-full min-h-[320px] lg:min-h-[420px] flex items-center justify-center overflow-hidden group">
             <img
-              src={technologyImg}
+              src={imgSrc}
               alt="Technology 3D Demo Preview"
+              onError={() => {
+                if (imgSrc !== FALLBACK_PREVIEW_IMG) {
+                  setImgSrc(FALLBACK_PREVIEW_IMG);
+                } else {
+                  setImgSrc(SECONDARY_FALLBACK);
+                }
+              }}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
             {/* Dark overlay for contrast */}

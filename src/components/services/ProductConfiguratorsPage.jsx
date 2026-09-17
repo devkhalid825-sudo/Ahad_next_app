@@ -210,12 +210,19 @@ const CAR_CONFIGURATOR_COLORS = [
   { id: 'grey', name: 'Gravity Grey', hex: '#9CA0A5' },
 ];
 
+const KIA_FALLBACK_IMG = '/assets/About-page/kia.webp';
+const SECONDARY_FALLBACK = '/assets/ElipseImages/hero/volve-configrator.webp';
+
 /**
  * Interactive Live PlayCanvas 3D Configurator Component
+ * (On-demand WebGL launch for optimal SEO, Core Web Vitals & crash resilience)
  */
 const CarConfiguratorViewer = () => {
+  const [activated, setActivated] = useState(false);
   const [activeColor, setActiveColor] = useState(CAR_CONFIGURATOR_COLORS[0].id);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [iframeError, setIframeError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(kiaImg || KIA_FALLBACK_IMG);
   const frameRef = useRef(null);
 
   const sendColor = (colorId) => {
@@ -234,6 +241,17 @@ const CarConfiguratorViewer = () => {
     }
   };
 
+  // Timeout protection: If iframe takes longer than 14 seconds and hasn't loaded, flag error gracefully
+  useEffect(() => {
+    if (!activated || isLoaded || iframeError) return;
+    const timeout = setTimeout(() => {
+      if (!isLoaded) {
+        setIframeError(true);
+      }
+    }, 14000);
+    return () => clearTimeout(timeout);
+  }, [activated, isLoaded, iframeError]);
+
   const handleIframeLoad = () => {
     setIsLoaded(true);
     setTimeout(() => {
@@ -241,59 +259,145 @@ const CarConfiguratorViewer = () => {
     }, 1000);
   };
 
+  const handleLaunch = () => {
+    setActivated(true);
+    setIsLoaded(false);
+    setIframeError(false);
+  };
+
+  const handleClose = () => {
+    setActivated(false);
+    setIsLoaded(false);
+    setIframeError(false);
+  };
+
   return (
     <div className="relative w-full max-w-5xl mx-auto aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_50px_rgba(0,0,0,0.8)] bg-[#0E0E10] group">
-      {/* Loading Spinner */}
-      {!isLoaded && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2.5 sm:gap-3 bg-[#0E0E10]">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-[#4169E1]/20 border-t-[#4169E1] rounded-full animate-spin" />
-          <p className="text-[10px] sm:text-xs font-medium tracking-wide uppercase text-zinc-400">
-            Initializing Real-Time 3D Engine...
-          </p>
+      {activated ? (
+        <>
+          {/* Close Demo Button */}
+          <button
+            type="button"
+            onClick={handleClose}
+            aria-label="Close 3D Configurator"
+            className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg hover:scale-105 active:scale-95"
+          >
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {iframeError ? (
+            /* Graceful Fallback if 3D Configurator Fails to Load */
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#0d0f1c] text-white p-6 text-center">
+              <div className="relative w-full h-full max-h-[220px] mb-4 overflow-hidden rounded-2xl border border-white/10">
+                <img
+                  src={imgSrc}
+                  alt="Kia Sportage 3D Configurator Fallback"
+                  className="w-full h-full object-cover filter brightness-75"
+                />
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <p className="text-sm font-medium text-white/90 mb-1.5">3D Interactive Configurator Unavailable</p>
+              <p className="text-xs text-white/50 mb-4 max-w-xs">Viewing static model preview.</p>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="px-6 py-2.5 bg-[#4169E1] hover:bg-[#3558c8] text-white text-xs font-semibold rounded-full transition-all cursor-pointer shadow-md"
+              >
+                Return to Preview
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Loading Spinner */}
+              {!isLoaded && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2.5 sm:gap-3 bg-[#0E0E10]">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-[#4169E1]/20 border-t-[#4169E1] rounded-full animate-spin" />
+                  <p className="text-[10px] sm:text-xs font-medium tracking-wide uppercase text-zinc-400">
+                    Initializing Real-Time 3D Engine...
+                  </p>
+                </div>
+              )}
+
+              {/* Live PlayCanvas Configurator Iframe */}
+              <iframe
+                ref={frameRef}
+                src={CAR_CONFIGURATOR_SRC}
+                title="Kia Sportage Interactive 3D Product Configurator"
+                allow="fullscreen; xr-spatial-tracking"
+                onError={() => setIframeError(true)}
+                onLoad={handleIframeLoad}
+                className="w-full h-full border-0 relative z-0 bg-transparent"
+              />
+
+              {/* Centered Floating Luxury Color Dock */}
+              <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 pointer-events-auto max-w-[95%] sm:max-w-[92%]">
+                <div className="flex items-center gap-1.5 sm:gap-3 bg-black/85 backdrop-blur-2xl px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
+                  <div className="flex items-center gap-1.5 sm:gap-2 pr-2 sm:pr-2.5 border-r border-white/15">
+                    <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                    <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white whitespace-nowrap">
+                      {CAR_CONFIGURATOR_COLORS.find((c) => c.id === activeColor)?.name || 'Gravity Blue'}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {CAR_CONFIGURATOR_COLORS.map((c) => (
+                      <button
+                        key={c.id}
+                        onClick={() => sendColor(c.id)}
+                        title={c.name}
+                        className={`w-5 h-5 sm:w-7 sm:h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer ${activeColor === c.id
+                          ? 'scale-110 ring-2 ring-white shadow-[0_0_16px_rgba(255,255,255,0.8)]'
+                          : 'opacity-70 hover:opacity-100 hover:scale-105 ring-1 ring-white/20'
+                          }`}
+                        style={{ backgroundColor: c.hex }}
+                        aria-label={c.name}
+                      >
+                        {activeColor === c.id && (
+                          <span className={`w-1.5 h-1.5 rounded-full ${c.hex === '#FFFFFF' ? 'bg-black' : 'bg-white'}`} />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      ) : (
+        /* Preview Image with Launch Configurator Button (SEO Optimized, Fast LCP) */
+        <div className="relative w-full h-full flex items-center justify-center overflow-hidden group">
+          <img
+            src={imgSrc}
+            alt="Kia Sportage 3D Configurator Real-Time WebGL Preview"
+            onError={() => {
+              if (imgSrc !== KIA_FALLBACK_IMG) {
+                setImgSrc(KIA_FALLBACK_IMG);
+              } else {
+                setImgSrc(SECONDARY_FALLBACK);
+              }
+            }}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+          {/* Subtle Contrast Overlay */}
+          <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px] transition-colors duration-300 group-hover:bg-black/25" />
+
+          {/* Launch Configurator Button */}
+          <button
+            type="button"
+            onClick={handleLaunch}
+            className="relative z-10 px-7 py-3.5 sm:px-9 sm:py-4 bg-[#4169E1] hover:bg-[#3558c8] active:bg-[#2e4fba] text-white text-xs sm:text-sm md:text-base font-semibold tracking-wide rounded-full transition-all duration-300 shadow-[0_8px_25px_rgba(65,105,225,0.5)] hover:shadow-[0_12px_35px_rgba(65,105,225,0.7)] hover:scale-105 active:scale-95 flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none"
+          >
+            <svg
+              className="w-4 h-4 sm:w-5 sm:h-5 fill-current"
+              viewBox="0 0 24 24"
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <span>Launch 3D Configurator</span>
+          </button>
         </div>
       )}
-
-      {/* Live PlayCanvas Configurator Iframe */}
-      <iframe
-        ref={frameRef}
-        src={CAR_CONFIGURATOR_SRC}
-        title="Interactive 3D Product Configurator Reel & Live Experience"
-        loading="eager"
-        allow="fullscreen; xr-spatial-tracking"
-        onLoad={handleIframeLoad}
-        className="w-full h-full border-0 relative z-0 bg-transparent"
-      />
-
-      {/* Centered Floating Luxury Color Dock */}
-      <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 pointer-events-auto max-w-[95%] sm:max-w-[92%]">
-        <div className="flex items-center gap-1.5 sm:gap-3 bg-black/85 backdrop-blur-2xl px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
-          <div className="flex items-center gap-1.5 sm:gap-2 pr-2 sm:pr-2.5 border-r border-white/15">
-            <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-            <span className="text-[10px] sm:text-xs font-semibold tracking-wide text-white whitespace-nowrap">
-              {CAR_CONFIGURATOR_COLORS.find((c) => c.id === activeColor)?.name || 'Gravity Blue'}
-            </span>
-          </div>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            {CAR_CONFIGURATOR_COLORS.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => sendColor(c.id)}
-                title={c.name}
-                className={`w-5 h-5 sm:w-7 sm:h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer ${activeColor === c.id
-                  ? 'scale-110 ring-2 ring-white shadow-[0_0_16px_rgba(255,255,255,0.8)]'
-                  : 'opacity-70 hover:opacity-100 hover:scale-105 ring-1 ring-white/20'
-                  }`}
-                style={{ backgroundColor: c.hex }}
-                aria-label={c.name}
-              >
-                {activeColor === c.id && (
-                  <span className={`w-1.5 h-1.5 rounded-full ${c.hex === '#FFFFFF' ? 'bg-black' : 'bg-white'}`} />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
