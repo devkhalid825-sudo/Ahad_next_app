@@ -186,13 +186,13 @@ const Hero = () => {
         <Header />
 
         {/* Main Desktop Carousel Container */}
-        <div className="flex-1 w-full max-w-[1780px] mx-auto flex flex-col justify-center items-center px-4 sm:px-6 lg:px-10 relative my-auto">
+        <div className="flex-1 w-full max-w-[1920px] mx-auto flex flex-col justify-center items-center px-2 sm:px-4 lg:px-6 relative my-auto">
           <div className="relative w-full flex items-center justify-center">
-            {/* Left Arrow Navigation Button (Clean Chevron with Balanced Gap from Video) */}
+            {/* Left Navigation Arrow (Clean Minimal Chevron without Circle) */}
             <button
               onClick={handleDesktopPrev}
               aria-label="Previous Slide"
-              className="absolute left-3 sm:left-6 lg:left-10 xl:left-12 z-30 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]"
+              className="absolute left-1 sm:left-3 lg:left-5 xl:left-8 z-40 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]"
             >
               <svg
                 className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 stroke-current stroke-[3]"
@@ -203,11 +203,11 @@ const Hero = () => {
               </svg>
             </button>
 
-            {/* Right Arrow Navigation Button (Clean Chevron with Balanced Gap from Video) */}
+            {/* Right Navigation Arrow (Clean Minimal Chevron without Circle) */}
             <button
               onClick={handleDesktopNext}
               aria-label="Next Slide"
-              className="absolute right-3 sm:right-6 lg:right-10 xl:right-12 z-30 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]"
+              className="absolute right-1 sm:right-3 lg:right-5 xl:right-8 z-40 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]"
             >
               <svg
                 className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 stroke-current stroke-[3]"
@@ -220,15 +220,15 @@ const Hero = () => {
 
             {/* 3D Multi-Card Stage */}
             <div className="relative w-full flex items-center justify-center overflow-visible">
-              {/* Left Peeking Card */}
+              {/* Left Peeking Card (Crisp HD Video Preview, No Blur) */}
               <div
                 onClick={handleDesktopPrev}
-                className="absolute left-[-1%] xl:left-[1%] w-[18vw] max-w-[280px] h-[85%] max-h-[720px] bg-neutral-900 rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-40 hover:opacity-75 transition-all duration-500 cursor-pointer shadow-2xl border border-white/15 scale-90 pointer-events-auto"
+                className="absolute left-[-2%] xl:left-[0%] 2xl:left-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-50 hover:opacity-90 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto"
               >
                 <video
                   key={`prev-${prevDesktopSlide.video}`}
                   src={prevDesktopSlide.video}
-                  className="w-full h-full object-cover filter brightness-75 pointer-events-none"
+                  className="w-full h-full object-cover pointer-events-none"
                   autoPlay
                   muted
                   loop
@@ -236,8 +236,14 @@ const Hero = () => {
                 />
               </div>
 
-              {/* Active Large Center Card (Exact 16:9 Aspect Ratio - No Video Cut) */}
-              <div className="relative w-[88vw] md:w-[82vw] lg:w-[78vw] xl:w-[76vw] 2xl:w-[74vw] max-w-[1400px] 2xl:max-w-[1550px] aspect-video max-h-[75vh] 2xl:max-h-[80vh] bg-black rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] overflow-hidden shadow-[0_0_45px_rgba(255,255,255,0.12),0_30px_90px_rgba(0,0,0,0.9)] border border-white/30 z-20 flex flex-col justify-end transition-all duration-500">
+              {/* Active Large Center Card (Strict 16:9 Proportion - Zero Cutting on All Screens) */}
+              <div
+                style={{
+                  width: 'min(78vw, calc((100dvh - 160px) * 16 / 9), 1400px)',
+                  aspectRatio: '16 / 9',
+                }}
+                className="relative bg-black rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] overflow-hidden shadow-[0_0_45px_rgba(255,255,255,0.12),0_30px_90px_rgba(0,0,0,0.9)] border border-white/30 z-20 flex flex-col justify-end transition-all duration-500 shrink-0"
+              >
                 {/* Active Video Player */}
                 <video
                   ref={desktopVideoRef}
@@ -253,15 +259,15 @@ const Hero = () => {
                 />
               </div>
 
-              {/* Right Peeking Card */}
+              {/* Right Peeking Card (Crisp HD Video Preview, No Blur) */}
               <div
                 onClick={handleDesktopNext}
-                className="absolute right-[-1%] xl:right-[1%] w-[18vw] max-w-[280px] h-[85%] max-h-[720px] bg-neutral-900 rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-40 hover:opacity-75 transition-all duration-500 cursor-pointer shadow-2xl border border-white/15 scale-90 pointer-events-auto"
+                className="absolute right-[-2%] xl:right-[0%] 2xl:right-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-50 hover:opacity-90 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto"
               >
                 <video
                   key={`next-${nextDesktopSlide.video}`}
                   src={nextDesktopSlide.video}
-                  className="w-full h-full object-cover filter brightness-75 pointer-events-none"
+                  className="w-full h-full object-cover pointer-events-none"
                   autoPlay
                   muted
                   loop
