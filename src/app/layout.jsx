@@ -74,7 +74,7 @@ const GTM_ID = 'GTM-P38LKZMN';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <Script id="gtm-idle-delayed" strategy="afterInteractive">
           {`
@@ -120,12 +120,20 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-BEL0YQZ0G0');
           `}
         </Script>
+        {/* Instantly.ai / Leadsy Website Visitor Pixel */}
+        <Script
+          id="vtag-ai-js"
+          src="https://r2.leadsy.ai/tag.js"
+          data-pid="1Esz3xQn945NMkX0S"
+          data-version="062024"
+          strategy="afterInteractive"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
         />
       </head>
-      <body className="font-sans antialiased bg-black text-white">
+      <body className="font-sans antialiased bg-black text-white" suppressHydrationWarning>
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

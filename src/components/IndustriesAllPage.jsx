@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { m as motion } from 'framer-motion';
 import { FiSearch, FiArrowRight } from '@/components/ui/Icons';
 import { getImgSrc } from '../utils/api';
@@ -43,7 +43,8 @@ const iconMap = {
 const categories = ["ALL", "Real Estate", "Architecture", "Interior Design", "Industrial", "Advertising", "Healthcare", "Education & Training", "Retail"];
 
 const IndustriesAllPage = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
+    const navigate = (url) => router.push(url);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useState('ALL');
     const [industries, setIndustries] = useState([]);

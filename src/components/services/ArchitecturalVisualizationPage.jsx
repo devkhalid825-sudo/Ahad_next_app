@@ -60,7 +60,7 @@ const ARCHVIZ_BUILDS = [
     image: timBarthImg,
     tech: 'Unreal Engine 5 · Lumen GI',
     behanceLink: 'https://www.behance.net/gallery/240770789/Interactive-Virtual-Tour-Unreal-Engine',
-    youtubeLink: 'https://www.youtube.com/watch?v=YzLNRBsug_Q',
+    youtubeLink: 'https://youtu.be/aXGkn51OToA?si=nBWPTScOYEsyamZr',
   },
   {
     title: ' 360° Virtual Tour',

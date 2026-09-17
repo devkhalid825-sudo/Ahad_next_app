@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { getImgSrc } from '../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { m as motion } from 'framer-motion';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
@@ -26,7 +26,8 @@ const services = [
 ];
 
 const UKServicesPage = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
+  const navigate = (url) => router.push(url);
 
     useEffect(() => {
         window.scrollTo(0, 0);

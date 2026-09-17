@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { SITE_URL } from '../utils/api';
 import { m as motion, AnimatePresence } from 'framer-motion';
 import { FaThLarge, FaPaperPlane } from '@/components/ui/Icons';
@@ -127,7 +127,8 @@ const IndustryLayout = ({
     faqs,
     finalCta
 }) => {
-    const navigate = useNavigate();
+    const router = useRouter();
+    const navigate = (url) => router.push(url);
     const [openFaq, setOpenFaq] = useState(null);
 
     const handleStartProject = () => navigate('/contact');

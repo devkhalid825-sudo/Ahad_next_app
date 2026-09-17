@@ -1,6 +1,4 @@
-﻿﻿'use client';
-
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 /**
  * ServiceRelatedLinks — internal linking section for service pages.
@@ -45,7 +43,7 @@ const ServiceRelatedLinks = ({ relatedServices = [], relatedArticles = [] }) => 
                 {relatedServices.map((svc, i) => (
                   <li key={i} className="border-b border-[#1A1A1A] last:border-0">
                     <Link
-                      to={svc.to}
+                      href={svc.to}
                       className="flex items-center justify-between py-4 md:py-5 text-[#F2F0EB] hover:text-[#4169E1] transition-colors duration-200 group"
                     >
                       <span className="text-sm md:text-base font-light">{svc.label}</span>
@@ -69,7 +67,7 @@ const ServiceRelatedLinks = ({ relatedServices = [], relatedArticles = [] }) => 
                 {relatedArticles.map((art, i) => (
                   <li key={i} className="border-b border-[#1A1A1A] last:border-0">
                     <Link
-                      to={art.to}
+                      href={art.to}
                       className="flex items-center justify-between py-4 md:py-5 text-[#F2F0EB] hover:text-[#4169E1] transition-colors duration-200 group"
                     >
                       <span className="text-sm md:text-base font-light">{art.label}</span>

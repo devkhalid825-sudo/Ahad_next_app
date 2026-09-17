@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Contact from "../features/Contact";
@@ -19,7 +20,7 @@ const stackImg = getImgSrc(_stackImg);
 
 const CTA = ({ label, to = "/contact", className = "" }) =>
   !label ? null : (
-    <Link to={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>
+    <Link href={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>
       {label} <span aria-hidden="true">→</span>
     </Link>
   );
@@ -94,7 +95,8 @@ const TextCarousel = ({ texts }) => { const [current, setCurrent] = useState(0);
 };
 
 const UKProductVisualisationPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const navigate = (url) => router.push(url);
   const [openFaq, setOpenFaq] = useState(null);
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const handleStartProject = () => navigate('/contact');

@@ -48,6 +48,13 @@ const serviceMeta = {
     keywords: '3d product visualization, 3d product rendering, product visualization services, e-commerce 3d rendering, photorealistic product rendering',
     ogImage: `${SITE_URL}/assets/services/og-3d-product-visualization.jpg`,
     schemaType: 'Service',
+    video: {
+      name: 'Ahmed Foods Crystal Jelly 3D Commercial Animation — Elipse Studio',
+      description: 'See how Elipse Studio crafts cinematic 3D product visualization, fluid simulations, and commercial CGI animation.',
+      thumbnailUrl: 'https://img.youtube.com/vi/BsKw4i6riRw/maxresdefault.jpg',
+      uploadDate: '2024-01-01',
+      embedUrl: 'https://www.youtube.com/embed/BsKw4i6riRw',
+    },
   },
   'cinematic-3d-product-commercial-visuals': {
     title: 'Cinematic 3D Product & Commercial Visuals',
@@ -55,6 +62,13 @@ const serviceMeta = {
     keywords: '3d product visualization, cinematic 3d, cgi commercials, 3d product animation',
     ogImage: `${SITE_URL}/assets/services/og-3d-product-visualization.jpg`,
     schemaType: 'Service',
+    video: {
+      name: 'Ahmed Foods Crystal Jelly 3D Commercial Animation — Elipse Studio',
+      description: 'See how Elipse Studio crafts cinematic 3D product visualization, fluid simulations, and commercial CGI animation.',
+      thumbnailUrl: 'https://img.youtube.com/vi/BsKw4i6riRw/maxresdefault.jpg',
+      uploadDate: '2024-01-01',
+      embedUrl: 'https://www.youtube.com/embed/BsKw4i6riRw',
+    },
   },
   '3d-product-configurators': {
     title: '3D Product Configurators',

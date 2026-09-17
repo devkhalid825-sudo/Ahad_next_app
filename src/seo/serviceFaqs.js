@@ -1,4 +1,4 @@
-export const SERVICE_FAQS = {
+ export const SERVICE_FAQS = {
   'architectural-visualization': [
     {
       q: 'What is architectural visualization?',
@@ -38,8 +38,48 @@ export const SERVICE_FAQS = {
       q: 'Can 3D product renders be used in WebAR?',
       a: 'Yes. We optimize CAD/CGI assets into lightweight USDZ and GLTF models for instant AR viewing on iOS and Android devices without app downloads.',
     },
+    {
+      q: 'Do you create 3D anamorphic billboards and fluid VFX commercials?',
+      a: 'Yes. We produce high-impact forced-perspective 3D anamorphic corner LED billboard animations, fluid splash simulations (beverages, cosmetic creams), and slow-motion particle dynamics.',
+    },
+  ],
+  'cinematic-3d-product-commercial-visuals': [
+    {
+      q: 'What is cinematic 3D product visualization?',
+      a: 'Cinematic 3D product visualization combines hyperrealistic CGI rendering, fluid dynamics, macro camera choreography, and Hollywood-grade lighting to create compelling commercial visuals.',
+    },
+    {
+      q: 'What assets do you require to start?',
+      a: 'CAD data (STEP, IGES, SolidWorks, OBJ), physical product samples, or 2D technical drawings along with mood boards and brand guidelines.',
+    },
   ],
   '3d-product-configurators': [
+    {
+      q: 'What is a 3D web product configurator?',
+      a: 'A WebGL-powered 3D configurator allows users to customize materials, colors, components, and dimensions of a product in real-time within their browser.',
+    },
+    {
+      q: 'Which e-commerce platforms can integrate 3D configurators?',
+      a: 'Our configurators seamlessly integrate with Shopify, WooCommerce, Magento, BigCommerce, Salesforce Commerce Cloud, and custom headless web stacks.',
+    },
+    {
+      q: 'Does it work smoothly on mobile browsers?',
+      a: 'Yes. We utilize Three.js / WebGL optimization techniques to guarantee high FPS performance and instant loading across iOS Safari and Android Chrome.',
+    },
+    {
+      q: 'Can configurators calculate prices dynamically?',
+      a: 'Yes. Custom options automatically update price breakdowns, generate build specifications, and feed directly into cart checkout.',
+    },
+    {
+      q: 'Can customers view configured products in Augmented Reality (WebAR)?',
+      a: 'Yes. Our 3D configurators feature built-in WebAR support (Apple Quick Look and Google Scene Viewer) allowing shoppers to view their custom build in their real environment at 1:1 scale without downloading an app.',
+    },
+    {
+      q: 'What 3D and CAD formats can you work with to build a configurator?',
+      a: 'We work with industrial CAD formats (STEP, IGES, SolidWorks, Rhino, DWG) as well as polygonal 3D assets (FBX, OBJ, Blender, glTF/GLB), which we optimize for fast web streaming.',
+    },
+  ],
+  'interactive-3d-web-product-configurators': [
     {
       q: 'What is a 3D web product configurator?',
       a: 'A WebGL-powered 3D configurator allows users to customize materials, colors, components, and dimensions of a product in real-time within their browser.',

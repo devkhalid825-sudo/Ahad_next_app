@@ -1,7 +1,8 @@
 ﻿'use client';
 
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Contact from "../features/Contact";
@@ -81,7 +82,7 @@ const af31 = getImgSrc(_af31);
 
 const galleryImages = [af1, af2, af3, af4, af5, af6, af7, af8, af9, af10, af11, af12, af13, af14, af15, af16, af17, af18, af19, af20, af21, af22, af23, af24, af25, af26, af27, af28, af29, af30, af31];
 
-const CTA = ({ label, to = "/contact", className = "" }) => !label ? null : (<Link to={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>{label} <span aria-hidden="true">→</span></Link>);
+const CTA = ({ label, to = "/contact", className = "" }) => !label ? null : (<Link href={to} className={`inline-flex items-center gap-2 text-[13px] font-semibold px-[20px] py-[10px] bg-[#4169E1] text-white rounded-[6px] border border-[#4169E1] hover:bg-[#3158D4] transition-all duration-200 ${className}`}>{label} <span aria-hidden="true">→</span></Link>);
 const Eyebrow = ({ children }) => <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-[#4169E1] mb-[0.75rem]">{children}</p>;
 const SectionTitle = ({ children, className = "" }) => <h2 className={`text-2xl md:text-4xl lg:text-[44px] font-medium mb-10 md:mb-20 tracking-tight leading-[1.1] text-[#F2F0EB] ${className}`}>{children}</h2>;
 const ReadText = ({ text }) => <p className="text-base md:text-lg lg:text-xl font-light leading-relaxed text-white/70 mb-6 last:mb-0">{text}</p>;
@@ -96,7 +97,8 @@ const TextCarousel = ({ texts }) => { const [current, setCurrent] = useState(0);
 };
 
 const AnimationPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const navigate = (url) => router.push(url);
   const [openFaq, setOpenFaq] = useState(null);
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const handleStartProject = () => navigate('/contact');

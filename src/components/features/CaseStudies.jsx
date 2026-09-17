@@ -10,7 +10,7 @@ import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-const DEFAULT_IMAGE = '/assets/og-image.png';
+const DEFAULT_IMAGE = '/assets/logo-og.webp';
 const DEFAULT_IMAGE_LIGHT = 'https://placehold.co/800x450/222/888?text=Case+Study';
 
 const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
