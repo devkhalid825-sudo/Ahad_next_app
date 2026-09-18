@@ -107,7 +107,7 @@ const ARCHVIZ_BUILDS = [
 const ARCHVIZ_TABS = [
   { id: 'all', label: 'All Projects' },
   { id: 'vr', label: 'VR' },
-  { id: 'architecture', label: 'Architecture' },
+  { id: 'master-plan', label: 'Master Plan' },
   { id: '360', label: '360° Virtual Tour' },
   { id: '3d-viz', label: '3D Visualization' },
 ];
@@ -270,7 +270,9 @@ const ArchitecturalVisualizationPage = () => {
     if (activeTab === 'all') return ARCHVIZ_BUILDS;
     return ARCHVIZ_BUILDS.filter((item) => {
       if (activeTab === 'vr') return item.tags?.includes('VR');
-      if (activeTab === 'architecture') return item.tags?.includes('Architecture');
+      if (activeTab === 'master-plan') {
+        return item.tags?.includes('Master Plan') || item.category?.toLowerCase().includes('master');
+      }
       if (activeTab === '360') return item.tags?.includes('360');
       if (activeTab === '3d-viz') return item.tags?.includes('3D Visualization');
       return true;
@@ -508,7 +510,7 @@ const ArchitecturalVisualizationPage = () => {
                           ? 'bg-purple-600/90 text-white border border-purple-400/40'
                           : tag === '360'
                           ? 'bg-emerald-600/90 text-white border border-emerald-400/40'
-                          : tag === 'Architecture'
+                          : tag === 'Master Plan' || tag === 'Architecture'
                           ? 'bg-[#4169E1]/90 text-white border border-[#4169E1]/40'
                           : 'bg-black/70 text-white/90 border border-white/20'
                       }`}
