@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ArchVizHeader from '../layouts/ArchVizHeader';
 import Footer from '../layouts/Footer';
@@ -31,6 +31,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Love Apartment | 3D Visualization & VR Experience',
     category: 'Luxury Residential',
+    tags: ['VR', '3D Visualization', 'Architecture'],
     desc: 'High-end interior & exterior 3D visualization and immersive virtual reality experience crafted for modern luxury apartment marketing.',
     image: loveImg,
     tech: 'Interior CGI · VR Experience',
@@ -39,6 +40,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Zenith By Amber',
     category: 'High-Rise Tower',
+    tags: ['Architecture', '3D Visualization'],
     desc: 'Complete exterior architectural visualization package for a signature luxury high-rise tower, emphasizing structural geometry and urban skyline presence.',
     image: zenithImg,
     tech: 'Tower CGI · Exterior Stills',
@@ -48,6 +50,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Khoj Resort Architectural Edit',
     category: 'Cinematic Film',
+    tags: ['Architecture', '3D Visualization'],
     desc: 'A cinematic architectural animation reel showcasing a serene eco-resort development nestled in nature, integrating natural sunlight and tranquil waterside living.',
     image: khojImg,
     tech: '4K Film · Hospitality',
@@ -56,6 +59,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Interactive Virtual Tour & Flythrough',
     category: 'Unreal Engine 5',
+    tags: ['VR', 'Architecture', '3D Visualization'],
     desc: 'Interactive real-time property walkthrough built in Unreal Engine. Allows prospective buyers to explore interiors with dynamic lighting and interactive fixtures.',
     image: timBarthImg,
     tech: 'Unreal Engine 5 · Lumen GI',
@@ -63,8 +67,9 @@ const ARCHVIZ_BUILDS = [
     youtubeLink: 'https://youtu.be/aXGkn51OToA?si=nBWPTScOYEsyamZr',
   },
   {
-    title: ' 360° Virtual Tour',
+    title: '360° Virtual Tour (Kumar Residence)',
     category: 'Web 360° Tour',
+    tags: ['360', 'Architecture'],
     desc: 'Full web-based panoramic tour of an architectural modern residence. Enables instant interactive walkthroughs on client phones and tablets without software installation.',
     image: kumarImg,
     tech: 'Web 360° · Luxury Residence',
@@ -73,6 +78,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Penthouse VR Walkthrough',
     category: 'VR Walkthrough',
+    tags: ['VR', 'Architecture'],
     desc: 'Immersive VR showcase for luxury off-plan penthouses. Allows international buyers to walk through bedrooms, balconies, and living areas with real-scale spatial perception.',
     image: penthouseImg,
     tech: 'Meta Quest VR · Off-Plan Sales',
@@ -81,6 +87,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Modern Villa | VR & 3D Visualization',
     category: 'Modern Villa',
+    tags: ['Architecture', 'VR', '3D Visualization'],
     desc: 'Complete exterior architecture and interior living suite CGI for an ultra-modern minimalist villa, accompanied by real-time VR walk simulation.',
     image: villaImg,
     tech: 'Villa CGI · VR Capture',
@@ -89,11 +96,20 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Classic Villa | VR & 3D Visualization',
     category: 'Classic Architecture',
+    tags: ['Architecture', '3D Visualization'],
     desc: 'Intricate classical stone detailing, grand porticos, symmetrical colonnades, and opulent European estate rendering for private development marketing.',
     image: classicVillaImg,
     tech: 'Neoclassical · Estate CGI',
     behanceLink: 'https://www.behance.net/gallery/220332665/Classic-Villa-Visualization',
   },
+];
+
+const ARCHVIZ_TABS = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'vr', label: 'VR' },
+  { id: 'architecture', label: 'Architecture' },
+  { id: '360', label: '360° Virtual Tour' },
+  { id: '3d-viz', label: '3D Visualization' },
 ];
 
 // Archviz Capabilities Cards
@@ -244,10 +260,22 @@ const CapabilitiesGrid = () => {
 
 const ArchitecturalVisualizationPage = () => {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const filteredBuilds = useMemo(() => {
+    if (activeTab === 'all') return ARCHVIZ_BUILDS;
+    return ARCHVIZ_BUILDS.filter((item) => {
+      if (activeTab === 'vr') return item.tags?.includes('VR');
+      if (activeTab === 'architecture') return item.tags?.includes('Architecture');
+      if (activeTab === '360') return item.tags?.includes('360');
+      if (activeTab === '3d-viz') return item.tags?.includes('3D Visualization');
+      return true;
+    });
+  }, [activeTab]);
 
   return (
     <div
@@ -438,16 +466,58 @@ const ArchitecturalVisualizationPage = () => {
           <p className="text-sm sm:text-base md:text-lg mt-2.5 sm:mt-3 leading-relaxed font-light text-zinc-300">
             Explore real client projects delivered by Elipse Studio across towers, luxury villas, master communities, and interactive real-time environments.
           </p>
+
+          {/* Interactive Category Filter Tabs */}
+          <div className="flex justify-center items-center mt-7 sm:mt-9">
+            <div className="inline-flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+              {ARCHVIZ_TABS.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap ${
+                      isActive
+                        ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] scale-[1.02]'
+                        : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
-          {ARCHVIZ_BUILDS.map((item, idx) => (
+          {filteredBuilds.map((item, idx) => (
             <div
               key={idx}
               className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
             >
               {/* Image Preview Container (16:9 HD Size) */}
               <div className="relative aspect-video overflow-hidden bg-black/40">
+                {/* Category Badges / Tags */}
+                <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5 pointer-events-none">
+                  {item.tags?.map((tag, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className={`px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-md ${
+                        tag === 'VR'
+                          ? 'bg-purple-600/90 text-white border border-purple-400/40'
+                          : tag === '360'
+                          ? 'bg-emerald-600/90 text-white border border-emerald-400/40'
+                          : tag === 'Architecture'
+                          ? 'bg-[#4169E1]/90 text-white border border-[#4169E1]/40'
+                          : 'bg-black/70 text-white/90 border border-white/20'
+                      }`}
+                    >
+                      {tag === '360' ? '360° Tour' : tag}
+                    </span>
+                  ))}
+                </div>
+
                 <img
                   src={item.image}
                   alt={item.title}

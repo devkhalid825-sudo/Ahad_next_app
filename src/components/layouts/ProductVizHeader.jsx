@@ -261,6 +261,14 @@ const ProductVizHeader = () => {
                         </div>
                       </div>
                     </>
+                  ) : item.name === 'Contact' ? (
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="inline-flex items-center justify-center -ml-4 sm:-ml-6 md:-ml-8 px-4 sm:px-6 md:px-8 py-1 sm:py-2 md:py-2.5 border-2 border-white bg-white text-black hover:bg-[#4169E1] hover:border-[#4169E1] hover:text-white text-2xl md:text-4xl lg:text-5xl max-h-[900px]:text-xs max-h-[900px]:sm:text-sm max-h-[900px]:md:text-base max-h-[900px]:lg:text-lg font-bold rounded-xl md:rounded-2xl transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.25)] hover:shadow-[0_0_35px_rgba(65,105,225,0.6)] hover:scale-105 my-1"
+                    >
+                      {item.name}
+                    </Link>
                   ) : (
                     <Link
                       href={item.href}

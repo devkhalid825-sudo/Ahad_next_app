@@ -220,20 +220,23 @@ const Hero = () => {
 
             {/* 3D Multi-Card Stage */}
             <div className="relative w-full flex items-center justify-center overflow-visible">
-              {/* Left Peeking Card (Crisp HD Video Preview, No Blur) */}
+              {/* Left Peeking Card (Subtle Blurred & Gradient Darkened Preview) */}
               <div
                 onClick={handleDesktopPrev}
-                className="absolute left-[-2%] xl:left-[0%] 2xl:left-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-50 hover:opacity-90 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto"
+                className="absolute left-[-2%] xl:left-[0%] 2xl:left-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-40 hover:opacity-70 transition-all duration-500 cursor-pointer shadow-2xl border border-white/10 pointer-events-auto group"
               >
                 <video
                   key={`prev-${prevDesktopSlide.video}`}
                   src={prevDesktopSlide.video}
-                  className="w-full h-full object-cover pointer-events-none"
+                  className="w-full h-full object-cover pointer-events-none filter blur-[4px] scale-110 brightness-75 transition-transform duration-500 group-hover:scale-105"
                   autoPlay
                   muted
                   loop
                   playsInline
                 />
+                {/* Dark Blur Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/35 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60 pointer-events-none" />
               </div>
 
               {/* Active Large Center Card (Strict 16:9 Proportion - Zero Cutting on All Screens) */}
@@ -259,20 +262,23 @@ const Hero = () => {
                 />
               </div>
 
-              {/* Right Peeking Card (Crisp HD Video Preview, No Blur) */}
+              {/* Right Peeking Card (Subtle Blurred & Gradient Darkened Preview) */}
               <div
                 onClick={handleDesktopNext}
-                className="absolute right-[-2%] xl:right-[0%] 2xl:right-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-50 hover:opacity-90 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto"
+                className="absolute right-[-2%] xl:right-[0%] 2xl:right-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-40 hover:opacity-70 transition-all duration-500 cursor-pointer shadow-2xl border border-white/10 pointer-events-auto group"
               >
                 <video
                   key={`next-${nextDesktopSlide.video}`}
                   src={nextDesktopSlide.video}
-                  className="w-full h-full object-cover pointer-events-none"
+                  className="w-full h-full object-cover pointer-events-none filter blur-[4px] scale-110 brightness-75 transition-transform duration-500 group-hover:scale-105"
                   autoPlay
                   muted
                   loop
                   playsInline
                 />
+                {/* Dark Blur Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/65 to-black/35 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60 pointer-events-none" />
               </div>
             </div>
           </div>

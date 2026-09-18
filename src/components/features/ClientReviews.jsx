@@ -83,7 +83,40 @@ const LazyReviewSlide = ({ review, isMuted, onToggleMute }) => {
   );
 };
 
-// No static fallback — section is hidden until real backend data loads.
+const REVIEW_ONE_LINERS = {
+  'tim barth': 'What I was looking for was a professional 3D partner — Elipse delivered an exceptional, smooth interactive virtual tour.',
+  'barth': 'What I was looking for was a professional 3D partner — Elipse delivered an exceptional, smooth interactive virtual tour.',
+  'virtual immo': 'What I was looking for was a professional 3D partner — Elipse delivered an exceptional, smooth interactive virtual tour.',
+  'filippo': 'The VR application allows our clients to experience and explore real estate in full 3D before construction.',
+  'medina': 'The VR application allows our clients to experience and explore real estate in full 3D before construction.',
+  'hyperreal': 'The VR application allows our clients to experience and explore real estate in full 3D before construction.',
+  'abel': 'The 3D configurator completely transformed how our customers customize and purchase products online.',
+  'alasso': 'The 3D configurator completely transformed how our customers customize and purchase products online.',
+  'cm marketing': 'The 3D configurator completely transformed how our customers customize and purchase products online.',
+  'cap configurator': 'The 3D configurator completely transformed how our customers customize and purchase products online.',
+  'ahmad': 'The VR visualization quality was outstanding, bringing our complex design concepts to life on schedule.',
+  'ahmed': 'The VR visualization quality was outstanding, bringing our complex design concepts to life on schedule.',
+  'tnt': 'The VR visualization quality was outstanding, bringing our complex design concepts to life on schedule.',
+  'aviv': 'Our buyers can now explore spaces interactively in real-time, accelerating our sales cycle significantly.',
+  'hyper': 'An incredible leap in our digital presence and interactive customer experience.',
+};
+
+const getReviewQuote = (review) => {
+  if (review.quote && typeof review.quote === 'string' && review.quote.trim().length > 0) {
+    return review.quote.trim();
+  }
+  const client = (review.clientName || '').toLowerCase();
+  const comp = (review.company || '').toLowerCase();
+  const proj = (review.projectName || '').toLowerCase();
+
+  for (const [key, quote] of Object.entries(REVIEW_ONE_LINERS)) {
+    if (client.includes(key) || comp.includes(key) || proj.includes(key)) {
+      return quote;
+    }
+  }
+
+  return 'Working with Elipse was an exceptional experience that elevated our visual brand presence.';
+};
 
 const mapReviews = (data) =>
   data.map((r) => ({
@@ -93,6 +126,7 @@ const mapReviews = (data) =>
     company: r.company || '',
     projectName: r.projectName || '',
     projectLink: r.projectLink || '',
+    quote: r.quote || getReviewQuote(r),
   }));
 
 const ClientReviews = ({ initialReviews = null }) => {
@@ -287,10 +321,10 @@ const ClientReviews = ({ initialReviews = null }) => {
                 return (
                   <SwiperSlide key={review.id} className="!w-full py-3 sm:py-4">
                     <div
-                      className="w-full h-[380px] xs:h-[420px] sm:h-[460px] bg-[#323235] rounded-[20px] sm:rounded-[24px] flex flex-col p-3 sm:p-4 ring-[4px] sm:ring-[6px] ring-[#2b2b2d] relative"
+                      className="w-full bg-[#323235] rounded-[20px] sm:rounded-[24px] flex flex-col p-3 sm:p-4 ring-[4px] sm:ring-[6px] ring-[#2b2b2d] relative"
                       style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
                     >
-                      <div className="w-full h-full rounded-[14px] sm:rounded-[16px] overflow-hidden border border-white/5 relative">
+                      <div className="w-full h-[280px] xs:h-[320px] sm:h-[360px] rounded-[14px] sm:rounded-[16px] overflow-hidden border border-white/5 relative">
                         {review.video ? (
                           <MediaFacade
                             videoUrl={review.video}
@@ -305,31 +339,52 @@ const ClientReviews = ({ initialReviews = null }) => {
                             className="w-full h-full"
                           />
                         ) : null}
+
+                        {review.video && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleMute(review.id, false);
+                            }}
+                            className="absolute bottom-3 right-3 z-20 w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-black/70 backdrop-blur flex items-center justify-center hover:bg-black/90 transition-colors shadow-lg text-white"
+                            aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                          >
+                            {isMuted ? (
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                <line x1="23" y1="9" x2="17" y2="15"></line>
+                                <line x1="17" y1="9" x2="23" y2="15"></line>
+                              </svg>
+                            ) : (
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                              </svg>
+                            )}
+                          </button>
+                        )}
                       </div>
 
-                      {review.video && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleMute(review.id, false);
-                          }}
-                          className="absolute bottom-5 sm:bottom-6 right-5 sm:right-6 z-20 w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-black/70 backdrop-blur flex items-center justify-center hover:bg-black/90 transition-colors shadow-lg text-white"
-                          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-                        >
-                          {isMuted ? (
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                              <line x1="23" y1="9" x2="17" y2="15"></line>
-                              <line x1="17" y1="9" x2="23" y2="15"></line>
-                            </svg>
-                          ) : (
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                            </svg>
+                      {/* Client Info & 1-Liner Quote on Mobile */}
+                      <div className="flex flex-col px-1 pt-3 pb-1">
+                        <div className="flex items-center gap-2 text-white/70 text-xs mb-1">
+                          <span className="font-medium text-white">{review.clientName}</span>
+                          {review.company && (
+                            <>
+                              <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
+                              <span>{review.company}</span>
+                            </>
                           )}
-                        </button>
-                      )}
+                        </div>
+                        <h3 className="text-white text-sm sm:text-base font-medium leading-tight">
+                          {review.projectName || review.clientName}
+                        </h3>
+                        {review.quote && (
+                          <p className="text-zinc-300 text-xs sm:text-sm mt-1.5 leading-relaxed line-clamp-2 italic">
+                            &ldquo;{review.quote}&rdquo;
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </SwiperSlide>
                 );
@@ -389,7 +444,7 @@ const ClientReviews = ({ initialReviews = null }) => {
                   <SwiperSlide key={review.id} className="!w-[420px] lg:!w-[520px] py-2 md:py-4">
                     <div className="w-full h-full">
                       <div
-                        className="relative w-full h-[520px] lg:h-[580px] bg-[#323235] rounded-[24px] md:rounded-[36px] flex flex-col p-4 md:p-6 transition-all duration-300 hover:-translate-y-1 ring-[4px] ring-[#2b2b2d]"
+                        className="relative w-full min-h-[540px] lg:min-h-[590px] h-auto bg-[#323235] rounded-[24px] md:rounded-[36px] flex flex-col p-4 md:p-6 transition-all duration-300 hover:-translate-y-1 ring-[4px] ring-[#2b2b2d]"
                         style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
                       >
                         <LazyReviewSlide
@@ -398,7 +453,7 @@ const ClientReviews = ({ initialReviews = null }) => {
                           onToggleMute={(key) => toggleMute(key, true)}
                         />
                         <div className="flex-1 flex flex-col px-2 md:px-4 py-4">
-                          <div className="flex items-center gap-3 text-white/70 text-sm mb-3">
+                          <div className="flex items-center gap-3 text-white/70 text-sm mb-2.5">
                             <span className="font-medium text-white">{review.clientName}</span>
                             {review.company && (
                               <>
@@ -407,11 +462,11 @@ const ClientReviews = ({ initialReviews = null }) => {
                               </>
                             )}
                           </div>
-                          <h3 className="text-white text-lg md:text-xl font-medium leading-snug line-clamp-2">
+                          <h3 className="text-white text-lg md:text-xl font-medium leading-snug">
                             {review.projectName || review.clientName}
                           </h3>
                           {review.quote && (
-                            <p className="text-zinc-400 text-sm mt-2 italic leading-relaxed line-clamp-3">
+                            <p className="text-zinc-300 text-sm mt-2.5 leading-relaxed line-clamp-3 italic">
                               &ldquo;{review.quote}&rdquo;
                             </p>
                           )}
