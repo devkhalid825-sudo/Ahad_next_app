@@ -7,6 +7,7 @@ import HeroCTA from './HeroCTA';
 import LatestWork from './LatestWork';
 import ClientReviews from './ClientReviews';
 import Solutions from './Solutions';
+import BrandsMarquee from './BrandsMarquee';
 import Industries from './Industries';
 import Technology from './Technology';
 import SocialMediaSection from './SocialMediaSection';
@@ -52,6 +53,7 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
       <div data-animate="s2" className={animClass('s2')}>
         <ClientReviews initialReviews={initialReviews} />
         <Solutions />
+        <BrandsMarquee />
       </div>
 
       <div data-animate="s3" className={animClass('s3')}>

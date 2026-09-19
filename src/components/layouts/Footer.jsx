@@ -6,17 +6,6 @@ import { FiFacebook, FiPhone, FiMail, SiInstagram, TbBrandLinkedin, RiYoutubeLin
 import { apiCall, getImgSrc } from '@/utils/api';
 
 import logo from '@/assets/images/Elipse2.webp';
-import brandsImg1 from '@/assets/images/brandslogo01.webp';
-import brandsImg2 from '@/assets/images/brandslogo02.webp';
-import brandsImg3 from '@/assets/images/brandslogo03.webp';
-import brandsImg4 from '@/assets/images/brandslogo04.webp';
-import brandsImg6 from '@/assets/ElipseImages/logos/logo6.webp';
-import brandsImg7 from '@/assets/ElipseImages/logos/logo7.webp';
-import brandsImg8 from '@/assets/ElipseImages/logos/logo8.webp';
-import brandsImg9 from '@/assets/ElipseImages/logos/logo9.webp';
-import brandsImg10 from '@/assets/ElipseImages/logos/logo10.webp';
-import brandsImgStudentLife from '@/assets/ElipseImages/logos/SL.webp';
-import brandsImgCarbon from '@/assets/ElipseImages/logos/carbon.webp';
 
 const FooterColumn = ({ title, sectionKey, as: Tag = 'div', ariaLabel, isOpen, onToggle, alwaysOpen = false, children }) => {
   if (alwaysOpen) {
@@ -105,43 +94,9 @@ const Footer = () => {
     { img: <PiTiktokLogo />, link: 'https://www.tiktok.com/@elipse_studio?lang=en', label: 'TikTok' },
   ];
 
-  const brandsImages = [
-    { img: brandsImg1, name: 'Tapal Tea' },
-    { img: brandsImg2, name: 'Rooh Afza' },
-    { img: brandsImg3, name: 'Searle Pharmaceuticals' },
-    { img: brandsImg4, name: 'Khoj Resorts' },
-    { img: brandsImg9, name: 'Amber Developments', className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
-    { img: brandsImg6, name: 'Omoré' },
-    { img: brandsImg7, name: 'ARY Laguna' },
-    { img: brandsImg8, name: 'Ahmed Foods' },
-    { img: brandsImg10, name: 'Hamdard Laboratories', className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
-    { img: brandsImgStudentLife, name: 'Student Life', className: 'brightness-0 invert opacity-100 scale-[1.5] md:scale-[1.8]' },
-    { img: brandsImgCarbon, name: 'Carbon Powered', className: 'opacity-80 hover:opacity-100 scale-[1.5] md:scale-[1.8]' },
-  ];
-
   return (
-    <footer className="relative bg-gradient-to-b from-[#0a1628] to-[#1a2a6e] text-white pt-0 pb-12 md:pb-16 font-sans overflow-hidden">
+    <footer className="relative bg-gradient-to-b from-[#0a1628] to-[#1a2a6e] text-white pt-4 md:pt-6 pb-12 md:pb-16 font-sans overflow-hidden">
       <div className="w-full px-6 md:px-12">
-        <div className="relative w-full overflow-hidden py-6 md:py-10">
-          <div className="animate-marquee-custom flex">
-            {[...brandsImages, ...brandsImages, ...brandsImages, ...brandsImages].map((brand, index) => (
-              <div key={index} className="flex-shrink-0 flex items-center justify-center px-8 md:px-16">
-                <img
-                  src={typeof brand.img === 'string' ? brand.img : brand.img?.src}
-                  alt={`${brand.name} Logo`}
-                  width="120"
-                  height="48"
-                  loading="lazy"
-                  className={`h-8 md:h-12 w-auto object-contain opacity-100 hover:opacity-100 transition-opacity ${brand.className || ''
-                    }`}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border-t border-white/50 w-full"></div>
-
         <div className="flex flex-col md:flex-row justify-between w-full lg:w-auto gap-4 items-center py-8 md:py-12">
           <span className="text-lg font-light tracking-wide text-white/90">Join our mailing list:</span>
           <input

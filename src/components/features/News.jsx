@@ -26,7 +26,7 @@ const getImageSrc = (image) => {
   let src = image;
   if (typeof src === 'object') src = src.url || src.src || '';
   if (typeof src !== 'string' || !src.trim()) return articleImg1;
-// Always prefer the production CDN for upload images
+  // Always prefer the production CDN for upload images
   const cdn = toCdnUrl(src);
   if (cdn && cdn !== src) return cdn;
   if (src.startsWith('/uploads/') || src.startsWith('/media/')) return `${BACKEND_ORIGIN}${src}`;
@@ -131,7 +131,13 @@ const News = ({ initialBlogs = null }) => {
   const mergedStaticPosts = staticPosts
     .filter((p) => !apiUrls.has(p.url))
     .map((p) => ({ ...p, _key: `static-${p.id}` }));
-  const blogPosts = [...mergedStaticPosts, ...mergedApiBlogs];
+  const allPosts = [...mergedStaticPosts, ...mergedApiBlogs];
+
+  // Pick top 4 curated featured blogs and create an auto-loop sequence
+  const baseFour = allPosts.slice(0, 4);
+  const featuredLoopPosts = baseFour.length >= 4 
+    ? [...baseFour, ...baseFour.map((p, idx) => ({ ...p, _key: `${p._key}-loop-${idx}` }))]
+    : allPosts.slice(0, 8);
 
   return (
     <section
@@ -139,8 +145,8 @@ const News = ({ initialBlogs = null }) => {
       className="w-full bg-[#1e2d6e] py-8 md:py-14 overflow-hidden font-sans flex flex-col justify-center relative"
     >
       <div className="w-full relative">
-        <div className="flex justify-between items-center px-[15px] md:px-[40px] gap-2">
-          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium mb-6 md:mb-10 tracking-tight leading-[1.1] text-white">
+        <div className="flex justify-between items-center px-[15px] md:px-[40px] gap-2 mb-6 md:mb-10">
+          <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">
             Latest News & Blogs
           </h2>
           <Link
@@ -155,19 +161,25 @@ const News = ({ initialBlogs = null }) => {
           modules={[Autoplay, FreeMode]}
           loop={true}
           slidesPerView="auto"
-          spaceBetween={15}
-          freeMode={true}
+          spaceBetween={16}
+          speed={900}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          freeMode={false}
           grabCursor={true}
           className="!overflow-visible !px-[15px] md:!px-0"
         >
-          {blogPosts.map((post) => (
-            <SwiperSlide key={post._key} className="!w-[220px] md:!w-[577px] py-2 md:py-4">
+          {featuredLoopPosts.map((post) => (
+            <SwiperSlide key={post._key} className="!w-[230px] sm:!w-[340px] md:!w-[540px] lg:!w-[577px] py-2 md:py-4">
               <div className="w-full h-full">
                 <div
-                  className="relative w-full h-[280px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d]"
+                  className="relative w-full h-[290px] sm:h-[380px] md:h-[637px] bg-[#323235] rounded-[24px] md:rounded-[48px] flex flex-col p-3.5 md:p-6 transition-all duration-300 hover:-translate-y-2 ring-[4px] md:ring-[8px] ring-[#2b2b2d]"
                   style={{ boxShadow: 'rgba(0,0,0,0.3) 0px 10px 30px -5px' }}
                 >
-                  <div className="w-full h-[150px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5 group">
+                  <div className="w-full h-[150px] sm:h-[200px] md:h-[380px] rounded-[16px] md:rounded-[36px] overflow-hidden border border-white/5 group">
                     <img
                       src={getImageSrc(post.image)}
                       alt={post.title}
@@ -178,9 +190,9 @@ const News = ({ initialBlogs = null }) => {
                       style={{ objectPosition: '50% 30%' }}
                     />
                   </div>
-                  <div className="flex-1 flex flex-col md:px-6 px-3 md:py-8 py-3">
+                  <div className="flex-1 flex flex-col md:px-6 px-2.5 md:py-8 py-3">
                     {post.url !== '/blog/leap-2026-wrap-up' && (
-                      <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6">
+                      <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6 flex-wrap">
                         <span>{post.date}</span>
                         <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
                         <span>{post.category}</span>
@@ -197,7 +209,7 @@ const News = ({ initialBlogs = null }) => {
                           href={post.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex items-center justify-between w-full text-white text-[13px] md:text-md mt-4"
+                          className="group flex items-center justify-between w-full text-white text-[13px] md:text-base mt-4"
                         >
                           <span>Learn More</span>
                           <div className="bg-white/10 p-1.5 md:p-3 rounded-full border border-white/10 group-hover:translate-x-1 transition">
@@ -208,7 +220,7 @@ const News = ({ initialBlogs = null }) => {
                               strokeWidth="2.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              className="w-4 h-4 md:w-7 md:h-7"
+                              className="w-4 h-4 md:w-6 md:h-6"
                             >
                               <line x1="7" y1="17" x2="17" y2="7"></line>
                               <polyline points="7 7 17 7 17 17"></polyline>
@@ -218,7 +230,7 @@ const News = ({ initialBlogs = null }) => {
                       ) : (
                         <Link
                           href={post.url}
-                          className="group flex items-center justify-between w-full text-white text-[13px] md:text-md mt-4"
+                          className="group flex items-center justify-between w-full text-white text-[13px] md:text-base mt-4"
                         >
                           <span>Learn More</span>
                           <div className="bg-white/10 p-1.5 md:p-3 rounded-full border border-white/10 group-hover:translate-x-1 transition">
@@ -229,7 +241,7 @@ const News = ({ initialBlogs = null }) => {
                               strokeWidth="2.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              className="w-4 h-4 md:w-7 md:h-7"
+                              className="w-4 h-4 md:w-6 md:h-6"
                             >
                               <line x1="7" y1="17" x2="17" y2="7"></line>
                               <polyline points="7 7 17 7 17 17"></polyline>

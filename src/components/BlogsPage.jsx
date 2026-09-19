@@ -376,14 +376,33 @@ const BlogsPage = ({ initialBlogs }) => {
         return pinLeapFirst([...apiBlogs, ...uniqueStatic].sort((a, b) => new Date(b.date) - new Date(a.date)));
     })();
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const POSTS_PER_PAGE = 9;
+
     const handleSearchChange = (e) => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
+        setCurrentPage(1);
         const filtered = allPosts.filter(post =>
             post.title.toLowerCase().includes(term) ||
             post.category.toLowerCase().includes(term)
         );
         setFilteredPosts(filtered);
+    };
+
+    const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
+    const paginatedPosts = filteredPosts.slice(
+        (currentPage - 1) * POSTS_PER_PAGE,
+        currentPage * POSTS_PER_PAGE
+    );
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setCurrentPage(page);
+        const el = document.getElementById('latest-articles-section');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
@@ -473,12 +492,19 @@ const BlogsPage = ({ initialBlogs }) => {
             {/* ══════════════════════════════════════════════════════════
                 LATEST ARTICLES GRID & SEARCH
             ══════════════════════════════════════════════════════════ */}
-            <section className="py-12 md:py-24 bg-black">
+            <section id="latest-articles-section" className="py-12 md:py-24 bg-black">
                 <div className="w-full px-6 sm:px-12 md:px-20">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter uppercase text-white">
-                            Latest Articles
-                        </h2>
+                        <div>
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter uppercase text-white">
+                                Latest Articles
+                            </h2>
+                            {!loading && filteredPosts.length > 0 && (
+                                <p className="text-xs md:text-sm text-zinc-400 mt-2">
+                                    Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}–{Math.min(currentPage * POSTS_PER_PAGE, filteredPosts.length)} of {filteredPosts.length} articles
+                                </p>
+                            )}
+                        </div>
 
                         {/* SEARCH BAR */}
                         <div className="relative w-full md:w-[450px]">
@@ -501,13 +527,78 @@ const BlogsPage = ({ initialBlogs }) => {
                                 </div>
                             ))
                         ) : (
-                            filteredPosts.map((post) => (
+                            paginatedPosts.map((post) => (
                                 <div key={post.id} className="w-full">
                                     <BlogCard post={post} />
                                 </div>
                             ))
                         )}
                     </div>
+
+                    {/* PAGINATION CONTROLS */}
+                    {!loading && totalPages > 1 && (
+                        <div className="mt-16 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`px-4 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all ${
+                                    currentPage === 1
+                                        ? 'border-white/10 text-zinc-600 cursor-not-allowed'
+                                        : 'border-white/20 text-white hover:border-[#4169E1] hover:bg-[#4169E1]/10'
+                                }`}
+                            >
+                                ← Previous
+                            </button>
+
+                            <div className="flex items-center gap-1.5 md:gap-2">
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                                    // Show first, last, current, and surrounding pages
+                                    if (
+                                        pageNum === 1 ||
+                                        pageNum === totalPages ||
+                                        (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                                    ) {
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => handlePageChange(pageNum)}
+                                                className={`w-9 h-9 md:w-11 md:h-11 rounded-full text-xs md:text-sm font-semibold transition-all ${
+                                                    currentPage === pageNum
+                                                        ? 'bg-[#4169E1] text-white shadow-lg shadow-[#4169E1]/30'
+                                                        : 'bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:border-white/30'
+                                                }`}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    } else if (
+                                        pageNum === currentPage - 2 ||
+                                        pageNum === currentPage + 2
+                                    ) {
+                                        return (
+                                            <span key={pageNum} className="text-zinc-600 px-1 text-xs md:text-sm">
+                                                ...
+                                            </span>
+                                        );
+                                    }
+                                    return null;
+                                })}
+                            </div>
+
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`px-4 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all ${
+                                    currentPage === totalPages
+                                        ? 'border-white/10 text-zinc-600 cursor-not-allowed'
+                                        : 'border-white/20 text-white hover:border-[#4169E1] hover:bg-[#4169E1]/10'
+                                }`}
+                            >
+                                Next →
+                            </button>
+                        </div>
+                    )}
+
                     {!loading && filteredPosts.length === 0 && (
                         <div className="text-center py-20 text-zinc-500 text-xl font-light">
                             {error ? error : (searchTerm ? `No articles found matching "${searchTerm}"` : 'No articles yet. Check back soon for new content.')}
