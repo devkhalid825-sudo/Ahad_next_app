@@ -201,17 +201,17 @@ const WebGLVsUnrealEngineArticle = () => {
     <div data-nav="light" className="w-full min-h-screen overflow-x-hidden bg-white text-zinc-900 selection:bg-[#2563EB]/30 selection:text-white">
       <Header />
 
-      <main className="px-3 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20">
+      <main className="px-3 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-16 sm:pt-20 md:pt-22 pb-12 sm:pb-16">
 
         {/* ══════ HERO SECTION ══════ */}
-        <section className="relative bg-white text-neutral-900 py-10 sm:py-16 overflow-hidden mb-8 sm:mb-12">
+        <section className="relative bg-white text-neutral-900 py-3 sm:py-6 lg:py-8 overflow-hidden mb-4 sm:mb-8">
           {/* Decorative ✦ top-left */}
-          <div className="absolute top-8 left-10 text-[#2563EB] text-3xl font-bold select-none pointer-events-none" aria-hidden="true">
+          <div className="absolute top-4 left-8 text-[#2563EB] text-2xl font-bold select-none pointer-events-none" aria-hidden="true">
             ✦
           </div>
           {/* Decorative arrow top-right */}
-          <div className="absolute top-8 right-12 text-[#2563EB] text-lg font-bold select-none pointer-events-none opacity-70" aria-hidden="true">
-            <svg width="36" height="24" viewBox="0 0 60 40" fill="none">
+          <div className="absolute top-4 right-10 text-[#2563EB] text-base font-bold select-none pointer-events-none opacity-70" aria-hidden="true">
+            <svg width="32" height="20" viewBox="0 0 60 40" fill="none">
               <path d="M4 20 Q20 4 40 16 Q52 22 54 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
               <path d="M48 6 L54 10 L50 16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
             </svg>
@@ -220,18 +220,18 @@ const WebGLVsUnrealEngineArticle = () => {
           <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
 
             {/* ── Main Center Headline (Single <h1>) ── */}
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-[54px] font-bold tracking-tight text-neutral-900 max-w-4xl leading-tight mb-8 sm:mb-12 px-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-bold tracking-tight text-neutral-900 max-w-3xl leading-snug mb-5 sm:mb-7 px-2">
               WebGL vs. Unreal Engine <span className="whitespace-nowrap">3D Configurator:</span>{' '}
               <span className="text-[#2563EB]">Which Technology is Right</span> for Your Business?
             </h1>
 
             {/* ── 3-Column Content Grid ── */}
-            <div className="w-full grid grid-cols-1 md:grid-cols-[0.9fr_1.2fr_0.9fr] lg:grid-cols-[1fr_1.35fr_1fr] gap-6 sm:gap-8 md:gap-6 items-center relative">
+            <div className="w-full grid grid-cols-1 md:grid-cols-[1fr_1.25fr_1fr] gap-5 sm:gap-6 md:gap-6 items-center relative">
 
               {/* Left Column: Intro / Quick Summary (Mobile: Order 2, Desktop: Order 1) */}
-              <div className="order-2 md:order-1 text-left space-y-4 md:pr-2 px-4 sm:px-0 max-w-md mx-auto md:mx-0">
-                <FaRegLightbulb className="text-[#2563EB] text-2xl" />
-                <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-sans">
+              <div className="order-2 md:order-1 flex flex-col justify-center text-left space-y-3 md:pr-2 px-3 sm:px-0 max-w-sm mx-auto md:mx-0 w-full">
+                <FaRegLightbulb className="text-[#2563EB] text-xl" />
+                <p className="text-neutral-600 text-xs sm:text-[13px] md:text-sm leading-relaxed font-sans">
                   Interactive 3D product configurators are transforming modern e-commerce and automotive sales. Compare graphics fidelity, recurring pixel streaming costs, latency, and checkout integration to make the right investment.
                 </p>
                 <div className="flex flex-row items-center gap-2 pt-1 w-full">
@@ -251,12 +251,12 @@ const WebGLVsUnrealEngineArticle = () => {
               </div>
 
               {/* Center Column: Hero Visual with Zoomed Clean YouTube Short Embed (Mobile: Order 1, Desktop: Order 2) */}
-              <div className="order-1 md:order-2 relative flex justify-center px-2 sm:px-0 w-full">
-                <div className="absolute w-80 h-80 sm:w-[34rem] sm:h-[34rem] lg:w-[38rem] lg:h-[38rem] bg-neutral-100 rounded-full -z-10 border border-neutral-200 flex items-center justify-center">
-                  <span className="absolute bottom-6 text-neutral-400 text-2xl select-none">✦</span>
+              <div className="order-1 md:order-2 relative flex justify-center items-center px-2 sm:px-0 w-full">
+                <div className="absolute w-64 h-64 sm:w-[24rem] sm:h-[24rem] lg:w-[27rem] lg:h-[27rem] bg-neutral-100 rounded-full -z-10 border border-neutral-200 flex items-center justify-center">
+                  <span className="absolute bottom-4 text-neutral-400 text-xl select-none">✦</span>
                 </div>
 
-                <div className="relative w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-[28rem] lg:max-w-[32rem] xl:max-w-[34rem] h-[26rem] sm:h-[32rem] md:h-[35rem] lg:h-[38rem] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-black group z-10">
+                <div className="relative w-full max-w-[16rem] sm:max-w-[19rem] md:max-w-[21rem] lg:max-w-[23rem] h-[21rem] sm:h-[24rem] md:h-[26rem] lg:h-[28rem] xl:h-[29.5rem] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-black group z-10">
                   <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
                     <iframe
                       ref={iframeRef}
@@ -272,31 +272,31 @@ const WebGLVsUnrealEngineArticle = () => {
                   <button
                     onClick={toggleSound}
                     type="button"
-                    className="absolute bottom-4 right-4 z-30 w-11 h-11 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl transition-all hover:scale-110 cursor-pointer"
+                    className="absolute bottom-3.5 right-3.5 z-30 w-10 h-10 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl transition-all hover:scale-110 cursor-pointer"
                     title={isMuted ? 'Unmute Video' : 'Mute Video'}
                     aria-label={isMuted ? 'Unmute Video' : 'Mute Video'}
                   >
                     {isMuted ? (
-                      <FiVolumeX className="text-lg text-white/90" />
+                      <FiVolumeX className="text-base text-white/90" />
                     ) : (
-                      <FiVolume2 className="text-lg text-emerald-400" />
+                      <FiVolume2 className="text-base text-emerald-400" />
                     )}
                   </button>
                 </div>
               </div>
 
               {/* Right Column: Key Takeaway Box (Mobile: Order 3, Desktop: Order 3) */}
-              <div className="order-3 md:order-3 text-center md:text-left flex flex-col items-center md:items-start justify-center space-y-2 md:pl-4 px-4 sm:px-0 max-w-md mx-auto md:mx-0">
-                <div className="flex gap-0.5 text-[#2563EB] justify-center text-lg">
+              <div className="order-3 md:order-3 text-center md:text-left flex flex-col items-center md:items-start justify-center space-y-1.5 md:pl-2 px-3 sm:px-0 max-w-sm mx-auto md:mx-0 w-full">
+                <div className="flex gap-0.5 text-[#2563EB] justify-center text-base">
                   {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
                 </div>
-                <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 leading-none">
+                <div className="text-xl sm:text-2xl font-extrabold tracking-tight text-neutral-900 leading-none">
                   WebGL vs UE5
                 </div>
-                <p className="text-xs sm:text-sm text-neutral-500 uppercase tracking-wider font-medium">
+                <p className="text-[11px] sm:text-xs text-neutral-500 uppercase tracking-wider font-medium">
                   3D Configurator Engineering Matrix
                 </p>
-                <div className="mt-3 bg-blue-50 border border-blue-100 p-4 rounded-2xl text-center md:text-left w-full space-y-2">
+                <div className="mt-2 bg-blue-50/80 border border-blue-100 p-3.5 rounded-2xl text-center md:text-left w-full space-y-1.5">
                   <p className="text-[11px] sm:text-xs text-zinc-700 font-medium leading-snug">
                     &ldquo;Choose WebGL when cost scalability and instant web loads matter. Choose Unreal Engine when cinematic photorealism directly converts high-ticket luxury sales.&rdquo;
                   </p>
@@ -306,12 +306,12 @@ const WebGLVsUnrealEngineArticle = () => {
             </div>
 
             {/* ── Bottom Dark Pill Bar ── */}
-            <div className="mt-12 sm:mt-16 hidden sm:flex flex-row items-center gap-4 bg-neutral-900 text-white px-6 py-3 rounded-full shadow-xl">
+            <div className="mt-6 sm:mt-8 hidden sm:flex flex-row items-center gap-4 bg-neutral-900 text-white px-5 py-2.5 rounded-full shadow-lg">
               <a
                 href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs sm:text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5"
+                className="text-xs sm:text-[13px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5"
               >
                 <span>Book a 15-min Technical Consultation</span>
                 <FiExternalLink />
@@ -319,7 +319,7 @@ const WebGLVsUnrealEngineArticle = () => {
               <span className="hidden sm:block h-4 w-px bg-neutral-700" />
               <button
                 onClick={handleScrollToJournal}
-                className="text-xs sm:text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
+                className="text-xs sm:text-[13px] font-semibold text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
               >
                 Explore Full Guide ↓
               </button>

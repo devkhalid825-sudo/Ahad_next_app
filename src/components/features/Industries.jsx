@@ -48,10 +48,9 @@ const Industries = () => {
 
         <div className="grid grid-cols-2 gap-3 md:hidden">
           {industries.map((item, index) => (
-            <Link
+            <div
               key={index}
-              href={item.link}
-              className="relative overflow-hidden bg-zinc-950/40 backdrop-blur-md border border-white/20 active:border-[#4169E1]/50 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 active:scale-[0.97] min-h-[130px]"
+              className="relative overflow-hidden bg-zinc-950/40 backdrop-blur-md border border-white/20 active:border-[#4169E1]/50 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 min-h-[130px]"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#4169E1]/0 via-transparent to-transparent active:from-[#4169E1]/10 transition-all duration-300 pointer-events-none" />
               <div className="relative z-10 w-11 h-11 rounded-full bg-white/[0.03] border border-white/20 flex items-center justify-center text-[#4169E1] shrink-0">
@@ -60,15 +59,14 @@ const Industries = () => {
               <h3 className="relative z-10 text-[11px] font-semibold tracking-tight text-center leading-tight">
                 {item.title}
               </h3>
-            </Link>
+            </div>
           ))}
         </div>
 
         <div className="hidden md:grid md:grid-cols-3 xl:grid-cols-6 gap-4">
           {industries.map((item, index) => (
-            <Link
+            <div
               key={index}
-              href={item.link}
               className="relative bg-zinc-950/40 backdrop-blur-md border border-white/[0.05] hover:border-[#4169E1]/30 rounded-2xl p-4 md:p-6 flex flex-col items-center gap-3 hover:shadow-[0_0_30px_rgba(65,105,225,0.1)] transition-all duration-500 group overflow-hidden min-h-[160px] md:min-h-[190px]"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#4169E1]/0 via-transparent to-transparent group-hover:from-[#4169E1]/5 transition-all duration-500 pointer-events-none" />
@@ -86,7 +84,7 @@ const Industries = () => {
                   {item.description}
                 </p>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
