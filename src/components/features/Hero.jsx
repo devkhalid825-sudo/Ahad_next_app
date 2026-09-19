@@ -239,13 +239,13 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30 pointer-events-none" />
               </div>
 
-              {/* Active Large Center Card (Strict 16:9 Proportion - Zero Cutting on All Screens) */}
+              {/* Active Large Center Card (Increased Size - Strict 16:9 Proportion) */}
               <div
                 style={{
-                  width: 'min(78vw, calc((100dvh - 160px) * 16 / 9), 1400px)',
+                  width: 'min(85vw, calc((100dvh - 130px) * 16 / 9), 1620px)',
                   aspectRatio: '16 / 9',
                 }}
-                className="relative bg-black rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] overflow-hidden shadow-[0_0_45px_rgba(255,255,255,0.12),0_30px_90px_rgba(0,0,0,0.9)] border border-white/30 z-20 flex flex-col justify-end transition-all duration-500 shrink-0"
+                className="relative bg-black rounded-[18px] sm:rounded-[22px] lg:rounded-[26px] overflow-hidden shadow-[0_0_55px_rgba(255,255,255,0.12),0_30px_90px_rgba(0,0,0,0.9)] border border-white/30 z-20 flex flex-col justify-end transition-all duration-500 shrink-0"
               >
                 {/* Active Video Player */}
                 <video

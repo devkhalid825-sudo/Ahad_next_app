@@ -83,7 +83,7 @@ const News = ({ initialBlogs = null }) => {
       id: 19,
       title: 'LEAP 2026 Wrap Up: Five Ground Lessons From Riyadh',
       image: configuratorCard,
-      date: 'SEPTEMBER 1, 2026',
+      date: 'SEPTEMBER 10, 2026',
       category: 'Event & Strategy',
       readTime: '10 min read',
       url: '/blog/leap-2026-wrap-up',
@@ -92,7 +92,7 @@ const News = ({ initialBlogs = null }) => {
       id: 20,
       title: 'WebGL vs. Unreal Engine 3D Configurator: Which is Better for Your Business?',
       image: volvoHero,
-      date: 'SEPTEMBER 2, 2026',
+      date: 'SEPTEMBER 19, 2026',
       category: '3D Configurators',
       readTime: '12 min read',
       url: '/blog/webgl-vs-unreal-engine-3d-configurator',
@@ -191,13 +191,9 @@ const News = ({ initialBlogs = null }) => {
                     />
                   </div>
                   <div className="flex-1 flex flex-col md:px-6 px-2.5 md:py-8 py-3">
-                    {post.url !== '/blog/leap-2026-wrap-up' && (
-                      <div className="hidden md:flex items-center gap-4 text-white/70 text-sm mb-6 flex-wrap">
+                    {post.date && (
+                      <div className="flex items-center text-white/70 text-xs md:text-sm mb-3 md:mb-6">
                         <span>{post.date}</span>
-                        <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
-                        <span>{post.category}</span>
-                        <span className="w-1 h-1 bg-[#4169E1] rounded-full"></span>
-                        <span>{post.readTime}</span>
                       </div>
                     )}
                     <h3 className="text-white md:text-[22px] text-[13px] font-medium leading-tight line-clamp-3">
