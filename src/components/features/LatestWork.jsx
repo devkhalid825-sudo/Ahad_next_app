@@ -179,29 +179,30 @@ const LatestWorkContent = ({ isLight = false, initialProjects = null }) => {
           />
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto no-scrollbar gap-x-6 md:gap-x-12 pb-4 snap-x snap-mandatory scroll-smooth pl-1"
+            className="flex overflow-x-auto no-scrollbar gap-2 md:gap-3 pb-4 snap-x snap-mandatory scroll-smooth pl-1 items-center"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             <span ref={leftSentinelRef} className="absolute left-0 w-1 h-full pointer-events-none" />
 
-            {categories.map((cat, index) => (
-              <button
-                key={cat}
-                onClick={() => handleCategoryChange(cat)}
-                suppressHydrationWarning
-                className={`text-sm md:text-2xl transition-all duration-300 whitespace-nowrap snap-start ${
-                  activeCategory === cat && !searchTerm
-                    ? isLight
-                      ? 'text-zinc-900 border-b-2 border-[#4169E1] pb-1 font-semibold'
-                      : 'text-white border-b-2 border-[#4169E1] pb-1'
-                    : isLight
-                    ? 'text-zinc-500 hover:text-zinc-900'
-                    : 'text-zinc-400 hover:text-white'
-                } ${index === categories.length - 1 ? 'pr-20 md:pr-32' : ''}`}
-              >
-                {cat}
-              </button>
-            ))}
+            {categories.map((cat, index) => {
+              const isActive = activeCategory === cat && !searchTerm;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryChange(cat)}
+                  suppressHydrationWarning
+                  className={`px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 whitespace-nowrap snap-start cursor-pointer shrink-0 ${
+                    isActive
+                      ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/30'
+                      : isLight
+                      ? 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900 border border-zinc-200/70'
+                      : 'bg-zinc-900/90 text-zinc-400 hover:bg-zinc-800 hover:text-white border border-zinc-800'
+                  } ${index === categories.length - 1 ? 'mr-12 md:mr-20' : ''}`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
 
             <span ref={rightSentinelRef} className="absolute right-0 w-1 h-full pointer-events-none" />
           </div>

@@ -31,7 +31,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Love Apartment | 3D Visualization & VR Experience',
     category: 'Luxury Residential',
-    tags: ['VR', '3D Visualization', 'Architecture'],
+    tags: ['VR', '3D Visualization'],
     desc: 'High-end interior & exterior 3D visualization and immersive virtual reality experience crafted for modern luxury apartment marketing.',
     image: loveImg,
     tech: 'Interior CGI · VR Experience',
@@ -40,7 +40,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Zenith By Amber',
     category: 'High-Rise Tower',
-    tags: ['Architecture', '3D Visualization'],
+    tags: ['3D Visualization'],
     desc: 'Complete exterior architectural visualization package for a signature luxury high-rise tower, emphasizing structural geometry and urban skyline presence.',
     image: zenithImg,
     tech: 'Tower CGI · Exterior Stills',
@@ -50,7 +50,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Khoj Resort Architectural Edit',
     category: 'Cinematic Film',
-    tags: ['Architecture', '3D Visualization'],
+    tags: ['3D Visualization'],
     desc: 'A cinematic architectural animation reel showcasing a serene eco-resort development nestled in nature, integrating natural sunlight and tranquil waterside living.',
     image: khojImg,
     tech: '4K Film · Hospitality',
@@ -59,7 +59,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Interactive Virtual Tour & Flythrough',
     category: 'Unreal Engine 5',
-    tags: ['VR', 'Architecture', '3D Visualization'],
+    tags: ['VR', '3D Visualization'],
     desc: 'Interactive real-time property walkthrough built in Unreal Engine. Allows prospective buyers to explore interiors with dynamic lighting and interactive fixtures.',
     image: timBarthImg,
     tech: 'Unreal Engine 5 · Lumen GI',
@@ -69,7 +69,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: '360° Virtual Tour (Kumar Residence)',
     category: 'Web 360° Tour',
-    tags: ['360', 'Architecture'],
+    tags: ['360'],
     desc: 'Full web-based panoramic tour of an architectural modern residence. Enables instant interactive walkthroughs on client phones and tablets without software installation.',
     image: kumarImg,
     tech: 'Web 360° · Luxury Residence',
@@ -78,7 +78,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Penthouse VR Walkthrough',
     category: 'VR Walkthrough',
-    tags: ['VR', 'Architecture'],
+    tags: ['VR'],
     desc: 'Immersive VR showcase for luxury off-plan penthouses. Allows international buyers to walk through bedrooms, balconies, and living areas with real-scale spatial perception.',
     image: penthouseImg,
     tech: 'Meta Quest VR · Off-Plan Sales',
@@ -87,7 +87,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Modern Villa | VR & 3D Visualization',
     category: 'Modern Villa',
-    tags: ['Architecture', 'VR', '3D Visualization'],
+    tags: ['VR', '3D Visualization'],
     desc: 'Complete exterior architecture and interior living suite CGI for an ultra-modern minimalist villa, accompanied by real-time VR walk simulation.',
     image: villaImg,
     tech: 'Villa CGI · VR Capture',
@@ -96,7 +96,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Classic Villa | VR & 3D Visualization',
     category: 'Classic Architecture',
-    tags: ['Architecture', '3D Visualization'],
+    tags: ['3D Visualization'],
     desc: 'Intricate classical stone detailing, grand porticos, symmetrical colonnades, and opulent European estate rendering for private development marketing.',
     image: classicVillaImg,
     tech: 'Neoclassical · Estate CGI',
@@ -107,7 +107,6 @@ const ARCHVIZ_BUILDS = [
 const ARCHVIZ_TABS = [
   { id: 'all', label: 'All Projects' },
   { id: 'vr', label: 'VR' },
-  { id: 'master-plan', label: 'Master Plan' },
   { id: '360', label: '360° Virtual Tour' },
   { id: '3d-viz', label: '3D Visualization' },
 ];
@@ -203,18 +202,46 @@ const CAPABILITIES = [
 ];
 
 /**
- * Cinematic Architectural Reel Video Player
+ * Cinematic Architectural Reel Video Player (Performance Optimized Facade)
  */
 const ArchvizVideoPlayer = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <div className="relative w-full max-w-5xl mx-auto aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_50px_rgba(0,0,0,0.8)] bg-[#0E0E10]">
-      <iframe
-        className="w-full h-full border-0"
-        src="https://www.youtube.com/embed/YzLNRBsug_Q?rel=0&modestbranding=1"
-        title="Elipse Studio Architectural Visualization Reel"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      />
+      {isPlaying ? (
+        <iframe
+          className="w-full h-full border-0"
+          src="https://www.youtube.com/embed/YzLNRBsug_Q?autoplay=1&rel=0&modestbranding=1"
+          title="Elipse Studio Architectural Visualization Reel"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      ) : (
+        <div
+          onClick={() => setIsPlaying(true)}
+          className="relative w-full h-full cursor-pointer group flex items-center justify-center bg-zinc-950"
+        >
+          <img
+            src="https://img.youtube.com/vi/YzLNRBsug_Q/maxresdefault.jpg"
+            alt="Elipse Studio Architectural Visualization Reel"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+          />
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
+          <div className="absolute w-16 sm:w-20 h-16 sm:h-20 rounded-full bg-[#4169E1] text-white flex items-center justify-center shadow-[0_0_30px_rgba(65,105,225,0.6)] group-hover:scale-110 group-hover:bg-[#3158D4] transition-all duration-300 z-10">
+            <svg className="w-7 sm:w-8 h-7 sm:h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-left z-10">
+            <span className="text-xs sm:text-sm font-semibold text-white/90 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+              Watch Architectural Reel (4K)
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -270,9 +297,6 @@ const ArchitecturalVisualizationPage = () => {
     if (activeTab === 'all') return ARCHVIZ_BUILDS;
     return ARCHVIZ_BUILDS.filter((item) => {
       if (activeTab === 'vr') return item.tags?.includes('VR');
-      if (activeTab === 'master-plan') {
-        return item.tags?.includes('Master Plan') || item.category?.toLowerCase().includes('master');
-      }
       if (activeTab === '360') return item.tags?.includes('360');
       if (activeTab === '3d-viz') return item.tags?.includes('3D Visualization');
       return true;
@@ -493,142 +517,149 @@ const ArchitecturalVisualizationPage = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
-          {filteredBuilds.map((item, idx) => (
-            <div
-              key={idx}
-              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
-            >
-              {/* Image Preview Container (16:9 HD Size) */}
-              <div className="relative aspect-video overflow-hidden bg-black/40">
-                {/* Category Badges / Tags */}
-                <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5 pointer-events-none">
-                  {item.tags?.map((tag, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className={`px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-md ${
-                        tag === 'VR'
-                          ? 'bg-purple-600/90 text-white border border-purple-400/40'
-                          : tag === '360'
-                          ? 'bg-emerald-600/90 text-white border border-emerald-400/40'
-                          : tag === 'Master Plan' || tag === 'Architecture'
-                          ? 'bg-[#4169E1]/90 text-white border border-[#4169E1]/40'
-                          : 'bg-black/70 text-white/90 border border-white/20'
-                      }`}
-                    >
-                      {tag === '360' ? '360° Tour' : tag}
-                    </span>
-                  ))}
-                </div>
-
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  width="1280"
-                  height="720"
-                  loading={idx < 3 ? "eager" : "lazy"}
-                  decoding="async"
-                  fetchPriority={idx === 0 ? "high" : "auto"}
-                  onError={(e) => {
-                    if (item.fallbackImg && e.currentTarget.src !== item.fallbackImg) {
-                      e.currentTarget.src = item.fallbackImg;
-                    }
-                  }}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 will-change-transform"
-                />
-              </div>
-
-              {/* Card Body */}
-              <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-medium group-hover:text-[#4169E1] transition-colors duration-300 text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed font-light text-zinc-400">
-                    {item.desc}
-                  </p>
-                </div>
-
-                {/* Card Action Section & Buttons */}
-                <div className="mt-6 pt-4 border-t border-white/10 flex flex-col gap-3.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#4169E1] font-semibold">{item.tech}</span>
+          {filteredBuilds.map((item, idx) => {
+            const primaryLink = item.behanceLink || item.liveLink || item.driveLink || item.youtubeLink;
+            return (
+              <div
+                key={idx}
+                onClick={() => primaryLink && window.open(primaryLink, '_blank', 'noopener,noreferrer')}
+                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60 cursor-pointer"
+              >
+                {/* Image Preview Container (16:9 HD Size) */}
+                <div className="relative aspect-video overflow-hidden bg-black/40">
+                  {/* Category Badges / Tags */}
+                  <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5 pointer-events-none">
+                    {item.tags?.filter((tag) => tag !== 'Architecture' && tag !== 'Master Plan').map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className={`px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-md ${
+                          tag === 'VR'
+                            ? 'bg-purple-600/90 text-white border border-purple-400/40'
+                            : tag === '360'
+                            ? 'bg-emerald-600/90 text-white border border-emerald-400/40'
+                            : 'bg-black/70 text-white/90 border border-white/20'
+                        }`}
+                      >
+                        {tag === '360' ? '360° Tour' : tag}
+                      </span>
+                    ))}
                   </div>
 
-                  <div className="flex items-center gap-2.5 flex-wrap">
-                    {item.liveLink && (
-                      <a
-                        href={item.liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
-                      >
-                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        <span>Launch 360° Tour</span>
-                      </a>
-                    )}
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    width="1280"
+                    height="720"
+                    loading={idx < 3 ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={idx === 0 ? "high" : "auto"}
+                    onError={(e) => {
+                      if (item.fallbackImg && e.currentTarget.src !== item.fallbackImg) {
+                        e.currentTarget.src = item.fallbackImg;
+                      }
+                    }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 will-change-transform"
+                  />
+                </div>
 
-                    {item.reelLink && (
-                      <a
-                        href={item.reelLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
-                      >
-                        <svg className="w-3.5 h-3.5 text-pink-500 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                        </svg>
-                        <span>Watch Reel</span>
-                      </a>
-                    )}
+                {/* Card Body */}
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-medium group-hover:text-[#4169E1] transition-colors duration-300 text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-relaxed font-light text-zinc-400">
+                      {item.desc}
+                    </p>
+                  </div>
 
-                    {item.driveLink && (
-                      <a
-                        href={item.driveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
-                      >
-                        <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                        </svg>
-                        <span>Open Drive Archive</span>
-                      </a>
-                    )}
+                  {/* Card Action Section & Buttons */}
+                  <div className="mt-6 pt-4 border-t border-white/10 flex flex-col gap-3.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#4169E1] font-semibold">{item.tech}</span>
+                    </div>
 
-                    {item.behanceLink && (
-                      <a
-                        href={item.behanceLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
-                      >
-                        <svg className="w-3.5 h-3.5 text-[#4169E1] fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.076 0-5.625-3.045-5.625-6.046 0-3.418 1.944-5.954 5.375-5.954 3.737 0 5.099 2.766 4.908 6.136h-7.795c.094 1.797 1.134 3.464 3.271 3.464 1.455 0 2.453-.787 2.871-1.6h2.096zm-7.726-4.5c.083-1.428.983-2.646 2.652-2.646 1.583 0 2.508 1.144 2.585 2.646h-5.237zm-11.456 7.5h-4.544v-16h4.868c2.973 0 5.132 1.411 5.132 4.316 0 1.637-.841 2.915-2.227 3.528 1.761.642 2.771 2.158 2.771 4.148 0 3.208-2.483 4.008-6 4.008zm-2.044-6.877h2.247c1.474 0 2.464-.539 2.464-1.929 0-1.258-.871-1.794-2.246-1.794h-2.465v3.723zm0-5.323h2.122c1.237 0 2.053-.48 2.053-1.639 0-1.121-.77-1.561-1.968-1.561h-2.207v3.2z" />
-                        </svg>
-                        <span>View Behance</span>
-                      </a>
-                    )}
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      {item.liveLink && (
+                        <a
+                          href={item.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
+                        >
+                          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                          <span>Launch 360° Tour</span>
+                        </a>
+                      )}
 
-                    {item.youtubeLink && (
-                      <a
-                        href={item.youtubeLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
-                      >
-                        <svg className="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-                        </svg>
-                        <span>Demo</span>
-                      </a>
-                    )}
+                      {item.reelLink && (
+                        <a
+                          href={item.reelLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                        >
+                          <svg className="w-3.5 h-3.5 text-pink-500 fill-current shrink-0" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                          </svg>
+                          <span>Watch Reel</span>
+                        </a>
+                      )}
+
+                      {item.driveLink && (
+                        <a
+                          href={item.driveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
+                        >
+                          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                          </svg>
+                          <span>Open Drive Archive</span>
+                        </a>
+                      )}
+
+                      {item.behanceLink && (
+                        <a
+                          href={item.behanceLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                        >
+                          <svg className="w-3.5 h-3.5 text-[#4169E1] fill-current shrink-0" viewBox="0 0 24 24">
+                            <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.076 0-5.625-3.045-5.625-6.046 0-3.418 1.944-5.954 5.375-5.954 3.737 0 5.099 2.766 4.908 6.136h-7.795c.094 1.797 1.134 3.464 3.271 3.464 1.455 0 2.453-.787 2.871-1.6h2.096zm-7.726-4.5c.083-1.428.983-2.646 2.652-2.646 1.583 0 2.508 1.144 2.585 2.646h-5.237zm-11.456 7.5h-4.544v-16h4.868c2.973 0 5.132 1.411 5.132 4.316 0 1.637-.841 2.915-2.227 3.528 1.761.642 2.771 2.158 2.771 4.148 0 3.208-2.483 4.008-6 4.008zm-2.044-6.877h2.247c1.474 0 2.464-.539 2.464-1.929 0-1.258-.871-1.794-2.246-1.794h-2.465v3.723zm0-5.323h2.122c1.237 0 2.053-.48 2.053-1.639 0-1.121-.77-1.561-1.968-1.561h-2.207v3.2z" />
+                          </svg>
+                          <span>View Behance</span>
+                        </a>
+                      )}
+
+                      {item.youtubeLink && (
+                        <a
+                          href={item.youtubeLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
+                        >
+                          <svg className="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24">
+                            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                          </svg>
+                          <span>Demo</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* 2 CTAs Directly Below Portfolio Gallery */}

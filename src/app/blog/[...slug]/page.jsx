@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 const staticArticles = {
   'leap-2026-wrap-up': dynamic(() => import('@/components/articles/Leap2026Article')),
   'leap-2026-wrap-up-bilal-lania': dynamic(() => import('@/components/articles/Leap2026Article')),
+  'webgl-vs-unreal-engine-3d-configurator': dynamic(() => import('@/components/articles/WebGLVsUnrealEngineArticle')),
   'web-based-configurator': dynamic(() => import('@/components/articles/ConfiguratorArticle')),
   'immersive-ar-marketing': dynamic(() => import('@/components/articles/ARMarketingArticle')),
   'industrial-animation': dynamic(() => import('@/components/articles/IndustrialAnimationArticle')),
@@ -37,6 +38,23 @@ const staticArticleMetadata = {
     description: 'Ground reality lessons from LEAP Riyadh for creative tech founders. 3D interactive configurators, enterprise VR, digital twins, and anamorphic 3D in Saudi Arabia.',
     keywords: ['LEAP 2026', 'LEAP Riyadh', '3D interactive configurators', 'enterprise VR AR', 'digital twins Saudi Arabia', 'anamorphic 3D', 'creative tech Saudi Arabia', 'Bilal Lania'],
     ogImage: `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
+  },
+  'webgl-vs-unreal-engine-3d-configurator': {
+    title: 'WebGL vs Unreal Engine 3D Configurator: Full Comparison',
+    description: 'Compare WebGL and Unreal Engine 3D configurators. Discover graphics quality, pixel streaming costs, e-commerce integration, and the best choice for your business.',
+    keywords: [
+      'WebGL 3D configurator',
+      'Unreal Engine 3D configurator',
+      'pixel streaming cost',
+      'WebGL vs Unreal Engine',
+      'interactive 3D product configurator',
+      'Arcware pixel streaming',
+      'StreamPixel',
+      'e-commerce 3D configurator',
+      'car configurator 3D',
+      'Elipse Studio'
+    ],
+    ogImage: `${SITE_URL}/assets/ElipseImages/hero/volve-configrator.webp`,
   },
   'web-based-configurator': {
     title: 'Web-Based 3D Configurators',
@@ -108,12 +126,13 @@ const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
 function staticArticleSchemas(slugStr, meta) {
   const isLeap = slugStr.startsWith('leap-2026-wrap-up');
+  const isWebGLVsUnreal = slugStr === 'webgl-vs-unreal-engine-3d-configurator';
   const schema = buildArticleSchema({
     title: meta.title,
     description: meta.description,
     image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
-    publishedAt: '2026-02-12',
-    updatedAt: '2026-02-12',
+    publishedAt: isWebGLVsUnreal ? '2026-03-01' : '2026-02-12',
+    updatedAt: isWebGLVsUnreal ? '2026-03-01' : '2026-02-12',
     slug: slugStr,
   });
 
@@ -136,14 +155,33 @@ function staticArticleSchemas(slugStr, meta) {
     },
   ]);
 
-  const leapAuthor = {
+  const webglUnrealFaq = buildFaqSchema([
+    {
+      q: 'What is the main difference between WebGL and Unreal Engine 3D configurators?',
+      a: 'WebGL renders locally on the user browser GPU with zero recurring streaming fees and instant load times, making it ideal for high-traffic retail. Unreal Engine 5 delivers ultra-photorealistic ray-traced visuals rendered on cloud GPUs and streamed via pixel streaming (Arcware/StreamPixel), making it best for luxury automotive and high-ticket items.',
+    },
+    {
+      q: 'How much does Pixel Streaming cost for Unreal Engine configurators?',
+      a: 'Pixel Streaming costs depend on cloud GPU usage, typically ranging from $0.05 to $0.20+ per active minute per concurrent user through providers like Arcware or StreamPixel. WebGL, by contrast, incurs $0 streaming costs as it executes directly on the client device.',
+    },
+    {
+      q: 'Can both WebGL and Unreal Engine configurators connect to Shopify and e-commerce checkouts?',
+      a: 'Yes. Both technologies support end-to-end e-commerce integration, including dynamic Bill of Materials (BOM) generation, custom pricing calculation, and direct Add-to-Cart checkout via Shopify, WooCommerce, or custom APIs.',
+    },
+    {
+      q: 'When should a business choose WebGL over Unreal Engine?',
+      a: 'Choose WebGL when your website receives high visitor traffic, budget constraints require avoiding monthly streaming bills, fast mobile load speed is critical, and standard PBR 3D graphics are sufficient for your products.',
+    },
+  ]);
+
+  const authorSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Bilal Lania',
     jobTitle: 'Founder & Creative Director',
     worksFor: { '@type': 'Organization', name: 'Elipse Studio', url: SITE_URL },
     url: SITE_URL,
-    description: 'Founder and Creative Director of Elipse Studio. Ground report from LEAP 2026 in Riyadh on 3D interactive configurators, enterprise VR/AR, digital twins and anamorphic content in Saudi Arabia.',
+    description: 'Founder and Creative Director of Elipse Studio specializing in 3D interactive configurators, Unreal Engine 5 pixel streaming, WebGL, and enterprise spatial computing.',
   };
 
   const breadcrumb = buildBreadcrumbSchema([
@@ -151,7 +189,12 @@ function staticArticleSchemas(slugStr, meta) {
     { name: 'Blog', url: '/blog' },
     { name: meta.title, url: `/blog/${slugStr}` },
   ]);
-  return [schema, breadcrumb, ...(isLeap ? [leapFaq, leapAuthor] : [])].filter(Boolean);
+
+  let extraSchemas = [];
+  if (isLeap) extraSchemas = [leapFaq, authorSchema];
+  if (isWebGLVsUnreal) extraSchemas = [webglUnrealFaq, authorSchema];
+
+  return [schema, breadcrumb, ...extraSchemas].filter(Boolean);
 }
 
 function blogImageUrl(image) {

@@ -163,7 +163,7 @@ const SocialMediaSection = ({ initialSocialMedia = [] }) => {
   if (items.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className="w-full bg-black py-8 md:py-14 overflow-hidden font-sans flex flex-col justify-center relative">
+    <section ref={sectionRef} className="hidden md:flex w-full bg-black py-8 md:py-14 overflow-hidden font-sans flex-col justify-center relative">
       <div className="w-full relative">
         <div className="flex justify-between items-center px-[15px] md:px-[40px] gap-2 mb-6 md:mb-10">
           <h2 className="text-2xl md:text-4xl lg:text-[44px] font-medium tracking-tight leading-[1.1] text-white">

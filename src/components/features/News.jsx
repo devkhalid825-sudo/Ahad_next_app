@@ -13,11 +13,13 @@ import articleImg1Raw from '../../assets/article-img/A (3) .webp';
 import articleImg6Raw from '../../assets/ElipseImages/projects/Artictecture.webp';
 import vrHeroRaw from '../../assets/images/1 (1).webp';
 import configuratorCardRaw from '../../assets/ElipseImages/personal/leap-hero.webp';
+import volvoHeroRaw from '../../assets/ElipseImages/hero/volve-configrator.webp';
 
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);
 const vrHero = getImgSrc(vrHeroRaw);
 const configuratorCard = getImgSrc(configuratorCardRaw);
+const volvoHero = getImgSrc(volvoHeroRaw);
 
 const getImageSrc = (image) => {
   if (!image) return articleImg1;
@@ -85,6 +87,15 @@ const News = ({ initialBlogs = null }) => {
       category: 'Event & Strategy',
       readTime: '10 min read',
       url: '/blog/leap-2026-wrap-up',
+    },
+    {
+      id: 20,
+      title: 'WebGL vs. Unreal Engine 3D Configurator: Which is Better for Your Business?',
+      image: volvoHero,
+      date: 'SEPTEMBER 2, 2026',
+      category: '3D Configurators',
+      readTime: '12 min read',
+      url: '/blog/webgl-vs-unreal-engine-3d-configurator',
     },
     {
       id: 18,
