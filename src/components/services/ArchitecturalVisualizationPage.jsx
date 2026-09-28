@@ -419,8 +419,8 @@ const ArchitecturalVisualizationPage = () => {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`shrink-0 px-3.5 sm:px-6 py-1.5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive
-                        ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] scale-[1.02]'
-                        : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] scale-[1.02]'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
                       }`}
                   >
                     {tab.label}
@@ -447,11 +447,13 @@ const ArchitecturalVisualizationPage = () => {
                     {item.tags?.filter((tag) => tag !== 'Architecture' && tag !== 'Master Plan').map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className={`px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-md ${tag === 'VR'
-                            ? 'bg-purple-600/90 text-white border border-purple-400/40'
-                            : tag === '360'
-                              ? 'bg-emerald-600/90 text-white border border-emerald-400/40'
-                              : 'bg-black/70 text-white/90 border border-white/20'
+                        className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-md ${tag === 'VR'
+                          ? 'bg-purple-600 text-white border border-purple-400/50'
+                          : tag === '360'
+                            ? 'bg-emerald-600 text-white border border-emerald-400/50'
+                            : tag === '3D Visualization'
+                              ? 'bg-[#4169E1] text-white border border-blue-300/40'
+                              : 'bg-zinc-900 text-white border border-zinc-700/80'
                           }`}
                       >
                         {tag === '360' ? '360° Tour' : tag}
@@ -619,9 +621,7 @@ const ArchitecturalVisualizationPage = () => {
         <CapabilitiesGrid />
       </section>
 
-      {/* ======================================================== */}
-      {/* 4. PRODUCTION PIPELINE SECTION                           */}
-      {/* ======================================================== */}
+
       <section id="pipeline" className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black">
         <div className="max-w-4xl mx-auto text-center mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase font-mono bg-[#4169E1]/10 border border-[#4169E1]/25 text-[#4169E1] mb-3">

@@ -29,9 +29,9 @@ const breadcrumb = {
 
 export function generateMetadata() {
   return buildMetadata({
-    title: 'Portfolio & Projects',
+    title: 'Portfolio — Interactive 3D, ArchViz & CGI | Elipse Studio',
     description:
-      'Explore our portfolio of 3D visualization, VR, AR, and interactive product configurator projects across global client industries.',
+      'Elipse Studio projects: UE5 automotive configurators, real-time architectural VR walkthroughs, and 4K CGI campaigns.',
     canonical: `${SITE_URL}/portfolio`,
   });
 }

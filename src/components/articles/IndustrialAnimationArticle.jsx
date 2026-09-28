@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { FiCopy, FiCheck, FiVolume2, FiVolumeX } from 'react-icons/fi';
+import { FaRegLightbulb } from 'react-icons/fa';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 
@@ -14,7 +17,7 @@ const frames = {
   extra: '/assets/industrial-animation/in-article-extra.webp',
 };
 
-const heroVideo = 'https://www.youtube.com/embed/BsKw4i6riRw';
+const heroVideo = 'https://www.youtube.com/embed/BsKw4i6riRw?autoplay=1&mute=1&loop=1&playlist=BsKw4i6riRw&playsinline=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1';
 
 const marqueeItems = [
   'INDUSTRIAL ANIMATION',
@@ -88,7 +91,7 @@ const MobileExpandEntry = ({ entry, imageLeft, hasImage }) => {
   return (
     <article className="py-10 sm:py-14 border-b border-zinc-800">
       <Reveal delay={0}>
-        <div className={`grid gap-8 items-start ${hasImage ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+        <div className={`grid gap-8 items-center ${hasImage ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
 
           {/* Image — always top on mobile */}
           {hasImage && (
@@ -115,6 +118,16 @@ const MobileExpandEntry = ({ entry, imageLeft, hasImage }) => {
                   {entry.content.map((p, j) => (
                     <p key={j} className="text-zinc-400 leading-relaxed max-w-[66ch]">{p}</p>
                   ))}
+                </div>
+              )}
+              {entry.link && (
+                <div className="mt-5">
+                  <Link
+                    href={entry.link.href}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#2563EB] border border-[#2563EB]/40 rounded-full px-5 py-2.5 hover:bg-[#2563EB]/10 transition-all"
+                  >
+                    {entry.link.label} <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               )}
               {entry.flow && (
@@ -191,6 +204,7 @@ const entries = [
       'Installation instructions',
       'Maintenance and service training',
     ],
+    link: { href: '/services/3d-animation', label: 'Explore our 3D animation services' },
     footnote: 'Elipse Studio currently uses industrial animation to visualise complex mechanical systems, manufacturing processes, and engineering concepts, including CAD-based workflows.',
   },
   {
@@ -301,6 +315,7 @@ const entries = [
       'Selling industrial equipment is different from selling consumer products. B2B buyers often need to understand technical specifications, operational benefits, installation requirements, and system capabilities before making a purchasing decision.',
       'A professional industrial animation becomes a powerful sales-enablement asset. Use it across the whole funnel:',
     ],
+    link: { href: '/services/3d-animation', label: 'See our commercial 3D animation services' },
     bullets: [
       'Sales presentations — give your sales team a visual explanation of complicated machinery',
       'Website product pages — show visitors how equipment works instead of static images',
@@ -379,9 +394,39 @@ const deliverables = [
 ];
 
 const IndustrialAnimationArticle = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const iframeRef = useRef(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const toggleSound = () => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      const action = isMuted ? 'unMute' : 'mute';
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: action, args: [] }),
+        '*'
+      );
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (typeof window !== 'undefined') {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleScrollToJournal = () => {
+    const journalEl = document.getElementById('journal');
+    if (journalEl) {
+      journalEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div data-nav="dark" className="w-full min-h-screen overflow-x-hidden bg-black text-zinc-100 selection:bg-[#2563EB]/30 selection:text-white">
@@ -392,34 +437,124 @@ const IndustrialAnimationArticle = () => {
 
       <main className="overflow-x-hidden">
 
-        {/* ══════ HERO: AHMED FOOD STYLE ══════ */}
-        <section className="bg-black px-4 sm:px-8 md:px-12 lg:px-16 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 md:pb-10">
-          <div className="max-w-[1600px] mx-auto">
-            {/* Title row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-6 pt-2 sm:pt-4">
-              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
-                Industrial Animation<span className="text-[#2563EB]">.</span>
-              </h1>
+        {/* ══════ HERO SECTION (LEAP STYLE 3-COLUMN) ══════ */}
+        <section className="relative bg-black text-white px-3 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-[85px] sm:pt-[110px] md:pt-[125px] pb-6 sm:py-6 lg:py-8 overflow-hidden mb-6 sm:mb-8 flex flex-col justify-center md:block">
+          {/* Decorative ✦ top-left */}
+          <div className="hidden lg:block absolute top-24 left-10 text-[#2563EB] text-3xl font-bold select-none pointer-events-none" aria-hidden="true">
+            ✦
+          </div>
+          {/* Decorative arrow top-right */}
+          <div className="hidden lg:block absolute top-24 right-12 text-[#2563EB] text-lg font-bold select-none pointer-events-none opacity-70" aria-hidden="true">
+            <svg width="36" height="24" viewBox="0 0 60 40" fill="none">
+              <path d="M4 20 Q20 4 40 16 Q52 22 54 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              <path d="M48 6 L54 10 L50 16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+          </div>
+
+          <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
+            {/* ── Main Center Headline ── */}
+            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[44px] font-bold tracking-tight text-white max-w-3xl leading-snug mb-5 sm:mb-7 px-2">
+              Industrial Animation:{' '}
+              <span className="text-[#2563EB]">How UK Manufacturers Turn CAD</span>{' '}
+              into High-Converting 3D
+            </h1>
+
+            {/* ── 3-Column Content Grid ── */}
+            <div className="w-full grid grid-cols-1 md:grid-cols-[1fr_1.25fr_1fr] gap-5 sm:gap-6 md:gap-6 items-center relative">
+
+              {/* Left Column: Intro / Description (Hidden on mobile) */}
+              <div className="hidden md:flex order-2 md:order-1 text-center md:text-left space-y-3 md:pr-2 px-3 sm:px-0 max-w-sm mx-auto md:mx-0 w-full flex-col items-center md:items-start">
+                <FaRegLightbulb className="text-[#2563EB] text-xl" />
+                <p className="text-zinc-400 text-xs sm:text-[13px] md:text-sm leading-relaxed font-sans">
+                  For UK manufacturers and B2B brands, industrial 3D animation turns complex machinery into clear, demonstrable, sales-ready motion — without building physical prototypes.
+                </p>
+                <button
+                  onClick={handleScrollToJournal}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-white/20 text-xs font-semibold text-white/90 hover:bg-white/5 hover:border-white transition-all shadow-sm cursor-pointer text-center"
+                >
+                  Explore Industrial Formats ↓
+                </button>
+              </div>
+
+              {/* Center Column: Hero Visual with Exact Video Sizing */}
+              <div className="order-1 md:order-2 relative flex justify-center items-center px-2 sm:px-0 w-full">
+                <div className="absolute w-64 h-64 sm:w-[24rem] sm:h-[24rem] lg:w-[27rem] lg:h-[27rem] bg-white/5 rounded-full -z-10 border border-white/10 flex items-center justify-center">
+                  <span className="absolute bottom-4 text-zinc-500 text-xl select-none">✦</span>
+                </div>
+
+                <div className="relative w-full max-w-[16rem] sm:max-w-[19rem] md:max-w-[21rem] lg:max-w-[23rem] h-[21rem] sm:h-[24rem] md:h-[26rem] lg:h-[28rem] xl:h-[29.5rem] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-black group z-10">
+                  <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
+                    <iframe
+                      ref={iframeRef}
+                      src={heroVideo}
+                      title="Industrial Animation - CAD to Photoreal 3D Animation"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="w-[155%] h-[155%] max-w-none border-0 object-cover scale-[1.18]"
+                    />
+                  </div>
+
+                  {/* Sound Toggle Button */}
+                  <button
+                    onClick={toggleSound}
+                    type="button"
+                    className="absolute bottom-3.5 right-3.5 z-30 w-10 h-10 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl transition-all hover:scale-110 cursor-pointer"
+                    title={isMuted ? 'Unmute Video' : 'Mute Video'}
+                    aria-label={isMuted ? 'Unmute Video' : 'Mute Video'}
+                  >
+                    {isMuted ? (
+                      <FiVolumeX className="text-base text-white/90" />
+                    ) : (
+                      <FiVolume2 className="text-base text-emerald-400" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Column: Stars + Stats (Hidden on mobile) */}
+              <div className="hidden md:flex order-3 md:order-3 text-center md:text-left flex-col items-center md:items-start justify-center space-y-1.5 md:pl-2 px-3 sm:px-0 max-w-sm mx-auto md:mx-0 w-full">
+                <div className="flex gap-0.5 text-[#2563EB] justify-center text-lg">
+                  {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
+                </div>
+                <div className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-none">
+                  UK 2026
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-400 uppercase tracking-wider font-medium">
+                  MANUFACTURING & ENGINEERING CGI
+                </p>
+                <div className="mt-3 bg-blue-500/10 border border-blue-500/20 p-4 rounded-2xl text-center md:text-left w-full">
+                  <p className="text-[11px] sm:text-xs text-zinc-300 font-medium leading-snug">
+                    &ldquo;A single CAD-accurate master converts machinery drawings into photoreal, sales-ready animation.&rdquo;
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* ── Bottom Dark Pill Bar ── */}
+            <div className="mt-10 sm:mt-16 hidden sm:inline-flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 bg-neutral-900 text-white px-5 sm:px-7 py-3.5 sm:py-3 rounded-2xl sm:rounded-full shadow-xl text-xs sm:text-sm font-medium border border-neutral-800">
               <a
-                href="/contact"
-                className="inline-flex items-center justify-center text-xs sm:text-[13px] font-semibold px-6 py-3 bg-[#2563EB] text-white rounded-full hover:bg-[#1d4ed8] transition-all duration-200 cursor-pointer shrink-0 shadow-lg shadow-[#2563EB]/20 self-start sm:self-auto"
+                href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting?month=2026-09"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors text-center"
               >
-                Start a Project →
+                Book a 15-min technical scoping call ↗
               </a>
+              <span className="hidden sm:block h-4 w-px bg-neutral-700" />
+              <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap text-center">
+                <span className="text-neutral-300">By Elipse Studio Editorial Team</span>
+                <span className="h-3.5 w-px bg-neutral-700" />
+                <button
+                  onClick={handleCopyLink}
+                  className="font-semibold text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  {copied ? <FiCheck className="text-emerald-400" /> : <FiCopy />}
+                  <span>{copied ? 'Link Copied!' : 'Share Article'}</span>
+                </button>
+              </div>
             </div>
-            {/* Video */}
-            <div className="w-full relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
-              <iframe
-                className="w-full h-full"
-                src={heroVideo}
-                title="Industrial Animation Showreel"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                loading="lazy"
-              />
-            </div>
+
           </div>
         </section>
 
@@ -495,7 +630,7 @@ const IndustrialAnimationArticle = () => {
                   </span>
                 </div>
                 <div className="text-center">
-                  <span className="inline-flex items-center gap-1.5 bg-zinc-800/60 border border-zinc-700 text-zinc-400 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-full">
+                  <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 text-zinc-400 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-full">
                     Traditional Video
                   </span>
                 </div>
@@ -506,7 +641,7 @@ const IndustrialAnimationArticle = () => {
             <div className="space-y-2">
               {comparisonRows.map((row, i) => (
                 <Reveal key={i} delay={i * 50}>
-                  <div className="grid grid-cols-[1fr_auto_auto] sm:grid-cols-[1fr_200px_200px] gap-3 items-center bg-zinc-900/40 border border-zinc-800 rounded-xl px-4 py-3.5 hover:border-zinc-700 hover:bg-zinc-900/70 transition-all duration-200">
+                  <div className="grid grid-cols-[1fr_auto_auto] sm:grid-cols-[1fr_200px_200px] gap-3 items-center bg-zinc-900/40 border border-zinc-800 rounded-xl px-4 py-3.5 hover:border-white/20 hover:bg-white/5 transition-all duration-200">
                     {/* Requirement */}
                     <span className="text-zinc-100 text-sm sm:text-base font-medium">{row[0]}</span>
                     {/* 3D Animation cell */}
@@ -515,7 +650,7 @@ const IndustrialAnimationArticle = () => {
                     </div>
                     {/* Traditional Video cell */}
                     <div className="flex justify-center">
-                      <span className="inline-flex items-center bg-zinc-800/80 border border-zinc-700/60 text-zinc-400 text-xs sm:text-sm px-3 py-1.5 rounded-full whitespace-nowrap">
+                      <span className="inline-flex items-center bg-white/10 border border-white/15 text-zinc-400 text-xs sm:text-sm px-3 py-1.5 rounded-full whitespace-nowrap">
                         {row[2]}
                       </span>
                     </div>
@@ -637,7 +772,7 @@ const IndustrialAnimationArticle = () => {
               <div className="max-w-2xl mx-auto text-center mt-8 space-y-4">
                 <a
                   href="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-zinc-900 text-sm font-semibold hover:bg-[#2563EB] hover:text-white transition-all shadow-lg cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-zinc-900 text-sm font-semibold hover:bg-[#2563EB] hover:text-blue-50 transition-all shadow-lg cursor-pointer"
                 >
                   Start Your Industrial Animation Project →
                 </a>

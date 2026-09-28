@@ -9,7 +9,7 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from 
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-const categories = ['Animation', 'Web', 'Configurator', 'VR', 'AR', 'Architecture', 'Tour 360'];
+const categories = ['Configurator', 'Architecture', 'Animation'];
 
 export const defaultSectionOrder = ['storyBlocks', 'thumbnails', 'stills', 'results', 'process', 'content'];
 
@@ -352,7 +352,7 @@ const ProjectDashboard = () => {
 
     setForm({
       title: project.title || '', subtitle, metaTitle: project.metaTitle || '', metaDescription: project.metaDescription || '',
-      category: project.category || 'VR', image: project.image || '',
+      category: project.category || 'Configurator', image: project.image || '',
       heroImage: project.heroImage || '', heroVideo: project.heroVideo || '',
       heroType: (project.heroVideo && !project.heroImage) ? 'video' : 'image',
       heroAspectRatio, tickerWords,

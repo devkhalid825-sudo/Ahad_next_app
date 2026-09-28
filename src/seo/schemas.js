@@ -68,6 +68,75 @@ export const SITE_SCHEMA = [
     name: SITE_NAME,
     url: `${SITE_URL}/`,
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': `${SITE_URL}/#professional-service`,
+    name: SITE_NAME,
+    url: SITE_URL,
+    description:
+      'Global immersive agency — WebGL 3D configurators, industrial 3D animation, architectural visualization, and Unreal Engine 5 development.',
+    areaServed: ['US', 'GB', 'AE', 'SA', 'AU'],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Immersive Technology Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'WebGL 3D Product Configurators',
+            url: `${SITE_URL}/services/3d-product-configurators`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Industrial 3D Animation',
+            url: `${SITE_URL}/blog/industrial-animation`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Architectural Visualization',
+            url: `${SITE_URL}/services/architectural-visualization`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Unreal Engine 5 Development',
+            url: `${SITE_URL}/services/unreal-engine-development`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'AR Development',
+            url: `${SITE_URL}/services/ar-development`,
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'VR Development',
+            url: `${SITE_URL}/services/vr-development`,
+          },
+        },
+      ],
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Sales',
+      url: `${SITE_URL}/contact`,
+    },
+  },
 ];
 // Note: WebPage and BreadcrumbList are page-specific (they describe a single
 // URL), so they are NOT included here — a copy of the homepage's WebPage/

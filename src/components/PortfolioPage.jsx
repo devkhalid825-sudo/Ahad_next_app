@@ -7,6 +7,7 @@ import Footer from './layouts/Footer';
 import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
 import CaseStudies from './features/CaseStudies';
+import ScopingBanner from './features/ScopingBanner';
 import { getImgSrc } from '../utils/api';
 
 import portfolioImgRaw from '../assets/About-page/porfolio.webp';
@@ -22,9 +23,7 @@ const PortfolioPage = () => {
     <div className="bg-black min-h-screen text-white font-sans selection:bg-[#4169E1]/30 selection:text-white overflow-x-hidden">
       <Header />
 
-      {/* ══════════════════════════════════════════════════════════
-          HERO SECTION WITH FULL-WIDTH BACKGROUND IMAGE (PERMANENT DARK)
-      ══════════════════════════════════════════════════════════ */}
+
       <section className="portfolio-hero-section keep-dark-hero relative w-full min-h-[55vh] sm:min-h-[65vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-black !bg-black text-white !text-white">
         {/* Full-width background image */}
         <div className="absolute inset-0 w-full h-full">
@@ -58,20 +57,15 @@ const PortfolioPage = () => {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          FEATURED CASE STUDIES
-      ══════════════════════════════════════════════════════════ */}
+     
       <CaseStudies isLight={false} />
 
-      {/* ══════════════════════════════════════════════════════════
-          LATEST WORK INTEGRATION
-      ══════════════════════════════════════════════════════════ */}
+
       <LatestWork isLight={false} />
 
-      {/* ══════════════════════════════════════════════════════════
-          CONTACT & FOOTER SECTIONS
-      ══════════════════════════════════════════════════════════ */}
+
       <Contact />
+      <ScopingBanner />
       <Footer />
     </div>
   );
