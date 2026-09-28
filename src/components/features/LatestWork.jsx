@@ -7,7 +7,6 @@ import { FiSearch } from '@/components/ui/Icons';
 import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
 import { getProjectValueProposition } from '@/constants/projectValueProps';
 import { useTheme } from '@/components/providers/ThemeProvider';
-import VideoHover from '@/components/ui/VideoHover';
 
 /* ──────────────────────────────────────────────────────────────────────────────
    TASK B1 — 4 Pillar Tabs
@@ -32,22 +31,6 @@ const categoryToPillars = (category = '') => {
   return pillars;
 };
 
-const resolveVideoUrl = (val) => {
-  if (!val || typeof val !== 'string') return '';
-  const s = val.trim();
-  if (!s) return '';
-  if (
-    s.includes('youtube.com') ||
-    s.includes('youtu.be') ||
-    s.startsWith('http://') ||
-    s.startsWith('https://') ||
-    s.startsWith('/')
-  ) {
-    return s;
-  }
-  return `/assets/ElipseImages/videos/${s}`;
-};
-
 const VideoHoverCard = ({ project, isLight }) => {
   const themeContext = useTheme();
   const isLightMode = isLight !== undefined ? isLight : Boolean(themeContext?.isLight);
@@ -58,8 +41,6 @@ const VideoHoverCard = ({ project, isLight }) => {
       : `${BACKEND_ORIGIN}${project.image}`
     : '';
 
-  const rawVideo = project.previewVideo || project.video || project.heroVideo || '';
-  const videoSrc = resolveVideoUrl(rawVideo);
   const is360Tour = (project.category || '').toLowerCase().includes('360');
 
   return (
@@ -72,56 +53,47 @@ const VideoHoverCard = ({ project, isLight }) => {
           : ''
       }
       aria-label={`View project: ${project.title}`}
-      className="group block transition-all duration-300 cursor-pointer"
+      className={`group block relative overflow-hidden border transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl aspect-[16/9] w-full ${isLightMode
+        ? 'border-zinc-200 hover:border-zinc-300'
+        : 'border-zinc-800 hover:border-zinc-700'
+        }`}
     >
-      {/* 16:9 Media Container (100% Clean Poster + Hover Video) */}
-      <div
-        className={`relative overflow-hidden border transition-all duration-300 shadow-sm group-hover:shadow-xl aspect-[16/9] w-full ${isLightMode
-          ? 'border-zinc-200 group-hover:border-zinc-400'
-          : 'border-zinc-800 group-hover:border-zinc-700'
-          }`}
-      >
-        <VideoHover
-          posterSrc={imageSrc}
-          videoSrc={videoSrc}
-          alt={project.title}
-          className="w-full h-full"
-        />
-      </div>
-
-      {/* Architectural Luxury Editorial Info Below Media (Centered) */}
-      <div className="pt-4 pb-2 px-2 text-center flex flex-col items-center">
-        {/* Project Title (Serif Luxury Style) */}
-        <h3
-          className={`text-lg md:text-xl font-serif tracking-wide transition-colors duration-300 ${isLightMode
-            ? 'text-zinc-900 group-hover:text-black'
-            : 'text-white group-hover:text-zinc-100'
-            }`}
-        >
-          {project.title}
-        </h3>
-
-        {/* Subtitle / Description */}
-        <p
-          className={`text-xs md:text-sm font-light mt-1.5 max-w-sm line-clamp-2 leading-relaxed ${isLightMode ? 'text-zinc-600' : 'text-zinc-400'
-            }`}
-        >
-          {getProjectValueProposition(project)}
-        </p>
-
-        {/* Outlined Explore / View 360 Tour ↗ Button with Hover Color Fill */}
-        <div className="mt-3.5">
-          <span
-            className={`inline-flex items-center justify-center gap-2 px-6 py-2 text-sm font-medium tracking-wider border transition-all duration-300 shadow-sm ${isLightMode
-              ? 'border-zinc-400 text-zinc-800 bg-transparent group-hover:border-black group-hover:bg-black group-hover:text-white hover:border-black hover:bg-black hover:text-white'
-              : 'border-zinc-500 text-zinc-200 bg-transparent group-hover:border-white group-hover:bg-white group-hover:text-black hover:border-white hover:bg-white hover:text-black'
-              }`}
-          >
-            {is360Tour ? 'View 360 Tour' : 'Explore'}
-            <span className="text-[13px] leading-none transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-              ↗
+      <div className="relative h-full w-full overflow-hidden">
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-zinc-900" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
+          <h3 className="text-lg md:text-xl font-bold text-white mb-2">{project.title}</h3>
+          <p className="text-zinc-300 text-xs md:text-sm mb-2 line-clamp-2">
+            {getProjectValueProposition(project)}
+          </p>
+          <div className="pt-3 border-t border-zinc-700/50">
+            <span className="inline-flex items-center text-xs font-semibold text-white group-hover:text-[#4169E1] transition-colors uppercase tracking-widest">
+              {is360Tour ? 'View 360 Tour' : 'View Case Study'}
+              <svg
+                className="w-3 h-3 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
             </span>
-          </span>
+          </div>
         </div>
       </div>
     </Link>
