@@ -8,9 +8,7 @@ import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
 import { getProjectValueProposition } from '@/constants/projectValueProps';
 import { useTheme } from '@/components/providers/ThemeProvider';
 
-/* ──────────────────────────────────────────────────────────────────────────────
-   TASK B1 — 4 Pillar Tabs
-   ────────────────────────────────────────────────────────────────────────────── */
+
 const PILLAR_TABS = [
   { key: 'all', label: 'All Projects' },
   { key: 'configurator', label: '3D Configurators' },
@@ -259,7 +257,7 @@ const LatestWorkContent = ({ isLight = undefined, initialProjects = null }) => {
       </div>
 
       <div className="w-full px-[15px] md:px-[40px]">
-        <div key={activeTab} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+        <div key={activeTab} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px]">
           {displayedProjects.map((project) => (
             <VideoHoverCard key={project.id} project={project} isLight={isLightMode} />
           ))}

@@ -18,6 +18,8 @@ import kiaImgRaw from '../../assets/About-page/kia.webp';
 import marineImgRaw from '../../assets/About-page/marine.webp';
 import inverxImgRaw from '../../assets/About-page/inverx.webp';
 import tshirtImgRaw from '../../assets/About-page/t-shirt.webp';
+import capImgRaw from '../../assets/web-app-ui/cap.webp';
+import clothImgRaw from '../../assets/web-app-ui/cloth.webp';
 
 const steeringImg = getImgSrc(steeringImgRaw);
 const volvoImg = getImgSrc(volvoImgRaw);
@@ -28,6 +30,8 @@ const marineImg = getImgSrc(marineImgRaw);
 const inverxImg = getImgSrc(inverxImgRaw);
 const tshirtImg = getImgSrc(tshirtImgRaw);
 const seatImg = getImgSrc(seatImgRaw);
+const capImg = getImgSrc(capImgRaw);
+const clothImg = getImgSrc(clothImgRaw);
 
 // Selected 3D Product Configurator Portfolio Builds
 const CONFIGURATOR_BUILDS = [
@@ -46,7 +50,6 @@ const CONFIGURATOR_BUILDS = [
     desc: 'Interactive 3D exterior and interior vehicle customizer with photoreal material switching, camera presets, and real-time lighting.',
     image: volvoImg,
     tech: 'Unreal Engine · WebGL',
-    reelLink: 'https://youtu.be/rO1sg3y3TF0?si=9yv7WSm0m5AwqG0p',
     youtubeLink: 'https://youtu.be/rO1sg3y3TF0?si=9yv7WSm0m5AwqG0p',
   },
   {
@@ -105,6 +108,22 @@ const CONFIGURATOR_BUILDS = [
     image: tshirtImg,
     tech: 'WebGL · Three.js',
     liveLink: 'https://legacy.elipsestudio.com/T-Shirt/',
+  },
+  {
+    title: 'Cap 3D Configurator',
+    category: 'Apparel & Fashion 3D',
+    desc: 'Interactive real-time 3D cap customizer with fabric colorways, embroidery options, and instant 360° preview built in the browser.',
+    image: capImg,
+    tech: 'PlayCanvas · WebGL',
+    liveLink: 'https://studenterhue.studentlife.dk/studentlife/?package=premium&program=stx',
+  },
+  {
+    title: 'Cloth 3D Configurator',
+    category: 'Apparel & Fashion 3D',
+    desc: 'Real-time browser-based 3D cloth configurator with material switching, print placement, and colorway customization.',
+    image: clothImg,
+    tech: 'PlayCanvas · WebGL',
+    liveLink: 'https://democloth.studentlife.dk/',
   },
 ];
 
