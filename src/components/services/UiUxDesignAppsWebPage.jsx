@@ -40,6 +40,15 @@ const figmaThreeImg = getImgSrc(figmaThreeImgRaw);
 // Selected UI/UX & Product Design Portfolio Builds (replace titles/tools/links with real projects)
 const UIUX_BUILDS = [
   {
+    title: 'Bean Trailer — UI/UX Prototype',
+    category: 'Interactive Prototyping',
+    desc: 'Clickable high-fidelity prototype simulating the real product flow, tested with users early so costly build mistakes never happen.',
+    image: figmaThreeImg,
+    tools: 'Figma Prototyping · User Testing',
+    siteLink: 'https://www.figma.com/proto/Ygv1JHMqUCzuo9t5jYuWo1/Bean-Trailer?node-id=1745-173',
+    siteLabel: 'Figma',
+  },
+  {
     title: 'Qist Market',
     category: 'E-Commerce Platform',
     desc: 'E-commerce platform for installment-based shopping and financial flexibility.',
@@ -146,15 +155,6 @@ const UIUX_BUILDS = [
       { label: 'Website', href: 'https://www.ilaan.io/', secondary: true },
     ],
   },
-  {
-    title: 'Bean Trailer — UI/UX Prototype',
-    category: 'Interactive Prototyping',
-    desc: 'Clickable high-fidelity prototype simulating the real product flow, tested with users early so costly build mistakes never happen.',
-    image: figmaThreeImg,
-    tools: 'Figma Prototyping · User Testing',
-    siteLink: 'https://www.figma.com/proto/Ygv1JHMqUCzuo9t5jYuWo1/Bean-Trailer?node-id=1745-173',
-    siteLabel: 'Figma',
-  },
 ];
 
 // Capabilities Grid
@@ -248,7 +248,7 @@ const CAPABILITIES = [
 /**
  * Auto-playing image slider for the showcase area
  */
-const UIUX_SLIDES = [firstWebImg, firstAppImg, figmaTwoImg, secondWebImg, figmaThreeImg];
+const UIUX_SLIDES = [figmaThreeImg, firstWebImg, firstAppImg, figmaTwoImg, secondWebImg];
 
 const ImageAutoSlider = () => {
   const [current, setCurrent] = useState(0);
@@ -348,10 +348,13 @@ const CapabilitiesGrid = () => {
 const UiUxDesignAppsWebPage = () => {
   const router = useRouter();
   const [galleryTab, setGalleryTab] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const filteredBuilds = galleryTab === 'all'
     ? UIUX_BUILDS
     : UIUX_BUILDS.filter((b) => (CARD_TYPE[b.title] || 'website') === galleryTab);
+
+  const visibleBuilds = filteredBuilds.slice(0, visibleCount);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -473,7 +476,10 @@ const UiUxDesignAppsWebPage = () => {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setGalleryTab(tab.id)}
+              onClick={() => {
+                setGalleryTab(tab.id);
+                setVisibleCount(6);
+              }}
               className={`px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
                 galleryTab === tab.id
                   ? 'bg-[#4169E1] text-white shadow-lg shadow-[#4169E1]/30'
@@ -486,7 +492,7 @@ const UiUxDesignAppsWebPage = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-0">
-          {filteredBuilds.map((item, idx) => (
+          {visibleBuilds.map((item, idx) => (
             <div
               key={idx}
               className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
@@ -554,6 +560,20 @@ const UiUxDesignAppsWebPage = () => {
             </div>
           ))}
         </div>
+
+        {filteredBuilds.length > 6 && (
+          <div className="w-full flex justify-center mt-10 sm:mt-12">
+            <button
+              onClick={() => setVisibleCount(filteredBuilds.length > visibleCount ? filteredBuilds.length : 6)}
+              className="flex items-center gap-2.5 px-8 sm:px-10 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-lg shadow-[#4169E1]/25 hover:shadow-[#4169E1]/40 hover:scale-[1.03] transition-all duration-300 cursor-pointer"
+            >
+              <span>{filteredBuilds.length > visibleCount ? 'Load More' : 'Show Less'}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14m0-14l-6 6m6-6l6 6" />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* 2 CTAs Directly Below Portfolio Gallery */}
         <div className="mt-14 sm:mt-16 flex flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full">

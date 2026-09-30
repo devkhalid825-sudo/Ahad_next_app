@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ProductVizHeader from '../layouts/ProductVizHeader';
 import Footer from '../layouts/Footer';
@@ -47,6 +47,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Dynamic 3D product commercial and fruit spread simulation highlighting fresh ingredients, appetizing jar textures, and vibrant breakfast lifestyle CGI.',
     image: ahmedJamSpreadImg,
     tech: 'Fluid Dynamics · Redshift · 3D VFX',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/249579553/Ahmed-Foods-Jam-Spread-3D-Product-Advertisement',
   },
   {
@@ -55,6 +56,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Cinematic 3D commercial featuring photoreal ingredient dynamics, sizzling spices, steam simulation, and packaging CGI for Ahmed Foods Bombay Biryani recipe mix.',
     image: ahmedBiryaniImg,
     tech: 'Food CGI · Particle Dynamics · Redshift',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/250610119/Ahmed-Foods-Bombay-Biryani-CGI-Commercial',
   },
   {
@@ -63,6 +65,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Photorealistic 3D product rendering, exploded accessory visualization, and studio lighting for Club Pro golf cart club & ball washer systems.',
     image: clubProImg,
     tech: 'Studio CGI · 3D Product Rendering',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/251145627/Club-ball-washer-Club-Pro',
   },
   {
@@ -71,6 +74,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Photorealistic 3D product rendering and exploded technical visualization for solar power conversion units and high-capacity battery systems.',
     image: inverxImg,
     tech: 'Cinema 4D · Octane Render',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/254405865/Inverex-Product-Visualization',
   },
   {
@@ -79,6 +83,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Vibrant 3D commercial animation showcasing dynamic fruit jelly splashes, translucent material physics, and appetizing packaging aesthetics.',
     image: ahmedFoodsImg,
     tech: 'Fluid Dynamics · Houdini · Redshift',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/251531045/Ahmed-Foods-Crystal-Jelly-3D-Animation',
   },
   {
@@ -87,6 +92,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Mind-bending naked-eye 3D anamorphic corner LED billboard animation bringing majestic wildlife leaping out of the architectural display.',
     image: lahoreZooImg,
     tech: 'Forced Perspective · Unreal 5 · VFX',
+    tags: ['Anamorphic Animation'],
     behanceLink: 'https://www.behance.net/gallery/239269921/Lahore-Zoo-Anamorphic-Animation',
   },
   {
@@ -95,6 +101,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Tea holds a special place in every Pakistani household, and Tapal Tea (Pvt.) Ltd. has been a part of our lives for as long as we can remember. It’s an absolute pleasure to collaborate with a brand we’ve grown up with and always trusted.',
     image: tapalImg,
     tech: 'Liquid Simulation · 3ds Max · V-Ray',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/229323883/Tapal-Animation',
   },
   {
@@ -103,6 +110,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Spectacular outdoor 3D anamorphic commercial featuring explosive rose water splashes, ice crystals, and hyper-realistic beverage bottles.',
     image: roohAfzaImg,
     tech: 'Anamorphic CGI · Fluid Physics',
+    tags: ['Anamorphic Animation'],
     behanceLink: 'https://www.behance.net/gallery/221757889/Rooh-Afza-Bill-Board-Animation',
   },
   {
@@ -111,6 +119,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Cinematic spice swirl simulations, slow-motion grain bursts, and rich culinary CGI tailored for broadcast commercials and digital ads.',
     image: malkaImg,
     tech: 'Particle VFX · Maya · Arnold',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/193724187/Malka-Foods-VFX-Animation',
   },
   {
@@ -119,6 +128,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Ultra-clean studio lighting, micro-anodized metal shaders, and layer-by-layer mechanical component teardowns for next-gen consumer devices.',
     image: gipproImg,
     tech: 'CAD Ingestion · Exploded Assembly',
+    tags: ['Product Animation'],
     behanceLink: 'https://www.behance.net/gallery/212949897/Gippro-Animation',
   },
   {
@@ -127,6 +137,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Sub-millimeter texture accuracy rendering genuine leather grain, polished metallic buckles, and soft textile weaves in custom studio environments.',
     image: dogguoImg,
     tech: 'PBR Textures · Studio CGI',
+    tags: [],
     behanceLink: 'https://www.behance.net/gallery/206167799/DOGGUO-CGI',
   },
   {
@@ -135,6 +146,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Complex oil refining machinery visualization, high-precision pipeline network animation, and corporate technical storytelling.',
     image: parcoImg,
     tech: 'Industrial 3D · Motion Graphics',
+    tags: ['Motion Graphics', 'Explainer Video'],
     behanceLink: 'https://www.behance.net/gallery/201090447/Parco-Animation',
   },
   {
@@ -143,6 +155,7 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Atmospheric cinematic title sequences, historical narrative compositing, and evocative motion graphic treatments for high-profile streaming series.',
     image: dhoopImg,
     tech: 'Compositing · After Effects · 3D VFX',
+    tags: ['VFX', 'Motion Graphics'],
     behanceLink: 'https://www.behance.net/gallery/154519401/Dhoop-Ki-Deewar-(Motion-Graphics-VFX)',
   },
   {
@@ -151,8 +164,19 @@ const PRODUCT_VIZ_BUILDS = [
     desc: 'Intricate tourbillon gear movement animation, diamond-cut bezel refraction, and sapphire crystal reflections for luxury watch marketing.',
     image: giordanoImg,
     tech: 'Macro Detailing · Chronograph CGI',
+    tags: [],
     behanceLink: 'https://www.behance.net/gallery/152471537/Giordano-Commercial',
   },
+];
+
+const PRODUCT_VIZ_TABS = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'product-animation', label: 'Product Animation' },
+  { id: 'anamorphic', label: 'Anamorphic Animation' },
+  { id: 'motion-graphics', label: 'Motion Graphics' },
+  { id: 'explainer', label: 'Explainer Video' },
+  { id: 'vfx', label: 'VFX' },
+  { id: 'ai', label: 'AI' },
 ];
 
 // Capabilities Grid
@@ -295,19 +319,29 @@ const CapabilitiesGrid = () => {
                 </li>
               ))}
             </ul>
-          </div>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
     </div>
   );
 };
 
 const ProductVisualizationPage = () => {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const filteredBuilds = useMemo(() => {
+    if (activeTab === 'all') return PRODUCT_VIZ_BUILDS;
+    const label = PRODUCT_VIZ_TABS.find((t) => t.id === activeTab)?.label;
+    return PRODUCT_VIZ_BUILDS.filter((item) => item.tags?.includes(label));
+  }, [activeTab]);
+
+  const visibleBuilds = filteredBuilds.slice(0, visibleCount);
 
   return (
     <div
@@ -416,8 +450,45 @@ const ProductVisualizationPage = () => {
           </p>
         </div>
 
+        {/* Interactive Category Filter Tabs */}
+        <div className="w-full max-w-5xl mx-auto flex justify-center px-3 mt-7 sm:mt-9">
+          <div className="max-w-full overflow-x-auto no-scrollbar flex flex-nowrap items-center gap-1 sm:gap-1.5 p-1.5 sm:p-2 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+            {PRODUCT_VIZ_TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setVisibleCount(6);
+                  }}
+                  aria-pressed={isActive}
+                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
+                      : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {filteredBuilds.length === 0 ? (
+          <div className="w-full max-w-2xl mx-auto mt-12 sm:mt-16 text-center px-6 py-14 rounded-2xl bg-[#0E0E10] border border-white/10">
+            <p className="text-base sm:text-lg text-white font-medium">
+              New projects in this category are on the way
+            </p>
+            <p className="text-sm text-zinc-400 font-light mt-2">
+              We are currently producing fresh work for this service. Reach out to us to discuss your project.
+            </p>
+          </div>
+        ) : null}
+
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
-          {PRODUCT_VIZ_BUILDS.map((item, idx) => (
+          {visibleBuilds.map((item, idx) => (
             <div
               key={idx}
               className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
@@ -473,6 +544,20 @@ const ProductVisualizationPage = () => {
             </div>
           ))}
         </div>
+
+        {filteredBuilds.length > 6 && (
+          <div className="w-full flex justify-center mt-10 sm:mt-12">
+            <button
+              onClick={() => setVisibleCount(filteredBuilds.length > visibleCount ? filteredBuilds.length : 6)}
+              className="flex items-center gap-2.5 px-8 sm:px-10 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-lg shadow-[#4169E1]/25 hover:shadow-[#4169E1]/40 hover:scale-[1.03] transition-all duration-300 cursor-pointer"
+            >
+              <span>{filteredBuilds.length > visibleCount ? 'Load More' : 'Show Less'}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14m0-14l-6 6m6-6l6 6" />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* 2 CTAs Directly Below Portfolio Gallery */}
         <div className="mt-14 sm:mt-16 flex flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full">

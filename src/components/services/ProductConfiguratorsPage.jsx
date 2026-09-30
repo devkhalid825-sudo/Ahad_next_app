@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ConfiguratorHeader from '../layouts/ConfiguratorHeader';
 import Footer from '../layouts/Footer';
@@ -9,7 +9,6 @@ import ClientReviews from '../features/ClientReviews';
 import { getImgSrc } from '../../utils/api';
 
 // Project Images
-import steeringImgRaw from '../../assets/ElipseImages/projects/Streeing-1.webp';
 import volvoImgRaw from '../../assets/ElipseImages/hero/volve-configrator.webp';
 import inverexImgRaw from '../../assets/ElipseImages/projects/G-1.webp';
 import seatImgRaw from '../../assets/ElipseImages/projects/seat-2-1.webp';
@@ -21,7 +20,6 @@ import tshirtImgRaw from '../../assets/About-page/t-shirt.webp';
 import capImgRaw from '../../assets/web-app-ui/cap.webp';
 import clothImgRaw from '../../assets/web-app-ui/cloth.webp';
 
-const steeringImg = getImgSrc(steeringImgRaw);
 const volvoImg = getImgSrc(volvoImgRaw);
 const inverexImg = getImgSrc(inverexImgRaw);
 const sharkImg = getImgSrc(sharkImgRaw);
@@ -36,13 +34,13 @@ const clothImg = getImgSrc(clothImgRaw);
 // Selected 3D Product Configurator Portfolio Builds
 const CONFIGURATOR_BUILDS = [
   {
-    title: 'BMW Steering Wheel Configurator',
+    title: 'Kia Sportage 3D Configurator',
     category: 'Automotive WebGL',
-    desc: 'Real-time 3D browser customization for stitching, paddle shifters, carbon textures, and trim colors powered by PlayCanvas.',
-    image: steeringImg,
-    tech: 'PlayCanvas · WebGL',
-    liveLink: 'https://steering-configurator.netlify.app/',
-    reelLink: 'https://youtube.com/shorts/Rm2SXb_reVI?si=cNPmF7I7lDLglhNb',
+    desc: 'Interactive 3D crossover configurator featuring day/night environment toggles, custom rims, metallic paints, and cockpit inspection.',
+    image: kiaImg,
+    tech: 'Unreal Engine · WebGL',
+    liveLink: 'https://legacy.elipsestudio.com/Kia/',
+    tags: ['Automotive', 'Car'],
   },
   {
     title: 'Volvo Vehicle 3D Walkthrough',
@@ -51,6 +49,7 @@ const CONFIGURATOR_BUILDS = [
     image: volvoImg,
     tech: 'Unreal Engine · WebGL',
     youtubeLink: 'https://youtu.be/rO1sg3y3TF0?si=9yv7WSm0m5AwqG0p',
+    tags: ['Car', 'Automotive'],
   },
   {
     title: 'Costa Golf Cart Configurator',
@@ -59,14 +58,7 @@ const CONFIGURATOR_BUILDS = [
     image: inverexImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://costa-carts.netlify.app/',
-  },
-  {
-    title: 'Kia Sportage 3D Configurator',
-    category: 'Automotive WebGL',
-    desc: 'Interactive 3D crossover configurator featuring day/night environment toggles, custom rims, metallic paints, and cockpit inspection.',
-    image: kiaImg,
-    tech: 'Unreal Engine · WebGL',
-    liveLink: 'https://legacy.elipsestudio.com/Kia/',
+    tags: ['Golf Cart'],
   },
   {
     title: 'BYD Shark 6 Configurator',
@@ -75,6 +67,7 @@ const CONFIGURATOR_BUILDS = [
     image: sharkImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Zeus-Configurator/',
+    tags: ['Car', 'Automotive'],
   },
   {
     title: 'Inverex E-Bike Configurator',
@@ -83,6 +76,7 @@ const CONFIGURATOR_BUILDS = [
     image: inverxImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Bike-Configurator/',
+    tags: ['Bike', 'Automotive'],
   },
   {
     title: 'Automotive Seat Customizer',
@@ -91,6 +85,7 @@ const CONFIGURATOR_BUILDS = [
     image: seatImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://seat-cover-configurator.inknalgorithm.com/',
+    tags: ['Seat', 'Automotive'],
   },
   {
     title: 'Pursuit 288 Yacht Configurator',
@@ -100,6 +95,7 @@ const CONFIGURATOR_BUILDS = [
     tech: 'Unreal 5 · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Yacht_Configurator/',
     reelLink: 'https://youtube.com/shorts/YD_TWiIeL5U?si=aXBtfAFGUwsoPVzS',
+    tags: ['Yacht', 'Automotive'],
   },
   {
     title: 'Custom Apparel 3D Configurator',
@@ -108,6 +104,7 @@ const CONFIGURATOR_BUILDS = [
     image: tshirtImg,
     tech: 'WebGL · Three.js',
     liveLink: 'https://legacy.elipsestudio.com/T-Shirt/',
+    tags: ['Apparel'],
   },
   {
     title: 'Cap 3D Configurator',
@@ -116,6 +113,7 @@ const CONFIGURATOR_BUILDS = [
     image: capImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://studenterhue.studentlife.dk/studentlife/?package=premium&program=stx',
+    tags: ['Apparel'],
   },
   {
     title: 'Cloth 3D Configurator',
@@ -124,7 +122,19 @@ const CONFIGURATOR_BUILDS = [
     image: clothImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://democloth.studentlife.dk/',
+    tags: ['Apparel'],
   },
+];
+
+const CONFIGURATOR_TABS = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'automotive', label: 'Automotive' },
+  { id: 'cars', label: 'Car' },
+  { id: 'yachts', label: 'Yacht' },
+  { id: 'golf-cart', label: 'Golf Cart' },
+  { id: 'apparel', label: 'Apparel' },
+  { id: 'bike', label: 'Bike' },
+  { id: 'seat', label: 'Seat' },
 ];
 
 // Capabilities Grid
@@ -462,10 +472,20 @@ const CapabilitiesGrid = () => {
 
 const ProductConfiguratorsPage = () => {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const filteredBuilds = useMemo(() => {
+    if (activeTab === 'all') return CONFIGURATOR_BUILDS;
+    const label = CONFIGURATOR_TABS.find((t) => t.id === activeTab)?.label;
+    return CONFIGURATOR_BUILDS.filter((item) => item.tags?.includes(label));
+  }, [activeTab]);
+
+  const visibleBuilds = filteredBuilds.slice(0, visibleCount);
 
   return (
     <div
@@ -575,8 +595,34 @@ const ProductConfiguratorsPage = () => {
           </p>
         </div>
 
+        {/* Interactive Category Filter Tabs */}
+        <div className="w-full max-w-5xl mx-auto flex justify-center px-3 mt-7 sm:mt-9">
+          <div className="max-w-full overflow-x-auto no-scrollbar flex flex-nowrap items-center gap-1 sm:gap-1.5 p-1.5 sm:p-2 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+            {CONFIGURATOR_TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setVisibleCount(6);
+                  }}
+                  aria-pressed={isActive}
+                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
+                      : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
-          {CONFIGURATOR_BUILDS.map((item, idx) => (
+          {visibleBuilds.map((item, idx) => (
             <div
               key={idx}
               className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
@@ -660,6 +706,20 @@ const ProductConfiguratorsPage = () => {
             </div>
           ))}
         </div>
+
+        {filteredBuilds.length > 6 && (
+          <div className="w-full flex justify-center mt-10 sm:mt-12">
+            <button
+              onClick={() => setVisibleCount(filteredBuilds.length > visibleCount ? filteredBuilds.length : 6)}
+              className="flex items-center gap-2.5 px-8 sm:px-10 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-lg shadow-[#4169E1]/25 hover:shadow-[#4169E1]/40 hover:scale-[1.03] transition-all duration-300 cursor-pointer"
+            >
+              <span>{filteredBuilds.length > visibleCount ? 'Load More' : 'Show Less'}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14m0-14l-6 6m6-6l6 6" />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* 2 CTAs Directly Below Portfolio Gallery */}
         <div className="mt-14 sm:mt-16 flex flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full">

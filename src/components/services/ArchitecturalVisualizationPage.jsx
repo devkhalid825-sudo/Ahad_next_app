@@ -29,6 +29,15 @@ const classicVillaImg = getImgSrc(villasImgRaw);
 // Selected Real Estate & Archviz Portfolio Builds
 const ARCHVIZ_BUILDS = [
   {
+    title: 'Modern Villa | VR & 3D Visualization',
+    category: 'Modern Villa',
+    tags: ['VR', '3D Visualization'],
+    desc: 'Complete exterior architecture and interior living suite CGI for an ultra-modern minimalist villa, accompanied by real-time VR walk simulation.',
+    image: villaImg,
+    tech: 'Villa CGI · VR Capture',
+    behanceLink: 'https://www.behance.net/gallery/221374735/Modern-Villa-Virtual-Reality',
+  },
+  {
     title: 'Love Apartment | 3D Visualization & VR Experience',
     category: 'Luxury Residential',
     tags: ['VR', '3D Visualization'],
@@ -50,7 +59,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Khoj Resort Architectural Edit',
     category: 'Cinematic Film',
-    tags: ['3D Visualization'],
+    tags: ['3D Visualization', 'Cinematics & Flythrough'],
     desc: 'A cinematic architectural animation reel showcasing a serene eco-resort development nestled in nature, integrating natural sunlight and tranquil waterside living.',
     image: khojImg,
     tech: '4K Film · Hospitality',
@@ -59,7 +68,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Interactive Virtual Tour & Flythrough',
     category: 'Unreal Engine 5',
-    tags: ['VR', '3D Visualization'],
+    tags: ['VR', '3D Visualization', 'Cinematics & Flythrough', 'Interactive Virtual Tour'],
     desc: 'Interactive real-time property walkthrough built in Unreal Engine. Allows prospective buyers to explore interiors with dynamic lighting and interactive fixtures.',
     image: timBarthImg,
     tech: 'Unreal Engine 5 · Lumen GI',
@@ -69,7 +78,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: '360° Virtual Tour (Kumar Residence)',
     category: 'Web 360° Tour',
-    tags: ['360'],
+    tags: ['360', 'Interactive Virtual Tour'],
     desc: 'Full web-based panoramic tour of an architectural modern residence. Enables instant interactive walkthroughs on client phones and tablets without software installation.',
     image: kumarImg,
     tech: 'Web 360° · Luxury Residence',
@@ -85,15 +94,6 @@ const ARCHVIZ_BUILDS = [
     behanceLink: 'https://www.behance.net/gallery/254721427/VR-Apartment-Walkthrough',
   },
   {
-    title: 'Modern Villa | VR & 3D Visualization',
-    category: 'Modern Villa',
-    tags: ['VR', '3D Visualization'],
-    desc: 'Complete exterior architecture and interior living suite CGI for an ultra-modern minimalist villa, accompanied by real-time VR walk simulation.',
-    image: villaImg,
-    tech: 'Villa CGI · VR Capture',
-    behanceLink: 'https://www.behance.net/gallery/221374735/Modern-Villa-Virtual-Reality',
-  },
-  {
     title: 'Classic Villa | VR & 3D Visualization',
     category: 'Classic Architecture',
     tags: ['3D Visualization'],
@@ -106,6 +106,8 @@ const ARCHVIZ_BUILDS = [
 
 const ARCHVIZ_TABS = [
   { id: 'all', label: 'All Projects' },
+  { id: 'cinematic', label: 'Cinematics & Flythrough' },
+  { id: 'interactive-tour', label: 'Interactive Virtual Tour' },
   { id: 'vr', label: 'VR' },
   { id: '360', label: '360° Virtual Tour' },
   { id: '3d-viz', label: '3D Visualization' },
@@ -235,11 +237,6 @@ const ArchvizVideoPlayer = () => {
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
-          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-left z-10">
-            <span className="text-xs sm:text-sm font-semibold text-white/90 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
-              Watch Architectural Reel (4K)
-            </span>
-          </div>
         </div>
       )}
     </div>
@@ -288,6 +285,7 @@ const CapabilitiesGrid = () => {
 const ArchitecturalVisualizationPage = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -296,12 +294,16 @@ const ArchitecturalVisualizationPage = () => {
   const filteredBuilds = useMemo(() => {
     if (activeTab === 'all') return ARCHVIZ_BUILDS;
     return ARCHVIZ_BUILDS.filter((item) => {
+      if (activeTab === 'cinematic') return item.tags?.includes('Cinematics & Flythrough');
+      if (activeTab === 'interactive-tour') return item.tags?.includes('Interactive Virtual Tour');
       if (activeTab === 'vr') return item.tags?.includes('VR');
       if (activeTab === '360') return item.tags?.includes('360');
       if (activeTab === '3d-viz') return item.tags?.includes('3D Visualization');
       return true;
     });
   }, [activeTab]);
+
+  const visibleBuilds = filteredBuilds.slice(0, visibleCount);
 
   return (
     <div
@@ -408,31 +410,36 @@ const ArchitecturalVisualizationPage = () => {
           <p className="text-sm sm:text-base md:text-lg mt-2.5 sm:mt-3 leading-relaxed font-light text-zinc-300">
             Explore real client projects delivered by Elipse Studio across towers, luxury villas, master communities, and interactive real-time environments.
           </p>
+        </div>
 
-          {/* Interactive Category Filter Tabs */}
-          <div className="w-full flex justify-center items-center mt-7 sm:mt-9 px-3">
-            <div className="max-w-full overflow-x-auto no-scrollbar inline-flex flex-nowrap items-center gap-1 sm:gap-2 p-1.5 sm:p-2 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
-              {ARCHVIZ_TABS.map((tab) => {
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`shrink-0 px-3.5 sm:px-6 py-1.5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive
-                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] scale-[1.02]'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                      }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
+        {/* Interactive Category Filter Tabs */}
+        <div className="w-full max-w-5xl mx-auto flex justify-center px-3 mt-7 sm:mt-9">
+          <div className="max-w-full overflow-x-auto no-scrollbar flex flex-nowrap items-center gap-1 sm:gap-1.5 p-1.5 sm:p-2 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+            {ARCHVIZ_TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setVisibleCount(6);
+                  }}
+                  aria-pressed={isActive}
+                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
+                      : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
-          {filteredBuilds.map((item, idx) => {
+          {visibleBuilds.map((item, idx) => {
             const primaryLink = item.behanceLink || item.liveLink || item.driveLink || item.youtubeLink;
             return (
               <div
@@ -577,6 +584,20 @@ const ArchitecturalVisualizationPage = () => {
             );
           })}
         </div>
+
+        {filteredBuilds.length > 6 && (
+          <div className="w-full flex justify-center mt-10 sm:mt-12">
+            <button
+              onClick={() => setVisibleCount(filteredBuilds.length > visibleCount ? filteredBuilds.length : 6)}
+              className="flex items-center gap-2.5 px-8 sm:px-10 py-3.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-lg shadow-[#4169E1]/25 hover:shadow-[#4169E1]/40 hover:scale-[1.03] transition-all duration-300 cursor-pointer"
+            >
+              <span>{filteredBuilds.length > visibleCount ? 'Load More' : 'Show Less'}</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14m0-14l-6 6m6-6l6 6" />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* 2 CTAs Directly Below Portfolio Gallery */}
         <div className="mt-14 sm:mt-16 flex flex-row flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full">
