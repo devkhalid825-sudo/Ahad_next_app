@@ -3,6 +3,7 @@ import { apiCall, SITE_URL } from '@/utils/api';
 export const dynamic = 'force-dynamic';
 
 const staticBlogSlugs = [
+  'virtual-showrooms-vs-physical-retail-2026-roi-guide',
   'leap-2026-wrap-up',
   'webgl-vs-unreal-engine-3d-configurator',
   'web-based-configurator',

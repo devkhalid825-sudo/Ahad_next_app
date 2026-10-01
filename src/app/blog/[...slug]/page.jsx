@@ -7,6 +7,7 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
+  'virtual-showrooms-vs-physical-retail-2026-roi-guide': dynamic(() => import('@/components/articles/VirtualShowroomsRoiArticle')),
   'leap-2026': dynamic(() => import('@/components/articles/Leap2026Article')),
   'leap-2026-wrap-up': dynamic(() => import('@/components/articles/Leap2026Article')),
   'leap-2026-wrap-up-bilal-lania': dynamic(() => import('@/components/articles/Leap2026Article')),
@@ -31,6 +32,12 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  'virtual-showrooms-vs-physical-retail-2026-roi-guide': {
+    title: 'Virtual Showrooms vs Physical Retail: 2026 Financial Case & ROI | Elipse Studio',
+    description: 'Why enterprise brands treat virtual showrooms as 365-day conversion hubs alongside trade shows. Hard financial benchmarks, WebGL architecture, and ROI breakdown.',
+    keywords: ['virtual showroom ROI', '3D commerce 2026', 'trade show vs virtual showroom', 'WebGL 3D configurator', 'Unreal Engine 5 showroom', 'enterprise 3D strategy', 'Elipse Studio', 'Bilal Lania'],
+    ogImage: `${SITE_URL}/assets/ElipseImages/projects/elipse-artitecture.webp`,
+  },
   '3d-animation-services-uk-2026': {
     title: '3D Animation Services UK (2026): Commercial, Product & Architectural CGI | Elipse Studio',
     description: 'High-fidelity 3D animation for UK brands. CAD-accurate product animations, commercial brand films, and architectural walkthroughs. Transparent GBP pricing.',
