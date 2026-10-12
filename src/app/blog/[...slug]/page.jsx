@@ -31,9 +31,43 @@ const staticArticles = {
   'interactive-web-experiences-au-2026': dynamic(() => import('@/components/articles/AuInteractiveWebArticle')),
   'vfx-services-us-2026': dynamic(() => import('@/components/articles/UsVfxServicesArticle')),
   'interactive-3d-vs-cgi-production-pipeline-2026': dynamic(() => import('@/components/articles/Interactive3dVsCgiArticle')),
+  '3d-architectural-visualisation-uk-property-developers-guide': dynamic(() => import('@/components/articles/UkArchVizArticle')),
+  'ar-product-visualization-ecommerce-brands-2026-guide': dynamic(() => import('@/components/articles/ArProductVisualizationArticle')),
 };
 
 const staticArticleMetadata = {
+  '3d-architectural-visualisation-uk-property-developers-guide': {
+    title: '3D Architectural Visualisation for UK Property Developers: The 2026 Guide | Elipse Studio',
+    description: 'UK property developers are using 3D architectural visualisation to sell off-plan units faster, win planning in conservation areas, and reduce buyer dropout. Costs, use cases, and how to brief a studio.',
+    keywords: [
+      'architectural visualisation UK',
+      '3d rendering UK property developers',
+      'off-plan renders UK',
+      'architectural visualisation London',
+      'planning permission renders UK',
+      'property CGI UK',
+      'architectural visualisation services',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    ogImage: `${SITE_URL}/assets/ElipseImages/projects/elipse-artitecture.webp`,
+  },
+  'ar-product-visualization-ecommerce-brands-2026-guide': {
+    title: 'AR Product Visualization for Ecommerce Brands: The 2026 Guide | Elipse Studio',
+    description: 'Your customers cannot touch your product online. AR product visualization solves that — letting buyers place, rotate, and inspect your product in their real space before buying. Here is how it works and what it costs.',
+    keywords: [
+      'ar product visualization',
+      'augmented reality product visualization',
+      'ar for ecommerce',
+      'webAR product experience',
+      '3d ar product viewer',
+      'WebXR product viewer',
+      'ecommerce 3D AR',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    ogImage: `${SITE_URL}/assets/ElipseImages/blogs/blogs-Ar.webp`,
+  },
   'interactive-3d-vs-cgi-production-pipeline-2026': {
     title: 'Cinematic CGI and Interactive 3D: Why High-Growth Brands Need a Unified Pipeline in 2026 | Elipse Studio',
     description: 'Why leading brands no longer choose between CGI and interactive 3D. How building a unified 3D pipeline delivers 4K commercial visuals and web-native configurators from a single master asset.',
@@ -199,14 +233,54 @@ function staticArticleSchemas(slugStr, meta) {
   const isLeap = slugStr.startsWith('leap-2026');
   const isWebGLVsUnreal = slugStr === 'webgl-vs-unreal-engine-3d-configurator';
   const isInteractive3d = slugStr === 'interactive-3d-vs-cgi-production-pipeline-2026';
+  const isUkArchViz = slugStr === '3d-architectural-visualisation-uk-property-developers-guide';
+  const isArProduct = slugStr === 'ar-product-visualization-ecommerce-brands-2026-guide';
   const schema = buildArticleSchema({
     title: meta.title,
     description: meta.description,
     image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
-    publishedAt: isInteractive3d ? '2026-10-06' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
-    updatedAt: isInteractive3d ? '2026-10-06' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
+    publishedAt: (isInteractive3d || isUkArchViz || isArProduct) ? '2026-10-06' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
+    updatedAt: (isInteractive3d || isUkArchViz || isArProduct) ? '2026-10-06' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
     slug: slugStr,
   });
+
+  const ukArchVizFaq = buildFaqSchema([
+    {
+      q: 'Why do UK property developers need 3D architectural visualisation in 2026?',
+      a: '3D architectural visualisation helps developers sell off-plan units faster, reduces buyer anxiety and legal disputes between reservation and exchange, and provides local planning authorities (LPAs) with verified contextual photomontages required for planning approval in sensitive conservation areas.',
+    },
+    {
+      q: 'What is the difference between a generic artist impression and a verified planning photomontage?',
+      a: 'A verified planning photomontage integrates the proposed 3D building into a high-resolution photograph of the actual site from a surveyed camera position with accurate focal length, true scale, massing, materials, and seasonal lighting, satisfying strict UK planning committee scrutiny.',
+    },
+    {
+      q: 'How much does architectural CGI cost for a UK development?',
+      a: 'A single exterior planning photomontage typically ranges from £2,500 to £9,000, interior CGIs cost £1,500 to £6,000 per room, animated walkthroughs cost £8,000 to £35,000, and a full off-plan launch CGI suite ranges from £15,000 to £60,000.',
+    },
+    {
+      q: 'Can interactive virtual tours replace physical show homes?',
+      a: 'While physical show homes serve visitors in person, an interactive virtual tour allows international and remote buyers to explore unbuilt apartments 24/7, evaluate finishes in real time, and gain the conviction needed to reserve off-plan.',
+    },
+  ]);
+
+  const arProductFaq = buildFaqSchema([
+    {
+      q: 'What is WebAR product visualization for ecommerce?',
+      a: 'WebAR is browser-based augmented reality that lets shoppers place and interact with photorealistic 3D products in their real physical space directly on iOS Safari and Android Chrome without downloading any app.',
+    },
+    {
+      q: 'How does AR reduce ecommerce return rates?',
+      a: 'Over 64% of product returns occur because items looked different or did not fit in person. AR gives shoppers 1:1 real-world scale and context in their homes before ordering, eliminating scale and spatial mismatches.',
+    },
+    {
+      q: 'What 3D file formats are needed for WebAR?',
+      a: 'WebAR utilizes USDZ files for iOS devices via Quick Look / ARKit, and GLTF / GLB files for Android devices via ARCore / Scene Viewer, with models optimized for rapid mobile loading.',
+    },
+    {
+      q: 'How much does it cost to implement WebAR on Shopify or WooCommerce?',
+      a: 'Single product WebAR typically ranges from $5,500 to $12,000, multi-product catalogs (5–10 SKUs) range from $18,000 to $35,000, and full custom catalogs range from $40,000 to $85,000+.',
+    },
+  ]);
 
   const interactive3dFaq = buildFaqSchema([
     {
@@ -285,6 +359,8 @@ function staticArticleSchemas(slugStr, meta) {
   if (isLeap) extraSchemas = [leapFaq, authorSchema];
   if (isWebGLVsUnreal) extraSchemas = [webglUnrealFaq, authorSchema];
   if (isInteractive3d) extraSchemas = [interactive3dFaq, authorSchema];
+  if (isUkArchViz) extraSchemas = [ukArchVizFaq, authorSchema];
+  if (isArProduct) extraSchemas = [arProductFaq, authorSchema];
 
   return [schema, breadcrumb, ...extraSchemas].filter(Boolean);
 }

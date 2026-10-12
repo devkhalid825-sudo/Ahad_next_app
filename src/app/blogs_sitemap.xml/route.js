@@ -3,6 +3,8 @@ import { apiCall, SITE_URL } from '@/utils/api';
 export const dynamic = 'force-dynamic';
 
 const staticBlogSlugs = [
+  '3d-architectural-visualisation-uk-property-developers-guide',
+  'ar-product-visualization-ecommerce-brands-2026-guide',
   'interactive-3d-vs-cgi-production-pipeline-2026',
   'why-product-photography-budget-3d-rendering-2026',
   'virtual-showrooms-vs-physical-retail-2026-roi-guide',

@@ -21,6 +21,7 @@ import ahmedFoodRaw from '../../assets/Ahmed-food/jam&spread/15.webp';
 import renderingImgRaw from '../../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../../assets/About-page/kia.webp';
 import marineRaw from '../../assets/About-page/marine.webp';
+import timBarthRaw from '../../assets/About-page/tim-barth.webp';
 
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);
@@ -34,6 +35,7 @@ const ahmedFoodImg = getImgSrc(ahmedFoodRaw);
 const renderingImg = getImgSrc(renderingImgRaw);
 const kiaImg = getImgSrc(kiaRaw);
 const marineImg = getImgSrc(marineRaw);
+const timBarth = getImgSrc(timBarthRaw);
 
 const getImageSrc = (image) => {
   if (!image) return articleImg1;
@@ -93,6 +95,24 @@ const News = ({ initialBlogs = null }) => {
   }, []);
 
   const staticPosts = [
+    {
+      id: 28,
+      title: '3D Architectural Visualisation for UK Property Developers: The 2026 Guide',
+      image: timBarth,
+      date: 'OCTOBER 10, 2026',
+      category: 'Architectural Visualisation',
+      readTime: '13 min read',
+      url: '/blog/3d-architectural-visualisation-uk-property-developers-guide',
+    },
+    {
+      id: 29,
+      title: 'AR Product Visualization for Ecommerce Brands: The 2026 Guide',
+      image: techBg,
+      date: 'OCTOBER 8, 2026',
+      category: 'AR & Ecommerce',
+      readTime: '11 min read',
+      url: '/blog/ar-product-visualization-ecommerce-brands-2026-guide',
+    },
     {
       id: 27,
       title: 'Cinematic CGI and Interactive 3D: Why High-Growth Brands Need a Unified Pipeline in 2026',
@@ -214,8 +234,8 @@ const News = ({ initialBlogs = null }) => {
     .map((p) => ({ ...p, _key: `static-${p.id}` }));
   const allPosts = [...mergedStaticPosts, ...mergedApiBlogs];
 
-  // Pick top 5 curated featured blogs (UK, AU, US, LEAP 2026, WebGL vs Unreal) and create an auto-loop sequence
-  const basePosts = allPosts.slice(0, 5);
+  // Pick top curated featured blogs (UK ArchViz, AR Ecommerce, UK, AU, US, LEAP 2026) and create an auto-loop sequence
+  const basePosts = allPosts.slice(0, 6);
   const featuredLoopPosts = basePosts.length >= 3
     ? [...basePosts, ...basePosts.map((p, idx) => ({ ...p, _key: `${p._key}-loop-${idx}` }))]
     : allPosts;

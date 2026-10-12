@@ -39,10 +39,12 @@ import ahmedFoodRaw from '../assets/Ahmed-food/jam&spread/15.webp';
 import renderingRaw from '../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../assets/About-page/kia.webp';
 import marineRaw from '../assets/About-page/marine.webp';
+import timBarthRaw from '../assets/About-page/tim-barth.webp';
 
 const kia = getImgSrc(kiaRaw);
 const rendering = getImgSrc(renderingRaw);
 const marine = getImgSrc(marineRaw);
+const timBarth = getImgSrc(timBarthRaw);
 const leapCard = getImgSrc(leapCardRaw);
 const steeringImg = getImgSrc(steeringImgRaw);
 const vfxImg = getImgSrc(vfxImgRaw);
@@ -66,10 +68,28 @@ const articleImg2 = getImgSrc(articleImg2Raw);
 const staticImages = {
     elephantImg, configuratorHero, arThumbnail, hero, hero4, techBg, volveImg,
     questImg, mainHeroImage, animationMainImg, furnitureImg, edu1, vrHero,
-    articleImg1, articleImg2, steeringImg, vfxImg, ahmedFoodImg, rendering, kia, marine
+    articleImg1, articleImg2, steeringImg, vfxImg, ahmedFoodImg, rendering, kia, marine, timBarth
 };
 
 const staticPosts = [
+    {
+        id: 'static-uk-archviz-guide-2026',
+        title: '3D Architectural Visualisation for UK Property Developers: The 2026 Guide',
+        excerpt: 'UK property developers are using 3D architectural visualisation to sell off-plan units faster, win planning in conservation areas, and reduce buyer dropout. Costs, use cases, and how to brief a studio.',
+        image: timBarth,
+        date: 'OCTOBER 10, 2026',
+        category: 'Architectural Visualisation',
+        url: '/blog/3d-architectural-visualisation-uk-property-developers-guide',
+    },
+    {
+        id: 'static-ar-product-visualization-2026',
+        title: 'AR Product Visualization for Ecommerce Brands: The 2026 Guide',
+        excerpt: 'Your customers cannot touch your product online. AR product visualization solves that — letting buyers place, rotate, and inspect your product in their real space before buying. Here is how it works and what it costs.',
+        image: techBg,
+        date: 'OCTOBER 8, 2026',
+        category: 'AR & Ecommerce',
+        url: '/blog/ar-product-visualization-ecommerce-brands-2026-guide',
+    },
     {
         id: 'static-interactive-3d-vs-cgi',
         title: 'Cinematic CGI and Interactive 3D: Why High-Growth Brands Need a Unified Pipeline in 2026',
