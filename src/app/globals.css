@@ -120,7 +120,7 @@ body {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  animation: marquee-loop 33s linear infinite;
+  animation: marquee-loop 165s linear infinite;
   will-change: transform;
 }
 
@@ -1481,8 +1481,9 @@ html.light header.header-scrolled {
   html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-logo {
     filter: none !important;
   }
-  html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) button,
+  html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) button:not(.site-theme-toggle),
   html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-header-contact-btn {
+    background-color: transparent !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
     color: #ffffff !important;
   }
@@ -1543,22 +1544,96 @@ html.light .desktop-hero-arrow {
   filter: none !important;
   drop-shadow: none !important;
 }
-html.light header .site-logo {
+/* When unscrolled over a dark hero (header.text-white), keep logo, buttons, and icons crisp white on all screen sizes */
+html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-logo {
+  filter: none !important;
+}
+html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) button:not(.site-theme-toggle),
+html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-header-contact-btn {
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) svg {
+  color: #ffffff !important;
+}
+
+/* When on light background or scrolled: ensure crisp black logo, buttons, and icons */
+html.light header:not(.text-white) .site-logo,
+html.light header.header-scrolled .site-logo {
   filter: invert(1) brightness(0.15) !important;
 }
 
-html.light header button,
-html.light header .site-header-contact-btn {
+html.light header:not(.text-white) button:not(.site-theme-toggle),
+html.light header:not(.text-white) .site-header-contact-btn,
+html.light header.header-scrolled button:not(.site-theme-toggle),
+html.light header.header-scrolled .site-header-contact-btn {
   border-color: rgba(0, 0, 0, 0.25) !important;
   color: #000000 !important;
 }
 
-html.light header button:hover {
+html.light header:not(.text-white) button:not(.site-theme-toggle):hover,
+html.light header.header-scrolled button:not(.site-theme-toggle):hover {
   border-color: rgba(0, 0, 0, 0.6) !important;
 }
 
-html.light header svg {
-  color: inherit !important;
+html.light header:not(.text-white) svg,
+html.light header.header-scrolled svg {
+  color: #000000 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   THEME TOGGLE BUTTON FIX
+   Prevents theme toggle from turning into a solid opaque white circle in Day Mode
+   ───────────────────────────────────────────────────────────────────────────── */
+.site-theme-toggle {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* On dark surface (dark hero or Night Mode): translucent glass + crisp white */
+.site-theme-toggle.theme-toggle-dark,
+html.light .site-theme-toggle.theme-toggle-dark,
+html.dark .site-theme-toggle.theme-toggle-dark {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.site-theme-toggle.theme-toggle-dark:hover,
+html.light .site-theme-toggle.theme-toggle-dark:hover,
+html.dark .site-theme-toggle.theme-toggle-dark:hover {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.site-theme-toggle.theme-toggle-dark svg,
+html.light .site-theme-toggle.theme-toggle-dark svg,
+html.dark .site-theme-toggle.theme-toggle-dark svg {
+  color: #ffffff !important;
+}
+
+/* On light surface (scrolled in Day Mode): subtle dark glass + crisp black */
+.site-theme-toggle.theme-toggle-light,
+html.light .site-theme-toggle.theme-toggle-light,
+html.dark .site-theme-toggle.theme-toggle-light {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  color: #000000 !important;
+}
+
+.site-theme-toggle.theme-toggle-light:hover,
+html.light .site-theme-toggle.theme-toggle-light:hover,
+html.dark .site-theme-toggle.theme-toggle-light:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.site-theme-toggle.theme-toggle-light svg,
+html.light .site-theme-toggle.theme-toggle-light svg,
+html.dark .site-theme-toggle.theme-toggle-light svg {
+  color: #000000 !important;
 }
 
 /* Ensure footer social section stays crisp white on dark blue background */

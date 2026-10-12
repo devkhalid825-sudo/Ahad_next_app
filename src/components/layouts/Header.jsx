@@ -22,12 +22,13 @@ const LOCATIONS = [
   { name: 'United States', href: '/us/services' },
 ];
 
-const Header = ({ isBelowVideoMobile = false }) => {
+const Header = ({ isBelowVideoMobile = false, darkHero = false }) => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [isLightSection, setIsLightSection] = useState(false);
+  const [hasDarkHero, setHasDarkHero] = useState(darkHero);
   const { isLight } = useTheme();
   const isLightMode = isLight || isLightSection;
   const [locationOpen, setLocationOpen] = useState(false);
@@ -43,6 +44,9 @@ const Header = ({ isBelowVideoMobile = false }) => {
 
   useEffect(() => {
     setMounted(true);
+    if (darkHero || document.querySelector('.keep-dark-hero, .portfolio-hero-section, .case-studies-hero-section')) {
+      setHasDarkHero(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -196,6 +200,7 @@ const Header = ({ isBelowVideoMobile = false }) => {
 
   // Keep the fixed/scrolled look alive during exit so the fade-out is visible
   const isAttached = showBrandIcon || exitAnim;
+  const isEffectiveLight = isMenuOpen ? false : ((hasDarkHero && !isAttached) ? false : isLightMode);
 
   const headerBgClass = isMenuOpen
     ? 'bg-black text-white header-menu-open'
@@ -203,7 +208,7 @@ const Header = ({ isBelowVideoMobile = false }) => {
       ? isLightMode
         ? 'header-scrolled bg-white/95 backdrop-blur-xl text-black shadow-sm'
         : 'header-scrolled bg-black/90 backdrop-blur-xl text-white shadow-xl shadow-black/40'
-      : isLightMode
+      : isEffectiveLight
         ? 'bg-transparent text-black'
         : 'bg-transparent text-white';
 
@@ -243,12 +248,12 @@ const Header = ({ isBelowVideoMobile = false }) => {
                 height="105"
                 className={`${logoSizeClass} w-auto object-contain col-start-1 row-start-1 site-logo transition-transform duration-300 hover:scale-105 ${
                   showBrandIcon && !isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                } ${isLightMode && !isMenuOpen ? 'invert' : ''}`}
+                } ${isEffectiveLight && !isMenuOpen ? 'invert' : ''}`}
               />
 
               {/* Compact Brand Icon (already shown while the attach animation plays) */}
               <img
-                src={isLightMode && !isMenuOpen ? iconBlack : iconWhite}
+                src={isEffectiveLight && !isMenuOpen ? iconBlack : iconWhite}
                 alt="Elipse Studio Icon"
                 width="48"
                 height="48"
@@ -264,7 +269,7 @@ const Header = ({ isBelowVideoMobile = false }) => {
                 <button
                   onClick={() => setLocationOpen((prev) => !prev)}
                   className={`px-4 h-8 sm:h-8.5 flex items-center justify-center gap-1.5 border ${
-                    isLightMode
+                    isEffectiveLight
                       ? 'border-black/20 hover:border-[#4169E1] text-black hover:text-[#4169E1]'
                       : 'border-white/20 hover:border-[#4169E1] text-white hover:text-[#4169E1]'
                   } bg-transparent rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-300 backdrop-blur-md`}
@@ -295,18 +300,18 @@ const Header = ({ isBelowVideoMobile = false }) => {
                   router.push('/contact');
                 }}
                 className={`hidden md:flex px-6 sm:px-7 h-10 sm:h-11 items-center justify-center border ${
-                  isLightMode
+                  isEffectiveLight
                     ? 'border-black/30 hover:border-black text-black hover:bg-black/5'
                     : 'border-white/30 hover:border-white text-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]'
                 } bg-transparent rounded-full text-xs sm:text-[13px] font-semibold tracking-wider transition-all duration-300 backdrop-blur-md cursor-pointer`}
               >
                 Contact Us
               </button>
-              <ThemeToggle isLightMode={isLightMode} className={isMenuOpen ? '!text-white !border-white/20 !bg-white/5' : ''} />
+              <ThemeToggle isLightMode={isEffectiveLight} />
               <button
                 onClick={toggleMenu}
                 className={`focus:outline-none hover:scale-110 active:scale-95 p-1 flex items-center justify-center rounded-full transition-transform ${
-                  isLightMode && !isMenuOpen ? 'text-black' : 'text-white'
+                  isEffectiveLight && !isMenuOpen ? 'text-black' : 'text-white'
                 }`}
                 aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               >

@@ -12,9 +12,13 @@ export default function ThemeToggle({ className = '', variant = 'header', isLigh
   if (!mounted) {
     return (
       <div
-        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border ${
-          effectiveIsLight ? 'border-black/20 bg-black/5' : 'border-white/20 bg-white/5'
-        } opacity-60 ${className}`}
+        className={`site-theme-toggle w-9 h-9 sm:w-10 sm:h-10 rounded-full border opacity-60 ${
+          effectiveIsLight ? 'theme-toggle-light' : 'theme-toggle-dark'
+        } ${className}`}
+        style={{
+          backgroundColor: effectiveIsLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.08)',
+          borderColor: effectiveIsLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.25)',
+        }}
         aria-hidden="true"
       />
     );
@@ -25,12 +29,17 @@ export default function ThemeToggle({ className = '', variant = 'header', isLigh
       <button
         type="button"
         onClick={toggleTheme}
-        className={`w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold rounded-xl border transition-all duration-300 ${
+        className={`site-theme-toggle-item w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold rounded-xl border transition-all duration-300 ${
           effectiveIsLight
-            ? 'bg-black/5 hover:bg-black/10 text-black border-black/10'
-            : 'bg-white/5 hover:bg-white/10 text-white border-white/10'
+            ? 'theme-toggle-light text-black border-black/10'
+            : 'theme-toggle-dark text-white border-white/10'
         } ${className}`}
-        aria-label={isLight ? 'Switch to Dark mode' : 'Switch to Light mode'}
+        style={{
+          backgroundColor: effectiveIsLight ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.06)',
+          borderColor: effectiveIsLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)',
+          color: effectiveIsLight ? '#000000' : '#ffffff',
+        }}
+        aria-label={isLight ? 'Day Mode active - Switch to Night mode' : 'Night Mode active - Switch to Day mode'}
       >
         <span className="flex items-center gap-2.5">
           {isLight ? (
@@ -51,13 +60,16 @@ export default function ThemeToggle({ className = '', variant = 'header', isLigh
     <button
       type="button"
       onClick={toggleTheme}
-      className={`group relative p-2 sm:p-2.5 rounded-full border transition-all duration-300 flex items-center justify-center cursor-pointer backdrop-blur-md active:scale-90 ${
-        effectiveIsLight
-          ? 'border-black/20 bg-black/5 text-black hover:border-black/50 hover:bg-black/10'
-          : 'border-white/20 bg-white/5 text-white hover:border-white/50 hover:bg-white/10'
+      className={`site-theme-toggle group relative p-2 sm:p-2.5 rounded-full border transition-all duration-300 flex items-center justify-center cursor-pointer backdrop-blur-md active:scale-90 ${
+        effectiveIsLight ? 'theme-toggle-light' : 'theme-toggle-dark'
       } ${className}`}
-      aria-label={isLight ? 'Light mode active - Switch to Dark mode' : 'Dark mode active - Switch to Light mode'}
-      title={isLight ? 'Switch to Dark mode' : 'Switch to Light mode'}
+      style={{
+        backgroundColor: effectiveIsLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.08)',
+        borderColor: effectiveIsLight ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.25)',
+        color: effectiveIsLight ? '#000000' : '#ffffff',
+      }}
+      aria-label={isLight ? 'Day mode active - Switch to Night mode' : 'Night mode active - Switch to Day mode'}
+      title={isLight ? 'Switch to Night mode' : 'Switch to Day mode'}
     >
       <div className="relative w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
         {isLight ? (

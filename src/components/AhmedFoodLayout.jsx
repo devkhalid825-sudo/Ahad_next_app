@@ -592,6 +592,16 @@ const AhmedFoodLayout = ({
     return [];
   }, [tickerWords]);
 
+  // Ensure enough items in each marquee track so it easily spans beyond any 4K/ultrawide screen (>= 32 items)
+  const marqueeItems = React.useMemo(() => {
+    if (!effectiveTickerWords.length) return [];
+    let items = [...effectiveTickerWords];
+    while (items.length < 32) {
+      items = [...items, ...effectiveTickerWords];
+    }
+    return items;
+  }, [effectiveTickerWords]);
+
   const titleFontSizeStyle = React.useMemo(() => {
     const len = Math.max((title || '').trim().length, 1);
     const calculatedVw = Math.min(6, Math.max(1.8, +(84 / (len * 0.58)).toFixed(2)));
@@ -903,7 +913,7 @@ const AhmedFoodLayout = ({
               <div
                 className="flex shrink-0 items-center space-x-12 animate-marquee-loop pr-12 text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white whitespace-nowrap"
               >
-                {[...effectiveTickerWords, ...effectiveTickerWords, ...effectiveTickerWords, ...effectiveTickerWords].map((word, i) => (
+                {marqueeItems.map((word, i) => (
                   <span key={`t1-${i}`} className="inline-flex items-center gap-6 sm:gap-8">
                     <span className="text-[#4169E1]">✦</span>
                     <span className="tracking-wider uppercase font-sans text-white">{word}</span>
@@ -915,7 +925,7 @@ const AhmedFoodLayout = ({
                 className="flex shrink-0 items-center space-x-12 animate-marquee-loop pr-12 text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white whitespace-nowrap"
                 aria-hidden="true"
               >
-                {[...effectiveTickerWords, ...effectiveTickerWords, ...effectiveTickerWords, ...effectiveTickerWords].map((word, i) => (
+                {marqueeItems.map((word, i) => (
                   <span key={`t2-${i}`} className="inline-flex items-center gap-6 sm:gap-8">
                     <span className="text-[#4169E1]">✦</span>
                     <span className="tracking-wider uppercase font-sans text-white">{word}</span>

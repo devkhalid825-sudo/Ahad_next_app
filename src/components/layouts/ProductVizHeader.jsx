@@ -184,7 +184,7 @@ const ProductVizHeader = () => {
             >
               Contact
             </button>
-            <ThemeToggle />
+            <ThemeToggle isLightMode={isLightSection} />
             <button
               onClick={toggleMenu}
               className={`focus:outline-none hover:scale-110 active:scale-95 p-1.5 flex items-center justify-center rounded-full transition-transform ${isLightSection ? 'text-black' : 'text-white'

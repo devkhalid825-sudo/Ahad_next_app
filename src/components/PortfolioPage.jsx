@@ -21,7 +21,7 @@ const PortfolioPage = () => {
 
   return (
     <div className="bg-black min-h-screen text-white font-sans selection:bg-[#4169E1]/30 selection:text-white overflow-x-hidden">
-      <Header />
+      <Header darkHero={true} />
 
 
       <section className="portfolio-hero-section keep-dark-hero relative w-full min-h-[55vh] sm:min-h-[65vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-black !bg-black text-white !text-white">

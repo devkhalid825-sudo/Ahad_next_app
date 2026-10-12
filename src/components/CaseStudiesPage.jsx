@@ -20,7 +20,7 @@ const CaseStudiesPage = () => {
 
   return (
     <div className="bg-black min-h-screen text-white font-sans selection:bg-[#4169E1]/30 selection:text-white overflow-x-hidden">
-      <Header />
+      <Header darkHero={true} />
 
       {/* ══════════════════════════════════════════════════════════
           HERO SECTION WITH FULL-WIDTH BACKGROUND IMAGE (PERMANENT DARK)
