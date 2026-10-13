@@ -74,7 +74,7 @@ const DynamicProjectView = ({ data, type = 'project' }) => {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => { cancelled = true; };
   }, [data, isCaseStudy]);
 

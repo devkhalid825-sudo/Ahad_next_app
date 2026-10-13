@@ -157,19 +157,34 @@ const Hero = () => {
       <section
         id="hero"
         data-nav="dark"
-        className="desktop-hero-section hidden md:flex relative w-full min-h-screen bg-black text-white flex-col justify-between overflow-hidden pt-24 md:pt-28 pb-12 select-none"
+        className="desktop-hero-section hidden md:flex relative w-full min-h-screen bg-black text-white flex-col justify-between overflow-hidden pt-20 md:pt-24 2xl:pt-20 pb-4 md:pb-6 2xl:pb-4 select-none"
       >
         {/* Header */}
         <Header />
 
         {/* Main Desktop Carousel Container */}
-        <div className="flex-1 w-full max-w-[1920px] mx-auto flex flex-col justify-center items-center px-2 sm:px-4 lg:px-6 relative my-auto">
+        <div className="flex-1 w-full max-w-[2560px] mx-auto flex flex-col justify-center items-center px-2 sm:px-4 lg:px-6 relative my-auto">
+          {/* Responsive center card width:
+              - Below 2xl (choti screen / laptops): 76vw to ensure navigation arrows never overlap video edges
+              - 2xl and above (bari screen, 2560x1279): 88vw (up to 2260px) for immersive big-screen presentation */}
+          <style>{`
+            .desktop-hero-center-card {
+              width: min(76vw, calc((100dvh - 160px) * 16 / 9), 1360px);
+              aspect-ratio: 16 / 9;
+            }
+            @media (min-width: 1536px) {
+              .desktop-hero-center-card {
+                width: min(88vw, calc((100dvh - 100px) * 16 / 9), 2260px);
+              }
+            }
+          `}</style>
+
           <div className="relative w-full flex items-center justify-center">
             {/* Left Navigation Arrow (Clean Minimal Chevron without Circle) */}
             <button
               onClick={handleDesktopPrev}
               aria-label="Previous Slide"
-              className="desktop-hero-arrow absolute left-1 sm:left-3 lg:left-5 xl:left-8 z-40 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]"
+              className="desktop-hero-arrow absolute left-1 sm:left-2 lg:left-3 xl:left-5 2xl:left-8 top-1/2 -translate-y-1/2 z-40 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]"
             >
               <svg
                 className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 stroke-current stroke-[3]"
@@ -184,7 +199,7 @@ const Hero = () => {
             <button
               onClick={handleDesktopNext}
               aria-label="Next Slide"
-              className="desktop-hero-arrow absolute right-1 sm:right-3 lg:right-5 xl:right-8 z-40 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]"
+              className="desktop-hero-arrow absolute right-1 sm:right-2 lg:right-3 xl:right-5 2xl:right-8 top-1/2 -translate-y-1/2 z-40 p-2 text-white/80 hover:text-white transition-all duration-300 hover:scale-125 active:scale-95 cursor-pointer drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)]"
             >
               <svg
                 className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 stroke-current stroke-[3]"
@@ -200,7 +215,7 @@ const Hero = () => {
               {/* Left Peeking Card (Soft Subtle Blur & Gentle Gradient) */}
               <div
                 onClick={handleDesktopPrev}
-                className="desktop-hero-side-card absolute left-[-2%] xl:left-[0%] 2xl:left-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-65 hover:opacity-95 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto group"
+                className="desktop-hero-side-card absolute left-[-2%] xl:left-[0%] 2xl:left-[0.5%] h-[90%] max-h-[760px] 2xl:max-h-[960px] aspect-[9/16] max-w-[260px] 2xl:max-w-[320px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-65 hover:opacity-95 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto group"
               >
                 <video
                   key={`prev-${prevDesktopSlide.video}`}
@@ -216,12 +231,8 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30 pointer-events-none" />
               </div>
 
-              {/* Active Large Center Card (Increased Size - Strict 16:9 Proportion) */}
+              {/* Active Large Center Card (Responsive Proportion - No Arrow Collision on Small Screens) */}
               <div
-                style={{
-                  width: 'min(85vw, calc((100dvh - 130px) * 16 / 9), 1620px)',
-                  aspectRatio: '16 / 9',
-                }}
                 className="desktop-hero-center-card relative bg-black rounded-[18px] sm:rounded-[22px] lg:rounded-[26px] overflow-hidden shadow-[0_0_55px_rgba(255,255,255,0.12),0_30px_90px_rgba(0,0,0,0.9)] border border-white/30 z-20 flex flex-col justify-end transition-all duration-500 shrink-0"
               >
                 {/* Active Video Player */}
@@ -242,7 +253,7 @@ const Hero = () => {
               {/* Right Peeking Card (Soft Subtle Blur & Gentle Gradient) */}
               <div
                 onClick={handleDesktopNext}
-                className="desktop-hero-side-card absolute right-[-2%] xl:right-[0%] 2xl:right-[1%] h-[90%] max-h-[760px] aspect-[9/16] max-w-[260px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-65 hover:opacity-95 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto group"
+                className="desktop-hero-side-card absolute right-[-2%] xl:right-[0%] 2xl:right-[0.5%] h-[90%] max-h-[760px] 2xl:max-h-[960px] aspect-[9/16] max-w-[260px] 2xl:max-w-[320px] bg-black rounded-[14px] sm:rounded-[18px] lg:rounded-[22px] overflow-hidden opacity-65 hover:opacity-95 transition-all duration-300 cursor-pointer shadow-2xl border border-white/20 pointer-events-auto group"
               >
                 <video
                   key={`next-${nextDesktopSlide.video}`}
