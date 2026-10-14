@@ -514,9 +514,9 @@ const BlogsPage = ({ initialBlogs }) => {
             {/* ══════════════════════════════════════════════════════════
                 HERO SECTION WITH FEATURED CARDS ON TOP OF BG
             ══════════════════════════════════════════════════════════ */}
-            <section data-nav="dark" className="relative w-full bg-black">
-                <div className="relative mx-auto min-h-screen w-full overflow-hidden bg-zinc-900 shadow-2xl flex flex-col">
-                    <Header />
+            <section data-nav="dark" className="blogs-hero-section keep-dark-hero relative w-full bg-black !bg-black text-white !text-white">
+                <div className="relative mx-auto min-h-screen w-full overflow-hidden bg-black !bg-black shadow-2xl flex flex-col">
+                    <Header darkHero={true} />
                     <div className="absolute inset-0 z-0">
                         <img
                             src={techBg}

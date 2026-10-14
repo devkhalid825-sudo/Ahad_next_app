@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import logoRaw from '@/assets/images/khalid.png';
 import iconWhiteRaw from '@/assets/images/elipse-icon-white.png';
 import iconBlackRaw from '@/assets/images/elipse-icon-black.png';
@@ -22,8 +22,47 @@ const LOCATIONS = [
   { name: 'United States', href: '/us/services' },
 ];
 
-const Header = ({ isBelowVideoMobile = false, darkHero = false }) => {
+const HARDCODED_BLOG_SLUGS = new Set([
+  'virtual-showrooms-vs-physical-retail-2026-roi-guide',
+  'leap-2026',
+  'leap-2026-wrap-up',
+  'leap-2026-wrap-up-bilal-lania',
+  'webgl-vs-unreal-engine-3d-configurator',
+  'web-based-configurator',
+  'immersive-ar-marketing',
+  'industrial-animation',
+  'automotive-configurator',
+  'vr-reshaping-world',
+  'immersive-experience-design',
+  'immersive-tech-2026',
+  'animated-videos-engagement',
+  'furniture-configurator-2026',
+  'educational-animation-2026',
+  'vr-custom-development-2026',
+  '3d-real-time-configurators-real-estate-dubai',
+  'architectural-visualization-guide',
+  'apparel-configurator-fashion-brands-2026',
+  'why-product-photography-budget-3d-rendering-2026',
+  '3d-animation-services-uk-2026',
+  'interactive-web-experiences-au-2026',
+  'vfx-services-us-2026',
+  'interactive-3d-vs-cgi-production-pipeline-2026',
+  '3d-architectural-visualisation-uk-property-developers-guide',
+  'ar-product-visualization-ecommerce-brands-2026-guide',
+  'what-happens-to-cad-file-when-you-hire-3d-animation-studio',
+  'real-cost-bad-vr-training-simulations-2026',
+]);
+
+const Header = ({ isBelowVideoMobile = false, darkHero = false, hideThemeToggle = false }) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const isHardcodedArticleRoute = React.useMemo(() => {
+    if (!pathname || !pathname.startsWith('/blog/')) return false;
+    const slug = pathname.replace('/blog/', '').replace(/\/$/, '');
+    return HARDCODED_BLOG_SLUGS.has(slug);
+  }, [pathname]);
+
+  const shouldHideThemeToggle = hideThemeToggle || isHardcodedArticleRoute;
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -44,7 +83,7 @@ const Header = ({ isBelowVideoMobile = false, darkHero = false }) => {
 
   useEffect(() => {
     setMounted(true);
-    if (darkHero || document.querySelector('.keep-dark-hero, .portfolio-hero-section, .case-studies-hero-section')) {
+    if (darkHero || document.querySelector('.keep-dark-hero, .portfolio-hero-section, .case-studies-hero-section, .blogs-hero-section')) {
       setHasDarkHero(true);
     }
   }, []);
@@ -307,7 +346,7 @@ const Header = ({ isBelowVideoMobile = false, darkHero = false }) => {
               >
                 Contact Us
               </button>
-              <ThemeToggle isLightMode={isEffectiveLight} />
+              {!shouldHideThemeToggle && <ThemeToggle isLightMode={isEffectiveLight} />}
               <button
                 onClick={toggleMenu}
                 className={`focus:outline-none hover:scale-110 active:scale-95 p-1 flex items-center justify-center rounded-full transition-transform ${
@@ -370,7 +409,7 @@ const Header = ({ isBelowVideoMobile = false, darkHero = false }) => {
                 >
                   Contact Us
                 </button>
-                <ThemeToggle className="!text-white !border-white/20 !bg-white/5" />
+                {!shouldHideThemeToggle && <ThemeToggle className="!text-white !border-white/20 !bg-white/5" />}
                 <button
                   onClick={() => setIsMenuOpen(false)}
                   className="focus:outline-none hover:scale-110 active:scale-95 p-1 flex items-center justify-center rounded-full transition-transform text-white cursor-pointer"

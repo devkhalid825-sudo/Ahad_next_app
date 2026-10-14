@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const AnimatedVideosEngagementArticle = () => {
   const gallery = [animationMainImg, elephantImg, motionGraphicsImg, anamorphicImg];
     return (
     <>
-      
-      <AhmedFoodLayout title="Why Animated Videos Drive Brand Engagement" meta={meta} heroImage={animationMainImg} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="Why Animated Videos Drive Brand Engagement" meta={meta} heroImage={animationMainImg} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

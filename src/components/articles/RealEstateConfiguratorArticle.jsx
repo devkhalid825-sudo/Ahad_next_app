@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const RealEstateConfiguratorArticle = () => {
   const gallery = [realEstateImg, vrExperienceImg, workflowImage, autoImg];
     return (
     <>
-      
-      <AhmedFoodLayout title="3D Real-Time Configurators for Dubai Off-Plan Sales" meta={meta} heroImage={realEstateImg} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="3D Real-Time Configurators for Dubai Off-Plan Sales" meta={meta} heroImage={realEstateImg} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

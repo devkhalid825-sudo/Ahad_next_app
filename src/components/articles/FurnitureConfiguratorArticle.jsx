@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const FurnitureConfiguratorArticle = () => {
   const gallery = [furnitureHero, furnitureDetail, interiorView, designProcess];
     return (
     <>
-      
-      <AhmedFoodLayout title="Configurator Solutions for Custom Furniture Brands" meta={meta} heroImage={furnitureHero} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="Configurator Solutions for Custom Furniture Brands" meta={meta} heroImage={furnitureHero} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

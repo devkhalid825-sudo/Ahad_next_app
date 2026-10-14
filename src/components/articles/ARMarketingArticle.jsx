@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const ARMarketingArticle = () => {
   const gallery = [arHeroImage, techImage, typesImage, furnitureImg];
     return (
     <>
-      
-      <AhmedFoodLayout title="What Is Immersive AR Marketing?" meta={meta} heroImage={arHeroImage} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="What Is Immersive AR Marketing?" meta={meta} heroImage={arHeroImage} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

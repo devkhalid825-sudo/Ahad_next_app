@@ -21,11 +21,11 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import { getImgSrc } from '../../utils/api';
 
-import _techBg from '../../assets/ElipseImages/blogs/blogs-Ar.webp';
-import _arThumb from '../../assets/ElipseImages/projects/AR.webp';
-import _mainAr from '../../assets/ElipseImages/blogs/Ar.webp';
-import _configHero from '../../assets/ElipseImages/blogs/jetour.webp';
-import _volveImg from '../../assets/ElipseImages/hero/volve-configrator.webp';
+import _techBg from '../../assets/About-page/vertical.webp';
+import _arThumb from '../../assets/Ar/07.webp';
+import _mainAr from '../../assets/About-page/AR.png';
+import _configHero from '../../assets/Ar/03.webp';
+import _volveImg from '../../assets/Ar/08.png';
 
 const techBg = getImgSrc(_techBg);
 const arThumb = getImgSrc(_arThumb);
@@ -92,8 +92,8 @@ const ArProductVisualizationArticle = () => {
   ];
 
   return (
-    <div data-nav="light" className="w-full min-h-screen overflow-x-hidden bg-white text-zinc-900 selection:bg-[#2563EB]/30 selection:text-white">
-      <Header />
+    <div data-nav="light" className="hardcoded-article w-full min-h-screen overflow-x-hidden bg-white text-zinc-900 selection:bg-[#2563EB]/30 selection:text-white">
+      <Header hideThemeToggle={true} />
 
       <main className="px-3 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20">
 
@@ -160,12 +160,7 @@ const ArProductVisualizationArticle = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white text-left">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#2563EB] text-white inline-block mb-1">
-                      WebAR 2026
-                    </span>
-                    <p className="text-xs font-medium text-white/95">Browser-native augmented reality on iOS & Android</p>
-                  </div>
+
                 </div>
               </div>
 

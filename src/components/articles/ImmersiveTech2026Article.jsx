@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const ImmersiveTech2026Article = () => {
   const gallery = [mainHeroImage, arImage, vrImage, mrImage];
     return (
     <>
-      
-      <AhmedFoodLayout title="AR vs. VR vs. MR: Transforming Your Brand" meta={meta} heroImage={mainHeroImage} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="AR vs. VR vs. MR: Transforming Your Brand" meta={meta} heroImage={mainHeroImage} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

@@ -62,6 +62,7 @@ const ConfiguratorArticle = () => {
         process={process}
         gallery={gallery}
         showMidArticleCta={true}
+        hideThemeToggle={true}
       />
     </>
   );

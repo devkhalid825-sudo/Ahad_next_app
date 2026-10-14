@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -54,6 +54,7 @@ const ApparelConfiguratorArticle = () => {
         results={results}
         process={process}
         gallery={gallery}
+        hideThemeToggle={true}
       />
     </>
   );

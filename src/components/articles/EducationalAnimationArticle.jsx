@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const EducationalAnimationArticle = () => {
   const gallery = [edu1, edu2, edu3, animationHero];
     return (
     <>
-      
-      <AhmedFoodLayout title="Educational Animation Services for Platforms" meta={meta} heroImage={edu1} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="Educational Animation Services for Platforms" meta={meta} heroImage={edu1} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

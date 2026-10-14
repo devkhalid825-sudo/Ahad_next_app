@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -54,6 +54,7 @@ const ArchitecturalVisualization = () => {
         results={results}
         process={process}
         gallery={gallery}
+        hideThemeToggle={true}
       />
     </>
   );

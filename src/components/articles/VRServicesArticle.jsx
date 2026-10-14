@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const VRServicesArticle = () => {
   const gallery = [vrHero, bespokeWorldImg, bespokeInteractionImg, aiAdaptiveImg];
     return (
     <>
-      
-      <AhmedFoodLayout title="Trusted VR Services Company for Custom Development" meta={meta} heroImage={vrHero} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="Trusted VR Services Company for Custom Development" meta={meta} heroImage={vrHero} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

@@ -429,11 +429,8 @@ const IndustrialAnimationArticle = () => {
   };
 
   return (
-    <div data-nav="dark" className="w-full min-h-screen overflow-x-hidden bg-black text-zinc-100 selection:bg-[#2563EB]/30 selection:text-white">
-
-
-
-      <Header />
+    <div data-nav="dark" className="hardcoded-article w-full min-h-screen overflow-x-hidden bg-black text-zinc-100 selection:bg-[#2563EB]/30 selection:text-white">
+      <Header hideThemeToggle={true} />
 
       <main className="overflow-x-hidden">
 

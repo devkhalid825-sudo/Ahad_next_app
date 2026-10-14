@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import AhmedFoodLayout from '../AhmedFoodLayout';
@@ -35,8 +35,7 @@ const AutomotiveConfiguratorArticle = () => {
   const gallery = [volvoImage, autoImage, configuratorHero, workflowImage];
     return (
     <>
-      
-      <AhmedFoodLayout title="Redefining the Car Buying Experience" meta={meta} heroImage={volvoImage} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} />
+      <AhmedFoodLayout title="Redefining the Car Buying Experience" meta={meta} heroImage={volvoImage} overview={overview} challenge={challenge} results={results} process={process} gallery={gallery} hideThemeToggle={true} />
     </>
   );
 };

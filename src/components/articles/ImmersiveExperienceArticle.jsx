@@ -42,6 +42,7 @@ const ImmersiveExperienceArticle = () => {
         process={process}
         gallery={gallery}
         showMidArticleCta={true}
+        hideThemeToggle={true}
       />
     </>
   );

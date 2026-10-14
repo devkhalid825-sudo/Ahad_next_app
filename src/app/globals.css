@@ -1423,7 +1423,8 @@ html.light .solution-tech-desc {
    ========================================================================== */
 html.light .keep-dark-hero,
 html.light section.portfolio-hero-section,
-html.light section.case-studies-hero-section {
+html.light section.case-studies-hero-section,
+html.light section.blogs-hero-section {
   background-color: #000000 !important;
   color: #ffffff !important;
 }
@@ -1434,7 +1435,8 @@ html.light .keep-dark-hero h3,
 html.light .keep-dark-hero p,
 html.light .keep-dark-hero span,
 html.light .portfolio-hero-section h1,
-html.light .case-studies-hero-section h1 {
+html.light .case-studies-hero-section h1,
+html.light .blogs-hero-section h1 {
   color: #ffffff !important;
 }
 
@@ -1452,8 +1454,25 @@ html.light .case-studies-hero-section [class*="bg-black/"] {
 
 html.light .keep-dark-hero [class*="from-black"],
 html.light .portfolio-hero-section [class*="from-black"],
-html.light .case-studies-hero-section [class*="from-black"] {
+html.light .case-studies-hero-section [class*="from-black"],
+html.light .blogs-hero-section [class*="from-black"] {
   display: block !important;
+}
+
+/* Ensure white blog cards inside featured swiper on blogs hero stay white with dark text */
+html.light .blogs-hero-section .bg-white,
+html.light .keep-dark-hero .featured-swiper .bg-white {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+html.light .blogs-hero-section .bg-white h3,
+html.light .blogs-hero-section .bg-white span,
+html.light .blogs-hero-section .bg-white p,
+html.light .keep-dark-hero .featured-swiper .bg-white h3,
+html.light .keep-dark-hero .featured-swiper .bg-white span,
+html.light .keep-dark-hero .featured-swiper .bg-white p {
+  color: #1a1a1a !important;
 }
 
 /* While inside Hero (not scrolled past), header background is completely transparent */
@@ -1652,5 +1671,14 @@ html.light .site-main-footer .footer-social-item {
 .site-main-footer .footer-social-item:hover,
 html.light .site-main-footer .footer-social-item:hover {
   color: #4169e1 !important;
+}
+
+/* ==========================================================================
+   HIDE THEME TOGGLE ON HARDCODED ARTICLES
+   ========================================================================== */
+.hardcoded-article .site-theme-toggle,
+.hardcoded-article header .site-theme-toggle,
+[data-article="hardcoded"] .site-theme-toggle {
+  display: none !important;
 }
 

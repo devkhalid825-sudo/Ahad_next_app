@@ -103,6 +103,7 @@ const AhmedFoodLayout = ({
   processEyebrow,
   showMidArticleCta = false,
   midArticleCtaComponent = null,
+  hideThemeToggle = false,
 }) => {
   const router = useRouter();
   const [activeVideo, setActiveVideo] = useState(0);
@@ -655,11 +656,11 @@ const AhmedFoodLayout = ({
   const starsCount = Math.min(5, Math.max(1, Number(heroStars || 5)));
 
   return (
-    <div className={`w-full overflow-x-hidden transition-colors duration-300 ${isLight ? 'bg-white text-neutral-900 selection:bg-[#2563EB]/30' : 'bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30'}`}>
+    <div className={`w-full overflow-x-hidden transition-colors duration-300 ${isLight ? 'bg-white text-neutral-900 selection:bg-[#2563EB]/30' : 'bg-[#0D0D0D] text-[#F2F0EB] selection:bg-[#4169E1]/30'} ${hideThemeToggle ? 'hardcoded-article' : ''}`}>
 
       {/* HERO SECTION — LEAP 2026 STYLE 3-COLUMN */}
       <section className={`relative min-h-screen flex flex-col justify-between px-2.5 sm:px-6 md:px-10 lg:px-14 pt-[75px] sm:pt-[90px] md:pt-[100px] pb-4 sm:pb-6 overflow-hidden transition-colors duration-300 ${isLight ? 'bg-white text-neutral-900' : 'bg-[#0D0D0D] text-[#F2F0EB]'}`}>
-        <Header />
+        <Header hideThemeToggle={hideThemeToggle} />
 
         {/* Decorative ✦ top-left (positioned below Header) */}
         <div className={`hidden lg:block absolute top-[95px] sm:top-[110px] lg:top-[125px] left-8 sm:left-12 lg:left-16 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'} text-3xl font-bold select-none pointer-events-none z-10`} aria-hidden="true">

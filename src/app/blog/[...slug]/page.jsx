@@ -453,10 +453,10 @@ export default async function Page({ params }) {
   if (StaticArticle) {
     const meta = staticArticleMetadata[slugStr] || staticArticleMetadata[apiSlug];
     return (
-      <>
+      <div className="hardcoded-article">
         {meta && <MultiJsonLd schemas={staticArticleSchemas(slugStr, meta)} />}
-        <StaticArticle />
-      </>
+        <StaticArticle hideThemeToggle={true} />
+      </div>
     );
   }
 
