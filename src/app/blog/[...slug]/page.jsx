@@ -7,6 +7,8 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
+  // 'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': dynamic(() => import('@/components/articles/CadToWebglArticle')),
+  'automotive-3d-configurator-dealership-conversion-2026': dynamic(() => import('@/components/articles/Automotive3dConfiguratorArticle')),
   'virtual-showrooms-vs-physical-retail-2026-roi-guide': dynamic(() => import('@/components/articles/VirtualShowroomsRoiArticle')),
   'leap-2026': dynamic(() => import('@/components/articles/Leap2026Article')),
   'leap-2026-wrap-up': dynamic(() => import('@/components/articles/Leap2026Article')),
@@ -15,7 +17,7 @@ const staticArticles = {
   'web-based-configurator': dynamic(() => import('@/components/articles/ConfiguratorArticle')),
   'immersive-ar-marketing': dynamic(() => import('@/components/articles/ARMarketingArticle')),
   'industrial-animation': dynamic(() => import('@/components/articles/IndustrialAnimationArticle')),
-  'automotive-configurator': dynamic(() => import('@/components/articles/AutomotiveConfiguratorArticle')),
+  'automotive-configurator': dynamic(() => import('@/components/articles/Automotive3dConfiguratorArticle')),
   'vr-reshaping-world': dynamic(() => import('@/components/articles/VRReshapingWorldArticle')),
   'immersive-experience-design': dynamic(() => import('@/components/articles/ImmersiveExperienceArticle')),
   'immersive-tech-2026': dynamic(() => import('@/components/articles/ImmersiveTech2026Article')),
@@ -36,6 +38,38 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': {
+    title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide) | Elipse Studio',
+    description: 'Your SolidWorks assembly is 1.2GB with 14 million polygons. Your mobile buyer\'s browser has 150MB of VRAM. This is the exact 4-step pipeline we use to bridge that gap — polygon decimation, normal baking, PBR channel packing, and Draco/KTX2 compression — with real before/after benchmarks.',
+    keywords: [
+      'cad to webgl',
+      'solidworks to webgl configurator',
+      'convert cad to 3d web',
+      'polygon reduction for webgl',
+      'lightweight 3d product models for ecommerce',
+      'cad file optimization web',
+      'webgl performance mobile',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    ogImage: `${SITE_URL}/assets/About-page/shark.webp`,
+  },
+  'automotive-3d-configurator-dealership-conversion-2026': {
+    title: 'Automotive 3D Configurators: How Real-Time Car Visualizers Drive Dealership Foot Traffic and Online Reservations (2026 Benchmark) | Elipse Studio',
+    description: 'Volvo, BMW, KIA. See how our dual-engine automotive configurator framework — browser WebGL for accessories and Unreal Engine 5 Pixel Streaming for full vehicle builds — increases lead generation by 40% and average invoice value by 28%.',
+    keywords: [
+      'automotive 3d configurator',
+      'real-time car configurator web',
+      'car visualizer software',
+      '3d vehicle customizer development',
+      'automotive configurator conversion rate',
+      'unreal engine 5 car configurator',
+      'webgl car visualizer',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    ogImage: `${SITE_URL}/assets/ElipseImages/hero/volve-configrator.webp`,
+  },
   '3d-architectural-visualisation-uk-property-developers-guide': {
     title: '3D Architectural Visualisation for UK Property Developers: The 2026 Guide | Elipse Studio',
     description: 'UK property developers are using 3D architectural visualisation to sell off-plan units faster, win planning in conservation areas, and reduce buyer dropout. Costs, use cases, and how to brief a studio.',
@@ -235,14 +269,56 @@ function staticArticleSchemas(slugStr, meta) {
   const isInteractive3d = slugStr === 'interactive-3d-vs-cgi-production-pipeline-2026';
   const isUkArchViz = slugStr === '3d-architectural-visualisation-uk-property-developers-guide';
   const isArProduct = slugStr === 'ar-product-visualization-ecommerce-brands-2026-guide';
+  const isCadToWebgl = slugStr === 'cad-to-webgl-enterprise-3d-optimization-pipeline-2026';
+  const isAutomotiveConfigurator = slugStr === 'automotive-3d-configurator-dealership-conversion-2026' || slugStr === 'automotive-configurator';
+  const isNewOctober = isInteractive3d || isUkArchViz || isArProduct || isCadToWebgl || isAutomotiveConfigurator;
+
   const schema = buildArticleSchema({
     title: meta.title,
     description: meta.description,
     image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
-    publishedAt: (isInteractive3d || isUkArchViz || isArProduct) ? '2026-10-06' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
-    updatedAt: (isInteractive3d || isUkArchViz || isArProduct) ? '2026-10-06' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
+    publishedAt: isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
+    updatedAt: isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
     slug: slugStr,
   });
+
+  const cadToWebglFaq = buildFaqSchema([
+    {
+      q: 'Why can CAD files like SolidWorks or STEP not run directly in WebGL?',
+      a: 'CAD applications represent 3D geometry using mathematically continuous NURBS boundary representations (curves and parameters), which are resolution-independent. WebGL engines, however, can only render triangular polygon meshes rasterized on the GPU. Raw CAD tessellation typically produces 8 to 40+ million triangles with internal hardware like bolts and fasteners, crashing mobile WebGL viewports.',
+    },
+    {
+      q: 'What is the target polygon budget for a production WebGL 3D configurator?',
+      a: 'For commercial web configurators running at a guaranteed 60 FPS on iOS Safari and mid-range Android devices, the total rendered scene should stay under 100,000 triangles (ideally 15,000 to 80,000 triangles for the hero asset), with draw calls kept under 50 per frame.',
+    },
+    {
+      q: 'How does texture channel packing reduce 3D configurator download size?',
+      a: 'Standard PBR materials require multiple monochrome textures: Roughness, Metallic, and Ambient Occlusion (AO). Channel packing merges these three individual grayscale maps into the Red, Green, and Blue channels of a single ORM texture file. The GPU reads each channel independently, reducing texture file payload by 60% to 65% with zero visual quality loss.',
+    },
+    {
+      q: 'What is the difference between Draco compression and KTX2 texture transcoding?',
+      a: 'Draco compresses the geometric mesh (vertex positions, normals, texture coordinates, indices) by up to 70–85%, with native WebGL decompression. KTX2 with Basis Universal supercompresses textures and transcodes them at runtime directly into GPU-native memory formats (ASTC for iOS, ETC2 for Android, BC7 for desktop), saving VRAM and avoiding browser memory crashes.',
+    },
+  ]);
+
+  const automotiveConfiguratorFaq = buildFaqSchema([
+    {
+      q: 'How does an automotive 3D configurator increase dealership conversion rates?',
+      a: 'Configurators turn passive buyers into active builders. When prospective buyers personalize exterior colors, rims, aero kits, and interior trims in real time, they develop psychological ownership before stepping into a showroom. Our production deployments show a 40% increase in test drive booking requests and a 28% boost in average vehicle invoice value from accessory upselling.',
+    },
+    {
+      q: 'When should an automotive brand choose WebGL versus Unreal Engine 5 Pixel Streaming?',
+      a: 'Choose browser WebGL (PlayCanvas / Three.js) for high-traffic accessory catalogs, wheel/rim visualizers, and exterior paint toggles that require instant, zero-cost loading at 60 FPS on mobile. Choose Unreal Engine 5 Pixel Streaming for full luxury vehicle configurations where photorealistic ray-traced reflections, metallic flake clearcoats, and interior leather stitching are required for high-intent reservation deposits.',
+    },
+    {
+      q: 'How are complex variant compatibility rules managed in vehicle configurators?',
+      a: 'Automotive configurators integrate a constraint rules engine that operates in real time. If a buyer chooses an M-Sport suspension package that requires 20-inch rims, incompatible wheel options are gracefully flagged with contextual explanations and recommended alternatives, preventing broken order specifications in the CRM.',
+    },
+    {
+      q: 'Can customer builds feed directly into dealership CRM systems?',
+      a: 'Yes. Completed configurations export full build specifications (exterior color code, trim package, wheel options, accessories, pricing) directly into automotive CRMs like Salesforce Automotive Cloud, CDK Global, or custom dealership APIs upon test drive booking or deposit submission.',
+    },
+  ]);
 
   const ukArchVizFaq = buildFaqSchema([
     {
@@ -361,6 +437,8 @@ function staticArticleSchemas(slugStr, meta) {
   if (isInteractive3d) extraSchemas = [interactive3dFaq, authorSchema];
   if (isUkArchViz) extraSchemas = [ukArchVizFaq, authorSchema];
   if (isArProduct) extraSchemas = [arProductFaq, authorSchema];
+  if (isCadToWebgl) extraSchemas = [cadToWebglFaq, authorSchema];
+  if (isAutomotiveConfigurator) extraSchemas = [automotiveConfiguratorFaq, authorSchema];
 
   return [schema, breadcrumb, ...extraSchemas].filter(Boolean);
 }

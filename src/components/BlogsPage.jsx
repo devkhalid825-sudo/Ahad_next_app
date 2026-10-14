@@ -38,10 +38,12 @@ import ahmedFoodRaw from '../assets/Ahmed-food/jam&spread/15.webp';
 
 import renderingRaw from '../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../assets/About-page/kia.webp';
+import sharkRaw from '../assets/About-page/shark.webp';
 import marineRaw from '../assets/About-page/marine.webp';
 import timBarthRaw from '../assets/About-page/tim-barth.webp';
 
 const kia = getImgSrc(kiaRaw);
+const shark = getImgSrc(sharkRaw);
 const rendering = getImgSrc(renderingRaw);
 const marine = getImgSrc(marineRaw);
 const timBarth = getImgSrc(timBarthRaw);
@@ -72,6 +74,26 @@ const staticImages = {
 };
 
 const staticPosts = [
+    /*
+    {
+        id: 'static-cad-to-webgl-2026',
+        title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide)',
+        excerpt: 'Your SolidWorks assembly is 1.2GB with 14 million polygons. Your mobile buyer\'s browser has 150MB of VRAM. This is the exact 4-step pipeline we use to bridge that gap — polygon decimation, normal baking, PBR channel packing, and Draco/KTX2 compression — with real before/after benchmarks.',
+        image: shark,
+        date: 'OCTOBER 14, 2026',
+        category: 'WebGL Engineering',
+        url: '/blog/cad-to-webgl-enterprise-3d-optimization-pipeline-2026',
+    },
+    */
+    {
+        id: 'static-automotive-3d-configurator-2026',
+        title: 'Automotive 3D Configurators: How Next-Gen Car Visualizers Drive Dealership Foot Traffic and Online Reservations (2026 Benchmark)',
+        excerpt: 'Volvo, BMW, KIA. See how our dual-engine automotive configurator framework — browser WebGL for accessories and Unreal Engine 5 Pixel Streaming for full vehicle builds — increases lead generation by 40% and average invoice value by 28%.',
+        image: volveImg,
+        date: 'OCTOBER 12, 2026',
+        category: 'Automotive 3D',
+        url: '/blog/automotive-3d-configurator-dealership-conversion-2026',
+    },
     {
         id: 'static-uk-archviz-guide-2026',
         title: '3D Architectural Visualisation for UK Property Developers: The 2026 Guide',
