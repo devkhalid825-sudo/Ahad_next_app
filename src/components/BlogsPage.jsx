@@ -74,7 +74,6 @@ const staticImages = {
 };
 
 const staticPosts = [
-    /*
     {
         id: 'static-cad-to-webgl-2026',
         title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide)',
@@ -84,7 +83,6 @@ const staticPosts = [
         category: 'WebGL Engineering',
         url: '/blog/cad-to-webgl-enterprise-3d-optimization-pipeline-2026',
     },
-    */
     {
         id: 'static-automotive-3d-configurator-2026',
         title: 'Automotive 3D Configurators: How Next-Gen Car Visualizers Drive Dealership Foot Traffic and Online Reservations (2026 Benchmark)',

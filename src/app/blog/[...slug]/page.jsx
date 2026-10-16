@@ -7,7 +7,7 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
-  // 'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': dynamic(() => import('@/components/articles/CadToWebglArticle')),
+  'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': dynamic(() => import('@/components/articles/CadToWebglArticle')),
   'automotive-3d-configurator-dealership-conversion-2026': dynamic(() => import('@/components/articles/Automotive3dConfiguratorArticle')),
   'virtual-showrooms-vs-physical-retail-2026-roi-guide': dynamic(() => import('@/components/articles/VirtualShowroomsRoiArticle')),
   'leap-2026': dynamic(() => import('@/components/articles/Leap2026Article')),

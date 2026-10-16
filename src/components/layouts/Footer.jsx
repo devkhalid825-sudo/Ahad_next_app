@@ -203,43 +203,90 @@ const Footer = () => {
                 isOpen={!!openSections.contactUs}
                 onToggle={toggleSection}
               >
-                <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-2">
-                  <p>1812 McCormick Ln</p>
-                  <p>Hanover Park, IL 60133</p>
-                  <p className="pt-1 text-white/90 font-medium">
-                    <a
-                      href="tel:+16302970428"
-                      className="hover:text-white transition-colors"
-                      onClick={() => {
-                        if (typeof window !== 'undefined' && window.gtag) {
-                          window.gtag('event', 'generate_lead', {
-                            event_category: 'Contact',
-                            event_label: 'Phone Call Click - Footer',
-                            value: 1,
-                          });
-                        }
-                      }}
-                    >
-                      +1 630-297-0428
-                    </a>
-                  </p>
-                  <p className="pt-0.5 text-white font-medium">
-                    <a
-                      href="mailto:info@elipsestudio.com"
-                      className="hover:text-[#4169E1] transition-colors"
-                      onClick={() => {
-                        if (typeof window !== 'undefined' && window.gtag) {
-                          window.gtag('event', 'generate_lead', {
-                            event_category: 'Contact',
-                            event_label: 'Email Click - Footer',
-                            value: 1,
-                          });
-                        }
-                      }}
-                    >
-                      info@elipsestudio.com
-                    </a>
-                  </p>
+                <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-3.5">
+                  {/* USA Office */}
+                  <div>
+                    <span className="text-white text-xs font-semibold tracking-wider uppercase block mb-1">USA Office</span>
+                    <p>1812 McCormick Ln</p>
+                    <p>Hanover Park, IL 60133</p>
+                    <p className="pt-0.5 text-white/90 font-medium">
+                      <a
+                        href="tel:+16302970428"
+                        className="hover:text-white transition-colors"
+                        onClick={() => {
+                          if (typeof window !== 'undefined' && window.gtag) {
+                            window.gtag('event', 'generate_lead', {
+                              event_category: 'Contact',
+                              event_label: 'Phone Call Click - Footer USA',
+                              value: 1,
+                            });
+                          }
+                        }}
+                      >
+                        +1 630-297-0428
+                      </a>
+                    </p>
+                  </div>
+
+                  {/* Pakistan Office */}
+                  <div className="pt-2 border-t border-white/10">
+                    <span className="text-white text-xs font-semibold tracking-wider uppercase block mb-1">Pakistan Office</span>
+                    <p>House no A-08, near Wasim Bagh,</p>
+                    <p>Block 13D-3, Gulshan-e-Iqbal, 75300</p>
+                    <div className="pt-1 text-white/90 font-medium flex flex-col gap-0.5">
+                      <a
+                        href="tel:+923471245257"
+                        className="hover:text-white transition-colors"
+                        onClick={() => {
+                          if (typeof window !== 'undefined' && window.gtag) {
+                            window.gtag('event', 'generate_lead', {
+                              event_category: 'Contact',
+                              event_label: 'Phone Call Click - Footer PK 1',
+                              value: 1,
+                            });
+                          }
+                        }}
+                      >
+                        +92 347 1245257
+                      </a>
+                      <a
+                        href="tel:+923323141556"
+                        className="hover:text-white transition-colors"
+                        onClick={() => {
+                          if (typeof window !== 'undefined' && window.gtag) {
+                            window.gtag('event', 'generate_lead', {
+                              event_category: 'Contact',
+                              event_label: 'Phone Call Click - Footer PK 2',
+                              value: 1,
+                            });
+                          }
+                        }}
+                      >
+                        +92 332 3141556
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="pt-2 border-t border-white/10">
+                    <p className="text-white font-medium">
+                      <a
+                        href="mailto:info@elipsestudio.com"
+                        className="hover:text-[#4169E1] transition-colors"
+                        onClick={() => {
+                          if (typeof window !== 'undefined' && window.gtag) {
+                            window.gtag('event', 'generate_lead', {
+                              event_category: 'Contact',
+                              event_label: 'Email Click - Footer',
+                              value: 1,
+                            });
+                          }
+                        }}
+                      >
+                        info@elipsestudio.com
+                      </a>
+                    </p>
+                  </div>
                 </div>
               </FooterColumn>
             </div>

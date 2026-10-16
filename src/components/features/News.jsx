@@ -20,6 +20,7 @@ import vfxImgRaw from '../../assets/About-page/QORDEN.webp';
 import ahmedFoodRaw from '../../assets/Ahmed-food/jam&spread/15.webp';
 import renderingImgRaw from '../../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../../assets/About-page/kia.webp';
+import sharkRaw from '../../assets/About-page/shark.webp';
 import marineRaw from '../../assets/About-page/marine.webp';
 import timBarthRaw from '../../assets/About-page/tim-barth.webp';
 
@@ -34,6 +35,7 @@ const vfxImg = getImgSrc(vfxImgRaw);
 const ahmedFoodImg = getImgSrc(ahmedFoodRaw);
 const renderingImg = getImgSrc(renderingImgRaw);
 const kiaImg = getImgSrc(kiaRaw);
+const shark = getImgSrc(sharkRaw);
 const marineImg = getImgSrc(marineRaw);
 const timBarth = getImgSrc(timBarthRaw);
 
@@ -95,6 +97,24 @@ const News = ({ initialBlogs = null }) => {
   }, []);
 
   const staticPosts = [
+    {
+      id: 31,
+      title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide)',
+      image: shark,
+      date: 'OCTOBER 14, 2026',
+      category: 'WebGL Engineering',
+      readTime: '8 min read',
+      url: '/blog/cad-to-webgl-enterprise-3d-optimization-pipeline-2026',
+    },
+    {
+      id: 30,
+      title: 'Automotive 3D Configurators: How Next-Gen Car Visualizers Drive Dealership Foot Traffic and Online Reservations (2026 Benchmark)',
+      image: volvoHero,
+      date: 'OCTOBER 12, 2026',
+      category: 'Automotive 3D',
+      readTime: '10 min read',
+      url: '/blog/automotive-3d-configurator-dealership-conversion-2026',
+    },
     {
       id: 28,
       title: '3D Architectural Visualisation for UK Property Developers: The 2026 Guide',
