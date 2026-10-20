@@ -3,7 +3,6 @@ import { cache } from 'react';
 import { apiCall, SITE_URL } from '@/utils/api';
 import { buildMetadata } from '@/lib/seo';
 import ProjectPage from '@/components/ProjectPage';
-import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 import { getProjectValueProposition } from '@/constants/projectValueProps';
@@ -82,15 +81,6 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const safeSlug = String(slug || '').trim();
 
-  if (safeSlug === 'ahmed-food') {
-    const description = getProjectValueProposition({ slug: 'ahmed-food', title: 'Ahmed Food' });
-    return buildMetadata({
-      title: 'Ahmed Food - 3D Product Visualization & Animation | Elipse Studio',
-      description,
-      canonical: `${SITE_URL}/project/ahmed-food`,
-    });
-  }
-
   const { data } = await getProject(safeSlug);
   if (data && data.title) {
     const { title, description } = apiProjectSchemas(safeSlug, data);
@@ -122,10 +112,6 @@ export default async function Page({ params }) {
   const safeSlug = String(slug || '').trim();
 
   if (!safeSlug) notFound();
-
-  if (safeSlug === 'ahmed-food') {
-    return <AhmedFood />;
-  }
 
   const { data, status } = await getProject(safeSlug);
   if (status === 200 && data && data.title) {

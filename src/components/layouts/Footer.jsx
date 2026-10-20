@@ -96,6 +96,37 @@ const Footer = () => {
 
   return (
     <footer className="relative site-main-footer bg-gradient-to-b from-[#0a1628] to-[#1a2a6e] border-t border-white/10 text-white pt-4 md:pt-6 pb-12 md:pb-16 font-sans overflow-hidden transition-colors duration-300">
+      <style dangerouslySetInnerHTML={{ __html: `
+        html.light .site-main-footer span,
+        html.light .site-main-footer .text-white,
+        html.light .site-main-footer span.text-white,
+        html.light .site-main-footer .footer-office-title {
+          color: #ffffff !important;
+        }
+        html.light .site-main-footer [class*="text-white/"],
+        html.light .site-main-footer .text-white\\/90,
+        html.light .site-main-footer .text-white\\/80,
+        html.light .site-main-footer .text-white\\/70 {
+          color: rgba(255, 255, 255, 0.85) !important;
+        }
+        html.light .site-main-footer a,
+        html.light .site-main-footer p a,
+        html.light .site-main-footer div a,
+        html.light .site-main-footer li a,
+        html.light .site-main-footer .footer-office-link {
+          color: rgba(255, 255, 255, 0.92) !important;
+        }
+        html.light .site-main-footer a:hover,
+        html.light .site-main-footer p a:hover,
+        html.light .site-main-footer div a:hover,
+        html.light .site-main-footer li a:hover,
+        html.light .site-main-footer .footer-office-link:hover {
+          color: #ffffff !important;
+        }
+        html.light .site-main-footer p {
+          color: rgba(255, 255, 255, 0.8) !important;
+        }
+      `}} />
       <div className="w-full px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between w-full lg:w-auto gap-4 items-center py-8 md:py-12">
           <span className="text-lg font-light tracking-wide text-white/90 footer-heading">Join our mailing list:</span>
@@ -206,13 +237,13 @@ const Footer = () => {
                 <div className="text-[13px] sm:text-[14px] font-light leading-relaxed text-white/70 space-y-3.5">
                   {/* USA Office */}
                   <div>
-                    <span className="text-white text-xs font-semibold tracking-wider uppercase block mb-1">USA Office</span>
-                    <p>1812 McCormick Ln</p>
-                    <p>Hanover Park, IL 60133</p>
+                    <span className="text-white text-xs font-semibold tracking-wider uppercase block mb-1 footer-office-title">USA Office</span>
+                    <p className="footer-office-text">1812 McCormick Ln</p>
+                    <p className="footer-office-text">Hanover Park, IL 60133</p>
                     <p className="pt-0.5 text-white/90 font-medium">
                       <a
                         href="tel:+16302970428"
-                        className="hover:text-white transition-colors"
+                        className="hover:text-white transition-colors footer-office-link"
                         onClick={() => {
                           if (typeof window !== 'undefined' && window.gtag) {
                             window.gtag('event', 'generate_lead', {
@@ -230,13 +261,13 @@ const Footer = () => {
 
                   {/* Pakistan Office */}
                   <div className="pt-2 border-t border-white/10">
-                    <span className="text-white text-xs font-semibold tracking-wider uppercase block mb-1">Pakistan Office</span>
-                    <p>House no A-08, near Wasim Bagh,</p>
-                    <p>Block 13D-3, Gulshan-e-Iqbal, 75300</p>
+                    <span className="text-white text-xs font-semibold tracking-wider uppercase block mb-1 footer-office-title">Pakistan Office</span>
+                    <p className="footer-office-text">House no A-08, near Wasim Bagh,</p>
+                    <p className="footer-office-text">Block 13D-3, Gulshan-e-Iqbal, 75300</p>
                     <div className="pt-1 text-white/90 font-medium flex flex-col gap-0.5">
                       <a
                         href="tel:+923471245257"
-                        className="hover:text-white transition-colors"
+                        className="hover:text-white transition-colors footer-office-link"
                         onClick={() => {
                           if (typeof window !== 'undefined' && window.gtag) {
                             window.gtag('event', 'generate_lead', {
@@ -251,7 +282,7 @@ const Footer = () => {
                       </a>
                       <a
                         href="tel:+923323141556"
-                        className="hover:text-white transition-colors"
+                        className="hover:text-white transition-colors footer-office-link"
                         onClick={() => {
                           if (typeof window !== 'undefined' && window.gtag) {
                             window.gtag('event', 'generate_lead', {

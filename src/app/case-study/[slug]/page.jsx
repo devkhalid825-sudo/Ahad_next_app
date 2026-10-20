@@ -39,7 +39,6 @@ function caseStudySchemas(slug, data) {
   return { description, schemas: [schema, breadcrumb] };
 }
 
-import AhmedFood from '@/components/projects/AhmedFood';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 
 const allProjects = [...projectList, ...caseStudyEntries];
@@ -48,15 +47,6 @@ const projectMap = Object.fromEntries(allProjects.map(p => [p.slug, p]));
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const safeSlug = String(slug || '').trim();
-
-  if (safeSlug === 'ahmed-food') {
-    const description = getProjectValueProposition({ slug: 'ahmed-food', title: 'Ahmed Food' });
-    return buildMetadata({
-      title: 'Ahmed Food - Case Study | Elipse Studio',
-      description,
-      canonical: `${SITE_URL}/case-study/ahmed-food`,
-    });
-  }
 
   const { data } = await getCaseStudy(safeSlug);
   if (!data || !data.title) {
@@ -80,10 +70,6 @@ export default async function Page({ params }) {
   const safeSlug = String(slug || '').trim();
 
   if (!safeSlug) notFound();
-
-  if (safeSlug === 'ahmed-food') {
-    return <AhmedFood />;
-  }
 
   const { data, status } = await getCaseStudy(safeSlug);
   if (status === 200 && data && data.title) {
