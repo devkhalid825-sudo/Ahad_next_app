@@ -9,7 +9,6 @@ import brandsImg6 from '@/assets/ElipseImages/logos/logo6.webp';
 import brandsImg7 from '@/assets/ElipseImages/logos/logo7.webp';
 import brandsImg8 from '@/assets/ElipseImages/logos/logo8.webp';
 import brandsImg9 from '@/assets/ElipseImages/logos/logo9.webp';
-import brandsImg10 from '@/assets/ElipseImages/logos/logo10.webp';
 import brandsImgStudentLife from '@/assets/ElipseImages/logos/SL.webp';
 
 
@@ -22,7 +21,6 @@ const brandsImages = [
   { img: brandsImg6, name: 'Omoré', className: 'h-9 xs:h-10 sm:h-13 md:h-16 max-w-[130px] sm:max-w-[220px]' },
   { img: brandsImg7, name: 'ARY Laguna', className: 'h-9 xs:h-10 sm:h-13 md:h-16 max-w-[140px] sm:max-w-[240px]' },
   { img: brandsImg8, name: 'Ahmed Foods', className: 'h-11 xs:h-12 sm:h-16 md:h-20 max-w-[145px] sm:max-w-[230px] brand-logo-ahmed' },
-  { img: brandsImg10, name: 'Hamdard Laboratories', className: 'h-10 xs:h-11 sm:h-15 md:h-20 brightness-0 invert max-w-[140px] sm:max-w-[240px] brand-logo-white brand-logo-hamdard' },
   { img: brandsImgStudentLife, name: 'Student Life', className: 'h-10 xs:h-12 sm:h-16 md:h-20 brightness-0 invert max-w-[140px] sm:max-w-[250px] brand-logo-white' },
 ];
 
@@ -42,10 +40,6 @@ const BrandsMarquee = () => {
         html.light .brands-marquee-section .brand-logo-ahmed {
           mix-blend-mode: multiply !important;
           filter: contrast(1.35) brightness(1.02) saturate(1.2) drop-shadow(0 0 0.5px rgba(0,0,0,0.25)) !important;
-        }
-        html.light .brands-marquee-section .brand-logo-hamdard {
-          filter: brightness(0) contrast(1.4) !important;
-          opacity: 0.95 !important;
         }
       `}} />
       <div className="w-full overflow-hidden">
