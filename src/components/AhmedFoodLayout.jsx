@@ -674,7 +674,7 @@ const AhmedFoodLayout = ({
           </svg>
         </div>
 
-        <div className="max-w-[1600px] mx-auto flex flex-col items-center text-center w-full px-0 sm:px-6 my-auto">
+        <div className="max-w-[1600px] 2xl:max-w-[1920px] min-[2200px]:max-w-[2200px] mx-auto flex flex-col items-center text-center w-full px-0 sm:px-6 my-auto">
 
           {/* ── Main Center Headline ── */}
           <h1
@@ -712,10 +712,10 @@ const AhmedFoodLayout = ({
 
           {/* ── Hero Content: Optional Left Column | Center Media | Optional Right Column ── */}
           <div className={`w-full items-center relative mt-2 sm:mt-4 mb-4 sm:mb-6 ${hasLeftColumn && hasRightColumn
-            ? 'grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8'
+            ? 'grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8 2xl:gap-10'
             : hasLeftColumn || hasRightColumn
-              ? 'grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8'
-              : 'flex flex-col items-center justify-center max-w-[1040px] xl:max-w-[1150px] mx-auto'
+              ? 'grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8 2xl:gap-10'
+              : 'flex flex-col items-center justify-center max-w-[1040px] xl:max-w-[1250px] 2xl:max-w-[1450px] min-[2200px]:max-w-[1750px] mx-auto'
             }`}>
 
             {/* Left Column: Only rendered if explicitly provided */}
@@ -754,16 +754,16 @@ const AhmedFoodLayout = ({
                 : 'w-full'
               } relative flex flex-col items-center justify-center px-0 sm:px-0 w-full`}>
               {/* Circular backdrop glow */}
-              <div className={`absolute w-80 h-80 sm:w-[34rem] sm:h-[34rem] lg:w-[44rem] lg:h-[44rem] ${isLight ? 'bg-neutral-100 border-neutral-200/60' : 'bg-white/[0.03] border-white/5'} rounded-full -z-10 border flex items-center justify-center pointer-events-none`}>
+              <div className={`absolute w-80 h-80 sm:w-[34rem] sm:h-[34rem] lg:w-[44rem] lg:h-[44rem] 2xl:w-[54rem] 2xl:h-[54rem] min-[2200px]:w-[64rem] min-[2200px]:h-[64rem] ${isLight ? 'bg-neutral-100 border-neutral-200/60' : 'bg-white/[0.03] border-white/5'} rounded-full -z-10 border flex items-center justify-center pointer-events-none`}>
                 <span className="absolute bottom-6 text-neutral-400 text-2xl select-none">⚡</span>
               </div>
 
               {/* Media Card Container (Enlarged for prominent video presentation) */}
               <div className={`relative rounded-2xl overflow-hidden shadow-2xl border-2 sm:border-4 ${isLight ? 'border-white bg-zinc-950' : 'border-zinc-800 bg-black'} z-10 transition-all duration-300 w-full ${currentAspectRatio === 'reel'
-                ? 'w-64 h-[22rem] sm:w-[24rem] sm:h-[30rem] lg:w-[26rem] lg:h-[34rem] aspect-[9/16]'
+                ? 'w-72 h-[26rem] sm:w-[26rem] sm:h-[34rem] lg:w-[28rem] lg:h-[38rem] xl:w-[32rem] xl:h-[44rem] 2xl:w-[36rem] 2xl:h-[50rem] min-[2200px]:w-[42rem] min-[2200px]:h-[58rem] max-h-[82vh] aspect-[9/16]'
                 : currentAspectRatio === 'square'
-                  ? 'w-full max-w-[880px] xl:max-w-[980px] h-[260px] xs:h-[295px] sm:h-auto sm:aspect-[16/10] max-h-[480px] sm:max-h-[520px]'
-                  : 'w-full max-w-[1040px] xl:max-w-[1150px] h-[260px] xs:h-[295px] sm:h-auto sm:aspect-video'
+                  ? 'w-full max-w-[880px] xl:max-w-[1080px] 2xl:max-w-[1250px] min-[2200px]:max-w-[1450px] h-[260px] xs:h-[295px] sm:h-auto sm:aspect-[16/10] max-h-[480px] sm:max-h-[560px] 2xl:max-h-[720px]'
+                  : 'w-full max-w-[1040px] xl:max-w-[1250px] 2xl:max-w-[1450px] min-[2200px]:max-w-[1750px] h-[260px] xs:h-[295px] sm:h-auto sm:aspect-video'
                 }`}>
                 {currentVideoUrl ? (
                   isDirectVideo(currentVideoUrl) ? (
