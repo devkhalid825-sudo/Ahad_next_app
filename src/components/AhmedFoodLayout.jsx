@@ -760,7 +760,7 @@ const AhmedFoodLayout = ({
 
               {/* Media Card Container (Enlarged for prominent video presentation) */}
               <div className={`relative rounded-2xl overflow-hidden shadow-2xl border-2 sm:border-4 ${isLight ? 'border-white bg-zinc-950' : 'border-zinc-800 bg-black'} z-10 transition-all duration-300 w-full ${currentAspectRatio === 'reel'
-                ? 'w-72 h-[26rem] sm:w-[26rem] sm:h-[34rem] lg:w-[28rem] lg:h-[38rem] xl:w-[32rem] xl:h-[44rem] 2xl:w-[36rem] 2xl:h-[50rem] min-[2200px]:w-[42rem] min-[2200px]:h-[58rem] max-h-[82vh] aspect-[9/16]'
+                ? 'w-64 h-[22rem] sm:w-[22rem] sm:h-[29rem] lg:w-[25rem] lg:h-[34rem] xl:w-[27rem] xl:h-[37rem] 2xl:w-[29rem] 2xl:h-[40rem] min-[2200px]:w-[34rem] min-[2200px]:h-[46rem] max-h-[68vh] aspect-[9/16]'
                 : currentAspectRatio === 'square'
                   ? 'w-full max-w-[880px] xl:max-w-[1080px] 2xl:max-w-[1250px] min-[2200px]:max-w-[1450px] h-[260px] xs:h-[295px] sm:h-auto sm:aspect-[16/10] max-h-[480px] sm:max-h-[560px] 2xl:max-h-[720px]'
                   : 'w-full max-w-[1040px] xl:max-w-[1250px] 2xl:max-w-[1450px] min-[2200px]:max-w-[1750px] h-[260px] xs:h-[295px] sm:h-auto sm:aspect-video'
