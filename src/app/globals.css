@@ -935,6 +935,37 @@ html.light .btn-primary * {
   color: #ffffff !important;
 }
 
+/* 12b. Submit Inquiry / Form Primary Buttons on Light Background - DARK with WHITE text */
+html.light .contact-submit-btn,
+html.light #contact button[type="submit"],
+html.light form button[type="submit"]:not(.bg-\[\#4169E1\]),
+html[data-theme="light"] .contact-submit-btn,
+html[data-theme="light"] #contact button[type="submit"],
+html[data-theme="light"] form button[type="submit"]:not(.bg-\[\#4169E1\]) {
+  background-color: #0c0c0c !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
+}
+
+html.light .contact-submit-btn *,
+html.light #contact button[type="submit"] *,
+html[data-theme="light"] .contact-submit-btn *,
+html[data-theme="light"] #contact button[type="submit"] * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+html.light .contact-submit-btn:hover,
+html.light #contact button[type="submit"]:hover,
+html.light form button[type="submit"]:not(.bg-\[\#4169E1\]):hover,
+html[data-theme="light"] .contact-submit-btn:hover,
+html[data-theme="light"] #contact button[type="submit"]:hover,
+html[data-theme="light"] form button[type="submit"]:not(.bg-\[\#4169E1\]):hover {
+  background-color: #1f1f1f !important;
+  color: #ffffff !important;
+}
+
 /* 13. Text Over Dark Image / Video Overlays MUST KEEP WHITE TEXT */
 html.light [class*="from-black"] h1,
 html.light [class*="from-black"] h2,

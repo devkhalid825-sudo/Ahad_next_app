@@ -488,6 +488,8 @@
 .uk-zone .uk-field textarea[aria-invalid="true"] { border-color: #f87171; }
 .uk-zone .uk-contact-submit { display: flex; align-items: center; gap: 18px; margin-top: 26px; flex-wrap: wrap; }
 .uk-zone .uk-contact-submit .uk-btn-primary { width: 100%; white-space: normal; text-align: center; line-height: 1.35; }
+.uk-zone[data-theme="light"] #uk_submit { background-color: #0c0c0c !important; color: #ffffff !important; border: 1px solid rgba(0,0,0,0.25) !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25) !important; }
+.uk-zone[data-theme="light"] #uk_submit:hover { background-color: #1f1f1f !important; }
 .uk-zone .uk-form-status { font-size: 14px; font-weight: 600; }
 .uk-zone .uk-form-status.uk-success { color: #3ddc84; }
 .uk-zone .uk-form-status.uk-error { color: #f87171; }

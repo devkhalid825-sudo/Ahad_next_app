@@ -488,6 +488,8 @@
 .us-zone .us-field textarea[aria-invalid="true"] { border-color: #f87171; }
 .us-zone .us-contact-submit { display: flex; align-items: center; gap: 18px; margin-top: 26px; flex-wrap: wrap; }
 .us-zone .us-contact-submit .us-btn-primary { width: 100%; white-space: normal; text-align: center; line-height: 1.35; }
+.us-zone[data-theme="light"] #us_submit { background-color: #0c0c0c !important; color: #ffffff !important; border: 1px solid rgba(0,0,0,0.25) !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25) !important; }
+.us-zone[data-theme="light"] #us_submit:hover { background-color: #1f1f1f !important; }
 .us-zone .us-form-status { font-size: 14px; font-weight: 600; }
 .us-zone .us-form-status.us-success { color: #3ddc84; }
 .us-zone .us-form-status.us-error { color: #f87171; }

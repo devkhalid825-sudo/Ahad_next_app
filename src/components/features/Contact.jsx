@@ -5,6 +5,7 @@ import { SiCalendly } from '@/components/ui/Icons';
 import { apiCall } from '@/utils/api';
 import ReCaptcha from '@/components/common/ReCaptcha';
 import { useRateLimitTimer } from '@/hooks/useRateLimitTimer';
+import { useTheme } from '@/components/providers/ThemeProvider';
 
 const PILLARS = [
   { id: 'configurators', label: 'Interactive 3D Web & Product Configurators' },
@@ -13,6 +14,7 @@ const PILLARS = [
 ];
 
 const Contact = () => {
+  const { isLight } = useTheme();
   const form = useRef();
   const recaptchaRef = useRef(null);
   const [recaptchaToken, setRecaptchaToken] = useState('');
@@ -349,7 +351,11 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || isLocked}
-                  className={`w-full bg-white hover:bg-neutral-200 text-black font-bold py-3.5 md:py-4 rounded-full text-sm md:text-base transition-all shadow-lg shadow-white/10 hover:shadow-white/20 transform active:scale-[0.98] ${
+                  className={`w-full contact-submit-btn font-bold py-3.5 md:py-4 rounded-full text-sm md:text-base transition-all transform active:scale-[0.98] ${
+                    isLight
+                      ? 'bg-black hover:bg-neutral-800 text-white shadow-lg shadow-black/20'
+                      : 'bg-white hover:bg-neutral-200 text-black shadow-lg shadow-white/10 hover:shadow-white/20'
+                  } ${
                     isSubmitting || isLocked
                       ? 'opacity-50 cursor-not-allowed pointer-events-none'
                       : ''

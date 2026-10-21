@@ -488,6 +488,8 @@
 .au-zone .au-field textarea[aria-invalid="true"] { border-color: #f87171; }
 .au-zone .au-contact-submit { display: flex; align-items: center; gap: 18px; margin-top: 26px; flex-wrap: wrap; }
 .au-zone .au-contact-submit .au-btn-primary { width: 100%; white-space: normal; text-align: center; line-height: 1.35; }
+.au-zone[data-theme="light"] #au_submit { background-color: #0c0c0c !important; color: #ffffff !important; border: 1px solid rgba(0,0,0,0.25) !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25) !important; }
+.au-zone[data-theme="light"] #au_submit:hover { background-color: #1f1f1f !important; }
 .au-zone .au-form-status { font-size: 14px; font-weight: 600; }
 .au-zone .au-form-status.au-success { color: #3ddc84; }
 .au-zone .au-form-status.au-error { color: #f87171; }

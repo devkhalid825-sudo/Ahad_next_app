@@ -5,6 +5,7 @@ import { FaPaperPlane, FaCheck } from '@/components/ui/Icons';
 import { apiCall } from '../utils/api';
 import ReCaptcha from '@/components/common/ReCaptcha';
 import { useRateLimitTimer } from '@/hooks/useRateLimitTimer';
+import { useTheme } from '@/components/providers/ThemeProvider';
 
 const PILLARS = [
   { id: 'configurators', label: 'Interactive 3D Web & Product Configurators', note: 'WebGL / Three.js / PlayCanvas' },
@@ -13,6 +14,7 @@ const PILLARS = [
 ];
 
 const ContactForm = () => {
+    const { isLight } = useTheme();
     const recaptchaRef = useRef(null);
     const [recaptchaToken, setRecaptchaToken] = useState('');
     const { isLocked, formattedTime, recordAttempt, triggerCooldown } = useRateLimitTimer({
@@ -374,7 +376,11 @@ const ContactForm = () => {
                         <button
                             type="submit"
                             disabled={isSubmitting || isLocked}
-                            className={`w-full flex items-center justify-center gap-2 text-center bg-white hover:bg-neutral-200 text-black font-bold py-3.5 sm:py-4 px-4 sm:px-6 rounded-full text-xs sm:text-sm md:text-base transition-all shadow-lg shadow-white/10 hover:shadow-white/20 cursor-pointer transform active:scale-[0.98] ${
+                            className={`w-full contact-submit-btn flex items-center justify-center gap-2 text-center font-bold py-3.5 sm:py-4 px-4 sm:px-6 rounded-full text-xs sm:text-sm md:text-base transition-all cursor-pointer transform active:scale-[0.98] ${
+                                isLight
+                                    ? 'bg-black hover:bg-neutral-800 text-white shadow-lg shadow-black/20'
+                                    : 'bg-white hover:bg-neutral-200 text-black shadow-lg shadow-white/10 hover:shadow-white/20'
+                            } ${
                                 isSubmitting || isLocked
                                     ? 'opacity-50 cursor-not-allowed pointer-events-none'
                                     : ''
