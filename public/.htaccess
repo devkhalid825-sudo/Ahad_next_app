@@ -77,6 +77,14 @@
   RewriteRule ^services/architectural-visualization-uae/?$ /services/architectural-visualization [R=301,L]
   RewriteRule ^services/animation/?$ /services/3d-animation [R=301,L]
 
+  # 404 URL Audit Remediation (Sami's Directives)
+  RewriteRule ^project-not-found/?$ /portfolio [R=301,L]
+  RewriteRule ^blog-post-not-found/?$ /blog [R=301,L]
+  RewriteRule ^web-configurators/?$ /services/3d-product-configurators [R=301,L]
+  RewriteRule ^3d-product-configurators/?$ /services/3d-product-configurators [R=301,L]
+  RewriteRule ^architectural-visualisation/?$ /services/architectural-visualization [R=301,L]
+  RewriteRule ^contacts/?$ /contact [R=301,L]
+
   # 1g. Trailing-slash normalization — redirect /contact/ → /contact (prevents duplicate content)
   # Only applies to known SPA routes where the canonical version has no trailing slash
   RewriteRule ^(contact|blog|services|industries|portfolio|about|capabilities|case-studies|projects)/$ /$1 [R=301,L]

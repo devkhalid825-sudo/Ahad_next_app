@@ -40,6 +40,9 @@ const VideoHoverCard = ({ project, isLight }) => {
     : '';
 
   const is360Tour = (project.category || '').toLowerCase().includes('360');
+  const isVolvo = (project.title || '').toLowerCase().includes('volvo') ||
+    (project.slug || '').toLowerCase().includes('volvo') ||
+    (project.path || '').toLowerCase().includes('volvo');
 
   return (
     <Link
@@ -71,7 +74,9 @@ const VideoHoverCard = ({ project, isLight }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
           <h3 className="text-lg md:text-xl font-bold text-white mb-2">{project.title}</h3>
           <p className="text-zinc-300 text-xs md:text-sm mb-2 line-clamp-2">
-            {getProjectValueProposition(project)}
+            {isVolvo
+              ? 'Unreal Engine 5 Pixel Streaming configurator for Volvo S90 featuring photorealistic cloud rendering — 34% conversion uplift.'
+              : getProjectValueProposition(project)}
           </p>
           <div className="pt-3 border-t border-zinc-700/50">
             <span className="inline-flex items-center text-xs font-semibold text-white group-hover:text-[#4169E1] transition-colors uppercase tracking-widest">
@@ -259,11 +264,10 @@ const LatestWorkContent = ({ isLight = undefined, initialProjects = null }) => {
           </div>
           {/* Subtle Right Edge Fade Indicator on Mobile (ultra-slim feather) */}
           <div
-            className={`absolute right-0 top-0 bottom-2 w-3.5 md:hidden pointer-events-none z-10 ${
-              isLightMode
-                ? 'bg-gradient-to-l from-white/80 to-transparent'
-                : 'bg-gradient-to-l from-black/80 to-transparent'
-            }`}
+            className={`absolute right-0 top-0 bottom-2 w-3.5 md:hidden pointer-events-none z-10 ${isLightMode
+              ? 'bg-gradient-to-l from-white/80 to-transparent'
+              : 'bg-gradient-to-l from-black/80 to-transparent'
+              }`}
             aria-hidden="true"
           />
         </div>

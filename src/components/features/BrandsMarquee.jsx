@@ -27,7 +27,8 @@ const brandsImages = [
 const BrandsMarquee = () => {
   return (
     <section className="brands-marquee-section w-full bg-black py-8 sm:py-10 md:py-16 overflow-hidden relative z-10 transition-colors duration-300">
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .brands-marquee-section .animate-marquee-custom {
           will-change: transform;
           transform: translate3d(0, 0, 0);

@@ -1,24 +1,16 @@
  export const SERVICE_FAQS = {
   'architectural-visualization': [
     {
-      q: 'What is architectural visualization?',
-      a: 'Architectural visualization (ArchViz) creates 3D photorealistic renderings, animations, and interactive experiences of buildings and interiors before they are built.',
+      q: 'What is architectural visualisation?',
+      a: 'Architectural visualisation is the process of creating photorealistic 3D renders, animations, and interactive walkthroughs of buildings and spaces before they are built. Elipse Studio produces architectural visualisations for property developers, interior designers, and architects across the UK, Australia, and the Middle East.',
     },
     {
-      q: 'What inputs are needed to start an ArchViz project?',
-      a: 'We require CAD files, BIM models (Revit, ArchiCAD, SketchUp), material finishes schedule, landscaping preferences, and lighting/mood instructions.',
+      q: 'Can Elipse Studio create virtual tours of architectural projects?',
+      a: 'Yes. Elipse Studio builds browser-based interactive virtual tours that allow prospective buyers and tenants to explore architectural spaces in real time from any device, with no VR headset required. Tours include clickable hotspots, 360-degree panoramas, and ambient spatial audio.',
     },
     {
-      q: 'How long does a 3D architectural rendering take?',
-      a: 'Single interior or exterior renders take 3-5 business days. Full marketing packages with walkthrough animations take 2-4 weeks depending on scope.',
-    },
-    {
-      q: 'Do you work with international real estate developers?',
-      a: 'Yes. Elipse Studio delivers architectural visualization services for developers, architects, and luxury property marketing agencies worldwide.',
-    },
-    {
-      q: 'What resolutions and formats do you deliver?',
-      a: 'We deliver ultra-HD 4K & 8K still renders, 60fps 4K video walkthroughs, dynamic web configurators, and VR-ready Unreal Engine assets.',
+      q: 'How accurate are Elipse Studio architectural renders?',
+      a: 'Elipse Studio architectural renders are produced from CAD drawings or architectural plans at 1:1 scale accuracy. Lighting, material textures, and environmental context are calibrated to match the proposed physical specification, producing renders that are indistinguishable from photography of the completed building.',
     },
   ],
   '3d-product-visualization': [
@@ -55,46 +47,46 @@
   ],
   '3d-product-configurators': [
     {
-      q: 'What is a 3D web product configurator?',
-      a: 'A WebGL-powered 3D configurator allows users to customize materials, colors, components, and dimensions of a product in real-time within their browser.',
+      q: 'What is a 3D product configurator?',
+      a: 'A 3D product configurator is an interactive web application that lets customers customise a product in real time — changing colours, materials, dimensions, and components — and view the result as a photorealistic 3D model before purchasing. Elipse Studio builds WebGL-based 3D configurators that run directly in the browser with no app download required.',
     },
     {
-      q: 'Which e-commerce platforms can integrate 3D configurators?',
-      a: 'Our configurators seamlessly integrate with Shopify, WooCommerce, Magento, BigCommerce, Salesforce Commerce Cloud, and custom headless web stacks.',
+      q: 'How long does it take to build a 3D product configurator?',
+      a: 'A standard 3D product configurator built by Elipse Studio takes 6 to 12 weeks from brief to launch, depending on the number of product variants, platform integration complexity, and asset preparation. Enterprise configurators with multiple product families typically require 12 to 20 weeks.',
     },
     {
-      q: 'Does it work smoothly on mobile browsers?',
-      a: 'Yes. We utilize Three.js / WebGL optimization techniques to guarantee high FPS performance and instant loading across iOS Safari and Android Chrome.',
+      q: 'Can a 3D configurator integrate with Shopify or WooCommerce?',
+      a: 'Yes. Elipse Studio builds 3D configurators that integrate natively with Shopify Storefront API, WooCommerce, BigCommerce, and headless commerce platforms. Configurator selections pass directly into the cart as line item properties, enabling seamless checkout and order fulfilment without manual quoting.',
     },
     {
-      q: 'Can configurators calculate prices dynamically?',
-      a: 'Yes. Custom options automatically update price breakdowns, generate build specifications, and feed directly into cart checkout.',
+      q: 'Does a 3D configurator hurt website performance?',
+      a: 'Not when built correctly. Elipse Studio 3D configurators use Draco-compressed WebGL models, progressive Level of Detail loading, and client-side lazy hydration to achieve Google Lighthouse mobile performance scores of 92 or above while running a full real-time 3D experience.',
     },
     {
-      q: 'Can customers view configured products in Augmented Reality (WebAR)?',
-      a: 'Yes. Our 3D configurators feature built-in WebAR support (Apple Quick Look and Google Scene Viewer) allowing shoppers to view their custom build in their real environment at 1:1 scale without downloading an app.',
-    },
-    {
-      q: 'What 3D and CAD formats can you work with to build a configurator?',
-      a: 'We work with industrial CAD formats (STEP, IGES, SolidWorks, Rhino, DWG) as well as polygonal 3D assets (FBX, OBJ, Blender, glTF/GLB), which we optimize for fast web streaming.',
+      q: 'What is the cost of a 3D product configurator?',
+      a: 'The cost of a 3D product configurator from Elipse Studio depends on the scope, number of variants, and platform integration. Contact elipsestudio.com/contact for a scoped quote based on your specific product catalogue and technical requirements.',
     },
   ],
   'interactive-3d-web-product-configurators': [
     {
-      q: 'What is a 3D web product configurator?',
-      a: 'A WebGL-powered 3D configurator allows users to customize materials, colors, components, and dimensions of a product in real-time within their browser.',
+      q: 'What is a 3D product configurator?',
+      a: 'A 3D product configurator is an interactive web application that lets customers customise a product in real time — changing colours, materials, dimensions, and components — and view the result as a photorealistic 3D model before purchasing. Elipse Studio builds WebGL-based 3D configurators that run directly in the browser with no app download required.',
     },
     {
-      q: 'Which e-commerce platforms can integrate 3D configurators?',
-      a: 'Our configurators seamlessly integrate with Shopify, WooCommerce, Magento, BigCommerce, Salesforce Commerce Cloud, and custom headless web stacks.',
+      q: 'How long does it take to build a 3D product configurator?',
+      a: 'A standard 3D product configurator built by Elipse Studio takes 6 to 12 weeks from brief to launch, depending on the number of product variants, platform integration complexity, and asset preparation. Enterprise configurators with multiple product families typically require 12 to 20 weeks.',
     },
     {
-      q: 'Does it work smoothly on mobile browsers?',
-      a: 'Yes. We utilize Three.js / WebGL optimization techniques to guarantee high FPS performance and instant loading across iOS Safari and Android Chrome.',
+      q: 'Can a 3D configurator integrate with Shopify or WooCommerce?',
+      a: 'Yes. Elipse Studio builds 3D configurators that integrate natively with Shopify Storefront API, WooCommerce, BigCommerce, and headless commerce platforms. Configurator selections pass directly into the cart as line item properties, enabling seamless checkout and order fulfilment without manual quoting.',
     },
     {
-      q: 'Can configurators calculate prices dynamically?',
-      a: 'Yes. Custom options automatically update price breakdowns, generate build specifications, and feed directly into cart checkout.',
+      q: 'Does a 3D configurator hurt website performance?',
+      a: 'Not when built correctly. Elipse Studio 3D configurators use Draco-compressed WebGL models, progressive Level of Detail loading, and client-side lazy hydration to achieve Google Lighthouse mobile performance scores of 92 or above while running a full real-time 3D experience.',
+    },
+    {
+      q: 'What is the cost of a 3D product configurator?',
+      a: 'The cost of a 3D product configurator from Elipse Studio depends on the scope, number of variants, and platform integration. Contact elipsestudio.com/contact for a scoped quote based on your specific product catalogue and technical requirements.',
     },
   ],
   'interactive-web-experiences': [
@@ -280,3 +272,22 @@
     },
   ],
 };
+
+export const HOMEPAGE_FAQS = [
+  {
+    q: 'What does Elipse Studio do?',
+    a: 'Elipse Studio is a 3D visualisation and immersive technology studio that builds real-time 3D product configurators, architectural visualisations, interactive virtual tours, and AR/VR experiences for enterprise brands globally.',
+  },
+  {
+    q: 'What industries does Elipse Studio serve?',
+    a: 'Elipse Studio serves retail, furniture, automotive, real estate, architecture, events, and industrial sectors. Clients include KIA, Lahore Zoo, and enterprise brands across the UK, Australia, USA, Singapore, and the Middle East.',
+  },
+  {
+    q: 'Where is Elipse Studio based?',
+    a: 'Elipse Studio is a remote-first digital studio with a global client base spanning the UK, Australia, USA, Singapore, and the Middle East. The founding team is led by Bilal Lania.',
+  },
+  {
+    q: 'How do I start a project with Elipse Studio?',
+    a: 'You can start a project with Elipse Studio by visiting elipsestudio.com/contact and submitting a project brief. The team responds within 24 hours to schedule a discovery call.',
+  },
+];

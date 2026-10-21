@@ -1,6 +1,6 @@
 export const PROJECT_VALUE_PROPOSITIONS = {
   'volvo-configurator':
-    'Real-time WebGL steering wheel configurator for Volvo — sub-2MB, 60fps, Shopify-integrated with 34% conversion uplift.',
+    'Unreal Engine 5 Pixel Streaming configurator for Volvo S90 featuring photorealistic cloud rendering — 34% conversion uplift.',
   'steering-configurator':
     'High-performance WebGL steering wheel customizer with dynamic materials, real-time lighting, and sub-second load times.',
   'ahmed-food':

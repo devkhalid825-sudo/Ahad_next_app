@@ -37,8 +37,7 @@ const redirects = [
   ["/project", "/portfolio"],
   ["/blogs", "/blog"],
   ["/blogs/", "/blog"],
-  // Dead/renamed CMS blog slugs still receiving crawler hits — redirect to
-  // the current post (or the blog hub) instead of serving a noindex 200.
+
   ["/blog/3d-configurators-increase-ecommerce-sales-qualified-leads", "/blog/how-3d-configurators-increase-ecommerce-sales-qualified-leads"],
   ["/blog/does-animation-pricing-usually-include-scriptwriting", "/blog"],
   ["/blog/How Browser-Based AR Turns Product Pages Into Try-Before-You-Buy Experiences", "/blog/how-browser-based-arturns-product-pages-into-try-before-you-buy-experiences"],
@@ -53,6 +52,21 @@ const redirects = [
   ["/project/seats-configurator", "/project/seat-configurator"],
   ["/project/towels-configurator", "/project/towel-configurator"],
   ["/services/web-configurator-developmented-leads", "/services/3d-product-configurators"],
+  // 404 URL Audit Remediation (Sami's Audit & Directives)
+  ["/project-not-found", "/portfolio"],
+  ["/project-not-found/", "/portfolio"],
+  ["/blog-post-not-found", "/blog"],
+  ["/blog-post-not-found/", "/blog"],
+  ["/web-configurators", "/services/3d-product-configurators"],
+  ["/web-configurators/", "/services/3d-product-configurators"],
+  ["/3d-product-configurators", "/services/3d-product-configurators"],
+  ["/3d-product-configurators/", "/services/3d-product-configurators"],
+  ["/architectural-visualisation", "/services/architectural-visualization"],
+  ["/architectural-visualisation/", "/services/architectural-visualization"],
+  ["/architectural-visualization", "/services/architectural-visualization"],
+  ["/architectural-visualization/", "/services/architectural-visualization"],
+  ["/contacts", "/contact"],
+  ["/contacts/", "/contact"],
 ];
 
 const wildcardRedirects = [

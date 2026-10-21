@@ -6,8 +6,12 @@ import { getReviews } from '@/services/reviewService';
 import { getBlogs } from '@/services/blogService';
 import { getSocialMedia } from '@/services/socialMediaService';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
+import { buildFaqSchema } from '@/lib/seo';
+import { HOMEPAGE_FAQS } from '@/seo/serviceFaqs';
 
 export const revalidate = 0; // No cache — always fetch fresh data from backend
+
+const homepageFaqSchema = buildFaqSchema(HOMEPAGE_FAQS);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -70,7 +74,7 @@ export default async function Page() {
 
   return (
     <>
-      <MultiJsonLd schemas={[schema, breadcrumb]} />
+      <MultiJsonLd schemas={[schema, breadcrumb, homepageFaqSchema].filter(Boolean)} />
       <Home
         initialFeatured={featured}
         initialProjects={projects}
