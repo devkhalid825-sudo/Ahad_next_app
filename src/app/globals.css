@@ -5,6 +5,7 @@
 
 @theme {
   --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
@@ -111,6 +112,7 @@ body {
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-100%);
   }
@@ -1527,16 +1529,19 @@ html.light header.header-scrolled {
 }
 
 @media (max-width: 767px) {
+
   /* On mobile hero, ONLY keep logo and icons white if header is truly over a dark video with text-white */
   html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-logo {
     filter: none !important;
   }
+
   html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) button:not(.site-theme-toggle),
   html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-header-contact-btn {
     background-color: transparent !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
     color: #ffffff !important;
   }
+
   html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) svg {
     color: #ffffff !important;
   }
@@ -1547,6 +1552,7 @@ html.light header.header-scrolled {
   html.light header.header-scrolled .site-logo {
     filter: invert(1) brightness(0.15) !important;
   }
+
   html.light header.bg-white button,
   html.light header.text-black button,
   html.light header.header-scrolled button,
@@ -1555,15 +1561,18 @@ html.light header.header-scrolled {
     border-color: rgba(0, 0, 0, 0.25) !important;
     color: #000000 !important;
   }
+
   html.light header.bg-white svg,
   html.light header.text-black svg,
   html.light header.header-scrolled svg {
     color: #000000 !important;
   }
+
   /* When menu is open: keep logo and controls crisp white against dark drawer */
   html.light header.header-menu-open .site-logo {
     filter: none !important;
   }
+
   html.light header.header-menu-open button,
   html.light header.header-menu-open svg {
     color: #ffffff !important;
@@ -1581,29 +1590,35 @@ html.light .desktop-hero-section {
   background-color: #ffffff !important;
   background-image: none !important;
 }
+
 html.light .desktop-hero-center-card {
   box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.12), 0 0 1px 1px rgba(0, 0, 0, 0.05) !important;
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
+
 html.light .desktop-hero-side-card {
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08) !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
+
 html.light .desktop-hero-arrow {
   color: #0f172a !important;
   filter: none !important;
   drop-shadow: none !important;
 }
+
 /* When unscrolled over a dark hero (header.text-white), keep logo, buttons, and icons crisp white on all screen sizes */
 html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-logo {
   filter: none !important;
 }
+
 html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) button:not(.site-theme-toggle),
 html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) .site-header-contact-btn {
   background-color: transparent !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
   color: #ffffff !important;
 }
+
 html.light header.text-white:not(.bg-white):not(.header-scrolled):not(.header-menu-open) svg {
   color: #ffffff !important;
 }
@@ -1642,48 +1657,56 @@ html.light header.header-scrolled svg {
   transition: all 0.3s ease !important;
 }
 
-/* On dark surface (dark hero or Night Mode): translucent glass + crisp white */
+/* Always maintain solid dark background, crisp white border, and pure white icon */
+.site-theme-toggle,
+html.light .site-theme-toggle,
+html.dark .site-theme-toggle,
 .site-theme-toggle.theme-toggle-dark,
-html.light .site-theme-toggle.theme-toggle-dark,
-html.dark .site-theme-toggle.theme-toggle-dark {
-  background-color: rgba(255, 255, 255, 0.08) !important;
+.site-theme-toggle.theme-toggle-light {
+  background-color: #121212 !important;
   border-color: rgba(255, 255, 255, 0.25) !important;
   color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.site-theme-toggle.theme-toggle-dark:hover,
-html.light .site-theme-toggle.theme-toggle-dark:hover,
-html.dark .site-theme-toggle.theme-toggle-dark:hover {
-  background-color: rgba(255, 255, 255, 0.16) !important;
+.site-theme-toggle:hover,
+html.light .site-theme-toggle:hover,
+html.dark .site-theme-toggle:hover {
+  background-color: #1e1e1e !important;
   border-color: rgba(255, 255, 255, 0.6) !important;
 }
 
-.site-theme-toggle.theme-toggle-dark svg,
-html.light .site-theme-toggle.theme-toggle-dark svg,
-html.dark .site-theme-toggle.theme-toggle-dark svg {
+.site-theme-toggle svg,
+html.light .site-theme-toggle svg,
+html.dark .site-theme-toggle svg,
+html.light header .site-theme-toggle svg,
+html.dark header .site-theme-toggle svg,
+html.light header.header-scrolled .site-theme-toggle svg,
+html.dark header.header-scrolled .site-theme-toggle svg {
   color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
-/* On light surface (scrolled in Day Mode): subtle dark glass + crisp black */
-.site-theme-toggle.theme-toggle-light,
-html.light .site-theme-toggle.theme-toggle-light,
-html.dark .site-theme-toggle.theme-toggle-light {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  border-color: rgba(0, 0, 0, 0.2) !important;
-  color: #000000 !important;
+.site-theme-toggle svg circle,
+html.light .site-theme-toggle svg circle,
+html.dark .site-theme-toggle svg circle {
+  fill: #ffffff !important;
+  stroke: none !important;
 }
 
-.site-theme-toggle.theme-toggle-light:hover,
-html.light .site-theme-toggle.theme-toggle-light:hover,
-html.dark .site-theme-toggle.theme-toggle-light:hover {
-  background-color: rgba(0, 0, 0, 0.1) !important;
-  border-color: rgba(0, 0, 0, 0.6) !important;
+.site-theme-toggle svg line,
+html.light .site-theme-toggle svg line,
+html.dark .site-theme-toggle svg line {
+  stroke: #ffffff !important;
 }
 
-.site-theme-toggle.theme-toggle-light svg,
-html.light .site-theme-toggle.theme-toggle-light svg,
-html.dark .site-theme-toggle.theme-toggle-light svg {
-  color: #000000 !important;
+.site-theme-toggle svg path,
+html.light .site-theme-toggle svg path,
+html.dark .site-theme-toggle svg path {
+  fill: #ffffff !important;
 }
 
 /* Ensure footer social section stays crisp white on dark blue background */
@@ -1712,4 +1735,3 @@ html.light .site-main-footer .footer-social-item:hover {
 [data-article="hardcoded"] .site-theme-toggle {
   display: none !important;
 }
-

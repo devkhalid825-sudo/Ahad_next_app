@@ -23,7 +23,9 @@ import kiaRaw from '../../assets/About-page/kia.webp';
 import sharkRaw from '../../assets/About-page/shark.webp';
 import marineRaw from '../../assets/About-page/marine.webp';
 import timBarthRaw from '../../assets/About-page/tim-barth.webp';
+import furnitureRaw from '../../assets/ElipseImages/blogs/alnoor.webp';
 
+const furnitureImg = getImgSrc(furnitureRaw);
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);
 const vrHero = getImgSrc(vrHeroRaw);
@@ -97,6 +99,15 @@ const News = ({ initialBlogs = null }) => {
   }, []);
 
   const staticPosts = [
+    {
+      id: 32,
+      title: '3D Product Configurators for Australian E-Commerce Brands (2026 Guide)',
+      image: kiaImg,
+      date: 'OCTOBER 21, 2026',
+      category: '3D Configurators AU',
+      readTime: '9 min read',
+      url: '/blog/3d-product-configurator-australia-2026',
+    },
     {
       id: 31,
       title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide)',

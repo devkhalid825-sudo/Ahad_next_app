@@ -35,9 +35,25 @@ const staticArticles = {
   'interactive-3d-vs-cgi-production-pipeline-2026': dynamic(() => import('@/components/articles/Interactive3dVsCgiArticle')),
   '3d-architectural-visualisation-uk-property-developers-guide': dynamic(() => import('@/components/articles/UkArchVizArticle')),
   'ar-product-visualization-ecommerce-brands-2026-guide': dynamic(() => import('@/components/articles/ArProductVisualizationArticle')),
+  '3d-product-configurator-australia-2026': dynamic(() => import('@/components/articles/AuProductConfiguratorArticle')),
 };
 
 const staticArticleMetadata = {
+  '3d-product-configurator-australia-2026': {
+    title: '3D Product Configurators for Australian E-Commerce Brands (2026 Guide) | Elipse Studio',
+    description: 'How interactive WebGL 3D product configurators and WebAR are lifting conversions by 40% and reducing return rates across Australian retail, furniture, building materials, and Shopify Plus stores.',
+    keywords: [
+      '3d product configurator australia',
+      'interactive product configurator au',
+      'webgl product configurator shopify australia',
+      'configure product online australia',
+      '3d configurator ecommerce au',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/3d-product-configurator-australia-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/kia.webp`,
+  },
   'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': {
     title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide) | Elipse Studio',
     description: 'Your SolidWorks assembly is 1.2GB with 14 million polygons. Your mobile buyer\'s browser has 150MB of VRAM. This is the exact 4-step pipeline we use to bridge that gap — polygon decimation, normal baking, PBR channel packing, and Draco/KTX2 compression — with real before/after benchmarks.',
@@ -271,7 +287,8 @@ function staticArticleSchemas(slugStr, meta) {
   const isArProduct = slugStr === 'ar-product-visualization-ecommerce-brands-2026-guide';
   const isCadToWebgl = slugStr === 'cad-to-webgl-enterprise-3d-optimization-pipeline-2026';
   const isAutomotiveConfigurator = slugStr === 'automotive-3d-configurator-dealership-conversion-2026' || slugStr === 'automotive-configurator';
-  const isNewOctober = isInteractive3d || isUkArchViz || isArProduct || isCadToWebgl || isAutomotiveConfigurator;
+  const isAuProductConfigurator = slugStr === '3d-product-configurator-australia-2026';
+  const isNewOctober = isInteractive3d || isUkArchViz || isArProduct || isCadToWebgl || isAutomotiveConfigurator || isAuProductConfigurator;
 
   const schema = buildArticleSchema({
     title: meta.title,
@@ -431,6 +448,25 @@ function staticArticleSchemas(slugStr, meta) {
     { name: meta.title, url: `/blog/${slugStr}` },
   ]);
 
+  const auProductConfiguratorFaq = buildFaqSchema([
+    {
+      q: 'Why are Australian e-commerce brands adopting 3D configurators in 2026?',
+      a: 'Australian online retail return rates regularly exceed 20% in furniture, homewares, and building products due to flat JPEG expectation mismatch. Real-time 3D configurators and WebAR let buyers customize upholstery, materials, and dimensions and place products in their space at 1:1 scale before buying, cutting returns by 20–30% and lifting conversions up to 40%.',
+    },
+    {
+      q: 'Do Australian shoppers need an app to use WebAR?',
+      a: 'No app download is required. WebAR launches natively directly in Safari on iOS and Chrome on Android without QR codes or third-party apps, giving Australian mobile shoppers instant 1:1 scale spatial validation.',
+    },
+    {
+      q: 'How does a 3D configurator integrate with Shopify Plus and WooCommerce in Australia?',
+      a: 'For Shopify Plus, the configurator embeds via Theme App Extensions and syncs directly with the Shopify Storefront API and cart with AUD pricing and GST-inclusive logic. For WooCommerce, it embeds via Gutenberg blocks and connects to Australian gateways like Afterpay, Zip, and eWAY.',
+    },
+    {
+      q: 'How fast can an Australian brand add new seasonal variants?',
+      a: 'Using Elipse Studio’s PBR material library pipeline, new colourways, fabric finishes, or seasonal variants can be added within 48 to 72 hours from artwork receipt without rebuilding the 3D model or re-commissioning studio photography.',
+    },
+  ]);
+
   let extraSchemas = [];
   if (isLeap) extraSchemas = [leapFaq, authorSchema];
   if (isWebGLVsUnreal) extraSchemas = [webglUnrealFaq, authorSchema];
@@ -439,6 +475,7 @@ function staticArticleSchemas(slugStr, meta) {
   if (isArProduct) extraSchemas = [arProductFaq, authorSchema];
   if (isCadToWebgl) extraSchemas = [cadToWebglFaq, authorSchema];
   if (isAutomotiveConfigurator) extraSchemas = [automotiveConfiguratorFaq, authorSchema];
+  if (isAuProductConfigurator) extraSchemas = [auProductConfiguratorFaq, authorSchema];
 
   return [schema, breadcrumb, ...extraSchemas].filter(Boolean);
 }
@@ -495,7 +532,7 @@ export async function generateMetadata({ params }) {
     return buildMetadata({
       title: meta.title,
       description: meta.description,
-      canonical: `${SITE_URL}/blog/${slugStr}`,
+      canonical: meta.canonical || `${SITE_URL}/blog/${slugStr}`,
       ogImage: meta.ogImage,
       keywords: meta.keywords,
       type: 'article',

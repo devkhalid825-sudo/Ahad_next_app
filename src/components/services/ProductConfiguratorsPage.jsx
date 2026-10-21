@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import ConfiguratorHeader from '../layouts/ConfiguratorHeader';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
@@ -40,6 +41,7 @@ const CONFIGURATOR_BUILDS = [
     image: kiaImg,
     tech: 'Unreal Engine · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Kia/',
+    projectPath: '/project/kia-configurator',
     tags: ['Automotive', 'Car'],
   },
   {
@@ -49,6 +51,7 @@ const CONFIGURATOR_BUILDS = [
     image: volvoImg,
     tech: 'Unreal Engine · WebGL',
     youtubeLink: 'https://youtu.be/rO1sg3y3TF0?si=9yv7WSm0m5AwqG0p',
+    projectPath: '/project/volvo-configurator',
     tags: ['Car', 'Automotive'],
   },
   {
@@ -58,6 +61,7 @@ const CONFIGURATOR_BUILDS = [
     image: inverexImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://costa-carts.netlify.app/',
+    projectPath: '/project/Costa-cart',
     tags: ['Golf Cart'],
   },
   {
@@ -67,6 +71,7 @@ const CONFIGURATOR_BUILDS = [
     image: sharkImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Zeus-Configurator/',
+    projectPath: '/project/byd-shark-6-configurator',
     tags: ['Car', 'Automotive'],
   },
   {
@@ -76,6 +81,7 @@ const CONFIGURATOR_BUILDS = [
     image: inverxImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Bike-Configurator/',
+    projectPath: '/project/inverex-configurator',
     tags: ['Bike', 'Automotive'],
   },
   {
@@ -85,6 +91,7 @@ const CONFIGURATOR_BUILDS = [
     image: seatImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://seat-cover-configurator.inknalgorithm.com/',
+    projectPath: '/project/seat-configrator',
     tags: ['Seat', 'Automotive'],
   },
   {
@@ -94,7 +101,7 @@ const CONFIGURATOR_BUILDS = [
     image: marineImg,
     tech: 'Unreal 5 · WebGL',
     liveLink: 'https://legacy.elipsestudio.com/Yacht_Configurator/',
-    reelLink: 'https://youtube.com/shorts/YD_TWiIeL5U?si=aXBtfAFGUwsoPVzS',
+    projectPath: '/project/yacht-configurator',
     tags: ['Yacht', 'Automotive'],
   },
   {
@@ -104,6 +111,7 @@ const CONFIGURATOR_BUILDS = [
     image: tshirtImg,
     tech: 'WebGL · Three.js',
     liveLink: 'https://legacy.elipsestudio.com/T-Shirt/',
+    projectPath: '/project/t-shirt-configurator',
     tags: ['Apparel'],
   },
   {
@@ -113,6 +121,7 @@ const CONFIGURATOR_BUILDS = [
     image: capImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://studenterhue.studentlife.dk/studentlife/?package=premium&program=stx',
+    projectPath: '/project/cap-configurator',
     tags: ['Apparel'],
   },
   {
@@ -673,18 +682,18 @@ const ProductConfiguratorsPage = () => {
                       </a>
                     )}
 
-                    {item.reelLink && (
-                      <a
-                        href={item.reelLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {item.projectPath && (
+                      <Link
+                        href={item.projectPath}
+                        onClick={(e) => e.stopPropagation()}
                         className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
                       >
-                        <svg className="w-3.5 h-3.5 text-pink-500 fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        <svg className="w-3.5 h-3.5 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
-                        <span>Watch Reel</span>
-                      </a>
+                        <span>View Project</span>
+                      </Link>
                     )}
 
                     {item.youtubeLink && (

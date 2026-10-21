@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import ProductVizHeader from '../layouts/ProductVizHeader';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
@@ -48,7 +49,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: ahmedJamSpreadImg,
     tech: 'Fluid Dynamics · Redshift · 3D VFX',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/249579553/Ahmed-Foods-Jam-Spread-3D-Product-Advertisement',
+    projectPath: '/project/ahmed-foods',
   },
   {
     title: 'Ahmed Foods Bombay Biryani | CGI Commercial',
@@ -57,7 +58,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: ahmedBiryaniImg,
     tech: 'Food CGI · Particle Dynamics · Redshift',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/250610119/Ahmed-Foods-Bombay-Biryani-CGI-Commercial',
+    projectPath: '/project/ahmed-foods',
   },
   {
     title: 'Club & ball washer | Club Pro',
@@ -66,7 +67,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: clubProImg,
     tech: 'Studio CGI · 3D Product Rendering',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/251145627/Club-ball-washer-Club-Pro',
+    projectPath: '/project/Costa-cart',
   },
   {
     title: 'Inverex Product Visualization',
@@ -75,7 +76,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: inverxImg,
     tech: 'Cinema 4D · Octane Render',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/254405865/Inverex-Product-Visualization',
+    projectPath: '/project/inverex-configurator',
   },
   {
     title: 'Ahmed Foods Crystal Jelly 3D Commercial',
@@ -84,7 +85,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: ahmedFoodsImg,
     tech: 'Fluid Dynamics · Houdini · Redshift',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/251531045/Ahmed-Foods-Crystal-Jelly-3D-Animation',
+    projectPath: '/project/ahmed-foods',
   },
   {
     title: 'Lahore Zoo 3D Anamorphic Animation',
@@ -93,7 +94,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: lahoreZooImg,
     tech: 'Forced Perspective · Unreal 5 · VFX',
     tags: ['Anamorphic Animation'],
-    behanceLink: 'https://www.behance.net/gallery/239269921/Lahore-Zoo-Anamorphic-Animation',
+    projectPath: '/project/lahore-zoo',
   },
   {
     title: 'Tapal | Animation',
@@ -102,7 +103,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: tapalImg,
     tech: 'Liquid Simulation · 3ds Max · V-Ray',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/229323883/Tapal-Animation',
+    projectPath: '/project/tapal-family-mixture',
   },
   {
     title: 'Rooh Afza 3D Anamorphic Billboard',
@@ -111,7 +112,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: roohAfzaImg,
     tech: 'Anamorphic CGI · Fluid Physics',
     tags: ['Anamorphic Animation'],
-    behanceLink: 'https://www.behance.net/gallery/221757889/Rooh-Afza-Bill-Board-Animation',
+    projectPath: '/project/anamorphic-animation',
   },
   {
     title: 'MALKA FOODS',
@@ -120,7 +121,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: malkaImg,
     tech: 'Particle VFX · Maya · Arnold',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/193724187/Malka-Foods-VFX-Animation',
+    projectPath: '/project/malka-foodsssss',
   },
   {
     title: 'Gippro | Animation',
@@ -129,7 +130,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: gipproImg,
     tech: 'CAD Ingestion · Exploded Assembly',
     tags: ['Product Animation'],
-    behanceLink: 'https://www.behance.net/gallery/212949897/Gippro-Animation',
+    projectPath: '/project/gippro-animation',
   },
   {
     title: 'DOGGUO Luxury Pet Accessories CGI',
@@ -138,7 +139,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: dogguoImg,
     tech: 'PBR Textures · Studio CGI',
     tags: [],
-    behanceLink: 'https://www.behance.net/gallery/206167799/DOGGUO-CGI',
+    projectPath: '/project/dogguo',
   },
   {
     title: 'Parco | Animation',
@@ -147,8 +148,9 @@ const PRODUCT_VIZ_BUILDS = [
     image: parcoImg,
     tech: 'Industrial 3D · Motion Graphics',
     tags: ['Motion Graphics', 'Explainer Video'],
-    behanceLink: 'https://www.behance.net/gallery/201090447/Parco-Animation',
+    projectPath: '/project/parcho',
   },
+  /* Temporarily hidden projects:
   {
     title: 'Dhoop Ki Deewar VFX & Title Sequence',
     category: 'Cinematic VFX & Motion Graphics',
@@ -156,7 +158,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: dhoopImg,
     tech: 'Compositing · After Effects · 3D VFX',
     tags: ['VFX', 'Motion Graphics'],
-    behanceLink: 'https://www.behance.net/gallery/154519401/Dhoop-Ki-Deewar-(Motion-Graphics-VFX)',
+    projectPath: '/project/ultrade-2d-animation',
   },
   {
     title: 'GIORDANO COMMERCIAL',
@@ -165,8 +167,9 @@ const PRODUCT_VIZ_BUILDS = [
     image: giordanoImg,
     tech: 'Macro Detailing · Chronograph CGI',
     tags: [],
-    behanceLink: 'https://www.behance.net/gallery/152471537/Giordano-Commercial',
+    projectPath: '/project/hillo-smart-mirror',
   },
+  */
 ];
 
 const PRODUCT_VIZ_TABS = [
@@ -491,7 +494,8 @@ const ProductVisualizationPage = () => {
           {visibleBuilds.map((item, idx) => (
             <div
               key={idx}
-              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60"
+              onClick={() => item.projectPath && router.push(item.projectPath)}
+              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60 cursor-pointer"
             >
               {/* Image Preview Container (16:9 HD Size) */}
               <div className="relative aspect-video overflow-hidden bg-black/40">
@@ -525,18 +529,18 @@ const ProductVisualizationPage = () => {
                   </div>
 
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    {item.behanceLink && (
-                      <a
-                        href={item.behanceLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {item.projectPath && (
+                      <Link
+                        href={item.projectPath}
+                        onClick={(e) => e.stopPropagation()}
                         className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-[#4169E1] hover:bg-[#3158D4] text-white shadow-md hover:shadow-lg hover:shadow-[#4169E1]/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer text-center"
                       >
-                        <svg className="w-3.5 h-3.5 text-white fill-current shrink-0" viewBox="0 0 24 24">
-                          <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.076 0-5.625-3.045-5.625-6.046 0-3.418 1.944-5.954 5.375-5.954 3.737 0 5.099 2.766 4.908 6.136h-7.795c.094 1.797 1.134 3.464 3.271 3.464 1.455 0 2.453-.787 2.871-1.6h2.096zm-7.726-4.5c.083-1.428.983-2.646 2.652-2.646 1.583 0 2.508 1.144 2.585 2.646h-5.237zm-11.456 7.5h-4.544v-16h4.868c2.973 0 5.132 1.411 5.132 4.316 0 1.637-.841 2.915-2.227 3.528 1.761.642 2.771 2.158 2.771 4.148 0 3.208-2.483 4.008-6 4.008zm-2.044-6.877h2.247c1.474 0 2.464-.539 2.464-1.929 0-1.258-.871-1.794-2.246-1.794h-2.465v3.723zm0-5.323h2.122c1.237 0 2.053-.48 2.053-1.639 0-1.121-.77-1.561-1.968-1.561h-2.207v3.2z" />
+                        <svg className="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
-                        <span>View Behance</span>
-                      </a>
+                        <span>View Project</span>
+                      </Link>
                     )}
                   </div>
                 </div>

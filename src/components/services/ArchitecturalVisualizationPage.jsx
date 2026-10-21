@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import ArchVizHeader from '../layouts/ArchVizHeader';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
@@ -35,7 +36,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'Complete exterior architecture and interior living suite CGI for an ultra-modern minimalist villa, accompanied by real-time VR walk simulation.',
     image: villaImg,
     tech: 'Villa CGI · VR Capture',
-    behanceLink: 'https://www.behance.net/gallery/221374735/Modern-Villa-Virtual-Reality',
+    projectPath: '/project/villa',
   },
   {
     title: 'Love Apartment | 3D Visualization & VR Experience',
@@ -44,7 +45,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'High-end interior & exterior 3D visualization and immersive virtual reality experience crafted for modern luxury apartment marketing.',
     image: loveImg,
     tech: 'Interior CGI · VR Experience',
-    behanceLink: 'https://www.behance.net/gallery/254406943/Love-Apartment-3D-Visualization-VR-Experience',
+    projectPath: '/project/love',
   },
   {
     title: 'Zenith By Amber',
@@ -53,7 +54,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'Complete exterior architectural visualization package for a signature luxury high-rise tower, emphasizing structural geometry and urban skyline presence.',
     image: zenithImg,
     tech: 'Tower CGI · Exterior Stills',
-    behanceLink: 'https://www.behance.net/gallery/233866999/Zenith-Visualization',
+    projectPath: '/project/zenith-by-amber',
     youtubeLink: 'https://youtu.be/Vf6C8e-hLXE?si=A0nV1wfUfoXx2cbu',
   },
   {
@@ -63,6 +64,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'A cinematic architectural animation reel showcasing a serene eco-resort development nestled in nature, integrating natural sunlight and tranquil waterside living.',
     image: khojImg,
     tech: '4K Film · Hospitality',
+    projectPath: '/project/khoj',
     youtubeLink: 'https://youtu.be/ugd5UTGFQ8U?si=76n7Bg-7sI1JFzEl',
   },
   {
@@ -72,7 +74,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'Interactive real-time property walkthrough built in Unreal Engine. Allows prospective buyers to explore interiors with dynamic lighting and interactive fixtures.',
     image: timBarthImg,
     tech: 'Unreal Engine 5 · Lumen GI',
-    behanceLink: 'https://www.behance.net/gallery/240770789/Interactive-Virtual-Tour-Unreal-Engine',
+    projectPath: '/project/tim-barth',
     youtubeLink: 'https://youtu.be/aXGkn51OToA?si=nBWPTScOYEsyamZr',
   },
   {
@@ -91,7 +93,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'Immersive VR showcase for luxury off-plan penthouses. Allows international buyers to walk through bedrooms, balconies, and living areas with real-scale spatial perception.',
     image: penthouseImg,
     tech: 'Meta Quest VR · Off-Plan Sales',
-    behanceLink: 'https://www.behance.net/gallery/254721427/VR-Apartment-Walkthrough',
+    projectPath: '/project/penthouse-vr-walkthrough',
   },
   {
     title: 'Classic Villa | VR & 3D Visualization',
@@ -100,7 +102,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'Intricate classical stone detailing, grand porticos, symmetrical colonnades, and opulent European estate rendering for private development marketing.',
     image: classicVillaImg,
     tech: 'Neoclassical · Estate CGI',
-    behanceLink: 'https://www.behance.net/gallery/220332665/Classic-Villa-Visualization',
+    projectPath: '/project/villa',
   },
 ];
 
@@ -113,9 +115,9 @@ const ARCHVIZ_TABS = [
   { id: '3d-viz', label: '3D Visualization' },
 ];
 
-// Archviz Capabilities Cards
+
 const CAPABILITIES = [
-  // Row 1: Interactive & Immersive Sales Technology
+
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,7 +160,7 @@ const CAPABILITIES = [
       'Realistic lifestyle integration (animated people, vehicles, landscaping)',
     ],
   },
-  // Row 2: Photoreal Marketing & Visual Assets
+
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -393,9 +395,6 @@ const ArchitecturalVisualizationPage = () => {
         </div>
       </section>
 
-      {/* ======================================================== */}
-      {/* 2. RECENT ARCHVIZ BUILDS (MAIN SHOWCASE GALLERY)         */}
-      {/* ======================================================== */}
       <section
         className="w-full px-4 sm:px-6 md:px-8 py-16 sm:py-24 border-b border-white/10 bg-black"
         id="archviz-gallery"
@@ -425,11 +424,10 @@ const ArchitecturalVisualizationPage = () => {
                     setVisibleCount(6);
                   }}
                   aria-pressed={isActive}
-                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
-                      : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
-                  }`}
+                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${isActive
+                    ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
+                    : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -440,11 +438,18 @@ const ArchitecturalVisualizationPage = () => {
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mt-10 sm:mt-12">
           {visibleBuilds.map((item, idx) => {
-            const primaryLink = item.behanceLink || item.liveLink || item.driveLink || item.youtubeLink;
+            const primaryLink = item.projectPath || item.liveLink || item.driveLink || item.youtubeLink;
             return (
               <div
                 key={idx}
-                onClick={() => primaryLink && window.open(primaryLink, '_blank', 'noopener,noreferrer')}
+                onClick={() => {
+                  if (!primaryLink) return;
+                  if (primaryLink.startsWith('http')) {
+                    window.open(primaryLink, '_blank', 'noopener,noreferrer');
+                  } else {
+                    router.push(primaryLink);
+                  }
+                }}
                 className="w-full md:w-[calc(50%-1rem)] lg:w-[calc((100%-4rem)/3)] group relative rounded-2xl overflow-hidden border transition-all duration-500 hover:shadow-[0_12px_40px_rgba(65,105,225,0.18)] flex flex-col justify-between bg-[#0E0E10] border-white/10 hover:border-[#4169E1]/60 cursor-pointer"
               >
                 {/* Image Preview Container (16:9 HD Size) */}
@@ -518,20 +523,7 @@ const ArchitecturalVisualizationPage = () => {
                         </a>
                       )}
 
-                      {item.reelLink && (
-                        <a
-                          href={item.reelLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
-                        >
-                          <svg className="w-3.5 h-3.5 text-pink-500 fill-current shrink-0" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                          </svg>
-                          <span>Watch Reel</span>
-                        </a>
-                      )}
+
 
                       {item.driveLink && (
                         <a
@@ -548,19 +540,18 @@ const ArchitecturalVisualizationPage = () => {
                         </a>
                       )}
 
-                      {item.behanceLink && (
-                        <a
-                          href={item.behanceLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                      {item.projectPath && (
+                        <Link
+                          href={item.projectPath}
                           onClick={(e) => e.stopPropagation()}
                           className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold border transition-all duration-300 hover:scale-[1.02] cursor-pointer text-center bg-white/5 hover:bg-white/10 border-white/15 hover:border-white/30 text-white"
                         >
-                          <svg className="w-3.5 h-3.5 text-[#4169E1] fill-current shrink-0" viewBox="0 0 24 24">
-                            <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.076 0-5.625-3.045-5.625-6.046 0-3.418 1.944-5.954 5.375-5.954 3.737 0 5.099 2.766 4.908 6.136h-7.795c.094 1.797 1.134 3.464 3.271 3.464 1.455 0 2.453-.787 2.871-1.6h2.096zm-7.726-4.5c.083-1.428.983-2.646 2.652-2.646 1.583 0 2.508 1.144 2.585 2.646h-5.237zm-11.456 7.5h-4.544v-16h4.868c2.973 0 5.132 1.411 5.132 4.316 0 1.637-.841 2.915-2.227 3.528 1.761.642 2.771 2.158 2.771 4.148 0 3.208-2.483 4.008-6 4.008zm-2.044-6.877h2.247c1.474 0 2.464-.539 2.464-1.929 0-1.258-.871-1.794-2.246-1.794h-2.465v3.723zm0-5.323h2.122c1.237 0 2.053-.48 2.053-1.639 0-1.121-.77-1.561-1.968-1.561h-2.207v3.2z" />
+                          <svg className="w-3.5 h-3.5 text-[#4169E1] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                           </svg>
-                          <span>View Behance</span>
-                        </a>
+                          <span>View Project</span>
+                        </Link>
                       )}
 
                       {item.youtubeLink && (

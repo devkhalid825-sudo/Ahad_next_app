@@ -75,6 +75,15 @@ const staticImages = {
 
 const staticPosts = [
     {
+        id: 'static-au-product-configurator-2026',
+        title: '3D Product Configurators for Australian E-Commerce Brands: 2026 AU Market Guide',
+        excerpt: 'How interactive WebGL 3D product configurators and WebAR are lifting conversions by 40% and reducing return rates across Australian retail, furniture, building materials, and Shopify Plus stores.',
+        image: kia,
+        date: 'OCTOBER 21, 2026',
+        category: '3D Configurators AU',
+        url: '/blog/3d-product-configurator-australia-2026',
+    },
+    {
         id: 'static-cad-to-webgl-2026',
         title: 'CAD to WebGL: How Enterprise Brands Convert Heavy Engineering Files into Sub-2MB Interactive 3D Web Experiences (2026 Guide)',
         excerpt: 'Your SolidWorks assembly is 1.2GB with 14 million polygons. Your mobile buyer\'s browser has 150MB of VRAM. This is the exact 4-step pipeline we use to bridge that gap — polygon decimation, normal baking, PBR channel packing, and Draco/KTX2 compression — with real before/after benchmarks.',
