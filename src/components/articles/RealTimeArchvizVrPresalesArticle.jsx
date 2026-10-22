@@ -20,7 +20,7 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import { getImgSrc } from '../../utils/api';
 
-import _modernVilla from '../../assets/About-page/thumbnail.png';
+import _modernVilla from '../../assets/About-page/01.png';
 import _penthouse from '../../assets/About-page/penthouse.webp';
 import _loveImg from '../../assets/About-page/love.webp';
 import _zenithImg from '../../assets/About-page/zenith.webp';
