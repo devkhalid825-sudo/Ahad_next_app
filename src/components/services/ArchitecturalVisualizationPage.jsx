@@ -70,7 +70,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: 'Interactive Virtual Tour & Flythrough',
     category: 'Unreal Engine 5',
-    tags: ['VR', '3D Visualization', 'Cinematics & Flythrough', 'Interactive Virtual Tour'],
+    tags: ['3D Visualization', 'Cinematics & Flythrough', 'Interactive Virtual Tour'],
     desc: 'Interactive real-time property walkthrough built in Unreal Engine. Allows prospective buyers to explore interiors with dynamic lighting and interactive fixtures.',
     image: timBarthImg,
     tech: 'Unreal Engine 5 · Lumen GI',
@@ -80,7 +80,7 @@ const ARCHVIZ_BUILDS = [
   {
     title: '360° Virtual Tour (Kumar Residence)',
     category: 'Web 360° Tour',
-    tags: ['360', 'Interactive Virtual Tour'],
+    tags: ['360', '3D Visualization'],
     desc: 'Full web-based panoramic tour of an architectural modern residence. Enables instant interactive walkthroughs on client phones and tablets without software installation.',
     image: kumarImg,
     tech: 'Web 360° · Luxury Residence',
@@ -102,7 +102,7 @@ const ARCHVIZ_BUILDS = [
     desc: 'Intricate classical stone detailing, grand porticos, symmetrical colonnades, and opulent European estate rendering for private development marketing.',
     image: classicVillaImg,
     tech: 'Neoclassical · Estate CGI',
-    projectPath: '/project/villa',
+    projectPath: '/project/classic-villa',
   },
 ];
 

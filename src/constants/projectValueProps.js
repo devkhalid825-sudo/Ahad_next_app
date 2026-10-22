@@ -19,6 +19,8 @@ export const PROJECT_VALUE_PROPOSITIONS = {
     'Ultra-realistic architectural CGI and cinematic walkthrough film for private luxury villa development.',
   'luxury-villa':
     'Ultra-realistic architectural CGI and cinematic walkthrough film for private luxury villa development.',
+  'classic-villa':
+    'Intricate neoclassical architectural CGI, exterior colonnades, and opulent European estate rendering for luxury development marketing.',
   'malka-food':
     'Commercial 3D packaging renders and dynamic particle CGI animations for Malka Food culinary product lines.',
   'costa-cart':
