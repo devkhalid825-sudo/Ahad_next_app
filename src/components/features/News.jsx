@@ -23,8 +23,10 @@ import kiaRaw from '../../assets/About-page/kia.webp';
 import sharkRaw from '../../assets/About-page/shark.webp';
 import marineRaw from '../../assets/About-page/marine.webp';
 import timBarthRaw from '../../assets/About-page/tim-barth.webp';
+import modernVillaRaw from '../../assets/About-page/modern-villas.webp';
 import furnitureRaw from '../../assets/ElipseImages/blogs/alnoor.webp';
 
+const modernVilla = getImgSrc(modernVillaRaw);
 const furnitureImg = getImgSrc(furnitureRaw);
 const articleImg1 = getImgSrc(articleImg1Raw);
 const articleImg6 = getImgSrc(articleImg6Raw);
@@ -99,6 +101,15 @@ const News = ({ initialBlogs = null }) => {
   }, []);
 
   const staticPosts = [
+    {
+      id: 33,
+      title: 'Real-Time ArchViz & Spatial VR: How Luxury Real Estate Developers Presell Properties 6–12 Months Before Groundbreak',
+      image: modernVilla,
+      date: 'OCTOBER 22, 2026',
+      category: 'Architectural Visualisation',
+      readTime: '10 min read',
+      url: '/blog/real-time-archviz-vr-luxury-real-estate-presales-2026',
+    },
     {
       id: 32,
       title: '3D Product Configurators for Australian E-Commerce Brands (2026 Guide)',

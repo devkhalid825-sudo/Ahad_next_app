@@ -7,6 +7,7 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
+  'real-time-archviz-vr-luxury-real-estate-presales-2026': dynamic(() => import('@/components/articles/RealTimeArchvizVrPresalesArticle')),
   'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': dynamic(() => import('@/components/articles/CadToWebglArticle')),
   'automotive-3d-configurator-dealership-conversion-2026': dynamic(() => import('@/components/articles/Automotive3dConfiguratorArticle')),
   'virtual-showrooms-vs-physical-retail-2026-roi-guide': dynamic(() => import('@/components/articles/VirtualShowroomsRoiArticle')),
@@ -39,6 +40,21 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  'real-time-archviz-vr-luxury-real-estate-presales-2026': {
+    title: 'Real-Time ArchViz & Spatial VR: How Luxury Real Estate Developers Presell Properties 6–12 Months Before Groundbreak | Elipse Studio',
+    description: 'A £4.2M unbuilt villa sold with zero show home visits. How developers use real-time WebGL walkthroughs, WebXR spatial VR, and material configurators to close off-plan sales 6–12 months before groundbreak.',
+    keywords: [
+      'real time archviz web',
+      'architectural visualization vr',
+      'interactive 3d real estate walkthrough',
+      'virtual property showroom',
+      'off plan presales 3d visualization',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/real-time-archviz-vr-luxury-real-estate-presales-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/modern-villas.webp`,
+  },
   '3d-product-configurator-australia-2026': {
     title: '3D Product Configurators for Australian E-Commerce Brands (2026 Guide) | Elipse Studio',
     description: 'How interactive WebGL 3D product configurators and WebAR are lifting conversions by 40% and reducing return rates across Australian retail, furniture, building materials, and Shopify Plus stores.',
@@ -280,6 +296,7 @@ export async function generateStaticParams() {
 const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
 function staticArticleSchemas(slugStr, meta) {
+  const isArchvizPresales = slugStr === 'real-time-archviz-vr-luxury-real-estate-presales-2026';
   const isLeap = slugStr.startsWith('leap-2026');
   const isWebGLVsUnreal = slugStr === 'webgl-vs-unreal-engine-3d-configurator';
   const isInteractive3d = slugStr === 'interactive-3d-vs-cgi-production-pipeline-2026';
@@ -294,8 +311,8 @@ function staticArticleSchemas(slugStr, meta) {
     title: meta.title,
     description: meta.description,
     image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
-    publishedAt: isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
-    updatedAt: isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'),
+    publishedAt: isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12')),
+    updatedAt: isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12')),
     slug: slugStr,
   });
 
@@ -467,7 +484,31 @@ function staticArticleSchemas(slugStr, meta) {
     },
   ]);
 
+  const archvizPresalesFaq = buildFaqSchema([
+    {
+      q: 'How does real-time ArchViz help luxury property developers close presales faster?',
+      a: 'Real-time ArchViz replaces static renders with an interactive WebGL 3D property walkthrough running at 60 FPS in any browser. Buyers can navigate freely, inspect spatial dimensions, evaluate natural sunlight, and customize finishes live — creating emotional conviction and accelerating off-plan reservations by 6 to 12 months before groundbreak.',
+    },
+    {
+      q: 'What technical pipeline enables real-time 3D walkthroughs on mobile browsers without downloads?',
+      a: 'Elipse Studio uses Draco geometric compression to compress 80–120MB BIM files down to 4–8MB, KTX2 textures with Basis Universal transcoding to reduce GPU VRAM by 60–75%, and Level of Detail (LOD) streaming so the first meaningful 3D scene renders in under 3 seconds with zero plugins or downloads.',
+    },
+    {
+      q: 'How does WebXR bridge browser walkthroughs and VR headsets for property sales?',
+      a: 'With the WebXR Device API, one single build serves both screen and VR modes. Prospective buyers worldwide explore directly in Safari or Chrome on laptops and tablets, while sales teams hosting VIP dinners or private presentations in Singapore or London can hand prospects a Meta Quest 3 for instant 1:1 scale spatial immersion with one click.',
+    },
+    {
+      q: 'How much money does a virtual property showroom save compared to a physical show home?',
+      a: 'A physical show apartment typically costs between £300,000 and £600,000 to construct, takes 6 to 9 months, and demonstrates only one unit layout. A real-time virtual showroom replaces this capital expenditure entirely (£0 show home build capex) while showcasing every floor plan and finish combination starting at planning approval.',
+    },
+    {
+      q: 'At what development stage can developers launch a real-time virtual showroom?',
+      a: 'Real-time walkthroughs are built directly from architectural CAD and BIM files (Revit, ArchiCAD, DWG). They can go live within 6 to 8 weeks from receiving planning-stage drawings — opening presales campaigns 8 to 12 months before groundbreak.',
+    },
+  ]);
+
   let extraSchemas = [];
+  if (isArchvizPresales) extraSchemas = [archvizPresalesFaq, authorSchema];
   if (isLeap) extraSchemas = [leapFaq, authorSchema];
   if (isWebGLVsUnreal) extraSchemas = [webglUnrealFaq, authorSchema];
   if (isInteractive3d) extraSchemas = [interactive3dFaq, authorSchema];
