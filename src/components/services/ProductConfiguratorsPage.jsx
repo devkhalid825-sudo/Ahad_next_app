@@ -9,7 +9,6 @@ import Contact from '../features/Contact';
 import ClientReviews from '../features/ClientReviews';
 import { getImgSrc } from '../../utils/api';
 
-// Project Images
 import volvoImgRaw from '../../assets/ElipseImages/hero/volve-configrator.webp';
 import inverexImgRaw from '../../assets/ElipseImages/projects/G-1.webp';
 import seatImgRaw from '../../assets/ElipseImages/projects/seat-2-1.webp';
@@ -133,6 +132,59 @@ const CONFIGURATOR_BUILDS = [
     liveLink: 'https://democloth.studentlife.dk/',
     tags: ['Apparel'],
   },
+
+ 
+
+  {
+    title: 'Fruit Juice 3D Configurator',
+    category: 'Product Configurator',
+    desc: 'Interactive 3D product configurator for a fruit juice brand — real-time bottle customization with flavor, label, and packaging options visualized instantly in the browser.',
+    image: 'https://api.elipsestudio.com/media/316',
+    tech: 'PlayCanvas · WebGL',
+    liveLink: 'https://playcanv.as/e/p/sMZ2SI8e/',
+    projectPath: '/project/fruit-configurator',
+    tags: ['Other'],
+  },
+  {
+    title: 'Towel Configurator',
+    category: 'Home & Textile 3D',
+    desc: 'Browser-based interactive 3D towel customizer with real-time color, pattern, and monogram placement. Delivers instant visual feedback for B2B and B2C textile personalization.',
+    image: 'https://api.elipsestudio.com/media/79',
+    tech: 'WebGL · Three.js',
+    liveLink: 'https://inknalgorithm.com/TowelConfigurator/',
+    projectPath: '/project/towel-configurator',
+    tags: ['Apparel'],
+  },
+  {
+    title: 'Deck Configurator',
+    category: 'Home & Outdoor 3D',
+    desc: 'Real-time 3D deck customizer enabling instant switching of decking materials, railing styles, colors, and layout options — built for outdoor living brands and retailers.',
+    image: 'https://api.elipsestudio.com/media/62',
+    tech: 'WebGL · PlayCanvas',
+    liveLink: 'https://legacy.elipsestudio.com/Deck_Configurator/',
+    projectPath: '/project/deck-configurator',
+    tags: ['Other'],
+  },
+  {
+    title: 'BMW Steering Wheel Configurator',
+    category: 'Automotive Interior 3D',
+    desc: 'Precision 2D/3D automotive steering wheel customizer with real-time material swaps, stitch pattern selection, and trim options for premium BMW aftermarket personalization.',
+    image: 'https://api.elipsestudio.com/media/164',
+    tech: 'WebGL · 2D/3D Hybrid',
+    liveLink: 'https://elipsestudio.com/Steering_Configurator/',
+    projectPath: '/project/steering-configurator',
+    tags: ['Automotive', 'Car'],
+  },
+  {
+    title: 'Meta Tour Configurator',
+    category: 'Web Experience',
+    desc: 'Immersive web-based meta tour experience combining interactive 3D navigation with spatial configurator elements for engaging product and space exploration.',
+    image: 'https://api.elipsestudio.com/media/154',
+    tech: 'WebGL · Interactive Web',
+    liveLink: 'https://elipsestudio.com/Metatour/',
+    projectPath: '/project/meta-tour',
+    tags: ['Other'],
+  },
 ];
 
 const CONFIGURATOR_TABS = [
@@ -144,6 +196,7 @@ const CONFIGURATOR_TABS = [
   { id: 'apparel', label: 'Apparel' },
   { id: 'bike', label: 'Bike' },
   { id: 'seat', label: 'Seat' },
+  { id: 'other', label: 'Other' },
 ];
 
 // Capabilities Grid
@@ -617,11 +670,10 @@ const ProductConfiguratorsPage = () => {
                     setVisibleCount(6);
                   }}
                   aria-pressed={isActive}
-                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
-                      : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
-                  }`}
+                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${isActive
+                    ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
+                    : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
+                    }`}
                 >
                   {tab.label}
                 </button>
