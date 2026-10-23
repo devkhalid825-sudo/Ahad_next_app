@@ -35,7 +35,7 @@ const HtmlEditor = ({ value, onChange, label, minHeight = 300 }) => {
             .callout-badge { display: inline-flex; align-items: center; width: auto; padding: 5px 14px; border-radius: 9999px; background: rgba(65,105,225,0.15); color: #4169E1; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
             .callout-heading { font-size: 22px; font-weight: 700; color: #fff; margin: 0 0 10px 0; }
             .callout-body { font-size: 13.5px; line-height: 1.65; color: #a1a1aa; margin: 0 0 20px 0; max-width: 700px; }
-            .callout-btn { display: inline-flex; align-items: center; gap: 8px; background: #2563EB; color: #fff !important; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 22px; border-radius: 9999px; text-decoration: none; }
+            .callout-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #2563EB; color: #fff !important; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 11px 22px; border-radius: 9999px; text-decoration: none; white-space: nowrap; text-align: center; }
           </style>
         </head>
         <body>${value}</body>

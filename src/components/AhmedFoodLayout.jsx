@@ -1256,7 +1256,9 @@ const AhmedFoodLayout = ({
         const bodyText = calloutBody !== undefined 
           ? customBody 
           : (isAhmedFood ? 'Eliminate unpredictable live-action food shoots. Send us your campaign brief or product CAD files, and our lead animation director will provide a 3D commercial feasibility breakdown within 24 hours.' : '');
-        const btnText = (calloutButtonText && String(calloutButtonText).trim()) || 'Schedule a 15-Minute Scoping Call';
+        const rawBtnText = (calloutButtonText && String(calloutButtonText).trim()) || 'Schedule a 15-Minute Scoping Call';
+        // Auto-strip any trailing arrow (→, ->, ↗, etc.) so duplicate arrows never happen
+        const btnText = rawBtnText.replace(/[\s\-_]*(?:→|->|↗|&rarr;)\s*$/gi, '').trim();
         const btnUrl = (calloutButtonUrl && String(calloutButtonUrl).trim()) || 'https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting';
 
         // STRICT: If no headline AND no body AND no eyebrow, render ABSOLUTELY NOTHING (zero empty space/margin)
@@ -1265,7 +1267,7 @@ const AhmedFoodLayout = ({
         return (
           <section className={`px-4 sm:px-6 md:px-8 pt-8 md:pt-14 pb-4 md:pb-6 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-black'}`}>
             <div className="w-full max-w-7xl mx-auto">
-              <div className={`p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl border text-left transition-colors duration-300 ${
+              <div className={`p-5 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl border text-left transition-colors duration-300 ${
                 isLight 
                   ? 'bg-[#F9FAFB] border-neutral-200 shadow-sm' 
                   : 'bg-[#141414] border-white/10'
@@ -1293,15 +1295,15 @@ const AhmedFoodLayout = ({
                     {bodyText}
                   </p>
                 )}
-                <div>
+                <div className="w-full sm:w-auto flex justify-start">
                   <a
                     href={btnUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#2563EB] hover:bg-[#1D4ED8] transition-all duration-200 shadow-md hover:shadow-lg no-underline cursor-pointer active:scale-95"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-full text-[11px] xs:text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#2563EB] hover:bg-[#1D4ED8] transition-all duration-200 shadow-md hover:shadow-lg no-underline cursor-pointer active:scale-95 text-center whitespace-nowrap"
                   >
                     <span>{btnText}</span>
-                    <span className="text-sm">→</span>
+                    <span className="text-sm shrink-0">→</span>
                   </a>
                 </div>
               </div>
