@@ -3,11 +3,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiCall, API_BASE_URL, BACKEND_ORIGIN, getYoutubeEmbed } from '../utils/api';
 import { getAdminToken } from '../utils/auth';
-import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiChevronLeft, FiChevronRight, FiMove, FiImage, FiFolder, FiStar } from '@/components/ui/Icons';
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave, FiUpload, FiChevronUp, FiChevronDown, FiChevronLeft, FiChevronRight, FiMove, FiImage, FiFolder, FiStar, FiEye, FiEyeOff } from '@/components/ui/Icons';
 import HtmlEditor from './ui/HtmlEditor';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { isProjectHidden } from '../utils/projectVisibility';
 
 const categories = ['Animation', 'Web', 'Configurator', 'VR', 'AR', 'Architecture', 'Tour 360'];
 
@@ -84,11 +85,21 @@ const emptyForm = {
   galleryCategories: [{ name: '', images: '' }],
   results: [],
   processSteps: [],
+  creditsEyebrow: '',
+  creditsHeading: '',
+  creditsToolsLabel: '',
+  creditsTools: '',
+  creditsAgency: '',
+  faqHeading: '',
+  faqItems: [],
+  targetKeywords: '',
+  customSchema: '',
   sectionOrder: defaultSectionOrder,
   videoTabs: [{ label: '', url: '' }],
   ctaUrl: '', ctaText: '',
   heroVideo: '', videoUrl: '',
   featured: false,
+  hidden: false,
 };
 
 const SectionCard = ({ icon, title, children }) => (
@@ -103,14 +114,29 @@ const SectionCard = ({ icon, title, children }) => (
   </div>
 );
 
-const SortableCaseStudyItem = ({ cs, onEdit, onDelete, onMoveUp, onMoveDown, onToggleFeatured, isFirst, isLast, isTop }) => {
+const SortableCaseStudyItem = ({ cs, onEdit, onDelete, onMoveUp, onMoveDown, onToggleFeatured, onToggleHide, isFirst, isLast, isTop }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: cs.id });
-  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1, zIndex: isDragging ? 10 : 1, position: 'relative' };
+  const hidden = isProjectHidden(cs);
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : hidden ? 0.6 : 1,
+    zIndex: isDragging ? 10 : 1,
+    position: 'relative'
+  };
   const thumbSrc = isTop
     ? resolvePreviewUrl(cs.largeBanner)
     : resolvePreviewUrl(cs.smallBanner);
   return (
-    <div ref={setNodeRef} style={style} className={`bg-[#111] border border-[#222] p-3 md:p-5 rounded-xl hover:border-[#4169E1]/40 transition-all flex items-center gap-2 md:gap-4 group ${isDragging ? 'shadow-[0_0_30px_rgba(65,105,225,0.15)] border-[#4169E1]/50' : ''}`}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`border p-3 md:p-5 rounded-xl transition-all flex items-center gap-2 md:gap-4 group ${
+        hidden
+          ? 'bg-[#141414] border-amber-900/40 hover:border-amber-700/60'
+          : 'bg-[#111] border-[#222] hover:border-[#4169E1]/40'
+      } ${isDragging ? 'shadow-[0_0_30px_rgba(65,105,225,0.15)] border-[#4169E1]/50' : ''}`}
+    >
       <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing p-1 md:p-1.5 text-[#555] hover:text-[#4169E1] transition-colors shrink-0"><FiMove className="text-sm md:text-lg" /></div>
       <div className="w-10 h-10 md:w-14 md:h-14 rounded-lg overflow-hidden bg-[#1A1A1A] shrink-0 border border-[#333] relative">
         {thumbSrc ? <img src={thumbSrc} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#555]"><FiImage size={18} /></div>}
@@ -119,6 +145,11 @@ const SortableCaseStudyItem = ({ cs, onEdit, onDelete, onMoveUp, onMoveDown, onT
       <div className="flex-1 min-w-0">
         <h4 className="text-xs md:text-sm font-bold tracking-tight text-[#F2F0EB] truncate flex items-center gap-2">
           {cs.title}
+          {hidden && (
+            <span className="inline-block px-1.5 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[6px] md:text-[7px] font-bold uppercase tracking-[0.15em] rounded-full leading-none">
+              Hidden
+            </span>
+          )}
           {cs.featured && <span className="inline-block px-1.5 py-0.5 bg-[#4169E1]/20 text-[#4169E1] text-[6px] md:text-[7px] font-bold uppercase tracking-[0.15em] rounded-full leading-none">Featured</span>}
         </h4>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[6px] md:text-[8px] text-[#888] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] mt-0.5 md:mt-1">
@@ -132,6 +163,15 @@ const SortableCaseStudyItem = ({ cs, onEdit, onDelete, onMoveUp, onMoveDown, onT
         <button onClick={() => onMoveDown(cs.id)} disabled={isLast} className="p-1 md:p-1.5 bg-[#1A1A1A] text-[#555] hover:text-[#4169E1] rounded-lg transition-all disabled:opacity-20 disabled:cursor-not-allowed"><FiChevronDown className="text-[10px] md:text-xs" /></button>
       </div>
       <div className="flex items-center gap-1 md:gap-2">
+        <button
+          onClick={() => onToggleHide(cs)}
+          className={`p-1.5 md:p-2.5 bg-[#1A1A1A] rounded-lg transition-all ${
+            hidden ? 'text-amber-400 hover:text-amber-300' : 'text-[#555] hover:text-[#4169E1]'
+          }`}
+          title={hidden ? 'Unhide case study (make visible)' : 'Hide case study from website'}
+        >
+          {hidden ? <FiEyeOff className="text-[10px] md:text-sm" /> : <FiEye className="text-[10px] md:text-sm" />}
+        </button>
         <button onClick={() => onToggleFeatured(cs)} className={`p-1.5 md:p-2.5 bg-[#1A1A1A] rounded-lg transition-all ${cs.featured ? 'text-yellow-400 hover:text-yellow-300' : 'text-[#555] hover:text-[#4169E1]'}`} title={cs.featured ? 'Unmark featured' : 'Mark as featured'}><FiStar className="text-[10px] md:text-sm" /></button>
         <button onClick={() => onEdit(cs)} className="p-1.5 md:p-2.5 bg-[#1A1A1A] text-[#555] hover:text-[#4169E1] rounded-lg transition-all"><FiEdit2 className="text-[10px] md:text-sm" /></button>
         <button onClick={() => onDelete(cs.id)} className="p-1.5 md:p-2.5 bg-red-500/10 text-red-500/50 hover:text-red-400 hover:bg-red-500/20 rounded-lg transition-all"><FiTrash2 className="text-[10px] md:text-sm" /></button>
@@ -168,6 +208,42 @@ const CaseStudyDashboard = () => {
     if (status === 200) setCaseStudies(data);
     else setMsg('Failed to load case studies');
     setLoading(false);
+  };
+
+  const handleToggleHide = async (cs) => {
+    const currentHidden = isProjectHidden(cs);
+    const nextHidden = !currentHidden;
+    let existingSections = [];
+    try {
+      existingSections = typeof cs.sections === 'string' ? JSON.parse(cs.sections) : (Array.isArray(cs.sections) ? cs.sections : []);
+    } catch {}
+    const updatedSections = [...existingSections];
+    if (updatedSections.length === 0) {
+      updatedSections.push({ type: 'metadata', hidden: nextHidden });
+    } else {
+      updatedSections[0] = { ...updatedSections[0], hidden: nextHidden };
+    }
+    const payload = {
+      hidden: nextHidden,
+      isHidden: nextHidden,
+      status: nextHidden ? 'hidden' : 'published',
+      sections: JSON.stringify(updatedSections),
+    };
+    const { status } = await apiCall(`/case-studies/${cs.id}`, 'PUT', payload, token);
+    if (status === 200 || status === 201) {
+      setCaseStudies((prev) =>
+        prev.map((item) =>
+          item.id === cs.id
+            ? { ...item, hidden: nextHidden, isHidden: nextHidden, status: nextHidden ? 'hidden' : 'published', sections: JSON.stringify(updatedSections) }
+            : item
+        )
+      );
+      setMsg(nextHidden ? `Case study "${cs.title}" is now hidden.` : `Case study "${cs.title}" is now visible.`);
+      setTimeout(() => setMsg(''), 4000);
+    } else {
+      setMsg('Failed to update visibility');
+      setTimeout(() => setMsg(''), 4000);
+    }
   };
 
   useEffect(() => { fetchCaseStudies(); }, []);
@@ -225,6 +301,7 @@ const CaseStudyDashboard = () => {
       storyBlocks: emptyForm.storyBlocks.map(b => ({ ...b })),
       results: emptyForm.results.map(r => ({ ...r })),
       processSteps: emptyForm.processSteps.map(p => ({ ...p })),
+      faqItems: [],
       videoTabs: [{ label: '', url: '' }],
       sectionOrder: [...defaultSectionOrder],
     });
@@ -303,6 +380,8 @@ const CaseStudyDashboard = () => {
       });
     }
 
+    const firstSec = Array.isArray(parsedSections) && parsedSections.length > 0 ? parsedSections[0] : {};
+
     setForm({
       title: cs.title || '', metaTitle: cs.metaTitle || '', metaDescription: cs.metaDescription || '',
       slug: cs.slug || '', largeBanner: cs.largeBanner || cs.heroImage || '', smallBanner: cs.smallBanner || '',
@@ -311,6 +390,15 @@ const CaseStudyDashboard = () => {
       heroVideo: cs.heroVideo || cs.videoUrl || '', videoUrl: cs.videoUrl || cs.heroVideo || '',
       overviewHeading: cs.overviewHeading || '', overviewText: cs.overviewText || cs.overview || '',
       challengeHeading: cs.challengeHeading || '', challengeText: cs.challengeText || cs.challenge || '',
+      creditsEyebrow: firstSec.creditsEyebrow !== undefined ? firstSec.creditsEyebrow : (cs.creditsEyebrow || ''),
+      creditsHeading: firstSec.creditsHeading !== undefined ? firstSec.creditsHeading : (cs.creditsHeading || ''),
+      creditsToolsLabel: firstSec.creditsToolsLabel !== undefined ? firstSec.creditsToolsLabel : (cs.creditsToolsLabel || ''),
+      creditsTools: firstSec.creditsTools !== undefined ? firstSec.creditsTools : (cs.creditsTools || ''),
+      creditsAgency: firstSec.creditsAgency !== undefined ? firstSec.creditsAgency : (cs.creditsAgency || ''),
+      faqHeading: firstSec.faqHeading !== undefined ? firstSec.faqHeading : (cs.faqHeading || ''),
+      faqItems: Array.isArray(firstSec.faqItems) ? firstSec.faqItems : parseJSON(cs.faqItems, []),
+      targetKeywords: firstSec.targetKeywords !== undefined ? firstSec.targetKeywords : (cs.targetKeywords || cs.metaKeywords || ''),
+      customSchema: firstSec.customSchema !== undefined ? firstSec.customSchema : (cs.customSchema || ''),
       storyBlocks,
       galleryThumbnails,
       galleryStills,
@@ -321,6 +409,7 @@ const CaseStudyDashboard = () => {
       videoTabs: parseJSON(cs.videoTabs, [{ label: '', url: '' }]),
       ctaUrl: cs.ctaUrl || '', ctaText: cs.ctaText || '',
       featured: cs.featured || false,
+      hidden: isProjectHidden(cs),
     });
     setSelectedBannerFile(null);
     setSelectedSmallFile(null);
@@ -496,7 +585,19 @@ const CaseStudyDashboard = () => {
         text: b.text || '',
         image: b.image || '',
         position: b.position || (idx % 2 === 0 ? 'left' : 'right'),
-        ...(idx === 0 ? { sectionOrder: form.sectionOrder || defaultSectionOrder } : {}),
+        ...(idx === 0 ? {
+          sectionOrder: form.sectionOrder || defaultSectionOrder,
+          hidden: Boolean(form.hidden),
+          creditsEyebrow: form.creditsEyebrow || '',
+          creditsHeading: form.creditsHeading || '',
+          creditsToolsLabel: form.creditsToolsLabel || '',
+          creditsTools: form.creditsTools || '',
+          creditsAgency: form.creditsAgency || '',
+          faqHeading: form.faqHeading || '',
+          faqItems: form.faqItems || [],
+          targetKeywords: form.targetKeywords || '',
+          customSchema: form.customSchema || '',
+        } : {}),
       }));
     } else {
       finalSections = [{
@@ -507,12 +608,25 @@ const CaseStudyDashboard = () => {
         image: '',
         position: 'left',
         sectionOrder: form.sectionOrder || defaultSectionOrder,
+        hidden: Boolean(form.hidden),
+        creditsEyebrow: form.creditsEyebrow || '',
+        creditsHeading: form.creditsHeading || '',
+        creditsToolsLabel: form.creditsToolsLabel || '',
+        creditsTools: form.creditsTools || '',
+        creditsAgency: form.creditsAgency || '',
+        faqHeading: form.faqHeading || '',
+        faqItems: form.faqItems || [],
+        targetKeywords: form.targetKeywords || '',
+        customSchema: form.customSchema || '',
       }];
     }
 
     const { storyBlocks, galleryThumbnails, galleryStills, sectionOrder, ...formRest } = form;
     const payload = {
       ...formRest,
+      hidden: Boolean(form.hidden),
+      isHidden: Boolean(form.hidden),
+      status: form.hidden ? 'hidden' : 'published',
       largeBanner: largeBannerUrl,
       smallBanner: smallBannerUrl,
       heroImage: largeBannerUrl,
@@ -527,6 +641,16 @@ const CaseStudyDashboard = () => {
       processSteps: JSON.stringify(form.processSteps.filter(p => p.phase || p.title)),
       galleryCategories: JSON.stringify(galleryCategoriesPayload),
       videoTabs: JSON.stringify(form.videoTabs.filter(v => v.label || v.url)),
+      creditsEyebrow: form.creditsEyebrow || '',
+      creditsHeading: form.creditsHeading || '',
+      creditsToolsLabel: form.creditsToolsLabel || '',
+      creditsTools: form.creditsTools || '',
+      creditsAgency: form.creditsAgency || '',
+      faqHeading: form.faqHeading || '',
+      faqItems: JSON.stringify(form.faqItems || []),
+      targetKeywords: form.targetKeywords || '',
+      metaKeywords: form.targetKeywords || '',
+      customSchema: form.customSchema || '',
       ctaUrl: form.ctaUrl || '',
       ctaText: form.ctaText || '',
     };
@@ -676,6 +800,34 @@ const CaseStudyDashboard = () => {
             </div>
 
             <form onSubmit={handleSave} className="p-4 md:p-8 space-y-5">
+              {/* Visibility / Hidden Status */}
+              <div className="bg-[#141414] border border-[#262626] p-4 rounded-xl flex items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2.5 h-2.5 rounded-full ${form.hidden ? 'bg-amber-400' : 'bg-emerald-400'}`} />
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#F2F0EB]">
+                      {form.hidden ? 'Status: Hidden from Website' : 'Status: Published & Visible'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#888] mt-1">
+                    {form.hidden
+                      ? 'This case study is hidden from portfolio feeds, home page, and search index.'
+                      : 'This case study is live and visible to visitors on the website.'}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setForm(f => ({ ...f, hidden: !f.hidden }))}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all border shrink-0 ${
+                    form.hidden
+                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 hover:bg-amber-500/30'
+                      : 'bg-[#1F1F1F] text-[#AAA] border-[#333] hover:text-white hover:border-[#555]'
+                  }`}
+                >
+                  {form.hidden ? 'Hidden (Click to Show)' : 'Visible (Click to Hide)'}
+                </button>
+              </div>
+
               {/* 1. Basic Information */}
               <SectionCard icon={<FiImage />} title="1. Basic Information">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1219,13 +1371,148 @@ const CaseStudyDashboard = () => {
                 <button type="button" onClick={() => addArrayItem('processSteps', { step: String(form.processSteps.length + 1).padStart(2, '0'), phase: '', title: '', desc: '' })} className="text-[#4169E1] text-[8px] uppercase tracking-widest font-bold hover:underline"><FiPlus className="inline mr-1" />Add Step</button>
               </SectionCard>
 
-              {/* 8. Description (HTML) */}
-              <SectionCard icon="📝" title="8. Full Description (HTML Editor)">
+              {/* ===== SECTION 8: FORMAL PROJECT CREDITS ===== */}
+              <SectionCard title="8. Formal Project Credits & Pipeline" icon="🎬">
+                <p className="text-[#888] text-[8px] uppercase tracking-widest -mt-2">
+                  Display a sleek centered card with production eyebrow, title, and tool pill badges on your case study page.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Card Eyebrow Tag</label>
+                    <input
+                      type="text"
+                      value={form.creditsEyebrow || ''}
+                      onChange={(e) => setForm(f => ({ ...f, creditsEyebrow: e.target.value }))}
+                      placeholder="Default: PRODUCTION PIPELINE"
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Section Title</label>
+                    <input
+                      type="text"
+                      value={form.creditsHeading || ''}
+                      onChange={(e) => setForm(f => ({ ...f, creditsHeading: e.target.value }))}
+                      placeholder="Default: Formal Project Credits"
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Tools Sub-Heading Label</label>
+                    <input
+                      type="text"
+                      value={form.creditsToolsLabel || ''}
+                      onChange={(e) => setForm(f => ({ ...f, creditsToolsLabel: e.target.value }))}
+                      placeholder="Default: CORE TOOLS & PIPELINE:"
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Lead Creative Agency (optional)</label>
+                    <input
+                      type="text"
+                      value={form.creditsAgency || ''}
+                      onChange={(e) => setForm(f => ({ ...f, creditsAgency: e.target.value }))}
+                      placeholder="e.g. Digitz"
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Core Tools (comma-separated)</label>
+                  <input
+                    type="text"
+                    value={form.creditsTools || ''}
+                    onChange={(e) => setForm(f => ({ ...f, creditsTools: e.target.value }))}
+                    placeholder="e.g. Autodesk Maya, Redshift, Foundry Nuke, SpeedTree, Blender, Adobe After Effects, AI 8K Upscaling"
+                    className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                  />
+                  {form.creditsTools && (
+                    <div className="mt-2.5 flex flex-wrap gap-1.5 p-2.5 bg-[#0D0D0D] rounded-lg border border-[#222]">
+                      <span className="text-[9px] text-[#666] uppercase tracking-wider mr-1 self-center">Live Badges Preview:</span>
+                      {form.creditsTools.split(',').map((t, idx) => {
+                        const trimmed = t.trim();
+                        if (!trimmed) return null;
+                        return (
+                          <span key={idx} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#4169E1]/20 text-[#60a5fa] border border-[#4169E1]/30">
+                            {trimmed}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </SectionCard>
+
+              {/* ===== SECTION 9: FAQ ===== */}
+              <SectionCard title="9. Frequently Asked Questions (FAQ)" icon="❓">
+                <p className="text-[#888] text-[8px] uppercase tracking-widest -mt-2">
+                  Add project FAQs with question and answer inputs. Renders centered and matching the site layout.
+                </p>
+                <div>
+                  <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">FAQ Section Heading</label>
+                  <input
+                    type="text"
+                    value={form.faqHeading || ''}
+                    onChange={(e) => setForm(f => ({ ...f, faqHeading: e.target.value }))}
+                    placeholder="Default: FAQ"
+                    className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  {(form.faqItems || []).map((faq, i) => (
+                    <div key={i} className="p-3 bg-[#1A1A1A] rounded-xl border border-[#222] space-y-2">
+                      <div className="flex items-center justify-between border-b border-[#26262e] pb-1.5">
+                        <span className="text-[10px] font-bold text-[#4169E1]">Question #{i + 1}</span>
+                        <div className="flex items-center gap-1">
+                          <button type="button" disabled={i === 0} onClick={() => moveArrayItem('faqItems', i, -1)} className="p-1 text-[#666] hover:text-[#4169E1] disabled:opacity-20"><FiChevronUp size={14} /></button>
+                          <button type="button" disabled={i === (form.faqItems || []).length - 1} onClick={() => moveArrayItem('faqItems', i, 1)} className="p-1 text-[#666] hover:text-[#4169E1] disabled:opacity-20"><FiChevronDown size={14} /></button>
+                          <button type="button" onClick={() => removeArrayItem('faqItems', i)} className="p-1 text-red-400 hover:text-red-300" title="Remove question"><FiX size={14} /></button>
+                        </div>
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          value={faq.q || ''}
+                          onChange={(e) => updateArray('faqItems', i, 'q', e.target.value)}
+                          placeholder="Question: e.g. What software and techniques were used to create the Lahore Zoo 3D billboard?"
+                          className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <textarea
+                          value={faq.a || ''}
+                          onChange={(e) => updateArray('faqItems', i, 'a', e.target.value)}
+                          rows={3}
+                          placeholder="Answer: e.g. The production pipeline utilized Autodesk Maya and Redshift for 3D animation..."
+                          className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs resize-none font-light leading-relaxed"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => addArrayItem('faqItems', { q: '', a: '' })}
+                  className="text-[#4169E1] text-[8px] uppercase tracking-widest font-bold hover:underline"
+                >
+                  <FiPlus className="inline mr-1" />Add FAQ Question
+                </button>
+              </SectionCard>
+
+              {/* 10. Description (HTML) */}
+              <SectionCard icon="📝" title="10. Full Description (HTML Editor)">
                 <HtmlEditor value={form.content} onChange={(val) => setForm(f => ({ ...f, content: val }))} minHeight={200} />
               </SectionCard>
 
-              {/* 9. Featured Switch & SEO */}
-              <SectionCard icon="⭐" title="9. Featured & SEO Settings">
+              {/* 11. Featured Switch & SEO */}
+              <SectionCard icon="⭐" title="11. Featured & SEO Settings">
                 <div className="flex items-center justify-between p-3 bg-[#1A1A1A] rounded-xl border border-[#333] mb-4">
                   <div>
                     <span className="text-xs font-bold text-[#F2F0EB] block">Featured Case Study</span>
@@ -1244,6 +1531,50 @@ const CaseStudyDashboard = () => {
                     <label className="block text-[#888] text-[8px] uppercase tracking-widest mb-2">Meta Description</label>
                     <input type="text" value={form.metaDescription} onChange={(e) => setForm(f => ({ ...f, metaDescription: e.target.value }))} className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-[#F2F0EB] focus:border-[#4169E1] outline-none transition-all text-xs" placeholder="Leave blank to use overview" />
                   </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-[#222]">
+                  <label className="block text-[#888] text-[8px] uppercase tracking-widest mb-1">
+                    Target Keywords (SEO / AEO) <span className="text-[#555]">(comma-separated)</span>
+                  </label>
+                  <p className="text-[#555] text-[8px] mb-2">Used for meta keyword tags, Schema.org Article, and AI discovery.</p>
+                  <input
+                    type="text"
+                    value={form.targetKeywords || ''}
+                    onChange={(e) => setForm(f => ({ ...f, targetKeywords: e.target.value }))}
+                    className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-[#F2F0EB] focus:border-[#4169E1] outline-none transition-all text-xs placeholder:text-[#444]"
+                    placeholder="e.g. Lahore Zoo 3D billboard, anamorphic wildlife animation, naked-eye 3D creature CGI, SpeedTree 3D forest environment, corner LED screen animation, Elipse Studio"
+                  />
+                  {form.targetKeywords && (
+                    <div className="mt-2.5 flex flex-wrap gap-1.5 p-2.5 bg-[#0D0D0D] rounded-lg border border-[#222]">
+                      <span className="text-[9px] text-[#666] uppercase tracking-wider mr-1 self-center">Keywords Preview:</span>
+                      {form.targetKeywords.split(',').map((k, idx) => {
+                        const trimmed = k.trim();
+                        if (!trimmed) return null;
+                        return (
+                          <span key={idx} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#4169E1]/15 text-[#93c5fd] border border-[#4169E1]/30">
+                            #{trimmed}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-[#222]">
+                  <label className="block text-[#888] text-[8px] uppercase tracking-widest mb-1">
+                    Custom JSON-LD Schema <span className="text-[#555]">(Optional — paste &lt;script&gt; or {`{}`} JSON)</span>
+                  </label>
+                  <p className="text-[#555] text-[8px] mb-2">
+                    Paste custom schema (e.g. CreativeWork / Article with contributors, customer, genre). If left blank, the website automatically generates standard Article + Breadcrumb + FAQ schema.
+                  </p>
+                  <textarea
+                    value={form.customSchema || ''}
+                    onChange={(e) => setForm(f => ({ ...f, customSchema: e.target.value }))}
+                    rows={4}
+                    placeholder='{ "@context": "https://schema.org", "@type": "CreativeWork", "name": "...", "creator": { ... }, "contributor": [ ... ] }'
+                    className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-[#F2F0EB] focus:border-[#4169E1] outline-none transition-all text-xs font-mono placeholder:text-[#444] resize-y"
+                  />
                 </div>
               </SectionCard>
 
@@ -1287,6 +1618,7 @@ const CaseStudyDashboard = () => {
                 onEdit={openEditForm}
                 onDelete={handleDelete}
                 onToggleFeatured={handleToggleFeatured}
+                onToggleHide={handleToggleHide}
                 onMoveUp={(id) => moveCaseStudy(id, -1)}
                 onMoveDown={(id) => moveCaseStudy(id, 1)}
               />

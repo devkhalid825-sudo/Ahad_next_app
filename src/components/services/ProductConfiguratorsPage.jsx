@@ -7,7 +7,7 @@ import ConfiguratorHeader from '../layouts/ConfiguratorHeader';
 import Footer from '../layouts/Footer';
 import Contact from '../features/Contact';
 import ClientReviews from '../features/ClientReviews';
-import { getImgSrc } from '../../utils/api';
+import { getImgSrc, apiCall, BACKEND_ORIGIN } from '../../utils/api';
 
 import volvoImgRaw from '../../assets/ElipseImages/hero/volve-configrator.webp';
 import inverexImgRaw from '../../assets/ElipseImages/projects/G-1.webp';
@@ -90,7 +90,7 @@ const CONFIGURATOR_BUILDS = [
     image: seatImg,
     tech: 'PlayCanvas · WebGL',
     liveLink: 'https://seat-cover-configurator.inknalgorithm.com/',
-    projectPath: '/project/seat-configrator',
+    projectPath: '/project/seat-configurator',
     tags: ['Seat', 'Automotive'],
   },
   {
@@ -536,16 +536,58 @@ const ProductConfiguratorsPage = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('all');
   const [visibleCount, setVisibleCount] = useState(6);
+  const [dbProjects, setDbProjects] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    let cancelled = false;
+    apiCall('/projects', 'GET')
+      .then(({ data, status }) => {
+        if (!cancelled && status === 200 && Array.isArray(data)) {
+          setDbProjects(data);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
   }, []);
 
+  const mergedBuilds = useMemo(() => {
+    if (!dbProjects || dbProjects.length === 0) return CONFIGURATOR_BUILDS;
+    return CONFIGURATOR_BUILDS.map((build) => {
+      const match = dbProjects.find((p) => {
+        const pPath = (p.path || '').toLowerCase().replace(/^\/+/, '');
+        const bPath = (build.projectPath || '').toLowerCase().replace(/^\/+/, '');
+        const pSlug = (p.slug || '').toLowerCase();
+        return (
+          pPath === bPath ||
+          (pPath && bPath.endsWith(pPath)) ||
+          (pSlug && bPath.includes(pSlug)) ||
+          (build.title && p.title && p.title.toLowerCase().trim() === build.title.toLowerCase().trim()) ||
+          (bPath.includes('seat') && (pPath.includes('seat') || pSlug.includes('seat') || (p.title && p.title.toLowerCase().includes('seat'))))
+        );
+      });
+      if (match) {
+        const liveImg = match.image || match.heroImage;
+        const resolvedImg = liveImg
+          ? (liveImg.startsWith('http') ? liveImg : `${BACKEND_ORIGIN}${liveImg.startsWith('/') ? '' : '/'}${liveImg}`)
+          : build.image;
+        return {
+          ...build,
+          image: resolvedImg || build.image,
+          title: match.title || build.title,
+          desc: match.description ? match.description.replace(/<[^>]*>/g, '').slice(0, 160) : build.desc,
+          projectPath: match.path || build.projectPath,
+        };
+      }
+      return build;
+    });
+  }, [dbProjects]);
+
   const filteredBuilds = useMemo(() => {
-    if (activeTab === 'all') return CONFIGURATOR_BUILDS;
+    if (activeTab === 'all') return mergedBuilds;
     const label = CONFIGURATOR_TABS.find((t) => t.id === activeTab)?.label;
-    return CONFIGURATOR_BUILDS.filter((item) => item.tags?.includes(label));
-  }, [activeTab]);
+    return mergedBuilds.filter((item) => item.tags?.includes(label));
+  }, [activeTab, mergedBuilds]);
 
   const visibleBuilds = filteredBuilds.slice(0, visibleCount);
 

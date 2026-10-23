@@ -212,6 +212,14 @@ const DynamicProjectView = ({ data, type = 'project' }) => {
       resultsEyebrow={sections[0]?.resultsEyebrow !== undefined ? sections[0].resultsEyebrow : data.resultsEyebrow}
       processHeading={sections[0]?.processHeading !== undefined ? sections[0].processHeading : data.processHeading}
       processEyebrow={sections[0]?.processEyebrow !== undefined ? sections[0].processEyebrow : data.processEyebrow}
+      creditsEyebrow={sections[0]?.creditsEyebrow !== undefined ? sections[0].creditsEyebrow : data.creditsEyebrow}
+      creditsHeading={sections[0]?.creditsHeading !== undefined ? sections[0].creditsHeading : data.creditsHeading}
+      creditsToolsLabel={sections[0]?.creditsToolsLabel !== undefined ? sections[0].creditsToolsLabel : data.creditsToolsLabel}
+      creditsTools={sections[0]?.creditsTools !== undefined ? sections[0].creditsTools : data.creditsTools}
+      creditsAgency={sections[0]?.creditsAgency !== undefined ? sections[0].creditsAgency : data.creditsAgency}
+      faqHeading={sections[0]?.faqHeading !== undefined ? sections[0].faqHeading : data.faqHeading}
+      faqItems={sections[0]?.faqItems !== undefined ? sections[0].faqItems : data.faqItems}
+      targetKeywords={sections[0]?.targetKeywords !== undefined ? sections[0].targetKeywords : (data.targetKeywords || data.metaKeywords)}
     />
   );
 };

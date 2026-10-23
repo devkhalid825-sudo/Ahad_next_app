@@ -9,6 +9,8 @@ import { getProjectValueProposition } from '@/constants/projectValueProps';
 import { useTheme } from '@/components/providers/ThemeProvider';
 
 
+import { isProjectHidden } from '@/utils/projectVisibility';
+
 const PILLAR_TABS = [
   { key: 'all', label: 'All Projects' },
   { key: 'configurator', label: '3D Configurators' },
@@ -105,7 +107,7 @@ const VideoHoverCard = ({ project, isLight }) => {
 
 const mapProjects = (data) =>
   data
-    .filter((p) => p.title !== 'Costa Cart' && p.title !== 'Costa Cart Config' && p.path !== '/project/costa-cart')
+    .filter((p) => p.title !== 'Costa Cart' && p.title !== 'Costa Cart Config' && p.path !== '/project/costa-cart' && !isProjectHidden(p))
     .map((p) => ({
       id: p.id,
       title: p.title,

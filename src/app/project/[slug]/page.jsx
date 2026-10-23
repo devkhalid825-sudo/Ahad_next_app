@@ -48,23 +48,43 @@ function staticProjectSchemas(slug, staticProject) {
   return { description, schemas: [schema, breadcrumb] };
 }
 
+import { buildFaqSchema } from '@/seo/schemas';
+import { isProjectHidden } from '@/utils/projectVisibility';
+
 function apiProjectSchemas(slug, data) {
   const title = data.metaTitle || data.title;
   const uniqueValueProp = getProjectValueProposition({ ...data, slug });
   const rawDesc = data.description ? data.description.replace(/<[^>]*>/g, '') : '';
   const description = data.metaDescription || uniqueValueProp || rawDesc.slice(0, 160);
   const url = `${SITE_URL}${data.path || '/project/' + slug}`;
-  const schema = {
+  
+  let targetKeywords = data.targetKeywords || data.metaKeywords || '';
+  let metaSec = {};
+  if (data.sections) {
+    try {
+      const parsed = typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections;
+      if (Array.isArray(parsed) && parsed[0]) {
+        metaSec = parsed[0];
+        if (!targetKeywords && metaSec.targetKeywords) {
+          targetKeywords = metaSec.targetKeywords;
+        }
+      }
+    } catch {}
+  }
+
+  const defaultSchema = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: title,
     description,
     url,
+    ...(targetKeywords ? { keywords: targetKeywords } : {}),
     creator: {
       '@type': 'Organization',
       name: 'Elipse Studio',
     },
   };
+
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -74,7 +94,35 @@ function apiProjectSchemas(slug, data) {
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   };
-  return { title, description, schemas: [schema, breadcrumb] };
+
+  const schemas = [breadcrumb];
+
+  // Custom Schema support
+  let customParsed = null;
+  const rawCustom = data.customSchema || metaSec.customSchema;
+  if (rawCustom && typeof rawCustom === 'string' && rawCustom.trim().length > 0) {
+    try {
+      const cleaned = rawCustom.replace(/<\/?script[^>]*>/gi, '').trim();
+      customParsed = JSON.parse(cleaned);
+    } catch (e) {
+      console.error('Error parsing customSchema JSON-LD in project page:', e);
+    }
+  }
+
+  if (customParsed) {
+    schemas.push(customParsed);
+  } else {
+    schemas.push(defaultSchema);
+  }
+
+  // Auto FAQ schema
+  const faqItems = metaSec.faqItems || data.faqItems;
+  if (Array.isArray(faqItems) && faqItems.length > 0) {
+    const faqSchema = buildFaqSchema(faqItems);
+    if (faqSchema) schemas.push(faqSchema);
+  }
+
+  return { title, description, targetKeywords, schemas };
 }
 
 export async function generateMetadata({ params }) {
@@ -83,11 +131,14 @@ export async function generateMetadata({ params }) {
 
   const { data } = await getProject(safeSlug);
   if (data && data.title) {
-    const { title, description } = apiProjectSchemas(safeSlug, data);
+    const isHidden = isProjectHidden(data);
+    const { title, description, targetKeywords } = apiProjectSchemas(safeSlug, data);
     return buildMetadata({
       title,
       description,
+      keywords: targetKeywords || undefined,
       canonical: data.path ? (data.path.startsWith('http') ? data.path : `${SITE_URL}${data.path.startsWith('/') ? data.path : '/' + data.path}`) : `${SITE_URL}/project/${slug}`,
+      noIndex: isHidden ? true : undefined,
     });
   }
   const staticProject = projectMap[slug];

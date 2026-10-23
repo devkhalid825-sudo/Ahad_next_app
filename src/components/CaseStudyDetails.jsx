@@ -160,6 +160,14 @@ const CaseStudyDetail = ({ slug, initialData }) => {
         content={cs.content || cs.description || ''}
         results={safeJson(cs.results, [])}
         process={safeJson(cs.processSteps || cs.process, [])}
+        creditsEyebrow={parsedSections[0]?.creditsEyebrow !== undefined ? parsedSections[0].creditsEyebrow : cs.creditsEyebrow}
+        creditsHeading={parsedSections[0]?.creditsHeading !== undefined ? parsedSections[0].creditsHeading : cs.creditsHeading}
+        creditsToolsLabel={parsedSections[0]?.creditsToolsLabel !== undefined ? parsedSections[0].creditsToolsLabel : cs.creditsToolsLabel}
+        creditsTools={parsedSections[0]?.creditsTools !== undefined ? parsedSections[0].creditsTools : cs.creditsTools}
+        creditsAgency={parsedSections[0]?.creditsAgency !== undefined ? parsedSections[0].creditsAgency : cs.creditsAgency}
+        faqHeading={parsedSections[0]?.faqHeading !== undefined ? parsedSections[0].faqHeading : cs.faqHeading}
+        faqItems={parsedSections[0]?.faqItems !== undefined ? parsedSections[0].faqItems : safeJson(cs.faqItems, [])}
+        targetKeywords={parsedSections[0]?.targetKeywords !== undefined ? parsedSections[0].targetKeywords : (cs.targetKeywords || cs.metaKeywords)}
         galleryCategories={otherCats.length > 0 ? otherCats : undefined}
         videoTabs={(safeJson(cs.videoTabs, []) || []).filter(t => t && typeof t.url === 'string' && t.url.trim().length > 0)}
         ctaUrl={cs.ctaUrl || '/contact'}

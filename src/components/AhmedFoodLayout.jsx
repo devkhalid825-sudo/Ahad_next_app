@@ -101,6 +101,14 @@ const AhmedFoodLayout = ({
   resultsEyebrow,
   processHeading,
   processEyebrow,
+  creditsEyebrow,
+  creditsHeading,
+  creditsToolsLabel,
+  creditsTools,
+  creditsAgency,
+  faqHeading,
+  faqItems = [],
+  targetKeywords = '',
   showMidArticleCta = false,
   midArticleCtaComponent = null,
   hideThemeToggle = false,
@@ -260,9 +268,8 @@ const AhmedFoodLayout = ({
         <div
           key={index}
           onClick={() => setLightboxImg(src)}
-          className={`group relative aspect-[16/9] w-full rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-lg shrink-0 ${
-            isLight ? 'border-neutral-200 bg-white hover:border-[#2563EB]' : 'border-zinc-800 bg-[#0D0D0D] hover:border-[#4169E1]/60'
-          }`}
+          className={`group relative aspect-[16/9] w-full rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-lg shrink-0 ${isLight ? 'border-neutral-200 bg-white hover:border-[#2563EB]' : 'border-zinc-800 bg-[#0D0D0D] hover:border-[#4169E1]/60'
+            }`}
         >
           <img
             src={src}
@@ -326,9 +333,8 @@ const AhmedFoodLayout = ({
         <div
           key={index}
           onClick={() => setLightboxImg(src)}
-          className={`group relative aspect-[4/5] w-full rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-lg shrink-0 ${
-            isLight ? 'border-neutral-200 bg-white hover:border-[#2563EB]' : 'border-white/10 bg-[#111] hover:border-[#4169E1]/60'
-          }`}
+          className={`group relative aspect-[4/5] w-full rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-lg shrink-0 ${isLight ? 'border-neutral-200 bg-white hover:border-[#2563EB]' : 'border-white/10 bg-[#111] hover:border-[#4169E1]/60'
+            }`}
         >
           <img
             src={src}
@@ -453,18 +459,41 @@ const AhmedFoodLayout = ({
   const renderProcess = () => {
     const validProcess = (process || []).filter(item => (item?.title && String(item.title).trim().length > 0) || (item?.phase && String(item.phase).trim().length > 0) || (item?.desc && String(item.desc).trim().length > 0));
     if (validProcess.length === 0) return null;
+    const count = validProcess.length;
+
     return (
       <section className={`px-4 sm:px-6 md:px-8 py-10 md:py-20 border-t transition-colors duration-300 ${isLight ? 'bg-white border-neutral-200' : 'bg-[#0D0D0D] border-white/5'}`}>
-        <div className="w-full">
-          <p className={`text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase mb-2 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
-            {processEyebrow || 'How we did it'}
-          </p>
-          <h2 className={`text-2xl sm:text-4xl lg:text-[44px] font-medium mb-8 md:mb-12 tracking-tight leading-tight ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
-            {processHeading || 'Our process'}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className={`w-full ${count <= 2 ? 'max-w-5xl mx-auto' : ''}`}>
+          <div className={count <= 2 ? 'text-center' : ''}>
+            <p className={`text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase mb-2 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
+              {processEyebrow || 'How we did it'}
+            </p>
+            <h2 className={`text-2xl sm:text-4xl lg:text-[44px] font-medium mb-8 md:mb-12 tracking-tight leading-tight ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
+              {processHeading || 'Our process'}
+            </h2>
+          </div>
+          <div
+            className={
+              count === 1
+                ? 'flex justify-center'
+                : count === 2
+                  ? 'flex flex-wrap justify-center gap-4 md:gap-6'
+                  : count === 3
+                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
+                    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'
+            }
+          >
             {validProcess.map((item, i) => (
-              <div key={i} className={`rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col ${isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#1A1A1A] border-white/10'}`}>
+              <div
+                key={i}
+                className={`rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col text-left ${isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#1A1A1A] border-white/10'
+                  } ${count === 1
+                    ? 'w-full max-w-xl'
+                    : count === 2
+                      ? 'w-full sm:w-[calc(50%-12px)]'
+                      : ''
+                  }`}
+              >
                 <div className="flex items-center gap-3 mb-3">
                   <span className={`text-2xl sm:text-3xl font-bold ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>{item.step}</span>
                   {item.phase && (
@@ -473,6 +502,85 @@ const AhmedFoodLayout = ({
                 </div>
                 <h3 className={`text-base sm:text-lg font-semibold mb-2 ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>{item.title}</h3>
                 <p className={`text-xs sm:text-sm font-light leading-relaxed flex-grow ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  // Render Formal Project Credits
+  const renderCredits = () => {
+    const toolsList = Array.isArray(creditsTools)
+      ? creditsTools
+      : typeof creditsTools === 'string'
+      ? creditsTools.split(',').map((t) => t.trim()).filter(Boolean)
+      : [];
+    if (!creditsHeading && toolsList.length === 0 && !creditsAgency) return null;
+
+    return (
+      <section className={`px-4 sm:px-6 md:px-8 py-10 md:py-16 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-[#0D0D0D]'}`}>
+        <div className="w-full max-w-4xl mx-auto">
+          <div className={`p-8 sm:p-12 rounded-3xl border text-center transition-all shadow-sm ${isLight ? 'bg-white border-neutral-200' : 'bg-[#141414] border-white/10'}`}>
+            <p className={`text-[11px] sm:text-[12px] font-bold tracking-[0.2em] uppercase mb-3 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
+              {creditsEyebrow || 'PRODUCTION PIPELINE'}
+            </p>
+            <h3 className={`text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 ${isLight ? 'text-neutral-900' : 'text-white'}`}>
+              {creditsHeading || 'Formal Project Credits'}
+            </h3>
+            {creditsAgency && (
+              <p className={`text-xs sm:text-sm font-medium mb-4 ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                Lead Creative Agency: <strong className={isLight ? 'text-black' : 'text-white'}>{creditsAgency}</strong>
+              </p>
+            )}
+            <p className={`text-[10px] sm:text-[11px] font-bold tracking-[0.16em] uppercase mb-4 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+              {creditsToolsLabel || 'CORE TOOLS & PIPELINE:'}
+            </p>
+            {toolsList.length > 0 && (
+              <div className="flex flex-wrap justify-center items-center gap-2.5 max-w-2xl mx-auto">
+                {toolsList.map((tool, idx) => (
+                  <span
+                    key={idx}
+                    className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                      isLight
+                        ? 'bg-[#EBF2FF] text-[#2563EB] border-[#BFDBFE]'
+                        : 'bg-[#4169E1]/15 text-[#60a5fa] border-[#4169E1]/35'
+                    }`}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  // Render FAQ Section
+  const renderFaq = () => {
+    const list = Array.isArray(faqItems)
+      ? faqItems.filter((item) => item && (item.q || item.a))
+      : [];
+    if (list.length === 0 && !faqHeading) return null;
+
+    return (
+      <section className={`px-4 sm:px-6 md:px-8 py-10 md:py-16 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-[#0D0D0D]'}`}>
+        <div className="w-full max-w-4xl mx-auto text-center">
+          <h2 className={`text-3xl sm:text-5xl font-extrabold tracking-tight mb-8 sm:mb-10 ${isLight ? 'text-neutral-900' : 'text-white'}`}>
+            {faqHeading || 'FAQ'}
+          </h2>
+          <div className="space-y-8 sm:space-y-10">
+            {list.map((item, idx) => (
+              <div key={idx} className="max-w-3xl mx-auto space-y-3">
+                <h3 className={`text-base sm:text-lg font-bold ${isLight ? 'text-neutral-900' : 'text-white'}`}>
+                  {item.q.startsWith('Q:') ? item.q : `Q: ${item.q}`}
+                </h3>
+                <p className={`text-sm sm:text-base font-normal leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-300'}`}>
+                  {item.a}
+                </p>
               </div>
             ))}
           </div>
@@ -508,27 +616,112 @@ const AhmedFoodLayout = ({
     return { part1: html, part2: '' };
   };
 
+  // Helper to enhance plain Credits and FAQ HTML to match the site design
+  const enhanceCaseStudyHtml = (html) => {
+    if (!html || typeof html !== 'string') return '';
+    let out = html;
+
+    // 1. Transform plain "Formal Project Credits" into styled credits card
+    if (!out.includes('project-credits-card')) {
+      out = out.replace(
+        /<h[2-4][^>]*>\s*(Formal Project Credits|Project Credits|Credits)\s*<\/h[2-4]>([\s\S]*?)(?=(?:<h[1-4]|$))/i,
+        (match, heading, body) => {
+          let agencyHtml = '';
+          const agencyMatch = body.match(/(?:Lead Creative Agency|Agency):\s*([^<,\n]+)/i);
+          if (agencyMatch) {
+            agencyHtml = `<p class="credits-agency"><strong>Lead Creative Agency:</strong> ${agencyMatch[1].trim()}</p>`;
+          }
+
+          let toolsHtml = '';
+          const toolsMatch = body.match(/(?:Core Tools|Tools):\s*([^<]+)/i);
+          if (toolsMatch) {
+            const tools = toolsMatch[1].split(',').map((t) => t.trim()).filter(Boolean);
+            toolsHtml = `
+              <p class="credits-label">Core Tools & Pipeline:</p>
+              <div class="tools-badges">
+                ${tools.map((t) => `<span class="tool-badge">${t}</span>`).join('')}
+              </div>
+            `;
+          } else {
+            toolsHtml = body;
+          }
+
+          return `
+            <div class="project-credits-card">
+              <p class="credits-eyebrow">PRODUCTION PIPELINE</p>
+              <h3 class="credits-heading">${heading}</h3>
+              ${agencyHtml}
+              ${toolsHtml}
+            </div>
+          `;
+        }
+      );
+    }
+
+    // 2. Transform plain "FAQ" into styled FAQ card list
+    if (!out.includes('project-faq-section')) {
+      out = out.replace(
+        /<h[2-4][^>]*>\s*(FAQ|Frequently Asked Questions)\s*<\/h[2-4]>([\s\S]*?)(?=(?:<h[1-4]|$))/i,
+        (match, faqHeading, body) => {
+          const qRegex = /(?:<p[^>]*>)?(?:<strong>)?\s*Q:\s*([\s\S]*?)(?:<\/strong>)?(?:<\/p>)?\s*(?:<p[^>]*>)?\s*A:\s*([\s\S]*?)(?:<\/p>|$)/gi;
+          let cards = '';
+          let m;
+          while ((m = qRegex.exec(body)) !== null) {
+            const q = m[1].replace(/<\/?[^>]+(>|$)/g, '').trim();
+            const a = m[2].replace(/<\/?[^>]+(>|$)/g, '').trim();
+            if (q && a) {
+              cards += `
+                <div class="faq-card">
+                  <h4 class="faq-question"><span class="faq-q-badge">Q</span><span>${q}</span></h4>
+                  <div class="faq-answer">${a}</div>
+                </div>
+              `;
+            }
+          }
+
+          if (cards) {
+            return `
+              <div class="project-faq-section">
+                <p class="faq-eyebrow">AEO & SEARCH DISCOVERY</p>
+                <h3 class="faq-heading">${faqHeading}</h3>
+                <div class="faq-cards-container">
+                  ${cards}
+                </div>
+              </div>
+            `;
+          }
+          return match;
+        }
+      );
+    }
+
+    return out;
+  };
+
   // Render HTML Editor Content
   const renderCleanContent = () => {
     if (!cleanContent) return null;
+    const enhancedContent = enhanceCaseStudyHtml(cleanContent);
     const contentClasses = `text-sm sm:text-base md:text-lg font-light leading-relaxed text-left w-full ${isLight ? 'text-zinc-700' : 'text-zinc-300'} [&_*]:!max-w-none [&_div]:!max-w-none [&_section]:!max-w-none [&_p]:!max-w-none [&_div]:!w-full [&_section]:!w-full [&_h1]:text-current [&_h2]:text-current [&_h2]:text-xl sm:[&_h2]:text-2xl md:[&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-current [&_h3]:text-lg sm:[&_h3]:text-xl md:[&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h4]:text-current [&_p]:mb-4 [&_strong]:text-current [&_a]:text-[#2563EB] dark:[&_a]:text-[#4169E1] [&_img]:rounded-xl [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-4 [&_blockquote]:border-[#2563EB] dark:[&_blockquote]:border-[#4169E1] [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:my-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4 [&_li]:mb-2`;
 
     if (showMidArticleCta) {
-      const { part1, part2 } = splitContentForMidCta(cleanContent);
+      const { part1, part2 } = splitContentForMidCta(enhancedContent);
       if (part2) {
         return (
           <section className={`px-4 sm:px-6 md:px-8 py-8 md:py-14 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-[#0D0D0D]'}`}>
-            <div
-              className={contentClasses}
-              dangerouslySetInnerHTML={{ __html: part1 }}
-            />
-            <div className="my-8 md:my-12">
-              {midArticleCtaComponent || <MidArticleCta />}
+            <div className="w-full max-w-5xl mx-auto">
+              <div
+                className={contentClasses}
+                dangerouslySetInnerHTML={{ __html: part1 }}
+              />
+              <div className="my-8 md:my-12">
+                {midArticleCtaComponent || <MidArticleCta />}
+              </div>
+              <div
+                className={contentClasses}
+                dangerouslySetInnerHTML={{ __html: part2 }}
+              />
             </div>
-            <div
-              className={contentClasses}
-              dangerouslySetInnerHTML={{ __html: part2 }}
-            />
           </section>
         );
       }
@@ -536,15 +729,17 @@ const AhmedFoodLayout = ({
 
     return (
       <section className={`px-4 sm:px-6 md:px-8 py-8 md:py-14 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-[#0D0D0D]'}`}>
-        <div
-          className={contentClasses}
-          dangerouslySetInnerHTML={{ __html: cleanContent }}
-        />
-        {showMidArticleCta && (
-          <div className="mt-8 md:mt-12">
-            {midArticleCtaComponent || <MidArticleCta />}
-          </div>
-        )}
+        <div className="w-full max-w-5xl mx-auto">
+          <div
+            className={contentClasses}
+            dangerouslySetInnerHTML={{ __html: enhancedContent }}
+          />
+          {showMidArticleCta && (
+            <div className="mt-8 md:mt-12">
+              {midArticleCtaComponent || <MidArticleCta />}
+            </div>
+          )}
+        </div>
       </section>
     );
   };
@@ -807,11 +1002,10 @@ const AhmedFoodLayout = ({
                       href={ctaUrl}
                       target={ctaUrl.startsWith('http') ? '_blank' : undefined}
                       rel={ctaUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className={`group inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold uppercase tracking-wider text-xs sm:text-sm !text-white transition-all duration-300 no-underline shadow-lg active:scale-95 ${
-                        isLight
-                          ? 'bg-[#2563EB] hover:bg-[#1D4ED8] shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] border border-blue-600/20'
-                          : 'bg-gradient-to-r from-[#2563EB] to-[#4169E1] hover:from-[#1D4ED8] hover:to-[#3158D4] shadow-[0_0_20px_rgba(65,105,225,0.6)] hover:shadow-[0_0_30px_rgba(65,105,225,0.9)] border border-blue-400/40'
-                      }`}
+                      className={`group inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold uppercase tracking-wider text-xs sm:text-sm !text-white transition-all duration-300 no-underline shadow-lg active:scale-95 ${isLight
+                        ? 'bg-[#2563EB] hover:bg-[#1D4ED8] shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] border border-blue-600/20'
+                        : 'bg-gradient-to-r from-[#2563EB] to-[#4169E1] hover:from-[#1D4ED8] hover:to-[#3158D4] shadow-[0_0_20px_rgba(65,105,225,0.6)] hover:shadow-[0_0_30px_rgba(65,105,225,0.9)] border border-blue-400/40'
+                        }`}
                     >
                       <FaPaperPlane className="text-[11px] sm:text-xs !text-white fill-white transition-transform duration-200 group-hover:translate-x-0.5 shrink-0" aria-hidden="true" />
                       <span className="!text-white font-bold tracking-wider leading-none">{ctaText || 'View Project'}</span>
@@ -820,11 +1014,10 @@ const AhmedFoodLayout = ({
                     <button
                       type="button"
                       onClick={handleStartProject}
-                      className={`group inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold uppercase tracking-wider text-xs sm:text-sm !text-white transition-all duration-300 border-none cursor-pointer shadow-lg active:scale-95 ${
-                        isLight
-                          ? 'bg-[#2563EB] hover:bg-[#1D4ED8] shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] border border-blue-600/20'
-                          : 'bg-gradient-to-r from-[#2563EB] to-[#4169E1] hover:from-[#1D4ED8] hover:to-[#3158D4] shadow-[0_0_20px_rgba(65,105,225,0.6)] hover:shadow-[0_0_30px_rgba(65,105,225,0.9)] border border-blue-400/40'
-                      }`}
+                      className={`group inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold uppercase tracking-wider text-xs sm:text-sm !text-white transition-all duration-300 border-none cursor-pointer shadow-lg active:scale-95 ${isLight
+                        ? 'bg-[#2563EB] hover:bg-[#1D4ED8] shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] border border-blue-600/20'
+                        : 'bg-gradient-to-r from-[#2563EB] to-[#4169E1] hover:from-[#1D4ED8] hover:to-[#3158D4] shadow-[0_0_20px_rgba(65,105,225,0.6)] hover:shadow-[0_0_30px_rgba(65,105,225,0.9)] border border-blue-400/40'
+                        }`}
                     >
                       <FaPaperPlane className="text-[11px] sm:text-xs !text-white fill-white transition-transform duration-200 group-hover:translate-x-0.5 shrink-0" aria-hidden="true" />
                       <span className="!text-white font-bold tracking-wider leading-none">{ctaText || 'View Project'}</span>
@@ -958,9 +1151,15 @@ const AhmedFoodLayout = ({
             </>
           )}
           {secKey === 'process' && renderProcess()}
+          {secKey === 'credits' && renderCredits()}
+          {secKey === 'faq' && renderFaq()}
           {secKey === 'content' && renderCleanContent()}
         </React.Fragment>
       ))}
+
+      {/* RENDER CREDITS & FAQ IF NOT INCLUDED IN SECTION ORDER */}
+      {!sectionOrder?.includes('credits') && renderCredits()}
+      {!sectionOrder?.includes('faq') && renderFaq()}
 
       {/* LIGHTBOX MODAL FOR GALLERY */}
       {lightboxImg && (
@@ -1003,17 +1202,15 @@ const AhmedFoodLayout = ({
       )}
 
       {/* CTA / BOTTOM NAVIGATION */}
-      <footer className={`px-4 sm:px-6 md:px-8 py-5 sm:py-6 md:py-8 border-t border-b transition-colors duration-300 ${
-        isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#0D0D0D] border-white/5'
-      }`}>
+      <footer className={`px-4 sm:px-6 md:px-8 py-5 sm:py-6 md:py-8 border-t border-b transition-colors duration-300 ${isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#0D0D0D] border-white/5'
+        }`}>
         <div className="flex items-center justify-between gap-3 w-full">
           <div>
             <button
-              className={`inline-flex items-center gap-2 text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2.5 rounded-full border transition-all duration-200 cursor-pointer active:scale-95 ${
-                isLight
-                  ? 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 hover:text-black shadow-sm'
-                  : 'border-white/10 bg-[#141414] text-zinc-300 hover:border-white/30 hover:text-white shadow-sm'
-              }`}
+              className={`inline-flex items-center gap-2 text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2.5 rounded-full border transition-all duration-200 cursor-pointer active:scale-95 ${isLight
+                ? 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 hover:text-black shadow-sm'
+                : 'border-white/10 bg-[#141414] text-zinc-300 hover:border-white/30 hover:text-white shadow-sm'
+                }`}
               onClick={() => router.push('/')}
             >
               <FaThLarge aria-hidden="true" className="text-xs" /> All work

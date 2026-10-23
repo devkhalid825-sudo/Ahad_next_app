@@ -1,6 +1,8 @@
 import { apiCall, SITE_URL } from '@/utils/api';
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
 
+import { isProjectHidden } from '@/utils/projectVisibility';
+
 export const dynamic = 'force-dynamic';
 
 const staticSlugs = [...projectList.map((p) => p.slug), ...caseStudyEntries.map((p) => p.slug)];
@@ -26,7 +28,7 @@ export async function GET() {
   // off-site, see LatestWork.jsx nofollow handling) — those aren't pages on
   // this site and must not be submitted in this site's sitemap.
   const dbUrls = dbProjects
-    .filter((p) => p.path && !p.path.startsWith('http') && !staticSlugSet.has(p.path.replace(/^\/project\//, '')))
+    .filter((p) => !isProjectHidden(p) && p.path && !p.path.startsWith('http') && !staticSlugSet.has(p.path.replace(/^\/project\//, '')))
     .map((p) => {
       const lastmod = (p.updatedAt || p.createdAt || '').split('T')[0] || new Date().toISOString().split('T')[0];
       const loc = p.path.startsWith('/') ? p.path : `/${p.path}`;

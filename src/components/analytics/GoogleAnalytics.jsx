@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 
-const GA_MEASUREMENT_ID = 'G-BEL0YQZ0G0';
+const GA_MEASUREMENT_ID = 'G-4VLP3K6ZJS';
 
 /**
  * Google Analytics 4 (GA4) Script Component

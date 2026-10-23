@@ -1,8 +1,12 @@
 import { cachedFetch } from './api';
+import { isProjectHidden } from '@/utils/projectVisibility';
 
 export async function getProjects(options = {}) {
-  const data = await cachedFetch('/projects', { tags: ['projects'], ...options });
-  return Array.isArray(data) ? data : [];
+  const { includeHidden = false, ...fetchOptions } = options;
+  const data = await cachedFetch('/projects', { tags: ['projects'], ...fetchOptions });
+  if (!Array.isArray(data)) return [];
+  if (includeHidden) return data;
+  return data.filter((p) => !isProjectHidden(p));
 }
 
 export async function getProjectBySlug(slug, options = {}) {
@@ -11,13 +15,19 @@ export async function getProjectBySlug(slug, options = {}) {
 }
 
 export async function getCaseStudies(options = {}) {
-  const data = await cachedFetch('/case-studies', { tags: ['case-studies'], ...options });
-  return Array.isArray(data) ? data : [];
+  const { includeHidden = false, ...fetchOptions } = options;
+  const data = await cachedFetch('/case-studies', { tags: ['case-studies'], ...fetchOptions });
+  if (!Array.isArray(data)) return [];
+  if (includeHidden) return data;
+  return data.filter((p) => !isProjectHidden(p));
 }
 
 export async function getFeaturedCaseStudies(options = {}) {
-  const data = await cachedFetch('/case-studies?featured=true', { tags: ['case-studies', 'featured'], ...options });
-  return Array.isArray(data) ? data : [];
+  const { includeHidden = false, ...fetchOptions } = options;
+  const data = await cachedFetch('/case-studies?featured=true', { tags: ['case-studies', 'featured'], ...fetchOptions });
+  if (!Array.isArray(data)) return [];
+  if (includeHidden) return data;
+  return data.filter((p) => !isProjectHidden(p));
 }
 
 export async function getCaseStudyBySlug(slug, options = {}) {

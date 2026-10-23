@@ -13,20 +13,39 @@ const getCaseStudy = cache(async (slug) => {
   return { data, status };
 });
 
+import { buildFaqSchema } from '@/seo/schemas';
+
 function caseStudySchemas(slug, data) {
   const uniqueValueProp = getProjectValueProposition({ ...data, slug });
   const description = data.metaDescription || uniqueValueProp || (data.description || data.content || '').replace(/<[^>]*>/g, '').slice(0, 160);
-  const schema = {
+  
+  let targetKeywords = data.targetKeywords || data.metaKeywords || '';
+  let metaSec = {};
+  if (data.sections) {
+    try {
+      const parsed = typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections;
+      if (Array.isArray(parsed) && parsed[0]) {
+        metaSec = parsed[0];
+        if (!targetKeywords && metaSec.targetKeywords) {
+          targetKeywords = metaSec.targetKeywords;
+        }
+      }
+    } catch {}
+  }
+
+  const defaultSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: data.metaTitle || data.title,
     description,
     image: data.heroImage || data.largeBanner,
+    ...(targetKeywords ? { keywords: targetKeywords } : {}),
     publisher: {
       '@type': 'Organization',
       name: 'Elipse Studio',
     },
   };
+
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -36,7 +55,35 @@ function caseStudySchemas(slug, data) {
       { '@type': 'ListItem', position: 3, name: data.title, item: `${SITE_URL}/case-study/${slug}` },
     ],
   };
-  return { description, schemas: [schema, breadcrumb] };
+
+  const schemas = [breadcrumb];
+
+  // Custom Schema support
+  let customParsed = null;
+  const rawCustom = data.customSchema || metaSec.customSchema;
+  if (rawCustom && typeof rawCustom === 'string' && rawCustom.trim().length > 0) {
+    try {
+      const cleaned = rawCustom.replace(/<\/?script[^>]*>/gi, '').trim();
+      customParsed = JSON.parse(cleaned);
+    } catch (e) {
+      console.error('Error parsing customSchema JSON-LD in case-study page:', e);
+    }
+  }
+
+  if (customParsed) {
+    schemas.push(customParsed);
+  } else {
+    schemas.push(defaultSchema);
+  }
+
+  // Auto FAQ schema
+  const faqItems = metaSec.faqItems || data.faqItems;
+  if (Array.isArray(faqItems) && faqItems.length > 0) {
+    const faqSchema = buildFaqSchema(faqItems);
+    if (faqSchema) schemas.push(faqSchema);
+  }
+
+  return { description, targetKeywords, schemas };
 }
 
 import { projectList, caseStudyEntries } from '@/components/projects/projectData';
@@ -57,10 +104,11 @@ export async function generateMetadata({ params }) {
       noIndex: true,
     });
   }
-  const { description } = caseStudySchemas(safeSlug, data);
+  const { description, targetKeywords } = caseStudySchemas(safeSlug, data);
   return buildMetadata({
     title: data.metaTitle || data.title,
     description,
+    keywords: targetKeywords || undefined,
     canonical: `${SITE_URL}/case-study/${safeSlug}`,
   });
 }
