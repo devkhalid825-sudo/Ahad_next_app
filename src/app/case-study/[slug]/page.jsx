@@ -6,10 +6,10 @@ import ProjectPage from '@/components/ProjectPage';
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 import { getProjectValueProposition } from '@/constants/projectValueProps';
 
-export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
+export const revalidate = 10; // 10s fast cache for fresh updates
 
 const getCaseStudy = cache(async (slug) => {
-  const { data, status } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 60 } });
+  const { data, status } = await apiCall(`/case-studies/by-slug?slug=${slug}`, 'GET', null, null, false, { next: { revalidate: 10 } });
   return { data, status };
 });
 

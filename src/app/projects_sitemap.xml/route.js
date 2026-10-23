@@ -9,7 +9,7 @@ const staticSlugs = [...projectList.map((p) => p.slug), ...caseStudyEntries.map(
 const staticSlugSet = new Set(staticSlugs);
 
 export async function GET() {
-  const { data } = await apiCall('/projects', 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data } = await apiCall('/projects', 'GET', null, null, false, { next: { revalidate: 10 } });
   const dbProjects = Array.isArray(data) ? data : [];
 
   // Static projects have no meaningful "updated" timestamp, so no <lastmod>

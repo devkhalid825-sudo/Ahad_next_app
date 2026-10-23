@@ -7,13 +7,13 @@ import { projectList, caseStudyEntries } from '@/components/projects/projectData
 import { MultiJsonLd } from '@/components/seo/JsonLd';
 import { getProjectValueProposition } from '@/constants/projectValueProps';
 
-export const revalidate = 60; // 1 min ISR cache for instant page clicks + fresh updates
+export const revalidate = 10; // 10s fast cache for fresh updates
 
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map((p) => [p.slug, p]));
 
 const getProject = cache(async (safeSlug) => {
-  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 60 } });
+  const { data, status } = await apiCall(`/projects/by-path?path=${encodeURIComponent('/project/' + safeSlug)}`, 'GET', null, null, false, { next: { revalidate: 10 } });
   return { data, status };
 });
 

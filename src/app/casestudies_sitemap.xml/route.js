@@ -3,7 +3,7 @@ import { apiCall, SITE_URL } from '@/utils/api';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const { data } = await apiCall('/case-studies', 'GET', null, null, false, { next: { revalidate: 300 } });
+  const { data } = await apiCall('/case-studies', 'GET', null, null, false, { next: { revalidate: 10 } });
   const caseStudies = Array.isArray(data) ? data : [];
 
   const urls = caseStudies
