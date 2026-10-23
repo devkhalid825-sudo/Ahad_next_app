@@ -31,6 +31,11 @@ const HtmlEditor = ({ value, onChange, label, minHeight = 300 }) => {
             .faq-question { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 8px; }
             .faq-q-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 9999px; background: rgba(65,105,225,0.2); color: #4169E1; font-size: 11px; font-weight: 800; flex-shrink: 0; }
             .faq-answer { padding-left: 32px; font-size: 13px; font-weight: 300; line-height: 1.7; color: #aaa; border-left: 2px solid rgba(65,105,225,0.3); }
+            .commercial-callout-card { margin: 30px 0; padding: 28px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); background: #141414; }
+            .callout-badge { display: inline-flex; align-items: center; width: auto; padding: 5px 14px; border-radius: 9999px; background: rgba(65,105,225,0.15); color: #4169E1; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+            .callout-heading { font-size: 22px; font-weight: 700; color: #fff; margin: 0 0 10px 0; }
+            .callout-body { font-size: 13.5px; line-height: 1.65; color: #a1a1aa; margin: 0 0 20px 0; max-width: 700px; }
+            .callout-btn { display: inline-flex; align-items: center; gap: 8px; background: #2563EB; color: #fff !important; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 22px; border-radius: 9999px; text-decoration: none; }
           </style>
         </head>
         <body>${value}</body>
@@ -75,6 +80,24 @@ const HtmlEditor = ({ value, onChange, label, minHeight = 300 }) => {
     onChange(value ? `${value.trim()}\n\n${template}` : template);
   };
 
+  const insertCalloutTemplate = () => {
+    const template = `<!-- Commercial Callout Banner -->
+<div class="commercial-callout-card">
+  <div>
+    <span class="callout-badge">READY TO ELEVATE YOUR COMMERCIAL CAMPAIGNS?</span>
+  </div>
+  <h3 class="callout-heading">Replace Costly Film Sets with Cinema-Caliber 3D CGI</h3>
+  <p class="callout-body">Eliminate unpredictable live-action food shoots. Send us your campaign brief or product CAD files, and our lead animation director will provide a 3D commercial feasibility breakdown within 24 hours.</p>
+  <div class="callout-btn-wrap">
+    <a href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting" target="_blank" rel="noopener noreferrer" class="callout-btn">
+      <span>Schedule a 15-Minute Scoping Call</span>
+      <span>→</span>
+    </a>
+  </div>
+</div>`;
+    onChange(value ? `${value.trim()}\n\n${template}` : template);
+  };
+
   const modes = [
     { key: 'code', icon: <FiCode />, label: 'Code' },
     { key: 'preview', icon: <FiEye />, label: 'Preview' },
@@ -112,7 +135,7 @@ const HtmlEditor = ({ value, onChange, label, minHeight = 300 }) => {
           className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider text-[#4169E1] bg-[#4169E1]/10 hover:bg-[#4169E1]/20 border border-[#4169E1]/30 transition-all cursor-pointer"
           title="Insert Formal Project Credits Template"
         >
-          + Credits Template
+          + Credits
         </button>
 
         <button
@@ -121,7 +144,16 @@ const HtmlEditor = ({ value, onChange, label, minHeight = 300 }) => {
           className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-400/10 hover:bg-emerald-400/20 border border-emerald-400/30 transition-all cursor-pointer"
           title="Insert FAQ Template"
         >
-          + FAQ Template
+          + FAQ
+        </button>
+
+        <button
+          type="button"
+          onClick={insertCalloutTemplate}
+          className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 hover:bg-amber-400/20 border border-amber-400/30 transition-all cursor-pointer"
+          title="Insert Commercial Callout Banner"
+        >
+          + Callout Banner
         </button>
 
         <div className="ml-auto text-[7px] text-[#444] uppercase tracking-widest">HTML</div>

@@ -172,6 +172,11 @@ const CaseStudyDetail = ({ slug, initialData }) => {
         videoTabs={(safeJson(cs.videoTabs, []) || []).filter(t => t && typeof t.url === 'string' && t.url.trim().length > 0)}
         ctaUrl={cs.ctaUrl || '/contact'}
         ctaText={cs.ctaText || 'Start a project'}
+        calloutEyebrow={parsedSections[0]?.calloutEyebrow !== undefined ? parsedSections[0].calloutEyebrow : cs.calloutEyebrow}
+        calloutHeadline={parsedSections[0]?.calloutHeadline !== undefined ? parsedSections[0].calloutHeadline : cs.calloutHeadline}
+        calloutBody={parsedSections[0]?.calloutBody !== undefined ? parsedSections[0].calloutBody : cs.calloutBody}
+        calloutButtonText={parsedSections[0]?.calloutButtonText !== undefined ? parsedSections[0].calloutButtonText : cs.calloutButtonText}
+        calloutButtonUrl={parsedSections[0]?.calloutButtonUrl !== undefined ? parsedSections[0].calloutButtonUrl : cs.calloutButtonUrl}
         nextProject={nextCs ? { path: `/case-study/${nextCs.slug}`, name: nextCs.title } : undefined}
       />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

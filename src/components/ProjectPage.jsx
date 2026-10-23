@@ -220,6 +220,11 @@ const DynamicProjectView = ({ data, type = 'project' }) => {
       faqHeading={sections[0]?.faqHeading !== undefined ? sections[0].faqHeading : data.faqHeading}
       faqItems={sections[0]?.faqItems !== undefined ? sections[0].faqItems : data.faqItems}
       targetKeywords={sections[0]?.targetKeywords !== undefined ? sections[0].targetKeywords : (data.targetKeywords || data.metaKeywords)}
+      calloutEyebrow={sections[0]?.calloutEyebrow !== undefined ? sections[0].calloutEyebrow : data.calloutEyebrow}
+      calloutHeadline={sections[0]?.calloutHeadline !== undefined ? sections[0].calloutHeadline : data.calloutHeadline}
+      calloutBody={sections[0]?.calloutBody !== undefined ? sections[0].calloutBody : data.calloutBody}
+      calloutButtonText={sections[0]?.calloutButtonText !== undefined ? sections[0].calloutButtonText : data.calloutButtonText}
+      calloutButtonUrl={sections[0]?.calloutButtonUrl !== undefined ? sections[0].calloutButtonUrl : data.calloutButtonUrl}
     />
   );
 };

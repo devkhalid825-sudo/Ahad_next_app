@@ -92,6 +92,11 @@ const emptyForm = {
   creditsAgency: '',
   faqHeading: '',
   faqItems: [],
+  calloutEyebrow: '',
+  calloutHeadline: '',
+  calloutBody: '',
+  calloutButtonText: '',
+  calloutButtonUrl: '',
   targetKeywords: '',
   customSchema: '',
   sectionOrder: defaultSectionOrder,
@@ -397,6 +402,11 @@ const CaseStudyDashboard = () => {
       creditsAgency: firstSec.creditsAgency !== undefined ? firstSec.creditsAgency : (cs.creditsAgency || ''),
       faqHeading: firstSec.faqHeading !== undefined ? firstSec.faqHeading : (cs.faqHeading || ''),
       faqItems: Array.isArray(firstSec.faqItems) ? firstSec.faqItems : parseJSON(cs.faqItems, []),
+      calloutEyebrow: firstSec.calloutEyebrow !== undefined ? firstSec.calloutEyebrow : (cs.calloutEyebrow || ''),
+      calloutHeadline: firstSec.calloutHeadline !== undefined ? firstSec.calloutHeadline : (cs.calloutHeadline || ''),
+      calloutBody: firstSec.calloutBody !== undefined ? firstSec.calloutBody : (cs.calloutBody || ''),
+      calloutButtonText: firstSec.calloutButtonText !== undefined ? firstSec.calloutButtonText : (cs.calloutButtonText || ''),
+      calloutButtonUrl: firstSec.calloutButtonUrl !== undefined ? firstSec.calloutButtonUrl : (cs.calloutButtonUrl || ''),
       targetKeywords: firstSec.targetKeywords !== undefined ? firstSec.targetKeywords : (cs.targetKeywords || cs.metaKeywords || ''),
       customSchema: firstSec.customSchema !== undefined ? firstSec.customSchema : (cs.customSchema || ''),
       storyBlocks,
@@ -595,6 +605,11 @@ const CaseStudyDashboard = () => {
           creditsAgency: form.creditsAgency || '',
           faqHeading: form.faqHeading || '',
           faqItems: form.faqItems || [],
+          calloutEyebrow: form.calloutEyebrow || '',
+          calloutHeadline: form.calloutHeadline || '',
+          calloutBody: form.calloutBody || '',
+          calloutButtonText: form.calloutButtonText || '',
+          calloutButtonUrl: form.calloutButtonUrl || '',
           targetKeywords: form.targetKeywords || '',
           customSchema: form.customSchema || '',
         } : {}),
@@ -616,6 +631,11 @@ const CaseStudyDashboard = () => {
         creditsAgency: form.creditsAgency || '',
         faqHeading: form.faqHeading || '',
         faqItems: form.faqItems || [],
+        calloutEyebrow: form.calloutEyebrow || '',
+        calloutHeadline: form.calloutHeadline || '',
+        calloutBody: form.calloutBody || '',
+        calloutButtonText: form.calloutButtonText || '',
+        calloutButtonUrl: form.calloutButtonUrl || '',
         targetKeywords: form.targetKeywords || '',
         customSchema: form.customSchema || '',
       }];
@@ -1506,13 +1526,74 @@ const CaseStudyDashboard = () => {
                 </button>
               </SectionCard>
 
-              {/* 10. Description (HTML) */}
-              <SectionCard icon="📝" title="10. Full Description (HTML Editor)">
+              {/* 10. Callout Banner (Above Related Work) */}
+              <SectionCard icon="📢" title="10. Commercial Callout Banner (Above Related Work)">
+                <p className="text-[#888] text-[8px] uppercase tracking-widest -mt-2">
+                  Display a sleek cinema-caliber conversion banner directly above the &ldquo;Related Work&rdquo; section.
+                </p>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Eyebrow Pill Tag</label>
+                    <input
+                      type="text"
+                      value={form.calloutEyebrow || ''}
+                      onChange={(e) => setForm(f => ({ ...f, calloutEyebrow: e.target.value }))}
+                      placeholder="e.g. READY TO ELEVATE YOUR COMMERCIAL CAMPAIGNS?"
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Headline</label>
+                    <input
+                      type="text"
+                      value={form.calloutHeadline || ''}
+                      onChange={(e) => setForm(f => ({ ...f, calloutHeadline: e.target.value }))}
+                      placeholder="e.g. Replace Costly Film Sets with Cinema-Caliber 3D CGI"
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs font-semibold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Body / Subtext</label>
+                    <textarea
+                      value={form.calloutBody || ''}
+                      onChange={(e) => setForm(f => ({ ...f, calloutBody: e.target.value }))}
+                      rows={3}
+                      placeholder="e.g. Eliminate unpredictable live-action food shoots. Send us your campaign brief or product CAD files, and our lead animation director will provide a 3D commercial feasibility breakdown within 24 hours."
+                      className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs resize-none font-light leading-relaxed"
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Button Text</label>
+                      <input
+                        type="text"
+                        value={form.calloutButtonText || ''}
+                        onChange={(e) => setForm(f => ({ ...f, calloutButtonText: e.target.value }))}
+                        placeholder="Default: Schedule a 15-Minute Scoping Call"
+                        className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[#888] text-[8px] uppercase tracking-wider mb-1">Button Link / Calendly URL</label>
+                      <input
+                        type="text"
+                        value={form.calloutButtonUrl || ''}
+                        onChange={(e) => setForm(f => ({ ...f, calloutButtonUrl: e.target.value }))}
+                        placeholder="Default: https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
+                        className="w-full bg-[#0D0D0D] border border-[#333] rounded-lg px-3 py-2 text-[#F2F0EB] focus:border-[#4169E1] outline-none text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </SectionCard>
+
+              {/* 11. Description (HTML) */}
+              <SectionCard icon="📝" title="11. Full Description (HTML Editor)">
                 <HtmlEditor value={form.content} onChange={(val) => setForm(f => ({ ...f, content: val }))} minHeight={200} />
               </SectionCard>
 
-              {/* 11. Featured Switch & SEO */}
-              <SectionCard icon="⭐" title="11. Featured & SEO Settings">
+              {/* 12. Featured Switch & SEO */}
+              <SectionCard icon="⭐" title="12. Featured & SEO Settings">
                 <div className="flex items-center justify-between p-3 bg-[#1A1A1A] rounded-xl border border-[#333] mb-4">
                   <div>
                     <span className="text-xs font-bold text-[#F2F0EB] block">Featured Case Study</span>

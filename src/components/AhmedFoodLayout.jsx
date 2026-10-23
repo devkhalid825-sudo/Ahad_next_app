@@ -109,6 +109,11 @@ const AhmedFoodLayout = ({
   faqHeading,
   faqItems = [],
   targetKeywords = '',
+  calloutEyebrow,
+  calloutHeadline,
+  calloutBody,
+  calloutButtonText,
+  calloutButtonUrl,
   showMidArticleCta = false,
   midArticleCtaComponent = null,
   hideThemeToggle = false,
@@ -874,42 +879,44 @@ const AhmedFoodLayout = ({
           {/* ── Main Center Headline ── */}
           <h1
             style={titleFontSizeStyle}
-            className={`font-bold tracking-tight w-full max-w-full whitespace-nowrap text-center leading-tight mb-2 sm:mb-3 px-1 sm:px-4 ${isLight ? 'text-neutral-900' : 'text-white'}`}
+            className={`font-bold tracking-tight w-full max-w-full text-center leading-tight mb-2 sm:mb-3 px-1 sm:px-4 break-words whitespace-normal sm:whitespace-nowrap ${isLight ? 'text-neutral-900' : 'text-white'}`}
           >
             {renderStyledTitle(title)}
           </h1>
 
           {/* Subtitle / Subheading */}
-          {subtitle && (
+          {subtitle && String(subtitle).trim().length > 0 && (
             <p className={`text-xs sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-3 sm:mb-5 px-2 ${isLight ? 'text-neutral-600' : 'text-zinc-400'}`}>
               {subtitle}
             </p>
           )}
 
-          {/* Video Tabs Switcher Buttons (Positioned directly below subtitle) */}
+          {/* Video Tabs Switcher Buttons (Mobile: exactly 3 on top row, 3 on bottom row; Tablet/Desktop: flex wrap) */}
           {hasVideoTabs && effectiveVideoTabs.length > 1 && (
-            <div className="flex flex-wrap items-center justify-center gap-2.5 mb-4 sm:mb-6 z-20">
-              {effectiveVideoTabs.map((tab, idx) => (
-                <button
-                  key={tab.id ?? tab.label ?? idx}
-                  type="button"
-                  onClick={() => setActiveVideo(idx)}
-                  className={`text-xs font-semibold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border transition-all duration-200 cursor-pointer ${activeVideo === idx
-                    ? (isLight ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-lg shadow-[#2563EB]/25' : 'bg-[#4169E1] text-white border-[#4169E1] shadow-lg shadow-[#4169E1]/25')
-                    : (isLight ? 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:text-black' : 'bg-[#141414] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white')
-                    }`}
-                >
-                  {tab.label || `Tab ${idx + 1}`}
-                </button>
-              ))}
+            <div className="w-full max-w-4xl mx-auto px-1 sm:px-4 mb-4 sm:mb-6 z-20">
+              <div className="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5">
+                {effectiveVideoTabs.map((tab, idx) => (
+                  <button
+                    key={tab.id ?? tab.label ?? idx}
+                    type="button"
+                    onClick={() => setActiveVideo(idx)}
+                    className={`text-[10px] sm:text-xs font-semibold px-1.5 sm:px-5 py-2 sm:py-2.5 rounded-full border transition-all duration-200 cursor-pointer text-center flex items-center justify-center leading-tight active:scale-95 shadow-sm min-h-[40px] sm:min-h-0 ${activeVideo === idx
+                      ? (isLight ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-[#2563EB]/25' : 'bg-[#4169E1] text-white border-[#4169E1] shadow-md shadow-[#4169E1]/25')
+                      : (isLight ? 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:text-black' : 'bg-[#141414] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white')
+                      }`}
+                  >
+                    <span className="line-clamp-2 leading-tight">{tab.label || `Tab ${idx + 1}`}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
           {/* ── Hero Content: Optional Left Column | Center Media | Optional Right Column ── */}
           <div className={`w-full items-center relative mt-2 sm:mt-4 mb-4 sm:mb-6 ${hasLeftColumn && hasRightColumn
-            ? 'grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8 2xl:gap-10'
+            ? 'lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8 2xl:gap-10 flex flex-col items-center'
             : hasLeftColumn || hasRightColumn
-              ? 'grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8 2xl:gap-10'
+              ? 'lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8 2xl:gap-10 flex flex-col items-center'
               : 'flex flex-col items-center justify-center max-w-[1040px] xl:max-w-[1250px] 2xl:max-w-[1450px] min-[2200px]:max-w-[1750px] mx-auto'
             }`}>
 
@@ -1026,8 +1033,8 @@ const AhmedFoodLayout = ({
                 </div>
               )}
 
-              {/* ── Fixed Editorial Pill Bar (Single-row sleek capsule on all devices) ── */}
-              <div className="w-full overflow-x-auto no-scrollbar py-1 px-2.5 mt-3 sm:mt-4 flex items-center justify-start sm:justify-center">
+              {/* ── Fixed Editorial Pill Bar (Single-row sleek capsule on all devices, perfectly centered) ── */}
+              <div className="w-full overflow-x-auto no-scrollbar py-1 px-1 sm:px-2.5 mt-3 sm:mt-4 flex items-center justify-center text-center">
                 <div className={`mx-auto inline-flex flex-nowrap items-center justify-center gap-2 sm:gap-3.5 px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] xs:text-xs sm:text-[13px] font-medium z-20 transition-all duration-300 shrink-0 whitespace-nowrap shadow-md ${isLight
                   ? 'bg-white text-neutral-800 border border-neutral-300'
                   : 'bg-neutral-900 text-white border border-neutral-800 shadow-xl'
@@ -1231,6 +1238,77 @@ const AhmedFoodLayout = ({
           )}
         </div>
       </footer>
+
+      {/* COMMERCIAL CALLOUT BANNER (DIRECTLY ABOVE RELATED WORK) */}
+      {(() => {
+        const isAhmedFood = String(title || '').toLowerCase().includes('ahmed');
+        const customHeadline = calloutHeadline !== undefined && calloutHeadline !== null ? String(calloutHeadline).trim() : '';
+        const customEyebrow = calloutEyebrow !== undefined && calloutEyebrow !== null ? String(calloutEyebrow).trim() : '';
+        const customBody = calloutBody !== undefined && calloutBody !== null ? String(calloutBody).trim() : '';
+
+        // If inputs are provided, use them. If it's Ahmed Food and not explicitly cleared, use defaults.
+        const headline = calloutHeadline !== undefined 
+          ? customHeadline 
+          : (isAhmedFood ? 'Replace Costly Film Sets with Cinema-Caliber 3D CGI' : '');
+        const eyebrow = calloutEyebrow !== undefined 
+          ? customEyebrow 
+          : (isAhmedFood ? 'READY TO ELEVATE YOUR COMMERCIAL CAMPAIGNS?' : '');
+        const bodyText = calloutBody !== undefined 
+          ? customBody 
+          : (isAhmedFood ? 'Eliminate unpredictable live-action food shoots. Send us your campaign brief or product CAD files, and our lead animation director will provide a 3D commercial feasibility breakdown within 24 hours.' : '');
+        const btnText = (calloutButtonText && String(calloutButtonText).trim()) || 'Schedule a 15-Minute Scoping Call';
+        const btnUrl = (calloutButtonUrl && String(calloutButtonUrl).trim()) || 'https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting';
+
+        // STRICT: If no headline AND no body AND no eyebrow, render ABSOLUTELY NOTHING (zero empty space/margin)
+        if (!headline && !bodyText && !eyebrow) return null;
+
+        return (
+          <section className={`px-4 sm:px-6 md:px-8 pt-8 md:pt-14 pb-4 md:pb-6 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-black'}`}>
+            <div className="w-full max-w-7xl mx-auto">
+              <div className={`p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl border text-left transition-colors duration-300 ${
+                isLight 
+                  ? 'bg-[#F9FAFB] border-neutral-200 shadow-sm' 
+                  : 'bg-[#141414] border-white/10'
+              }`}>
+                {eyebrow && (
+                  <div className="mb-3.5">
+                    <span className={`inline-flex items-center px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.08em] ${
+                      isLight 
+                        ? 'bg-blue-50 text-[#2563EB]' 
+                        : 'bg-[#4169E1]/15 text-[#4169E1]'
+                    }`}>
+                      {eyebrow}
+                    </span>
+                  </div>
+                )}
+                <h3 className={`text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-3 leading-tight ${
+                  isLight ? 'text-neutral-900' : 'text-white'
+                }`}>
+                  {headline}
+                </h3>
+                {bodyText && (
+                  <p className={`text-xs sm:text-sm md:text-[15px] font-normal leading-relaxed max-w-3xl mb-6 ${
+                    isLight ? 'text-neutral-600' : 'text-zinc-400'
+                  }`}>
+                    {bodyText}
+                  </p>
+                )}
+                <div>
+                  <a
+                    href={btnUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-[#2563EB] hover:bg-[#1D4ED8] transition-all duration-200 shadow-md hover:shadow-lg no-underline cursor-pointer active:scale-95"
+                  >
+                    <span>{btnText}</span>
+                    <span className="text-sm">→</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       <LatestWork />
       <ClientReviews />
