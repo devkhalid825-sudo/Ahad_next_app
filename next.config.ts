@@ -26,6 +26,8 @@ const serviceRedirects = [
   ["/services/interactive-configurators", "/services/3d-product-configurators"],
   ["/services/vr-ar-experiences", "/services/vr-development"],
   ["/services/architectural-visualization-uae", "/services/architectural-visualization"],
+  ["/services/vfx-studio-cgi-effects", "/services/vfx-virtual-production"],
+  ["/services/animation-studio-services", "/services/3d-animation"],
 ];
 
 const redirects = [
@@ -33,6 +35,8 @@ const redirects = [
   ["/case-study-one", "/project/gabani-emerald"],
   ["/case-study-two", "/project/villa-luxury"],
   ["/case-study-three", "/project/volvo-configurator"],
+  ["/volvo-configurator", "/project/volvo-configurator"],
+  ["/volvo-configurator/", "/project/volvo-configurator"],
   ["/case-study-peek-freans", "/project/peek-freans"],
   ["/project", "/portfolio"],
   ["/blogs", "/blog"],
@@ -42,6 +46,8 @@ const redirects = [
   ["/blog/does-animation-pricing-usually-include-scriptwriting", "/blog"],
   ["/blog/How Browser-Based AR Turns Product Pages Into Try-Before-You-Buy Experiences", "/blog/how-browser-based-arturns-product-pages-into-try-before-you-buy-experiences"],
   ["/blog/How%20Browser-Based%20AR%20Turns%20Product%20Pages%20Into%20Try-Before-You-Buy%20Experiences", "/blog/how-browser-based-arturns-product-pages-into-try-before-you-buy-experiences"],
+  ["/top-5-3d-animation-software-2025", "/blog"],
+  ["/top-5-3d-animation-software-2025/", "/blog"],
   // projects_sitemap.xml previously listed slugs that don't match the CMS
   // (typos in the real slugs / a since-renamed slug) — Google indexed the
   // wrong URLs and got a noindex 404 fallback. Point them at the real pages.

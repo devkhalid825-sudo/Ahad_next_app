@@ -20,10 +20,11 @@ import vfxImgRaw from '../../assets/About-page/QORDEN.webp';
 import ahmedFoodRaw from '../../assets/Ahmed-food/jam&spread/15.webp';
 import renderingImgRaw from '../../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../../assets/About-page/kia.webp';
+import spatialCommerceRaw from '../../assets/About-page/spatial-commerce.png';
 import sharkRaw from '../../assets/About-page/shark.webp';
 import marineRaw from '../../assets/About-page/marine.webp';
 import timBarthRaw from '../../assets/About-page/tim-barth.webp';
-import modernVillaRaw from '../../assets/About-page/modern-villas.webp';
+import modernVillaRaw from '../../assets/About-page/Nevegan.jpg';
 import furnitureRaw from '../../assets/ElipseImages/blogs/alnoor.webp';
 
 const modernVilla = getImgSrc(modernVillaRaw);
@@ -39,6 +40,7 @@ const vfxImg = getImgSrc(vfxImgRaw);
 const ahmedFoodImg = getImgSrc(ahmedFoodRaw);
 const renderingImg = getImgSrc(renderingImgRaw);
 const kiaImg = getImgSrc(kiaRaw);
+const spatialCommerceImg = getImgSrc(spatialCommerceRaw);
 const shark = getImgSrc(sharkRaw);
 const marineImg = getImgSrc(marineRaw);
 const timBarth = getImgSrc(timBarthRaw);
@@ -101,6 +103,15 @@ const News = ({ initialBlogs = null }) => {
   }, []);
 
   const staticPosts = [
+    {
+      id: 34,
+      title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: The 2026 Conversion and Return-Rate Benchmark Report',
+      image: spatialCommerceImg,
+      date: 'OCTOBER 26, 2026',
+      category: 'Spatial Commerce & B2B',
+      readTime: '8 min read',
+      url: '/blog/spatial-commerce-b2b-luxury-retail-2026-benchmark',
+    },
     {
       id: 33,
       title: 'Real-Time ArchViz & Spatial VR: How Luxury Real Estate Developers Presell Properties 6–12 Months Before Groundbreak',

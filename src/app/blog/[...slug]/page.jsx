@@ -7,6 +7,8 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
+  'spatial-commerce-b2b-luxury-retail-2026-benchmark': dynamic(() => import('@/components/articles/SpatialCommerceBenchmarkArticle')),
+  'spatial-commerce-2026-benchmark-report': dynamic(() => import('@/components/articles/SpatialCommerceBenchmarkArticle')),
   'real-time-archviz-vr-luxury-real-estate-presales-2026': dynamic(() => import('@/components/articles/RealTimeArchvizVrPresalesArticle')),
   'cad-to-webgl-enterprise-3d-optimization-pipeline-2026': dynamic(() => import('@/components/articles/CadToWebglArticle')),
   'automotive-3d-configurator-dealership-conversion-2026': dynamic(() => import('@/components/articles/Automotive3dConfiguratorArticle')),
@@ -40,6 +42,34 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  'spatial-commerce-b2b-luxury-retail-2026-benchmark': {
+    title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: 2026 Conversion & Return-Rate Benchmark Report | Elipse Studio',
+    description: 'Average return cost in industrial equipment is $47,000. Benchmark data across automotive, luxury real estate, and industrial equipment: how 3D configurators lift conversions by 2.8x and cut return costs by 38%.',
+    keywords: [
+      'spatial commerce',
+      '3d configurator b2b',
+      'spatial commerce benchmark 2026',
+      'industrial equipment 3d configurator',
+      'luxury retail 3d configurator',
+      'interactive 3d return rate reduction',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/spatial-commerce-b2b-luxury-retail-2026-benchmark`,
+    ogImage: `${SITE_URL}/assets/About-page/spatial-commerce.png`,
+  },
+  'spatial-commerce-2026-benchmark-report': {
+    title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: 2026 Conversion & Return-Rate Benchmark Report | Elipse Studio',
+    description: 'Average return cost in industrial equipment is $47,000. Benchmark data across automotive, luxury real estate, and industrial equipment: how 3D configurators lift conversions by 2.8x and cut return costs by 38%.',
+    keywords: [
+      'spatial commerce',
+      '3d configurator b2b',
+      'spatial commerce benchmark 2026',
+      'Elipse Studio',
+    ],
+    canonical: `${SITE_URL}/blog/spatial-commerce-b2b-luxury-retail-2026-benchmark`,
+    ogImage: `${SITE_URL}/assets/About-page/spatial-commerce.png`,
+  },
   'real-time-archviz-vr-luxury-real-estate-presales-2026': {
     title: 'Real-Time ArchViz & Spatial VR: How Luxury Real Estate Developers Presell Properties 6–12 Months Before Groundbreak | Elipse Studio',
     description: 'A £4.2M unbuilt villa sold with zero show home visits. How developers use real-time WebGL walkthroughs, WebXR spatial VR, and material configurators to close off-plan sales 6–12 months before groundbreak.',
@@ -53,7 +83,7 @@ const staticArticleMetadata = {
       'Bilal Lania',
     ],
     canonical: `${SITE_URL}/blog/real-time-archviz-vr-luxury-real-estate-presales-2026`,
-    ogImage: `${SITE_URL}/assets/About-page/modern-villas.webp`,
+    ogImage: `${SITE_URL}/assets/About-page/Nevegan.jpg`,
   },
   '3d-product-configurator-australia-2026': {
     title: '3D Product Configurators for Australian E-Commerce Brands (2026 Guide) | Elipse Studio',
@@ -296,6 +326,7 @@ export async function generateStaticParams() {
 const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
 function staticArticleSchemas(slugStr, meta) {
+  const isSpatialCommerce = slugStr.startsWith('spatial-commerce');
   const isArchvizPresales = slugStr === 'real-time-archviz-vr-luxury-real-estate-presales-2026';
   const isLeap = slugStr.startsWith('leap-2026');
   const isWebGLVsUnreal = slugStr === 'webgl-vs-unreal-engine-3d-configurator';
@@ -311,8 +342,8 @@ function staticArticleSchemas(slugStr, meta) {
     title: meta.title,
     description: meta.description,
     image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
-    publishedAt: isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12')),
-    updatedAt: isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12')),
+    publishedAt: isSpatialCommerce ? '2026-10-26' : (isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'))),
+    updatedAt: isSpatialCommerce ? '2026-10-26' : (isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12'))),
     slug: slugStr,
   });
 
@@ -507,7 +538,23 @@ function staticArticleSchemas(slugStr, meta) {
     },
   ]);
 
+  const spatialCommerceFaq = buildFaqSchema([
+    {
+      q: 'What is spatial commerce and how does it differ from a static 3D render?',
+      a: 'Spatial commerce is interactive 3D product engagement in three-dimensional space with real-time configurability (web-based 3D configurators, WebAR overlays, and immersive VR showrooms) where buyers actively rotate, inspect, customize finishes, and test dimensions before purchase.',
+    },
+    {
+      q: 'How much do 3D configurators reduce returns in high-ticket B2B and luxury retail?',
+      a: 'Elipse Studio deployment benchmarks demonstrate a 38% reduction in post-delivery returns and specification disputes for industrial capital equipment, near-zero returns on configured automotive accessories, and a 31% return drop in luxury residential furnishings.',
+    },
+    {
+      q: 'What is the ROI and payback timeline for an enterprise 3D configurator?',
+      a: 'For luxury retail and industrial B2B with high average order values ($8,500+), return reductions alone generate over $213,000 in annual savings. A mid-complexity configurator ($30,000–$80,000) achieves full payback in 2 to 4 months.',
+    },
+  ]);
+
   let extraSchemas = [];
+  if (isSpatialCommerce) extraSchemas = [spatialCommerceFaq, authorSchema];
   if (isArchvizPresales) extraSchemas = [archvizPresalesFaq, authorSchema];
   if (isLeap) extraSchemas = [leapFaq, authorSchema];
   if (isWebGLVsUnreal) extraSchemas = [webglUnrealFaq, authorSchema];

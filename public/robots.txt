@@ -3,6 +3,7 @@ Disallow: /wp-admin
 Disallow: /wp-login.php
 Disallow: /wp-*.php
 Disallow: /products/*
+Disallow: /ctg/
 Disallow: /?*
 Allow: /
 

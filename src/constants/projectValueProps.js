@@ -1,6 +1,6 @@
 export const PROJECT_VALUE_PROPOSITIONS = {
   'volvo-configurator':
-    'Unreal Engine 5 Pixel Streaming configurator for Volvo S90 featuring photorealistic cloud rendering — 34% conversion uplift.',
+    'Internal studio capability benchmark testing Unreal Engine 5 cloud pixel streaming for luxury automotive customization, achieving sub-50ms WebRTC latency and photorealistic real-time ray-traced lighting.',
   'steering-configurator':
     'High-performance WebGL steering wheel customizer with dynamic materials, real-time lighting, and sub-second load times.',
   'ahmed-food':

@@ -56,7 +56,7 @@ const VideoHoverCard = ({ project, isLight }) => {
           ? `noopener noreferrer${project.category === 'Tour 360' ? ' nofollow' : ''}`
           : ''
       }
-      aria-label={`View project: ${stripHtml(project.title)}`}
+      aria-label={`View project: ${isVolvo ? 'Volvo S90 Interactive Configurator (Concept Demo)' : stripHtml(project.title)}`}
       className={`group block relative overflow-hidden border transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl aspect-[16/9] w-full ${isLightMode
         ? 'border-zinc-200 hover:border-zinc-300'
         : 'border-zinc-800 hover:border-zinc-700'
@@ -66,7 +66,7 @@ const VideoHoverCard = ({ project, isLight }) => {
         {imageSrc ? (
           <img
             src={imageSrc}
-            alt={stripHtml(project.title)}
+            alt={isVolvo ? 'Volvo S90 Interactive Configurator (Concept Demo)' : stripHtml(project.title)}
             loading="lazy"
             decoding="async"
             className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
@@ -75,10 +75,22 @@ const VideoHoverCard = ({ project, isLight }) => {
           <div className="absolute inset-0 bg-zinc-900" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
-          <h3 className="text-lg md:text-xl font-bold text-white mb-2">{renderCardTitle(project.title)}</h3>
+          {isVolvo && (
+            <div className="flex flex-wrap items-center gap-2 mb-2.5">
+              <span className="inline-flex items-center px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.08em] bg-[#141416] text-white border border-zinc-700/80 shadow-md">
+                UNREAL ENGINE 5 · PIXEL STREAMING
+              </span>
+              <span className="inline-flex items-center px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.08em] bg-[#141416] text-[#3B82F6] border border-[#3B82F6] shadow-md">
+                CONCEPT DEMO
+              </span>
+            </div>
+          )}
+          <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+            {isVolvo ? 'Volvo S90 Interactive Configurator' : renderCardTitle(project.title)}
+          </h3>
           <p className="text-zinc-300 text-xs md:text-sm mb-2 line-clamp-2">
             {isVolvo
-              ? 'Unreal Engine 5 Pixel Streaming configurator for Volvo S90 featuring photorealistic cloud rendering — 34% conversion uplift.'
+              ? 'Internal studio capability benchmark testing Unreal Engine 5 cloud pixel streaming for luxury automotive customization, achieving sub-50ms WebRTC latency and photorealistic real-time ray-traced lighting.'
               : getProjectValueProposition(project)}
           </p>
           <div className="pt-3 border-t border-zinc-700/50">

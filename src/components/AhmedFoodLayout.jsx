@@ -483,31 +483,29 @@ const AhmedFoodLayout = ({
             {validProcess.map((item, i) => {
               // Sizing logic:
               // count === 1: max-w-xl
-              // count === 2: half width
-              // count === 4: 4 columns on lg
+              // count === 2 or 4: Balanced 2-column grid (2x2 for 4 steps, roomy and elegant)
               // count === 5: Strictly 3 on row 1, 2 centered on row 2
+              // count === 3 or 6+: 3 columns on desktop
               const cardWidthClass =
                 count === 1
                   ? 'w-full max-w-xl'
-                  : count === 2
-                    ? 'w-full sm:w-[calc(50%-12px)] max-w-lg'
-                    : count === 4
-                      ? 'w-full sm:w-[calc(50%-12px)] lg:w-[calc((100%-3*24px)/4)]'
-                      : 'w-full sm:w-[calc(50%-12px)] lg:w-[calc((100%-2*24px)/3)]';
+                  : count === 2 || count === 4
+                    ? 'w-full sm:w-[calc(50%-12px)] lg:w-[calc(50%-16px)] max-w-2xl'
+                    : 'w-full sm:w-[calc(50%-12px)] lg:w-[calc((100%-2*24px)/3)]';
 
               return (
                 <div
                   key={i}
-                  className={`rounded-2xl p-6 sm:p-7 border shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#4169E1]/40 flex flex-col text-left ${
+                  className={`rounded-2xl p-6 sm:p-8 border shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#4169E1]/40 flex flex-col text-left ${
                     isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#141414] border-white/10'
                   } ${cardWidthClass}`}
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2.5 mb-4">
-                    <span className={`text-2xl sm:text-3xl font-black tracking-tight ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <span className={`text-2xl sm:text-3xl font-black tracking-tight shrink-0 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
                       {item.step || `0${i + 1}`}
                     </span>
                     {item.phase && (
-                      <span className={`text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-[0.08em] ${
+                      <span className={`text-[10px] sm:text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-[0.08em] whitespace-nowrap shrink-0 ${
                         isLight
                           ? 'bg-[#2563EB]/10 text-[#2563EB]'
                           : 'bg-[#4169E1]/15 text-[#4169E1] border border-[#4169E1]/30'
@@ -516,7 +514,7 @@ const AhmedFoodLayout = ({
                       </span>
                     )}
                   </div>
-                  <h3 className={`text-base sm:text-lg font-bold mb-2.5 leading-snug ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
+                  <h3 className={`text-base sm:text-xl font-bold mb-2.5 leading-snug ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
                     {item.title}
                   </h3>
                   <p className={`text-xs sm:text-sm font-light leading-relaxed flex-grow ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>

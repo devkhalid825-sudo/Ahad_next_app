@@ -38,13 +38,15 @@ import ahmedFoodRaw from '../assets/Ahmed-food/jam&spread/15.webp';
 
 import renderingRaw from '../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../assets/About-page/kia.webp';
+import spatialCommerceRaw from '../assets/About-page/spatial-commerce.png';
 import sharkRaw from '../assets/About-page/shark.webp';
 import marineRaw from '../assets/About-page/marine.webp';
 import timBarthRaw from '../assets/About-page/tim-barth.webp';
-import modernVillaRaw from '../assets/About-page/modern-villas.webp';
+import modernVillaRaw from '../assets/About-page/Nevegan.jpg';
 
 const modernVilla = getImgSrc(modernVillaRaw);
 const kia = getImgSrc(kiaRaw);
+const spatialCommerce = getImgSrc(spatialCommerceRaw);
 const shark = getImgSrc(sharkRaw);
 const rendering = getImgSrc(renderingRaw);
 const marine = getImgSrc(marineRaw);
@@ -76,6 +78,15 @@ const staticImages = {
 };
 
 const staticPosts = [
+    {
+        id: 'static-spatial-commerce-2026-benchmark',
+        title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: The 2026 Conversion and Return-Rate Benchmark Report',
+        excerpt: '$47,000 average return cost eliminated. Real-world benchmark data across automotive, luxury real estate, and industrial equipment: how 3D configurators lift conversions by 2.8x and cut return disputes by 38%.',
+        image: spatialCommerce,
+        date: 'OCTOBER 26, 2026',
+        category: 'Spatial Commerce & B2B',
+        url: '/blog/spatial-commerce-b2b-luxury-retail-2026-benchmark',
+    },
     {
         id: 'static-archviz-vr-presales-2026',
         title: 'Real-Time ArchViz & Spatial VR: How Luxury Real Estate Developers Presell Properties 6–12 Months Before Groundbreak',
