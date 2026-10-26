@@ -886,7 +886,7 @@ const AhmedFoodLayout = ({
     if (!rawTitle) return '';
     const accentClass = isLight ? 'text-[#2563EB]' : 'text-[#4169E1]';
 
-    // 1. Explicit HTML <br> or newline \n (Allows user to break exact lines from dashboard)
+    // 1. Explicit HTML <br> or newline \n (Allows user to intentionally break lines from dashboard)
     if (rawTitle.includes('<br') || rawTitle.includes('\n')) {
       const lines = rawTitle.split(/<br\s*\/?>|\n/gi);
       return (
@@ -903,66 +903,38 @@ const AhmedFoodLayout = ({
       );
     }
 
-    // 2. Separators: colon (:), dash (-), em-dash (—), or pipe (|)
+    // 2. Separators: colon (:), dash (-), em-dash (—), or pipe (|) — INLINE, so short titles stay on 1 line!
     const separatorMatch = rawTitle.match(/^([^:—–|\-]+)\s*[:—–|\-]\s*(.+)$/);
     if (separatorMatch) {
       const brand = separatorMatch[1].trim();
       const rest = separatorMatch[2].trim();
       return (
         <>
-          <span className="block">{brand}</span>
-          <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>{rest}</span>
+          <span>{brand}</span>{' '}
+          <span className={accentClass}>{rest}</span>
         </>
       );
     }
 
-    // 3. Smart brand detection for 2-line layout (e.g. "Ahmed Foods", "Rooh Afza", "Lahore Zoo & Safari")
+    // 3. Multi-word titles without separator — INLINE, so short titles stay on 1 line!
     const words = rawTitle.trim().split(/\s+/);
-    if (words.length >= 4) {
-      const firstTwo = `${words[0]} ${words[1]}`;
-      const firstFour = words.length >= 4 ? `${words[0]} ${words[1]} ${words[2]} ${words[3]}` : '';
-
-      if (firstTwo.toLowerCase() === 'ahmed foods' || firstTwo.toLowerCase() === 'rooh afza') {
-        return (
-          <>
-            <span className="block">{firstTwo}</span>
-            <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>
-              {words.slice(2).join(' ')}
-            </span>
-          </>
-        );
-      }
-
-      if (firstFour.toLowerCase() === 'lahore zoo & safari') {
-        return (
-          <>
-            <span className="block">{firstFour}</span>
-            <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>
-              {words.slice(4).join(' ')}
-            </span>
-          </>
-        );
-      }
-    }
-
-    // 4. Fallback for other multi-word titles
     if (words.length >= 3) {
-      const midStart = Math.min(2, Math.floor(words.length / 2));
+      const midStart = 1;
+      const midEnd = Math.min(words.length - 1, 3);
       return (
         <>
-          <span className="block">{words.slice(0, midStart).join(' ')}</span>
-          <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>
-            {words.slice(midStart).join(' ')}
-          </span>
+          <span>{words.slice(0, midStart).join(' ')}</span>{' '}
+          <span className={accentClass}>{words.slice(midStart, midEnd + 1).join(' ')}</span>{' '}
+          <span>{words.slice(midEnd + 1).join(' ')}</span>
         </>
       );
     }
 
     return (
-      <span>
-        {rawTitle}
+      <>
+        <span>{rawTitle}</span>
         <span className={accentClass}>.</span>
-      </span>
+      </>
     );
   };
 
