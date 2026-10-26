@@ -50,9 +50,11 @@ function staticProjectSchemas(slug, staticProject) {
 
 import { buildFaqSchema } from '@/seo/schemas';
 import { isProjectHidden } from '@/utils/projectVisibility';
+import { stripHtml } from '@/utils/formatTitle';
 
 function apiProjectSchemas(slug, data) {
-  const title = data.metaTitle || data.title;
+  const rawTitle = data.metaTitle || data.title;
+  const title = stripHtml(rawTitle);
   const uniqueValueProp = getProjectValueProposition({ ...data, slug });
   const rawDesc = data.description ? data.description.replace(/<[^>]*>/g, '') : '';
   const description = data.metaDescription || uniqueValueProp || rawDesc.slice(0, 160);

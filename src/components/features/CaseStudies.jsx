@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { apiCall, BACKEND_ORIGIN } from '@/utils/api';
+import { renderCardTitle, stripHtml } from '@/utils/formatTitle';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -186,7 +187,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                       <Link href={study.path} className="absolute inset-0 w-full h-full block">
                         <Image
                           src={study.image}
-                          alt={study.title}
+                          alt={stripHtml(study.title)}
                           fill
                           sizes="(max-width: 768px) 85vw, (max-width: 1200px) 50vw, 35vw"
                           priority={idx === 0}
@@ -196,7 +197,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
                         <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 p-6">
                           <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase text-center text-white">
-                            {study.title}
+                            {renderCardTitle(study.title)}
                           </h3>
                         </div>
                       </Link>
@@ -237,7 +238,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                         <Link href={study.path} className="absolute inset-0 w-full h-full block">
                           <Image
                             src={study.image}
-                            alt={study.title}
+                            alt={stripHtml(study.title)}
                             fill
                             sizes="(max-width: 768px) 65vw, (max-width: 1200px) 30vw, 25vw"
                             loading="lazy"
@@ -246,7 +247,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
                           <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 p-4">
                             <h3 className="text-sm sm:text-lg md:text-xl font-bold uppercase text-center text-white">
-                              {study.title}
+                              {renderCardTitle(study.title)}
                             </h3>
                           </div>
                         </Link>

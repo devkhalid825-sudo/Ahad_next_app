@@ -8,6 +8,7 @@ import { OverviewSection, ResultsSection, ProcessSection, GallerySection } from 
 import { projectList, caseStudyEntries } from "./projects/projectData";
 import { apiCall, getYoutubeEmbed, BACKEND_ORIGIN, toCdnUrl } from "../utils/api";
 import { getProjectValueProposition } from "@/constants/projectValueProps";
+import { stripHtml } from "@/utils/formatTitle";
 
 const allProjects = [...projectList, ...caseStudyEntries];
 const projectMap = Object.fromEntries(allProjects.map(p => [p.slug, p]));
@@ -68,7 +69,7 @@ const DynamicProjectView = ({ data, type = 'project' }) => {
         if (currentIdx !== -1 && list.length > 1) {
           const next = list[(currentIdx + 1) % list.length];
           setNextProject({
-            title: next.title,
+            title: stripHtml(next.title),
             path: next.path || (isCaseStudy ? `/case-study/${next.slug}` : `/project/${next.slug}`),
             image: next.image || next.heroImage || next.largeBanner,
           });

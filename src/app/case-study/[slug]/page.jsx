@@ -14,10 +14,12 @@ const getCaseStudy = cache(async (slug) => {
 });
 
 import { buildFaqSchema } from '@/seo/schemas';
+import { stripHtml } from '@/utils/formatTitle';
 
 function caseStudySchemas(slug, data) {
   const uniqueValueProp = getProjectValueProposition({ ...data, slug });
   const description = data.metaDescription || uniqueValueProp || (data.description || data.content || '').replace(/<[^>]*>/g, '').slice(0, 160);
+  const cleanTitle = stripHtml(data.metaTitle || data.title);
   
   let targetKeywords = data.targetKeywords || data.metaKeywords || '';
   let metaSec = {};
@@ -36,7 +38,7 @@ function caseStudySchemas(slug, data) {
   const defaultSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: data.metaTitle || data.title,
+    headline: cleanTitle,
     description,
     image: data.heroImage || data.largeBanner,
     ...(targetKeywords ? { keywords: targetKeywords } : {}),
@@ -52,7 +54,7 @@ function caseStudySchemas(slug, data) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
       { '@type': 'ListItem', position: 2, name: 'Case Studies', item: `${SITE_URL}/case-studies` },
-      { '@type': 'ListItem', position: 3, name: data.title, item: `${SITE_URL}/case-study/${slug}` },
+      { '@type': 'ListItem', position: 3, name: cleanTitle, item: `${SITE_URL}/case-study/${slug}` },
     ],
   };
 

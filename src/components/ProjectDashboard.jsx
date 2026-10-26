@@ -14,6 +14,7 @@ const categories = ['Configurator', 'Architecture', 'Animation'];
 export const defaultSectionOrder = ['storyBlocks', 'thumbnails', 'stills', 'results', 'process', 'content'];
 
 import { isProjectHidden } from '../utils/projectVisibility';
+import { stripHtml } from '@/utils/formatTitle';
 export { isProjectHidden };
 
 export const normalizeSectionOrder = (order) => {
@@ -209,7 +210,7 @@ const SortableProjectItem = ({ project, onEdit, onDelete, onMoveUp, onMoveDown, 
       </div>
       <div className="flex-1 min-w-0">
         <h4 className="text-xs md:text-base font-bold tracking-tight text-[#F2F0EB] truncate flex items-center gap-2">
-          <span className="truncate">{project.title}</span>
+          <span className="truncate">{stripHtml(project.title)}</span>
           {isHidden && (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[7px] md:text-[8px] font-bold uppercase tracking-wider rounded-md shrink-0">
               <FiEyeOff size={9} /> Hidden

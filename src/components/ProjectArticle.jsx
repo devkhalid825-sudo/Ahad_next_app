@@ -7,6 +7,7 @@ import { FiArrowLeft } from '@/components/ui/Icons';
 import { apiCall, getYoutubeEmbed, SITE_URL } from '../utils/api';
 import AhmedFoodLayout from './AhmedFoodLayout';
 import MobileMenu from './MobileMenu';
+import { stripHtml } from '@/utils/formatTitle';
 
 const safeJson = (val, fallback) => {
   if (!val) return fallback;
@@ -146,7 +147,7 @@ const ProjectArticle = ({ slug, initialData }) => {
         results={results}
         process={processSteps}
         galleryCategories={galleryCategories.length > 0 ? galleryCategories : undefined}
-        nextProject={nextProject ? { path: nextProject.path, name: nextProject.title } : undefined}
+        nextProject={nextProject ? { path: nextProject.path, name: stripHtml(nextProject.title) } : undefined}
         ctaUrl={project.ctaUrl || firstSec.ctaUrl || undefined}
         ctaText={project.ctaText || firstSec.ctaText || undefined}
         heroIntroText={firstSec.heroIntroText || project.heroIntroText}

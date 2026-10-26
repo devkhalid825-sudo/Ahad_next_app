@@ -60,6 +60,7 @@ export const CATEGORY_FALLBACKS = {
  */
 function normalizeSlug(slugOrPathOrTitle = '') {
   return String(slugOrPathOrTitle)
+    .replace(/<[^>]*>/g, ' ')
     .toLowerCase()
     .replace(/^https?:\/\/[^/]+/i, '')
     .replace(/^\/(project|case-study)\//i, '')

@@ -10,6 +10,7 @@ import { useTheme } from '@/components/providers/ThemeProvider';
 
 
 import { isProjectHidden } from '@/utils/projectVisibility';
+import { renderCardTitle, stripHtml } from '@/utils/formatTitle';
 
 const PILLAR_TABS = [
   { key: 'all', label: 'All Projects' },
@@ -55,7 +56,7 @@ const VideoHoverCard = ({ project, isLight }) => {
           ? `noopener noreferrer${project.category === 'Tour 360' ? ' nofollow' : ''}`
           : ''
       }
-      aria-label={`View project: ${project.title}`}
+      aria-label={`View project: ${stripHtml(project.title)}`}
       className={`group block relative overflow-hidden border transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl aspect-[16/9] w-full ${isLightMode
         ? 'border-zinc-200 hover:border-zinc-300'
         : 'border-zinc-800 hover:border-zinc-700'
@@ -65,7 +66,7 @@ const VideoHoverCard = ({ project, isLight }) => {
         {imageSrc ? (
           <img
             src={imageSrc}
-            alt={project.title}
+            alt={stripHtml(project.title)}
             loading="lazy"
             decoding="async"
             className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
@@ -74,7 +75,7 @@ const VideoHoverCard = ({ project, isLight }) => {
           <div className="absolute inset-0 bg-zinc-900" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
-          <h3 className="text-lg md:text-xl font-bold text-white mb-2">{project.title}</h3>
+          <h3 className="text-lg md:text-xl font-bold text-white mb-2">{renderCardTitle(project.title)}</h3>
           <p className="text-zinc-300 text-xs md:text-sm mb-2 line-clamp-2">
             {isVolvo
               ? 'Unreal Engine 5 Pixel Streaming configurator for Volvo S90 featuring photorealistic cloud rendering — 34% conversion uplift.'
@@ -186,7 +187,7 @@ const LatestWorkContent = ({ isLight = undefined, initialProjects = null }) => {
   const filteredProjects = projects.filter((project) => {
     if (pathname === project.path) return false;
     const matchesSearch =
-      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      stripHtml(project.title).toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.category.toLowerCase().includes(searchTerm.toLowerCase());
     if (searchTerm) return matchesSearch;
     if (activeTab === 'all') return true;

@@ -9,6 +9,7 @@ import AhmedFoodLayout from './AhmedFoodLayout';
 import MobileMenu from './MobileMenu';
 
 import { caseStudyEntries } from './projects/projectData';
+import { stripHtml } from '@/utils/formatTitle';
 
 const CaseStudyDetail = ({ slug, initialData }) => {
   const [cs, setCs] = useState(initialData || null);
@@ -177,7 +178,7 @@ const CaseStudyDetail = ({ slug, initialData }) => {
         calloutBody={parsedSections[0]?.calloutBody !== undefined ? parsedSections[0].calloutBody : cs.calloutBody}
         calloutButtonText={parsedSections[0]?.calloutButtonText !== undefined ? parsedSections[0].calloutButtonText : cs.calloutButtonText}
         calloutButtonUrl={parsedSections[0]?.calloutButtonUrl !== undefined ? parsedSections[0].calloutButtonUrl : cs.calloutButtonUrl}
-        nextProject={nextCs ? { path: `/case-study/${nextCs.slug}`, name: nextCs.title } : undefined}
+        nextProject={nextCs ? { path: `/case-study/${nextCs.slug}`, name: stripHtml(nextCs.title) } : undefined}
       />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </article>
