@@ -21,6 +21,7 @@ import ahmedFoodRaw from '../../assets/Ahmed-food/jam&spread/15.webp';
 import renderingImgRaw from '../../assets/Ahmed-food/jelly/03.webp';
 import kiaRaw from '../../assets/About-page/kia.webp';
 import spatialCommerceRaw from '../../assets/About-page/spatial-commerce.png';
+import highTicketRaw from '../../assets/About-page/high-ticket.png';
 import sharkRaw from '../../assets/About-page/shark.webp';
 import marineRaw from '../../assets/About-page/marine.webp';
 import timBarthRaw from '../../assets/About-page/tim-barth.webp';
@@ -41,6 +42,7 @@ const ahmedFoodImg = getImgSrc(ahmedFoodRaw);
 const renderingImg = getImgSrc(renderingImgRaw);
 const kiaImg = getImgSrc(kiaRaw);
 const spatialCommerceImg = getImgSrc(spatialCommerceRaw);
+const highTicketImg = getImgSrc(highTicketRaw);
 const shark = getImgSrc(sharkRaw);
 const marineImg = getImgSrc(marineRaw);
 const timBarth = getImgSrc(timBarthRaw);
@@ -106,7 +108,7 @@ const News = ({ initialBlogs = null }) => {
     {
       id: 34,
       title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: The 2026 Conversion and Return-Rate Benchmark Report',
-      image: spatialCommerceImg,
+      image: highTicketImg,
       date: 'OCTOBER 26, 2026',
       category: 'Spatial Commerce & B2B',
       readTime: '8 min read',

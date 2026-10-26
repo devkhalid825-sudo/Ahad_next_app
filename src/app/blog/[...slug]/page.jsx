@@ -56,7 +56,7 @@ const staticArticleMetadata = {
       'Bilal Lania',
     ],
     canonical: `${SITE_URL}/blog/spatial-commerce-b2b-luxury-retail-2026-benchmark`,
-    ogImage: `${SITE_URL}/assets/About-page/spatial-commerce.png`,
+    ogImage: `${SITE_URL}/assets/About-page/high-ticket.png`,
   },
   'spatial-commerce-2026-benchmark-report': {
     title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: 2026 Conversion & Return-Rate Benchmark Report | Elipse Studio',
@@ -68,7 +68,7 @@ const staticArticleMetadata = {
       'Elipse Studio',
     ],
     canonical: `${SITE_URL}/blog/spatial-commerce-b2b-luxury-retail-2026-benchmark`,
-    ogImage: `${SITE_URL}/assets/About-page/spatial-commerce.png`,
+    ogImage: `${SITE_URL}/assets/About-page/high-ticket.png`,
   },
   'real-time-archviz-vr-luxury-real-estate-presales-2026': {
     title: 'Real-Time ArchViz & Spatial VR: How Luxury Real Estate Developers Presell Properties 6–12 Months Before Groundbreak | Elipse Studio',
@@ -126,7 +126,7 @@ const staticArticleMetadata = {
       '3d vehicle customizer development',
       'automotive configurator conversion rate',
       'unreal engine 5 car configurator',
-      'webgl car visualizer',
+      'webgl car visualizer',   
       'Elipse Studio',
       'Bilal Lania',
     ],
