@@ -122,6 +122,7 @@ const AhmedFoodLayout = ({
   const [activeVideo, setActiveVideo] = useState(0);
   const [lightboxImg, setLightboxImg] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
   const themeContext = useTheme();
   const isLight = themeContext?.isLight || false;
 
@@ -461,54 +462,69 @@ const AhmedFoodLayout = ({
   };
 
   // Render Process Steps (How We Did It)
+  // Render Process Section (Balanced & Centered for any step count, including 5 steps)
   const renderProcess = () => {
     const validProcess = (process || []).filter(item => (item?.title && String(item.title).trim().length > 0) || (item?.phase && String(item.phase).trim().length > 0) || (item?.desc && String(item.desc).trim().length > 0));
     if (validProcess.length === 0) return null;
     const count = validProcess.length;
 
     return (
-      <section className={`px-4 sm:px-6 md:px-8 py-10 md:py-20 border-t transition-colors duration-300 ${isLight ? 'bg-white border-neutral-200' : 'bg-[#0D0D0D] border-white/5'}`}>
-        <div className={`w-full ${count <= 2 ? 'max-w-5xl mx-auto' : ''}`}>
-          <div className={count <= 2 ? 'text-center' : ''}>
-            <p className={`text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase mb-2 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
+      <section className={`px-4 sm:px-6 md:px-8 py-12 md:py-20 border-t transition-colors duration-300 ${isLight ? 'bg-white border-neutral-200' : 'bg-[#0D0D0D] border-white/5'}`}>
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+            <p className={`text-xs sm:text-[13px] font-bold tracking-[0.16em] uppercase mb-2.5 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
               {processEyebrow || 'How we did it'}
             </p>
-            <h2 className={`text-2xl sm:text-4xl lg:text-[44px] font-medium mb-8 md:mb-12 tracking-tight leading-tight ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
+            <h2 className={`text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight leading-tight ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
               {processHeading || 'Our process'}
             </h2>
           </div>
-          <div
-            className={
-              count === 1
-                ? 'flex justify-center'
-                : count === 2
-                  ? 'flex flex-wrap justify-center gap-4 md:gap-6'
-                  : count === 3
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
-                    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'
-            }
-          >
-            {validProcess.map((item, i) => (
-              <div
-                key={i}
-                className={`rounded-2xl p-6 border shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col text-left ${isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#1A1A1A] border-white/10'
-                  } ${count === 1
-                    ? 'w-full max-w-xl'
-                    : count === 2
-                      ? 'w-full sm:w-[calc(50%-12px)]'
-                      : ''
-                  }`}
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className={`text-2xl sm:text-3xl font-bold ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>{item.step}</span>
-                  {item.phase && (
-                    <span className={`text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-[0.08em] ${isLight ? 'text-[#2563EB] bg-[#2563EB]/10' : 'text-[#4169E1] bg-[#4169E1]/10'}`}>{item.phase}</span>
-                  )}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-6xl mx-auto">
+            {validProcess.map((item, i) => {
+              // Sizing logic:
+              // count === 1: max-w-xl
+              // count === 2: half width
+              // count === 4: 4 columns on lg
+              // count === 5: Strictly 3 on row 1, 2 centered on row 2
+              const cardWidthClass =
+                count === 1
+                  ? 'w-full max-w-xl'
+                  : count === 2
+                    ? 'w-full sm:w-[calc(50%-12px)] max-w-lg'
+                    : count === 4
+                      ? 'w-full sm:w-[calc(50%-12px)] lg:w-[calc((100%-3*24px)/4)]'
+                      : 'w-full sm:w-[calc(50%-12px)] lg:w-[calc((100%-2*24px)/3)]';
+
+              return (
+                <div
+                  key={i}
+                  className={`rounded-2xl p-6 sm:p-7 border shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#4169E1]/40 flex flex-col text-left ${
+                    isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#141414] border-white/10'
+                  } ${cardWidthClass}`}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2.5 mb-4">
+                    <span className={`text-2xl sm:text-3xl font-black tracking-tight ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
+                      {item.step || `0${i + 1}`}
+                    </span>
+                    {item.phase && (
+                      <span className={`text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-[0.08em] ${
+                        isLight
+                          ? 'bg-[#2563EB]/10 text-[#2563EB]'
+                          : 'bg-[#4169E1]/15 text-[#4169E1] border border-[#4169E1]/30'
+                      }`}>
+                        {item.phase}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className={`text-base sm:text-lg font-bold mb-2.5 leading-snug ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
+                    {item.title}
+                  </h3>
+                  <p className={`text-xs sm:text-sm font-light leading-relaxed flex-grow ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                    {item.desc}
+                  </p>
                 </div>
-                <h3 className={`text-base sm:text-lg font-semibold mb-2 ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>{item.title}</h3>
-                <p className={`text-xs sm:text-sm font-light leading-relaxed flex-grow ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -550,7 +566,7 @@ const AhmedFoodLayout = ({
                     className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
                       isLight
                         ? 'bg-[#EBF2FF] text-[#2563EB] border-[#BFDBFE]'
-                        : 'bg-[#4169E1]/15 text-[#60a5fa] border-[#4169E1]/35'
+                        : 'bg-[#4169E1]/15 text-[#4169E1] border-[#4169E1]/35'
                     }`}
                   >
                     {tool}
@@ -564,7 +580,7 @@ const AhmedFoodLayout = ({
     );
   };
 
-  // Render FAQ Section
+  // Render FAQ Section as Sleek Accordion in a Card Box (Matching Formal Project Credits Box)
   const renderFaq = () => {
     const list = Array.isArray(faqItems)
       ? faqItems.filter((item) => item && (item.q || item.a))
@@ -573,21 +589,71 @@ const AhmedFoodLayout = ({
 
     return (
       <section className={`px-4 sm:px-6 md:px-8 py-10 md:py-16 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-[#0D0D0D]'}`}>
-        <div className="w-full max-w-4xl mx-auto text-center">
-          <h2 className={`text-3xl sm:text-5xl font-extrabold tracking-tight mb-8 sm:mb-10 ${isLight ? 'text-neutral-900' : 'text-white'}`}>
-            {faqHeading || 'FAQ'}
-          </h2>
-          <div className="space-y-8 sm:space-y-10">
-            {list.map((item, idx) => (
-              <div key={idx} className="max-w-3xl mx-auto space-y-3">
-                <h3 className={`text-base sm:text-lg font-bold ${isLight ? 'text-neutral-900' : 'text-white'}`}>
-                  {item.q.startsWith('Q:') ? item.q : `Q: ${item.q}`}
-                </h3>
-                <p className={`text-sm sm:text-base font-normal leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-300'}`}>
-                  {item.a}
-                </p>
-              </div>
-            ))}
+        <div className="w-full max-w-4xl mx-auto">
+          <div className={`p-8 sm:p-12 rounded-3xl border transition-all shadow-sm ${
+            isLight ? 'bg-white border-neutral-200' : 'bg-[#141414] border-white/10'
+          }`}>
+            <div className="text-center mb-8 sm:mb-10">
+              <p className={`text-[11px] sm:text-[12px] font-bold tracking-[0.2em] uppercase mb-3 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
+                FAQ
+              </p>
+              <h3 className={`text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 ${isLight ? 'text-neutral-900' : 'text-white'}`}>
+                {faqHeading || 'Frequently Asked Questions'}
+              </h3>
+            </div>
+            <div className="w-full divide-y divide-transparent">
+              {list.map((item, idx) => {
+                const cleanQ = (item.q || '').replace(/^Q:\s*/i, '').trim();
+                const cleanA = (item.a || '').replace(/^A:\s*/i, '').trim();
+                const isOpen = openFaq === idx;
+
+                return (
+                  <div
+                    key={idx}
+                    className={`border-b transition-colors duration-200 ${
+                      isLight ? 'border-neutral-200' : 'border-white/10'
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? null : idx)}
+                      className="w-full flex items-center justify-between gap-4 py-4 sm:py-5 text-left cursor-pointer group transition-all"
+                      aria-expanded={isOpen}
+                    >
+                      <span
+                        className={`text-base sm:text-lg font-medium pr-4 transition-colors ${
+                          isLight
+                            ? isOpen ? 'text-[#2563EB] font-semibold' : 'text-neutral-900 group-hover:text-[#2563EB]'
+                            : isOpen ? 'text-[#4169E1] font-semibold' : 'text-[#F2F0EB] group-hover:text-white'
+                        }`}
+                      >
+                        {cleanQ}
+                      </span>
+                      <span
+                        className={`text-2xl font-light transition-transform duration-300 shrink-0 select-none ${
+                          isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'
+                        } ${isOpen ? 'rotate-45' : ''}`}
+                      >
+                        +
+                      </span>
+                    </button>
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ${
+                        isOpen ? 'max-h-[800px] opacity-100 pb-5' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <p
+                        className={`text-sm sm:text-base font-light leading-relaxed whitespace-pre-line text-left ${
+                          isLight ? 'text-zinc-600' : 'text-zinc-300'
+                        }`}
+                      >
+                        {cleanA}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -663,7 +729,7 @@ const AhmedFoodLayout = ({
       );
     }
 
-    // 2. Transform plain "FAQ" into styled FAQ card list
+    // 2. Transform plain "FAQ" into styled FAQ accordion list
     if (!out.includes('project-faq-section')) {
       out = out.replace(
         /<h[2-4][^>]*>\s*(FAQ|Frequently Asked Questions)\s*<\/h[2-4]>([\s\S]*?)(?=(?:<h[1-4]|$))/i,
@@ -672,24 +738,27 @@ const AhmedFoodLayout = ({
           let cards = '';
           let m;
           while ((m = qRegex.exec(body)) !== null) {
-            const q = m[1].replace(/<\/?[^>]+(>|$)/g, '').trim();
-            const a = m[2].replace(/<\/?[^>]+(>|$)/g, '').trim();
+            const q = m[1].replace(/<\/?[^>]+(>|$)/g, '').replace(/^Q:\s*/i, '').trim();
+            const a = m[2].replace(/<\/?[^>]+(>|$)/g, '').replace(/^A:\s*/i, '').trim();
             if (q && a) {
               cards += `
-                <div class="faq-card">
-                  <h4 class="faq-question"><span class="faq-q-badge">Q</span><span>${q}</span></h4>
-                  <div class="faq-answer">${a}</div>
-                </div>
+                <details class="faq-accordion-item">
+                  <summary class="faq-accordion-summary">
+                    <span class="faq-question-text">${q}</span>
+                    <span class="faq-accordion-plus">+</span>
+                  </summary>
+                  <div class="faq-accordion-body">${a}</div>
+                </details>
               `;
             }
           }
 
           if (cards) {
             return `
-              <div class="project-faq-section">
-                <p class="faq-eyebrow">AEO & SEARCH DISCOVERY</p>
-                <h3 class="faq-heading">${faqHeading}</h3>
-                <div class="faq-cards-container">
+              <div class="project-faq-section max-w-4xl mx-auto my-12">
+                <p class="faq-eyebrow text-center">FAQ</p>
+                <h3 class="faq-heading text-center">${faqHeading}</h3>
+                <div class="faq-accordion-container">
                   ${cards}
                 </div>
               </div>
@@ -816,32 +885,84 @@ const AhmedFoodLayout = ({
   const renderStyledTitle = (rawTitle) => {
     if (!rawTitle) return '';
     const accentClass = isLight ? 'text-[#2563EB]' : 'text-[#4169E1]';
-    const parts = rawTitle.split(/[:—–-]/);
-    if (parts.length > 1) {
+
+    // 1. Explicit HTML <br> or newline \n (Allows user to break exact lines from dashboard)
+    if (rawTitle.includes('<br') || rawTitle.includes('\n')) {
+      const lines = rawTitle.split(/<br\s*\/?>|\n/gi);
       return (
         <>
-          <span>{parts[0].trim()}</span>{' '}
-          <span className={accentClass}>{parts.slice(1).join(' ').trim()}</span>
+          {lines.map((line, idx) => (
+            <span
+              key={idx}
+              className={`block ${idx > 0 ? `${accentClass} mt-1 sm:mt-1.5` : ''}`}
+            >
+              {line.trim()}
+            </span>
+          ))}
         </>
       );
     }
-    const words = rawTitle.split(' ');
+
+    // 2. Separators: colon (:), dash (-), em-dash (—), or pipe (|)
+    const separatorMatch = rawTitle.match(/^([^:—–|\-]+)\s*[:—–|\-]\s*(.+)$/);
+    if (separatorMatch) {
+      const brand = separatorMatch[1].trim();
+      const rest = separatorMatch[2].trim();
+      return (
+        <>
+          <span className="block">{brand}</span>
+          <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>{rest}</span>
+        </>
+      );
+    }
+
+    // 3. Smart brand detection for 2-line layout (e.g. "Ahmed Foods", "Rooh Afza", "Lahore Zoo & Safari")
+    const words = rawTitle.trim().split(/\s+/);
+    if (words.length >= 4) {
+      const firstTwo = `${words[0]} ${words[1]}`;
+      const firstFour = words.length >= 4 ? `${words[0]} ${words[1]} ${words[2]} ${words[3]}` : '';
+
+      if (firstTwo.toLowerCase() === 'ahmed foods' || firstTwo.toLowerCase() === 'rooh afza') {
+        return (
+          <>
+            <span className="block">{firstTwo}</span>
+            <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>
+              {words.slice(2).join(' ')}
+            </span>
+          </>
+        );
+      }
+
+      if (firstFour.toLowerCase() === 'lahore zoo & safari') {
+        return (
+          <>
+            <span className="block">{firstFour}</span>
+            <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>
+              {words.slice(4).join(' ')}
+            </span>
+          </>
+        );
+      }
+    }
+
+    // 4. Fallback for other multi-word titles
     if (words.length >= 3) {
-      const midStart = 1;
-      const midEnd = Math.min(words.length - 1, 3);
+      const midStart = Math.min(2, Math.floor(words.length / 2));
       return (
         <>
-          {words.slice(0, midStart).join(' ')}{' '}
-          <span className={accentClass}>{words.slice(midStart, midEnd + 1).join(' ')}</span>{' '}
-          {words.slice(midEnd + 1).join(' ')}
+          <span className="block">{words.slice(0, midStart).join(' ')}</span>
+          <span className={`block mt-1 sm:mt-1.5 ${accentClass}`}>
+            {words.slice(midStart).join(' ')}
+          </span>
         </>
       );
     }
+
     return (
-      <>
+      <span>
         {rawTitle}
         <span className={accentClass}>.</span>
-      </>
+      </span>
     );
   };
 
@@ -876,10 +997,11 @@ const AhmedFoodLayout = ({
 
         <div className="max-w-[1600px] 2xl:max-w-[1920px] min-[2200px]:max-w-[2200px] mx-auto flex flex-col items-center text-center w-full px-0 sm:px-6 my-auto">
 
-          {/* ── Main Center Headline ── */}
+          {/* ── Main Center Headline (30% smaller, balanced 2-line layout with brand on Line 1 & project on Line 2) ── */}
           <h1
-            style={titleFontSizeStyle}
-            className={`font-bold tracking-tight w-full max-w-full text-center leading-tight mb-2 sm:mb-3 px-1 sm:px-4 break-words whitespace-normal sm:whitespace-nowrap ${isLight ? 'text-neutral-900' : 'text-white'}`}
+            className={`text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[45px] font-extrabold tracking-tight w-full max-w-4xl lg:max-w-5xl mx-auto text-center leading-[1.18] sm:leading-[1.2] mb-3 sm:mb-5 px-2 sm:px-4 break-words ${
+              isLight ? 'text-neutral-900' : 'text-white'
+            }`}
           >
             {renderStyledTitle(title)}
           </h1>
@@ -1208,36 +1330,7 @@ const AhmedFoodLayout = ({
         </section>
       )}
 
-      {/* CTA / BOTTOM NAVIGATION */}
-      <footer className={`px-4 sm:px-6 md:px-8 py-5 sm:py-6 md:py-8 border-t border-b transition-colors duration-300 ${isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#0D0D0D] border-white/5'
-        }`}>
-        <div className="flex items-center justify-between gap-3 w-full">
-          <div>
-            <button
-              className={`inline-flex items-center gap-2 text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2.5 rounded-full border transition-all duration-200 cursor-pointer active:scale-95 ${isLight
-                ? 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-400 hover:text-black shadow-sm'
-                : 'border-white/10 bg-[#141414] text-zinc-300 hover:border-white/30 hover:text-white shadow-sm'
-                }`}
-              onClick={() => router.push('/')}
-            >
-              <FaThLarge aria-hidden="true" className="text-xs" /> All work
-            </button>
-          </div>
 
-          {/* Right side: 1 button (Next Project) */}
-          {nextProject && (
-            <div>
-              <button
-                className="group inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold px-5 sm:px-6 py-2.5 bg-gradient-to-r from-[#2563EB] to-[#4169E1] hover:from-[#1D4ED8] hover:to-[#3158D4] text-white rounded-full shadow-[0_0_15px_rgba(65,105,225,0.4)] hover:shadow-[0_0_20px_rgba(65,105,225,0.6)] transition-all duration-200 border-none cursor-pointer active:scale-95 shrink-0"
-                onClick={() => router.push(nextProject.path)}
-              >
-                <span>Next Project</span>
-                <span className="transition-transform group-hover:translate-x-0.5">→</span>
-              </button>
-            </div>
-          )}
-        </div>
-      </footer>
 
       {/* COMMERCIAL CALLOUT BANNER (DIRECTLY ABOVE RELATED WORK) */}
       {(() => {

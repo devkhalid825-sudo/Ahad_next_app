@@ -184,13 +184,11 @@ const SortableProjectItem = ({ project, onEdit, onDelete, onMoveUp, onMoveDown, 
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-[#111] border p-3 md:p-5 rounded-[1rem] md:rounded-[1.5rem] transition-all flex items-center gap-2 md:gap-4 group ${
-        isDragging ? 'shadow-[0_0_30px_rgba(65,105,225,0.15)] border-[#4169E1]/50' : ''
-      } ${
-        isHidden
+      className={`bg-[#111] border p-3 md:p-5 rounded-[1rem] md:rounded-[1.5rem] transition-all flex items-center gap-2 md:gap-4 group ${isDragging ? 'shadow-[0_0_30px_rgba(65,105,225,0.15)] border-[#4169E1]/50' : ''
+        } ${isHidden
           ? 'border-amber-500/30 opacity-70 hover:opacity-100 hover:border-amber-500/50'
           : 'border-[#222] hover:border-[#4169E1]/40'
-      }`}
+        }`}
     >
       <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing p-1 md:p-1.5 text-[#555] hover:text-[#4169E1] transition-colors shrink-0">
         <FiMove className="text-sm md:text-lg" />
@@ -238,11 +236,10 @@ const SortableProjectItem = ({ project, onEdit, onDelete, onMoveUp, onMoveDown, 
         <button
           type="button"
           onClick={() => onToggleHide(project)}
-          className={`p-1.5 md:p-2.5 rounded-lg md:rounded-xl transition-all ${
-            isHidden
-              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30'
-              : 'text-[#555] bg-[#1A1A1A] hover:text-[#4169E1] hover:bg-[#1A1A1A]'
-          }`}
+          className={`p-1.5 md:p-2.5 rounded-lg md:rounded-xl transition-all ${isHidden
+            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30'
+            : 'text-[#555] bg-[#1A1A1A] hover:text-[#4169E1] hover:bg-[#1A1A1A]'
+            }`}
           title={isHidden ? 'Hidden from website (Click to Make Visible)' : 'Visible on website (Click to Hide)'}
         >
           {isHidden ? <FiEyeOff className="text-[10px] md:text-sm" /> : <FiEye className="text-[10px] md:text-sm" />}
@@ -936,11 +933,10 @@ const ProjectDashboard = () => {
                 <button
                   type="button"
                   onClick={() => setForm(f => ({ ...f, hidden: !f.hidden }))}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all border ${
-                    form.hidden
-                      ? 'bg-amber-500/20 border-amber-500/40 text-amber-300 hover:bg-amber-500/30'
-                      : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30'
-                  }`}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all border ${form.hidden
+                    ? 'bg-amber-500/20 border-amber-500/40 text-amber-300 hover:bg-amber-500/30'
+                    : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30'
+                    }`}
                 >
                   {form.hidden ? <FiEyeOff size={12} /> : <FiEye size={12} />}
                   <span>{form.hidden ? 'Hidden' : 'Visible'}</span>
@@ -964,9 +960,8 @@ const ProjectDashboard = () => {
                             const current = form.category ? form.category.split(',').map(s => s.trim()).filter(Boolean) : [];
                             const next = selected ? current.filter(x => x !== c) : [...current, c];
                             setForm(f => ({ ...f, category: next.join(', ') }));
-                          }} className={`text-[10px] font-bold uppercase tracking-[0.12em] px-3.5 py-2 rounded-xl border transition-all ${
-                            selected ? 'bg-[#4169E1] text-white border-[#4169E1]' : 'bg-[#1A1A1A] text-[#555] border-[#333] hover:border-[#4169E1]/50'
-                          }`}>{c}</button>
+                          }} className={`text-[10px] font-bold uppercase tracking-[0.12em] px-3.5 py-2 rounded-xl border transition-all ${selected ? 'bg-[#4169E1] text-white border-[#4169E1]' : 'bg-[#1A1A1A] text-[#555] border-[#333] hover:border-[#4169E1]/50'
+                            }`}>{c}</button>
                         );
                       })}
                     </div>
@@ -1024,11 +1019,10 @@ const ProjectDashboard = () => {
                         key={r.id}
                         type="button"
                         onClick={() => setForm(f => ({ ...f, heroAspectRatio: r.id }))}
-                        className={`text-left p-3 rounded-xl border transition-all ${
-                          (form.heroAspectRatio || 'video') === r.id
-                            ? 'bg-[#4169E1]/20 border-[#4169E1] text-white'
-                            : 'bg-[#1A1A1A] border-[#333] text-[#888] hover:border-[#555] hover:text-[#ccc]'
-                        }`}
+                        className={`text-left p-3 rounded-xl border transition-all ${(form.heroAspectRatio || 'video') === r.id
+                          ? 'bg-[#4169E1]/20 border-[#4169E1] text-white'
+                          : 'bg-[#1A1A1A] border-[#333] text-[#888] hover:border-[#555] hover:text-[#ccc]'
+                          }`}
                       >
                         <div className="text-[11px] font-bold">{r.label}</div>
                         <div className="text-[8px] text-[#666] mt-0.5">{r.desc}</div>
@@ -1074,11 +1068,10 @@ const ProjectDashboard = () => {
                     <div className="space-y-3">
                       <input type="text" value={form.heroVideo} onChange={(e) => setForm(f => ({ ...f, heroVideo: e.target.value }))} className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-[#F2F0EB] focus:border-[#4169E1] outline-none transition-all text-xs placeholder:text-[#444]" placeholder="Video URL (YouTube / Shorts / MP4 link)" />
                       {form.heroVideo && (
-                        <div className={`mx-auto rounded-xl overflow-hidden border border-[#333] bg-[#0D0D0D] ${
-                          form.heroAspectRatio === 'reel' ? 'max-w-[260px] aspect-[9/16]' :
+                        <div className={`mx-auto rounded-xl overflow-hidden border border-[#333] bg-[#0D0D0D] ${form.heroAspectRatio === 'reel' ? 'max-w-[260px] aspect-[9/16]' :
                           form.heroAspectRatio === 'square' ? 'max-w-[340px] aspect-square' :
-                          'w-full aspect-video'
-                        }`}>
+                            'w-full aspect-video'
+                          }`}>
                           <iframe src={getYoutubeEmbed(form.heroVideo)} className="w-full h-full" allowFullScreen></iframe>
                         </div>
                       )}

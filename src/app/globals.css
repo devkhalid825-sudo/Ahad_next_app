@@ -1828,7 +1828,7 @@ html.dark .credits-label {
 [data-theme='dark'] .tool-badge,
 html.dark .tool-badge {
   background-color: rgba(65, 105, 225, 0.15);
-  color: #60a5fa;
+  color: #4169e1;
   border-color: rgba(65, 105, 225, 0.3);
 }
 .dark .tool-badge:hover,
@@ -1839,6 +1839,83 @@ html.dark .tool-badge:hover {
 
 .project-faq-section {
   margin: 3rem 0;
+}
+.faq-box-card {
+  padding: 2.5rem 3rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #141414;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+.light .faq-box-card,
+[data-theme='light'] .faq-box-card {
+  border-color: #e5e7eb;
+  background-color: #ffffff;
+}
+.faq-accordion-container {
+  display: flex;
+  flex-direction: column;
+}
+.faq-accordion-item {
+  border-bottom: 1px solid #1a1a1a;
+  transition: all 0.2s ease;
+}
+.light .faq-accordion-item,
+[data-theme='light'] .faq-accordion-item {
+  border-bottom-color: #e5e7eb;
+}
+.faq-accordion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #f2f0eb;
+  transition: color 0.2s;
+}
+.faq-accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.light .faq-accordion-summary,
+[data-theme='light'] .faq-accordion-summary {
+  color: #111827;
+}
+.faq-accordion-summary:hover {
+  color: #ffffff;
+}
+.light .faq-accordion-summary:hover,
+[data-theme='light'] .faq-accordion-summary:hover {
+  color: #2563eb;
+}
+.faq-accordion-plus {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #4169e1;
+  transition: transform 0.25s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+.light .faq-accordion-plus,
+[data-theme='light'] .faq-accordion-plus {
+  color: #2563eb;
+}
+.faq-accordion-item[open] .faq-accordion-plus {
+  transform: rotate(45deg);
+}
+.faq-accordion-body {
+  padding-bottom: 1.5rem;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+.light .faq-accordion-body,
+[data-theme='light'] .faq-accordion-body {
+  color: #4b5563;
 }
 .faq-eyebrow {
   font-size: 0.75rem;
