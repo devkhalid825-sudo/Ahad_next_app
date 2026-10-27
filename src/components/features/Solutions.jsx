@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 
 import kiaConfiguratorImg from '@/assets/About-page/khalid.webp';
 import zenithImg from '@/assets/About-page/interactive.webp';
-import cgiJellyImg from '@/assets/About-page/jelly.webp';
+import cgiJellyImg from '@/assets/About-page/malka.png';
 
 const solutionsCards = [
   {
@@ -50,7 +50,7 @@ const solutionsCards = [
     description:
       'We craft cinema-caliber CGI that commands audience attention and elevates brand value.',
     image: cgiJellyImg,
-    alt: 'Ahmed Foods Commercial 3D Product CGI & Fluid Simulation',
+    alt: 'Malka Foods Commercial 3D Product CGI & Fluid Simulation',
     videoUrl: 'https://youtu.be/BsKw4i6riRw?si=mS2PuOxRmvKKElpR',
     metaLabel: 'DELIVERABLES',
     pills: [
