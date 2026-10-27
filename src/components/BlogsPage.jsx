@@ -44,7 +44,9 @@ import sharkRaw from '../assets/About-page/shark.webp';
 import marineRaw from '../assets/About-page/marine.webp';
 import timBarthRaw from '../assets/About-page/tim-barth.webp';
 import modernVillaRaw from '../assets/About-page/Nevegan.jpg';
+import jetourRaw from '../assets/About-page/Jetour.webp';
 
+const jetour = getImgSrc(jetourRaw);
 const modernVilla = getImgSrc(modernVillaRaw);
 const kia = getImgSrc(kiaRaw);
 const spatialCommerce = getImgSrc(spatialCommerceRaw);
@@ -80,6 +82,15 @@ const staticImages = {
 };
 
 const staticPosts = [
+    {
+        id: 'static-ue5-pixel-streaming-vs-webgl-2026',
+        title: 'Unreal Engine 5 Pixel Streaming vs WebGL: The Enterprise Decision Framework for Interactive 3D (2026)',
+        excerpt: 'Client-side WebGL or cloud GPU pixel streaming? Complete breakdown using real benchmarks: BMW M-Performance (sub-2MB, 60 FPS mobile) vs Volvo S90 (AWS G5 Lumen ray tracing). Costs, latency, and conversion math.',
+        image: jetour,
+        date: 'OCTOBER 27, 2026',
+        category: '3D Engine Architecture',
+        url: '/blog/unreal-engine-5-pixel-streaming-vs-webgl-2026',
+    },
     {
         id: 'static-spatial-commerce-2026-benchmark',
         title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: The 2026 Conversion and Return-Rate Benchmark Report',

@@ -13,6 +13,7 @@ const staticBlogSlugs = [
   'why-product-photography-budget-3d-rendering-2026',
   'virtual-showrooms-vs-physical-retail-2026-roi-guide',
   'leap-2026-wrap-up',
+  'unreal-engine-5-pixel-streaming-vs-webgl-2026',
   'webgl-vs-unreal-engine-3d-configurator',
   'web-based-configurator',
   'immersive-ar-marketing',

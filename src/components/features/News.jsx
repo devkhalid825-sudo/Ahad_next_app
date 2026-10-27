@@ -27,7 +27,9 @@ import marineRaw from '../../assets/About-page/marine.webp';
 import timBarthRaw from '../../assets/About-page/tim-barth.webp';
 import modernVillaRaw from '../../assets/About-page/Nevegan.jpg';
 import furnitureRaw from '../../assets/ElipseImages/blogs/alnoor.webp';
+import jetourRaw from '../../assets/About-page/Jetour.webp';
 
+const jetourImg = getImgSrc(jetourRaw);
 const modernVilla = getImgSrc(modernVillaRaw);
 const furnitureImg = getImgSrc(furnitureRaw);
 const articleImg1 = getImgSrc(articleImg1Raw);
@@ -105,6 +107,15 @@ const News = ({ initialBlogs = null }) => {
   }, []);
 
   const staticPosts = [
+    {
+      id: 35,
+      title: 'Unreal Engine 5 Pixel Streaming vs WebGL: The Enterprise Decision Framework for Interactive 3D (2026)',
+      image: jetourImg,
+      date: 'OCTOBER 27, 2026',
+      category: '3D Engine Architecture',
+      readTime: '12 min read',
+      url: '/blog/unreal-engine-5-pixel-streaming-vs-webgl-2026',
+    },
     {
       id: 34,
       title: 'Spatial Commerce for High-Ticket B2B & Luxury Retail: The 2026 Conversion and Return-Rate Benchmark Report',
