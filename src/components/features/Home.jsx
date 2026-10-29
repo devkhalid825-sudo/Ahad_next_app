@@ -70,10 +70,10 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
             <p className="text-gray-400 text-xs md:text-base max-w-xl mx-auto mb-5 md:mb-8">
               Get a free sample render or ballpark estimate &mdash; no commitment required
             </p>
-            <div className="flex flex-row items-center justify-center gap-2 xs:gap-2.5 sm:gap-3 md:gap-4 max-w-full">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-xs sm:max-w-none mx-auto">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center text-center whitespace-nowrap bg-[#4169E1] hover:bg-[#3558c8] text-white px-3.5 py-2.5 xs:px-4 xs:py-2.5 sm:px-7 sm:py-3.5 md:px-10 md:py-4 rounded-full text-[11px] xs:text-xs sm:text-sm md:text-base font-semibold transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 transform hover:-translate-y-0.5"
+                className="w-full sm:w-auto inline-flex items-center justify-center text-center whitespace-nowrap bg-[#4169E1] hover:bg-[#3558c8] text-white px-6 py-3.5 sm:px-8 sm:py-3.5 md:px-10 md:py-4 rounded-full text-xs sm:text-sm md:text-base font-semibold transition-all shadow-lg shadow-[#4169E1]/30 hover:shadow-[#4169E1]/50 transform hover:-translate-y-0.5"
               >
                 Book Project Consultation
               </Link>
@@ -81,7 +81,7 @@ const Home = ({ initialFeatured, initialProjects, initialReviews, initialBlogs, 
                 href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center text-center whitespace-nowrap px-3.5 py-2.5 xs:px-4 xs:py-2.5 sm:px-7 sm:py-3.5 md:px-10 md:py-4 border border-white/20 text-white/80 hover:text-white hover:border-white/40 rounded-full text-[11px] xs:text-xs sm:text-sm md:text-base font-semibold transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center text-center whitespace-nowrap px-6 py-3.5 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/10 text-white rounded-full text-xs sm:text-sm md:text-base font-semibold transition-all backdrop-blur-sm"
               >
                 Schedule a Quick Call
               </a>

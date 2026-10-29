@@ -1,7 +1,7 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArticleProgress } from './articles/articleHelpers';
 import { FiArrowLeft } from '@/components/ui/Icons';
 import { apiCall, getYoutubeEmbed, SITE_URL, toCdnUrl } from '../utils/api';

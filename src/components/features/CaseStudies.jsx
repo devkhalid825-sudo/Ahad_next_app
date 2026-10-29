@@ -181,7 +181,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                 onSwiper={(swiper) => (topSwiperRef.current = swiper)}
                 className="!overflow-visible"
               >
-                {[...topItems, ...topItems].map((study, idx) => (
+                {topItems.map((study, idx) => (
                   <SwiperSlide key={`top-${idx}`}>
                     <div className="w-full aspect-video relative overflow-hidden group cursor-pointer">
                       <Link href={study.path} className="absolute inset-0 w-full h-full block">
@@ -232,7 +232,7 @@ const CaseStudies = ({ isLight = false, initialFeatured = null }) => {
                   onSwiper={(swiper) => (bottomSwiperRef.current = swiper)}
                   className="!overflow-visible"
                 >
-                  {[...bottomItems, ...bottomItems].map((study, idx) => (
+                  {bottomItems.map((study, idx) => (
                     <SwiperSlide key={`bottom-${idx}`}>
                       <div className="w-full aspect-video relative overflow-hidden group cursor-pointer">
                         <Link href={study.path} className="absolute inset-0 w-full h-full block">

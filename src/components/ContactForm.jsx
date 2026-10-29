@@ -172,10 +172,14 @@ const ContactForm = () => {
         setSubmitStatus(null);
     };
 
-    const inputClass = (name) =>
-        `w-full bg-white/[0.06] border rounded-xl py-3 px-3.5 sm:py-3.5 sm:px-4 focus:border-[#4169E1] outline-none transition-colors text-xs sm:text-sm md:text-base placeholder:text-gray-500 ${
-            errors[name] && touched[name] ? 'border-red-500/70' : 'border-white/[0.08]'
-        }`;
+    const inputClass = (name) => {
+        const hasError = errors[name] && touched[name];
+        const base = 'w-full border rounded-xl py-3 px-3.5 sm:py-3.5 sm:px-4 focus:border-[#4169E1] outline-none transition-colors text-xs sm:text-sm md:text-base';
+        if (isLight) {
+            return `${base} bg-gray-100 text-gray-900 placeholder:text-gray-400 ${hasError ? 'border-red-500/70' : 'border-gray-300'}`;
+        }
+        return `${base} bg-white/[0.06] text-white placeholder:text-gray-500 ${hasError ? 'border-red-500/70' : 'border-white/[0.08]'}`;
+    };
 
     const [activeTab, setActiveTab] = useState('form'); // 'form' | 'calendly'
 
@@ -258,7 +262,7 @@ const ContactForm = () => {
                         )}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-x-6 gap-y-4 sm:gap-y-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-4 md:gap-x-6 gap-y-4 sm:gap-y-5">
                         <div className="space-y-1.5 sm:space-y-2">
                             <label htmlFor="user_name" className="text-xs sm:text-sm font-medium text-gray-300">Full Name</label>
                             <input
@@ -429,15 +433,15 @@ const ContactForm = () => {
                         </div>
                     </div>
 
-                    <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-[#0c0c0c] min-h-[580px] sm:min-h-[660px]">
+                    <div className="relative rounded-xl sm:rounded-2xl border border-white/10 bg-[#0c0c0c] w-full overflow-hidden">
                         <iframe
                             src="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting?hide_gdpr_banner=1&background_color=0c0c0c&text_color=ffffff&primary_color=4169e1"
                             title="Schedule a 15-minute technical scoping call"
                             width="100%"
-                            height="660"
+                            height="940"
                             frameBorder="0"
-                            scrolling="no"
-                            className="w-full min-h-[580px] sm:min-h-[660px]"
+                            className="w-full h-[760px] sm:h-[840px] md:h-[900px] lg:h-[940px] border-0 block"
+                            style={{ width: '100%', minHeight: '760px', border: 'none' }}
                         />
                     </div>
 

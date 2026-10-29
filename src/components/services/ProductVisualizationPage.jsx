@@ -121,7 +121,7 @@ const PRODUCT_VIZ_BUILDS = [
     image: malkaImg,
     tech: 'Particle VFX · Maya · Arnold',
     tags: ['Product Animation'],
-    projectPath: '/project/malka-foodsssss',
+    projectPath: '/project/malka-foods',
   },
   {
     title: 'Gippro | Animation',

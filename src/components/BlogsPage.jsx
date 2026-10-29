@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -82,6 +82,15 @@ const staticImages = {
 };
 
 const staticPosts = [
+    {
+        id: 'static-commercial-cgi-vs-photography-2026',
+        title: 'Commercial CGI vs Traditional Product Photography: Why High-Growth CPG Brands Cut Production Timelines by 70% with 3D Pipelines',
+        excerpt: 'Physical photoshoot workflows cost FMCG brands £4,000–£18,000 per SKU and drag launches by 8–12 weeks. How master 3D packaging twins for Ahmed Foods and Malka Foods cut turnaround by 70% and reduce per-SKU asset costs by 50%.',
+        image: rendering,
+        date: 'OCTOBER 29, 2026',
+        category: 'Commercial CGI & 3D Packaging',
+        url: '/blog/commercial-cgi-vs-traditional-product-photography',
+    },
     {
         id: 'static-ue5-pixel-streaming-vs-webgl-2026',
         title: 'Unreal Engine 5 Pixel Streaming vs WebGL: The Enterprise Decision Framework for Interactive 3D (2026)',

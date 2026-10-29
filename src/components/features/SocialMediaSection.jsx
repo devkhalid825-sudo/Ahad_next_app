@@ -100,13 +100,18 @@ const SocialIcon = ({ href, title, children, activeBg, activeBorder, activeColor
   );
 };
 
+const cleanSocialTitle = (text) => {
+  if (!text || typeof text !== 'string') return '';
+  return text.replace(/\s*\|\s*/g, ' · ').replace(/\s+/g, ' ').trim();
+};
+
 const SocialMediaSection = ({ initialSocialMedia = [] }) => {
   const [items, setItems] = useState(() =>
     Array.isArray(initialSocialMedia) && initialSocialMedia.length > 0
       ? initialSocialMedia.map((item) => ({
           id: item.id,
           videoUrl: item.videoUrl,
-          projectName: item.projectName || '',
+          projectName: cleanSocialTitle(item.projectName),
           projectLink: item.projectLink || '',
         }))
       : []
@@ -134,7 +139,7 @@ const SocialMediaSection = ({ initialSocialMedia = [] }) => {
             data.map((item) => ({
               id: item.id,
               videoUrl: item.videoUrl,
-              projectName: item.projectName || '',
+              projectName: cleanSocialTitle(item.projectName),
               projectLink: item.projectLink || '',
             }))
           );

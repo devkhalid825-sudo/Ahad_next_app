@@ -162,7 +162,7 @@ const LiveDemo = () => {
   return (
     <div ref={wrapperRef} className="flex flex-col gap-3.5 h-full">
       {/* Iframe / Launch area */}
-      <div className="relative w-full h-full min-h-[320px] lg:min-h-[420px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-[#0d0f1c]">
+      <div className="relative w-full h-full min-h-[320px] lg:min-h-[420px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-zinc-950">
         {activated ? (
           <>
             {/* Close Demo Button */}
@@ -179,7 +179,7 @@ const LiveDemo = () => {
 
             {iframeError ? (
               /* Graceful Fallback if 3D Configurator Fails to Load */
-              <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center bg-[#0d0f1c] text-white p-6 text-center">
+              <div className="absolute inset-0 z-[2] flex flex-col items-center justify-center bg-zinc-950 text-white p-6 text-center">
                 <div className="relative w-full h-full max-h-[220px] mb-4 overflow-hidden rounded-2xl border border-white/10">
                   <img
                     src={imgSrc}
@@ -201,7 +201,7 @@ const LiveDemo = () => {
             ) : (
               <>
                 {/* Spinner with optimal timing for Studio transition */}
-                <div className={`absolute inset-0 z-[2] flex items-center justify-center bg-[#0d0f1c] transition-opacity duration-700 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                <div className={`absolute inset-0 z-[2] flex items-center justify-center bg-zinc-950 transition-opacity duration-700 ${isReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                   <div className="flex flex-col items-center gap-3.5">
                     <div className="relative w-10 h-10 flex items-center justify-center">
                       <div className="absolute inset-0 rounded-full border-[3px] border-white/10" />
@@ -209,7 +209,7 @@ const LiveDemo = () => {
                     </div>
                     <div className="flex flex-col items-center gap-1 text-center px-4">
                       <p className="text-white/80 text-xs font-medium tracking-wide">Preparing Studio Environment</p>
-                      <p className="text-white/30 text-[11px]">Loading 3D assets & lighting…</p>
+                      <p className="text-zinc-400 text-[11px]">Loading 3D assets & lighting…</p>
                     </div>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ const LiveDemo = () => {
                   title="Elipse Studio 3D Car Configurator"
                   allow="autoplay; fullscreen; xr-spatial-tracking"
                   allowFullScreen
-                  className="absolute inset-0 w-full h-full border-0 z-[1] bg-[#0d0f1c]"
+                  className="absolute inset-0 w-full h-full border-0 z-[1] bg-zinc-950"
                   onError={() => setIframeError(true)}
                   onLoad={() => {
                     setIframeLoaded(true);
@@ -266,8 +266,8 @@ const LiveDemo = () => {
 
       {/* Color swatches — visible only after launch */}
       {activated && (
-        <div className="px-4 py-4 bg-[#0b0d16] border border-white/10 rounded-2xl flex flex-col gap-2.5">
-          <div className="text-[11px] font-bold uppercase tracking-widest text-[#9aa3d6]">
+        <div className="px-4 py-4 bg-zinc-900/80 backdrop-blur-md border border-white/10 rounded-2xl flex flex-col gap-2.5">
+          <div className="text-[11px] font-bold uppercase tracking-widest text-zinc-400">
             Colour —{' '}
             <span className="text-white">
               {CAR_COLORS.find((c) => c.id === activeColor)?.name}
@@ -281,7 +281,7 @@ const LiveDemo = () => {
                 title={c.name}
                 aria-label={c.name}
                 onClick={() => handleColorClick(c.id)}
-                className={`w-7 h-7 rounded-full border-2 transition-all duration-150 ${activeColor === c.id ? 'border-[#4169E1] scale-110' : 'border-white/20'
+                className={`w-7 h-7 rounded-full border-2 transition-all duration-150 ${activeColor === c.id ? 'border-[#4169E1] ring-2 ring-[#4169E1]/40 scale-110' : 'border-white/20 hover:border-white/40 hover:scale-105'
                   }`}
                 style={{ background: c.hex }}
               />

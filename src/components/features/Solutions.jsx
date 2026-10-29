@@ -20,7 +20,7 @@ const solutionsCards = [
     category: '3D CONFIGURATORS',
     title: 'High-Converting 3D Commerce.',
     description:
-      'We build the real-time 3D, spatial, and cinematic experiences that turn complex products and unbuilt spaces into revenue.',
+      'From lightweight browser-native WebGL on Shopify to photoreal Unreal Engine Pixel Streaming. Let buyers customize, price, and interact with products in real time.',
     image: kiaConfiguratorImg,
     alt: 'Kia Vehicle 3D Product Configurator',
     metaLabel: 'DELIVERABLES',
@@ -125,8 +125,7 @@ const SolutionsSection = () => {
               href="/contact"
               className="solutions-cta-btn inline-flex items-center gap-2 bg-white hover:bg-zinc-200 text-black px-5 sm:px-6 md:px-7 py-3 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-md hover:scale-[1.02] cursor-pointer whitespace-nowrap"
             >
-              <span className="sm:hidden">Inquire Now</span>
-              <span className="hidden sm:inline">Inquire Now</span>
+              <span>Inquire Now</span>
               <FiArrowRight className="text-sm" />
             </Link>
           </div>

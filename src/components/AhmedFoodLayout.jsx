@@ -3,11 +3,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaThLarge, FaPaperPlane, FiX } from '@/components/ui/Icons';
+import Link from 'next/link';
 import Header from './layouts/Header';
-import LatestWork from './features/LatestWork';
-import ClientReviews from './features/ClientReviews';
 import Footer from './layouts/Footer';
-import Contact from './features/Contact';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { BACKEND_ORIGIN, toCdnUrl } from '../utils/api';
 import MidArticleCta from '@/components/blog/MidArticleCta';
@@ -125,6 +123,8 @@ const AhmedFoodLayout = ({
   const [openFaq, setOpenFaq] = useState(null);
   const themeContext = useTheme();
   const isLight = themeContext?.isLight || false;
+  const cleanTitle = (typeof title === 'string' ? title.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '') || 'Project';
+  const isAhmedFood = cleanTitle.toLowerCase().includes('ahmed');
 
   const handleCopyLink = () => {
     if (typeof window !== 'undefined') {
@@ -270,6 +270,14 @@ const AhmedFoodLayout = ({
 
     const renderThumbnailCard = (rawSrc, index) => {
       const src = resolveImageUrl(rawSrc);
+      const altText = isAhmedFood
+        ? (index < 6
+            ? `Ahmed Foods Mixed Fruit Jam 3D Commercial Render - Frame ${index + 1}`
+            : index < 12
+            ? `Ahmed Foods Crystal Jelly 3D Packaging Animation - Shot ${index + 1}`
+            : `Ahmed Foods Bombay Biryani CGI Commercial Visual - Detail ${index + 1}`)
+        : `${cleanTitle} 3D Commercial Render - Frame ${index + 1}`;
+
       return (
         <div
           key={index}
@@ -279,7 +287,7 @@ const AhmedFoodLayout = ({
         >
           <img
             src={src}
-            alt={`Thumbnail render ${index + 1}`}
+            alt={altText}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
@@ -335,6 +343,10 @@ const AhmedFoodLayout = ({
 
     const renderStillCard = (rawSrc, index) => {
       const src = resolveImageUrl(rawSrc);
+      const altText = isAhmedFood
+        ? `Ahmed Foods 3D CGI Commercial Production Still - Shot ${index + 1}`
+        : `${cleanTitle} Production Still Render - Shot ${index + 1}`;
+
       return (
         <div
           key={index}
@@ -344,7 +356,7 @@ const AhmedFoodLayout = ({
         >
           <img
             src={src}
-            alt={`Still render ${index + 1}`}
+            alt={altText}
             className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
@@ -356,7 +368,7 @@ const AhmedFoodLayout = ({
       <section className={`px-4 sm:px-6 md:px-8 py-10 md:py-20 border-t border-b overflow-hidden transition-colors duration-300 ${isLight ? 'bg-neutral-50 border-neutral-200' : 'bg-[#111] border-white/5'}`}>
         <div className="w-full">
           <p className={`text-xs sm:text-[14px] font-semibold tracking-[0.12em] uppercase mb-2 ${isLight ? 'text-[#2563EB]' : 'text-[#4169E1]'}`}>
-            {stillsEyebrow || 'Visual output'}
+            {stillsEyebrow && !stillsEyebrow.toLowerCase().includes('photography') ? stillsEyebrow : '3D Commercial Stills'}
           </p>
           <h2 className={`text-2xl sm:text-4xl lg:text-[44px] font-medium mb-8 md:mb-12 tracking-tight leading-tight ${isLight ? 'text-neutral-900' : 'text-[#F2F0EB]'}`}>
             {stillsHeading || 'Still Images'}
@@ -1132,7 +1144,7 @@ const AhmedFoodLayout = ({
                   : 'bg-neutral-900 text-white border border-neutral-800 shadow-xl'
                   }`}>
                   <a
-                    href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting?month=2026-09"
+                    href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`font-semibold transition-colors whitespace-nowrap shrink-0 ${isLight ? 'text-[#00a86b] hover:text-[#008f5a]' : 'text-emerald-400 hover:text-emerald-300'
@@ -1302,7 +1314,42 @@ const AhmedFoodLayout = ({
 
 
 
-      {/* COMMERCIAL CALLOUT BANNER (DIRECTLY ABOVE RELATED WORK) */}
+      {/* ── 1. NEXT PROJECT LINK ── */}
+      {nextProject && (nextProject.path || nextProject.title || nextProject.name) && (
+        <section className={`px-4 sm:px-6 md:px-8 pt-10 md:pt-16 pb-4 md:pb-6 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-black'}`}>
+          <div className="w-full max-w-7xl mx-auto">
+            <Link
+              href={nextProject.path || '#'}
+              className={`group block p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl border transition-all duration-300 ${
+                isLight
+                  ? 'bg-[#F9FAFB] border-neutral-200 hover:border-[#2563EB] shadow-sm hover:shadow-md'
+                  : 'bg-[#141414] border-white/10 hover:border-[#4169E1]/50 shadow-lg'
+              }`}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className={`inline-flex items-center px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.08em] mb-2.5 ${
+                    isLight ? 'bg-blue-50 text-[#2563EB]' : 'bg-[#4169E1]/15 text-[#4169E1]'
+                  }`}>
+                    Next Project
+                  </span>
+                  <h3 className={`text-xl sm:text-2xl md:text-3xl font-bold tracking-tight transition-colors duration-200 ${
+                    isLight ? 'text-neutral-900 group-hover:text-[#2563EB]' : 'text-white group-hover:text-[#4169E1]'
+                  }`}>
+                    {nextProject.title || nextProject.name}
+                  </h3>
+                </div>
+                <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-[#2563EB] shrink-0">
+                  <span>View Case Study</span>
+                  <span className="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* ── 2. FOCUSED CALENDLY BOOKING CTA ── */}
       {(() => {
         const isAhmedFood = String(title || '').toLowerCase().includes('ahmed');
         const customHeadline = calloutHeadline !== undefined && calloutHeadline !== null ? String(calloutHeadline).trim() : '';
@@ -1312,13 +1359,13 @@ const AhmedFoodLayout = ({
         // If inputs are provided, use them. If it's Ahmed Food and not explicitly cleared, use defaults.
         const headline = calloutHeadline !== undefined 
           ? customHeadline 
-          : (isAhmedFood ? 'Replace Costly Film Sets with Cinema-Caliber 3D CGI' : '');
+          : (isAhmedFood ? 'Replace Costly Film Sets with Cinema-Caliber 3D CGI' : 'Planning a 3D commercial campaign?');
         const eyebrow = calloutEyebrow !== undefined 
           ? customEyebrow 
-          : (isAhmedFood ? 'READY TO ELEVATE YOUR COMMERCIAL CAMPAIGNS?' : '');
+          : (isAhmedFood ? 'READY TO ELEVATE YOUR COMMERCIAL CAMPAIGNS?' : 'BOOK A 15-MINUTE SCOPING CALL');
         const bodyText = calloutBody !== undefined 
           ? customBody 
-          : (isAhmedFood ? 'Eliminate unpredictable live-action food shoots. Send us your campaign brief or product CAD files, and our lead animation director will provide a 3D commercial feasibility breakdown within 24 hours.' : '');
+          : (isAhmedFood ? 'Eliminate unpredictable live-action food shoots. Send us your campaign brief or product CAD files, and our lead animation director will provide a 3D commercial feasibility breakdown within 24 hours.' : 'Planning a 3D commercial campaign? Schedule a 15-Minute Scoping Call with our lead technical animation director to discuss project requirements.');
         const rawBtnText = (calloutButtonText && String(calloutButtonText).trim()) || 'Schedule a 15-Minute Scoping Call';
         // Auto-strip any trailing arrow (→, ->, ↗, etc.) so duplicate arrows never happen
         const btnText = rawBtnText.replace(/[\s\-_]*(?:→|->|↗|&rarr;)\s*$/gi, '').trim();
@@ -1375,11 +1422,7 @@ const AhmedFoodLayout = ({
         );
       })()}
 
-      <LatestWork />
-      <ClientReviews />
-      <div id="contact">
-        <Contact />
-      </div>
+      {/* ── 3. CLEAN FOOTER ── */}
       <Footer />
     </div>
   );

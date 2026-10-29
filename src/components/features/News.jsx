@@ -108,6 +108,15 @@ const News = ({ initialBlogs = null }) => {
 
   const staticPosts = [
     {
+      id: 36,
+      title: 'Commercial CGI vs Traditional Product Photography: Why High-Growth CPG Brands Cut Production Timelines by 70% with 3D Pipelines',
+      image: renderingImg,
+      date: 'OCTOBER 29, 2026',
+      category: 'Commercial CGI & 3D Packaging',
+      readTime: '11 min read',
+      url: '/blog/commercial-cgi-vs-traditional-product-photography',
+    },
+    {
       id: 35,
       title: 'Unreal Engine 5 Pixel Streaming vs WebGL: The Enterprise Decision Framework for Interactive 3D (2026)',
       image: jetourImg,
@@ -300,11 +309,8 @@ const News = ({ initialBlogs = null }) => {
     .map((p) => ({ ...p, _key: `static-${p.id}` }));
   const allPosts = [...mergedStaticPosts, ...mergedApiBlogs];
 
-  // Pick top curated featured blogs (UK ArchViz, AR Ecommerce, UK, AU, US, LEAP 2026) and create an auto-loop sequence
-  const basePosts = allPosts.slice(0, 6);
-  const featuredLoopPosts = basePosts.length >= 3
-    ? [...basePosts, ...basePosts.map((p, idx) => ({ ...p, _key: `${p._key}-loop-${idx}` }))]
-    : allPosts;
+  // Pick top curated featured blogs without manual duplicate cloning (Swiper loop handles infinite looping natively)
+  const featuredLoopPosts = allPosts.slice(0, 8);
 
   return (
     <section

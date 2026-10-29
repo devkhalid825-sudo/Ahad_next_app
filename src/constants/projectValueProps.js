@@ -23,6 +23,10 @@ export const PROJECT_VALUE_PROPOSITIONS = {
     'Intricate neoclassical architectural CGI, exterior colonnades, and opulent European estate rendering for luxury development marketing.',
   'malka-food':
     'Commercial 3D packaging renders and dynamic particle CGI animations for Malka Food culinary product lines.',
+  'malka-foods':
+    'Commercial 3D packaging renders and dynamic particle CGI animations for Malka Food culinary product lines.',
+  'malka-foodsssss':
+    'Commercial 3D packaging renders and dynamic particle CGI animations for Malka Food culinary product lines.',
   'costa-cart':
     'Real-time 3D golf cart and utility vehicle configurator with instant accessory visualization and quote generation.',
   'space-explorer-vr':
@@ -38,6 +42,8 @@ export const PROJECT_VALUE_PROPOSITIONS = {
   'kia-configurator':
     'Interactive 3D automotive vehicle configurator with real-time exterior paint, wheels, and interior trims.',
   'seat-configurator':
+    'Browser-based 3D automotive seating customizer delivering photoreal textures, stitching, and ergonomic views.',
+  'seat-configrator':
     'Browser-based 3D automotive seating customizer delivering photoreal textures, stitching, and ergonomic views.',
   'towel-configurator':
     'Interactive WebGL textile and fabric configurator featuring physical thread simulation and instant colorways.',
