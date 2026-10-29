@@ -844,18 +844,29 @@ const AhmedFoodLayout = ({
         const defaultLabel = title
           ? (title.split(/[-:—]/)[0].trim() || 'Main Video')
           : 'Main Video';
+        const isBreakdown1 = (t) => /breakdown/i.test(t.label || '');
+        const videoOnly1 = list.filter((t) => !isBreakdown1(t));
+        const breakdowns1 = list.filter((t) => isBreakdown1(t));
         return [
           { label: defaultLabel, url: cleanHero, aspectRatio: heroAspectRatio || 'video' },
-          ...list,
+          ...videoOnly1,
+          ...breakdowns1,
         ];
       } else if (existingIdx > 0) {
         const heroTab = list[existingIdx];
         const rest = list.filter((_, idx) => idx !== existingIdx);
-        return [heroTab, ...rest];
+        const isBreakdown2 = (t) => /breakdown/i.test(t.label || '');
+        const videoOnly2 = rest.filter((t) => !isBreakdown2(t));
+        const breakdowns2 = rest.filter((t) => isBreakdown2(t));
+        return [heroTab, ...videoOnly2, ...breakdowns2];
       }
     }
 
-    return list;
+    // Auto-sort: non-breakdown tabs first, then breakdown tabs
+    const isBreakdown = (t) => /breakdown/i.test(t.label || '');
+    const videoOnly = list.filter((t) => !isBreakdown(t));
+    const breakdowns = list.filter((t) => isBreakdown(t));
+    return [...videoOnly, ...breakdowns];
   }, [videoTabs, heroVideo, heroAspectRatio, title]);
 
   const hasVideoTabs = effectiveVideoTabs.length > 1;
