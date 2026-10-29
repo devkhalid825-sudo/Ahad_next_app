@@ -6,7 +6,6 @@ import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
-import CaseStudies from './features/CaseStudies';
 import ScopingBanner from './features/ScopingBanner';
 import { getImgSrc } from '../utils/api';
 
@@ -58,9 +57,6 @@ const PortfolioPage = () => {
       </section>
 
      
-      <CaseStudies isLight={false} />
-
-
       <LatestWork isLight={false} />
 
 

@@ -49,8 +49,53 @@ export const projectList = [
         images: ['/assets/About-page/villas.webp']
       }
     ]
+  },
+  {
+    slug: 'gluco-kahani',
+    title: 'Gluco Kahani | 3D Character Animation',
+    meta: [
+      { label: 'Category', value: 'Animation' },
+      { label: 'Service', value: 'Character Animation' },
+      { label: 'Deliverables', value: '3D Character Rigging · Brand Storytelling' },
+      { label: 'Description', value: 'Expressive 3D character animation and cinematic brand storytelling for Gluco Kahani, featuring custom character rigging, facial blendshapes, and stylized emotional narrative.' }
+    ],
+    heroImage: 'https://elipsestudio.com/media/53',
+    heroIframe: 'https://www.youtube.com/embed/WRV32zdSHK8',
+    nextProject: { path: '/project/ahmed-foods', name: 'Ahmed Foods' },
+    sections: [
+      {
+        type: 'overview',
+        heading: 'Whimsical 3D Character Animation & Emotional Storytelling',
+        text: 'Bringing stylized characters to life with intricate facial blendshapes, fluid body mechanics, and vibrant cinematic storytelling for Gluco Kahani.',
+        challenge: {
+          heading: 'High-Emotion Character Performance',
+          text: 'Designing believable emotional range while preserving whimsical brand aesthetics required custom rig controls and detailed secondary animation.'
+        }
+      },
+      {
+        type: 'results',
+        title: 'Project Highlights',
+        results: [
+          { value: '4K', title: 'Broadcast-Ready Animation', desc: 'Rendered at pristine 4K resolution with stylized cinematic lighting' },
+          { value: '100%', title: 'Custom 3D Rigs', desc: 'Bespoke facial and body mechanics built from ground up' }
+        ]
+      },
+      {
+        type: 'process',
+        steps: [
+          { step: '01', phase: 'Concept', title: 'Character Design & VisDev', desc: 'Translating 2D character sheets into expressive 3D silhouette designs.' },
+          { step: '02', phase: 'Rigging', title: 'Facial & Skeletal Rigging', desc: 'Bespoke Maya rigs with blendshapes for hyper-expressive emotions.' },
+          { step: '03', phase: 'Animation', title: 'Keyframe Animation & Timing', desc: 'Character performance, dynamic comedic timing, and secondary cloth/hair physics.' },
+          { step: '04', phase: 'Lighting', title: 'LookDev & Cinematic Render', desc: 'Stylized PBR shaders, warm volumetric lighting, and final comp.' }
+        ]
+      },
+      {
+        type: 'gallery',
+        title: 'Visual Showcase',
+        images: ['https://elipsestudio.com/media/53']
+      }
+    ]
   }
 ];
 
 export const caseStudyEntries = [];
-

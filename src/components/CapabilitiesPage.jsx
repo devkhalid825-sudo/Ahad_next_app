@@ -16,7 +16,7 @@ const capabilitiesHeroImg = getImgSrc(capabilitiesHeroImgRaw);
 const statsData = [
   { label: 'Projects Delivered', value: '250+' },
   { label: 'Global Clients', value: '80+' },
-  { label: 'Years Experience', value: '8+' },
+  { label: 'Years Experience', value: '5+' },
   { label: 'Industries Served', value: '12+' },
 ];
 
@@ -351,10 +351,10 @@ const CapabilitiesPage = () => {
                   <div className="mt-6 md:mt-8 pt-5 border-t border-white/5">
                     <Link
                       href={cap.link}
-                      className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-[#4169E1]/10 hover:bg-[#4169E1] text-[#4169E1] hover:text-white border border-[#4169E1]/30 hover:border-[#4169E1] text-xs md:text-sm font-semibold tracking-wider uppercase transition-all duration-300 group/btn shadow-sm hover:shadow-[0_0_20px_rgba(65,105,225,0.35)]"
+                      className="capabilities-explore-btn w-full inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-[#4169E1]/10 hover:bg-[#4169E1] text-[#4169E1] hover:!text-white border border-[#4169E1]/30 hover:border-[#4169E1] text-xs md:text-sm font-semibold tracking-wider uppercase transition-all duration-300 group/btn shadow-sm hover:shadow-[0_0_20px_rgba(65,105,225,0.35)]"
                     >
-                      <span>Explore</span>
-                      <svg className="w-4 h-4 transform group-hover/btn:translate-x-1.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <span className="transition-colors group-hover/btn:!text-white">Explore</span>
+                      <svg className="w-4 h-4 transform group-hover/btn:translate-x-1.5 transition-transform group-hover/btn:!text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </Link>
@@ -462,7 +462,7 @@ const CapabilitiesPage = () => {
                   Start Your Project
                 </Link>
                 <a
-                  href="https://calendly.com/elipsestudio"
+                  href="https://calendly.com/bilal-lania-elipsestudio/15-mins-meeting"
                   target="_blank"
                   rel="noopener noreferrer"
                   data-el-track="schedule-call-capabilities"

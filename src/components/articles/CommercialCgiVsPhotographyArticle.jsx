@@ -22,8 +22,7 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import { getImgSrc } from '../../utils/api';
 
-// ── Images: Pre-imported for Ahmed Foods, Malka Foods & CGI Visuals ──
-// Users can easily swap these imports or image references below
+
 import _heroImg from '../../assets/About-page/Jelly_02.png';
 import _malkaImg from '../../assets/Ahmed-food/jam&spread/09.webp';
 import _jamImg from '../../assets/About-page/Digital.png';

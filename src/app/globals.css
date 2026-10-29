@@ -816,8 +816,8 @@ html.light .text-white\/10 {
 }
 
 /* 7. Hover States: NEVER turn text white on white background on hover */
-html.light .hover\:text-white:hover,
-html.light .group:hover .group-hover\:text-white {
+html.light .hover\:text-white:hover:not(.capabilities-explore-btn):not([class*="hover:bg-[#4169E1]"]):not([class*="hover:bg-blue"]),
+html.light .group:hover .group-hover\:text-white:not(.capabilities-explore-btn *):not([class*="group-hover/btn"]) {
   color: #4169e1 !important;
 }
 
@@ -933,7 +933,19 @@ html.light .bg-blue-500 *,
 html.light button.bg-\[\#4169E1\],
 html.light a.bg-\[\#4169E1\],
 html.light .btn-primary,
-html.light .btn-primary * {
+html.light .btn-primary *,
+html.light .capabilities-explore-btn:hover,
+html.light .capabilities-explore-btn:hover *,
+.capabilities-explore-btn:hover,
+.capabilities-explore-btn:hover *,
+html.light a.capabilities-explore-btn:hover,
+html.light a.capabilities-explore-btn:hover *,
+html.light .hover\:bg-\[\#4169E1\]:hover,
+html.light .hover\:bg-\[\#4169E1\]:hover *,
+html.light a.hover\:bg-\[\#4169E1\]:hover,
+html.light a.hover\:bg-\[\#4169E1\]:hover *,
+html.light button.hover\:bg-\[\#4169E1\]:hover,
+html.light button.hover\:bg-\[\#4169E1\]:hover * {
   color: #ffffff !important;
 }
 
@@ -1687,7 +1699,6 @@ html.light header.header-scrolled .site-theme-toggle svg,
 html.dark header.header-scrolled .site-theme-toggle svg {
   color: #ffffff !important;
   fill: #ffffff !important;
-  stroke: #ffffff !important;
 }
 
 .site-theme-toggle svg circle,
@@ -1700,7 +1711,6 @@ html.dark .site-theme-toggle svg circle {
 .site-theme-toggle svg line,
 html.light .site-theme-toggle svg line,
 html.dark .site-theme-toggle svg line {
-  stroke: #ffffff !important;
 }
 
 .site-theme-toggle svg path,

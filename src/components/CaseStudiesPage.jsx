@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { m as motion } from 'framer-motion';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
-import CaseStudies from './features/CaseStudies';
 import LatestWork from './features/LatestWork';
 import Contact from './features/Contact';
 import { getImgSrc } from '../utils/api';
@@ -58,11 +57,6 @@ const CaseStudiesPage = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* ══════════════════════════════════════════════════════════
-          FEATURED CASE STUDIES SECTION
-      ══════════════════════════════════════════════════════════ */}
-      <CaseStudies isLight={false} />
 
       {/* ══════════════════════════════════════════════════════════
           LATEST WORK SECTION

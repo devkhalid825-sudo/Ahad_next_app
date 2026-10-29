@@ -150,6 +150,15 @@ const PRODUCT_VIZ_BUILDS = [
     tags: ['Motion Graphics', 'Explainer Video'],
     projectPath: '/project/parcho',
   },
+  {
+    title: 'Gluco Kahani | 3D Character Animation',
+    category: 'Character Animation & Brand Story',
+    desc: 'Expressive 3D character animation and cinematic brand storytelling for Gluco Kahani, featuring custom character rigging, facial blendshapes, and stylized emotional narrative.',
+    image: 'https://elipsestudio.com/media/53',
+    tech: 'Character Rigging · Maya · Stylized CGI',
+    tags: ['Character Animation'],
+    projectPath: '/project/gluco-kahani',
+  },
   /* Temporarily hidden projects:
   {
     title: 'Dhoop Ki Deewar VFX & Title Sequence',
@@ -176,6 +185,7 @@ const PRODUCT_VIZ_TABS = [
   { id: 'all', label: 'All Projects' },
   { id: 'product-animation', label: 'Product Animation' },
   { id: 'anamorphic', label: 'Anamorphic Animation' },
+  { id: 'character-animation', label: 'Character Animation' },
   { id: 'motion-graphics', label: 'Motion Graphics' },
   { id: 'explainer', label: 'Explainer Video' },
   { id: 'vfx', label: 'VFX' },
@@ -322,9 +332,9 @@ const CapabilitiesGrid = () => {
                 </li>
               ))}
             </ul>
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -454,8 +464,8 @@ const ProductVisualizationPage = () => {
         </div>
 
         {/* Interactive Category Filter Tabs */}
-        <div className="w-full max-w-5xl mx-auto flex justify-center px-3 mt-7 sm:mt-9">
-          <div className="max-w-full overflow-x-auto no-scrollbar flex flex-nowrap items-center gap-1 sm:gap-1.5 p-1.5 sm:p-2 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+        <div className="w-full max-w-6xl mx-auto flex justify-center px-2 sm:px-4 mt-7 sm:mt-9">
+          <div className="max-w-full overflow-x-auto no-scrollbar flex flex-nowrap items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 px-2 sm:px-3 rounded-full bg-[#0E0E10] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl">
             {PRODUCT_VIZ_TABS.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -466,11 +476,10 @@ const ProductVisualizationPage = () => {
                     setVisibleCount(6);
                   }}
                   aria-pressed={isActive}
-                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
-                      : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
-                  }`}
+                  className={`shrink-0 inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold leading-none px-2.5 sm:px-3 lg:px-4 py-1.5 sm:py-2 lg:py-2.5 text-[11px] sm:text-xs lg:text-[13px] transition-all duration-300 cursor-pointer ${isActive
+                    ? 'bg-[#4169E1] text-white shadow-[0_4px_20px_rgba(65,105,225,0.45)] border border-[#4169E1]'
+                    : 'bg-transparent text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
+                    }`}
                 >
                   {tab.label}
                 </button>

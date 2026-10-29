@@ -11,22 +11,30 @@ import ClientReviews from './features/ClientReviews';
 import leapHeroRaw from '../assets/ElipseImages/personal/leap-hero.webp';
 import ceoImgRaw from '../assets/ElipseImages/projects/ceo.webp';
 import cofounderImgRaw from '../assets/ElipseImages/projects/co-founder.webp';
-import clubproImgRaw from '../assets/ElipseImages/projects/clubpro-1.webp';
+import golfCartImgRaw from '../assets/About-page/golf-cart.webp';
 import steeringImgRaw from '../assets/ElipseImages/projects/Streeing-1.webp';
 import ahmedImgRaw from '../assets/ElipseImages/hero/15.webp';
 import zooImgRaw from '../assets/ElipseImages/projects/0.webp';
+import bilalImgRaw from '../assets/About-page/bilalbhaiimage.jpeg';
+import maazImgRaw from '../assets/About-page/maazbhaiimage.jpg';
+import asadImgRaw from '../assets/About-page/Asadbhai.jpeg';
+import fahadImgRaw from '../assets/About-page/fahadbhaiimage.jpeg';
 
 const leapHeroImg = getImgSrc(leapHeroRaw);
 const ceoImg = getImgSrc(ceoImgRaw);
 const cofounderImg = getImgSrc(cofounderImgRaw);
-const clubproImg = getImgSrc(clubproImgRaw);
+const golfCartImg = getImgSrc(golfCartImgRaw);
 const steeringImg = getImgSrc(steeringImgRaw);
 const ahmedImg = getImgSrc(ahmedImgRaw);
 const zooImg = getImgSrc(zooImgRaw);
+const bilalImg = getImgSrc(bilalImgRaw);
+const maazImg = getImgSrc(maazImgRaw);
+const asadImg = getImgSrc(asadImgRaw);
+const fahadImg = getImgSrc(fahadImgRaw);
 const statsData = [
   { label: 'Projects Delivered', value: '250+' },
   { label: 'Global Clients', value: '80+' },
-  { label: 'Years Experience', value: '8+' },
+  { label: 'Years Experience', value: '5+' },
   { label: 'Team Members', value: '40+' },
 ];
 
@@ -112,14 +120,27 @@ const teamData = [
   {
     name: 'Bilal Lania',
     role: 'CEO & Co-Founder',
-    img: ceoImg,
-    description: 'Visionary leader driving Elipse Studio and Ink & Algorithm with a passion for creative technology and immersive digital experiences.',
+    img: bilalImg,
+    imgClass: 'scale-[1.28] origin-[center_75%] group-hover:scale-[1.33]',
+    imgStyle: { objectPosition: 'center 75%' },
   },
   {
     name: 'Syed Maaz Ali',
     role: 'Co-Founder & Technical Director',
-    img: cofounderImg,
-    description: 'Unreal Generalist with expertise in Unreal Engine, 3D Web Configurators, 3ds Max, Maya, and Lumion. Leads technical direction, project management, and on-time delivery of immersive experiences.',
+    img: maazImg,
+    imgStyle: { objectPosition: 'center 68%' },
+    imgClass: 'scale-[1.16] origin-[center_68%] group-hover:scale-[1.22]',
+
+  },
+  {
+    name: 'Asad Khan',
+    role: 'Co-Founder & Head of CG | Building 3D, AI Real-Time Visual ',
+    img: asadImg,
+  },
+  {
+    name: 'Fahad Nadeem',
+    role: 'Development Head',
+    img: fahadImg,
   },
 ];
 
@@ -427,12 +448,12 @@ const AboutPage = () => {
                 className="group bg-[#111111] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#4169E1]/30 transition-all duration-500 hover:-translate-y-1"
               >
                 <div className="aspect-[16/9] overflow-hidden">
-                  <img src={clubproImg} alt="Club Pro 3D Configurator" width="600" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={golfCartImg} alt="Golf Carts Electric Configurator" width="600" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-5 md:p-8">
-                  <h3 className="text-lg md:text-2xl font-semibold text-white">Club Pro 3D Configurator</h3>
+                  <h3 className="text-lg md:text-2xl font-semibold text-white">Golf Carts Electric Configurator</h3>
                   <p className="mt-2 md:mt-3 text-white/70 text-sm md:text-base font-light leading-relaxed">
-                    Premium interactive 3D configurator built for Club Pro, enabling real-time customization of products with intuitive controls. Customers can explore finishes, materials, and options in a fully immersive browser-based experience powered by Unreal Engine.
+                    Premium interactive 3D configurator built for electric golf carts, enabling real-time customization of products with intuitive controls. Customers can explore finishes, materials, and options in a fully immersive browser-based experience powered by Unreal Engine.
                   </p>
                   <div className="mt-3 md:mt-4 flex flex-wrap gap-2">
                     <span className="inline-block text-[11px] text-[#4169E1] tracking-widest uppercase font-medium bg-[#4169E1]/10 px-3 py-1 rounded-full">Unreal Engine</span>
@@ -522,7 +543,7 @@ const AboutPage = () => {
               className="text-center"
             >
               <span className="text-[#4169E1] text-xs md:text-sm tracking-[0.3em] uppercase font-medium">Leadership</span>
-              <h2 className="mt-4 md:mt-6 text-3xl md:text-6xl font-semibold tracking-tighter">Meet the Founders</h2>
+              <h2 className="mt-4 md:mt-6 text-3xl md:text-6xl font-semibold tracking-tighter">Meet the Team</h2>
             </motion.div>
             <div className="mt-8 md:mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 lg:gap-12 max-w-5xl mx-auto">
               {teamData.map((member, index) => (
@@ -535,12 +556,18 @@ const AboutPage = () => {
                   className="group cursor-pointer"
                 >
                   <div className="aspect-[3/4] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden bg-[#1a1a1a] border border-white/5 group-hover:border-[#4169E1]/40 transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(65,105,225,0.15)]">
-                    <img src={member.img} alt={member.name} width="400" height="400" className="w-full h-full object-cover" />
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      width="500"
+                      height="660"
+                      style={member.imgStyle}
+                      className={`w-full h-full object-cover transition-transform duration-500 ${member.imgClass || 'group-hover:scale-105'}`}
+                    />
                   </div>
                   <div className="mt-6 text-center">
                     <h3 className="text-lg md:text-xl font-semibold text-white">{member.name}</h3>
                     <p className="mt-1 text-sm text-[#4169E1] font-medium">{member.role}</p>
-                    <p className="mt-3 text-white/70 text-sm font-light leading-relaxed max-w-xs mx-auto">{member.description}</p>
                   </div>
                 </motion.div>
               ))}

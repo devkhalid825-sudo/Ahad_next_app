@@ -250,13 +250,16 @@ const WebGLVsUnrealEngineArticle = () => {
                 </div>
               </div>
 
-              {/* Center Column: Hero Visual with Zoomed Clean YouTube Short Embed (Mobile: Order 1, Desktop: Order 2) */}
+              {/* Center Column: Hero Visual with Exact 9:16 Shorts Framing (Mobile: Order 1, Desktop: Order 2) */}
               <div className="order-1 md:order-2 relative flex justify-center items-center px-2 sm:px-0 w-full">
-                <div className="absolute w-64 h-64 sm:w-[24rem] sm:h-[24rem] lg:w-[27rem] lg:h-[27rem] bg-neutral-100 rounded-full -z-10 border border-neutral-200 flex items-center justify-center">
+                <div className="absolute w-56 h-56 sm:w-[24rem] sm:h-[24rem] lg:w-[27rem] lg:h-[27rem] bg-neutral-100 rounded-full -z-10 border border-neutral-200 flex items-center justify-center">
                   <span className="absolute bottom-4 text-neutral-400 text-xl select-none">✦</span>
                 </div>
 
-                <div className="relative w-full max-w-[16rem] sm:max-w-[19rem] md:max-w-[21rem] lg:max-w-[23rem] h-[21rem] sm:h-[24rem] md:h-[26rem] lg:h-[28rem] xl:h-[29.5rem] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-black group z-10">
+                <div
+                  onClick={toggleSound}
+                  className="relative w-full max-w-[13rem] sm:max-w-[17rem] md:max-w-[18rem] lg:max-w-[20rem] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-black group z-10 cursor-pointer"
+                >
                   <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
                     <iframe
                       ref={iframeRef}
@@ -264,13 +267,19 @@ const WebGLVsUnrealEngineArticle = () => {
                       title="Volvo 3D Configurator Real-Time Demo"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
-                      className="w-[155%] h-[155%] max-w-none border-0 object-cover scale-[1.18]"
+                      className="w-full h-full object-contain border-0"
                     />
                   </div>
 
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+
                   {/* Interactive Sound Control Button (Bottom-Right) */}
                   <button
-                    onClick={toggleSound}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleSound();
+                    }}
                     type="button"
                     className="absolute bottom-3.5 right-3.5 z-30 w-10 h-10 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl transition-all hover:scale-110 cursor-pointer"
                     title={isMuted ? 'Unmute Video' : 'Mute Video'}
