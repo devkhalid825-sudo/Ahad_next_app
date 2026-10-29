@@ -834,6 +834,31 @@ const AhmedFoodLayout = ({
       ? videoTabs.filter((t) => t && typeof t.url === 'string' && t.url.trim().length > 0)
       : [];
 
+    const isBreakdown = (t) => /breakdown/i.test(t?.label || '');
+
+    // Align breakdowns with their corresponding main video order if possible
+    const alignBreakdowns = (mainList, breakdownList) => {
+      const sorted = [];
+      const remaining = [...breakdownList];
+      mainList.forEach((mainTab) => {
+        const mainName = (mainTab?.label || '')
+          .toLowerCase()
+          .replace(/\b(video|commercial|cgi|3d|main)\b/gi, '')
+          .trim();
+        if (!mainName) return;
+        const matchIdx = remaining.findIndex((b) => {
+          const bName = (b?.label || '').toLowerCase();
+          return bName.includes(mainName) || mainName.includes(bName.replace(/\bbreakdown\b/gi, '').trim());
+        });
+        if (matchIdx !== -1) {
+          sorted.push(remaining[matchIdx]);
+          remaining.splice(matchIdx, 1);
+        }
+      });
+      sorted.push(...remaining);
+      return sorted;
+    };
+
     if (heroVideo && typeof heroVideo === 'string' && heroVideo.trim()) {
       const cleanHero = heroVideo.trim();
       const existingIdx = list.findIndex(
@@ -844,30 +869,44 @@ const AhmedFoodLayout = ({
         const defaultLabel = title
           ? (title.split(/[-:—]/)[0].trim() || 'Main Video')
           : 'Main Video';
-        const isBreakdown1 = (t) => /breakdown/i.test(t.label || '');
-        const videoOnly1 = list.filter((t) => !isBreakdown1(t));
-        const breakdowns1 = list.filter((t) => isBreakdown1(t));
-        return [
+        const videoOnly1 = list.filter((t) => !isBreakdown(t));
+        const breakdowns1 = list.filter((t) => isBreakdown(t));
+        const fullMain1 = [
           { label: defaultLabel, url: cleanHero, aspectRatio: heroAspectRatio || 'video' },
           ...videoOnly1,
-          ...breakdowns1,
         ];
+        return [...fullMain1, ...alignBreakdowns(fullMain1, breakdowns1)];
       } else if (existingIdx > 0) {
         const heroTab = list[existingIdx];
         const rest = list.filter((_, idx) => idx !== existingIdx);
-        const isBreakdown2 = (t) => /breakdown/i.test(t.label || '');
-        const videoOnly2 = rest.filter((t) => !isBreakdown2(t));
-        const breakdowns2 = rest.filter((t) => isBreakdown2(t));
-        return [heroTab, ...videoOnly2, ...breakdowns2];
+        const videoOnly2 = rest.filter((t) => !isBreakdown(t));
+        const breakdowns2 = rest.filter((t) => isBreakdown(t));
+        const fullMain2 = [heroTab, ...videoOnly2];
+        return [...fullMain2, ...alignBreakdowns(fullMain2, breakdowns2)];
       }
     }
 
-    // Auto-sort: non-breakdown tabs first, then breakdown tabs
-    const isBreakdown = (t) => /breakdown/i.test(t.label || '');
+    // Auto-sort: non-breakdown tabs first, then aligned breakdown tabs
     const videoOnly = list.filter((t) => !isBreakdown(t));
     const breakdowns = list.filter((t) => isBreakdown(t));
-    return [...videoOnly, ...breakdowns];
+    return [...videoOnly, ...alignBreakdowns(videoOnly, breakdowns)];
   }, [videoTabs, heroVideo, heroAspectRatio, title]);
+
+  const { mainTabsWithIndex, breakdownTabsWithIndex } = React.useMemo(() => {
+    const isBreakdown = (t) => /breakdown/i.test(t?.label || '');
+    const main = [];
+    const breakdowns = [];
+    effectiveVideoTabs.forEach((tab, index) => {
+      if (isBreakdown(tab)) {
+        breakdowns.push({ tab, index });
+      } else {
+        main.push({ tab, index });
+      }
+    });
+    return { mainTabsWithIndex: main, breakdownTabsWithIndex: breakdowns };
+  }, [effectiveVideoTabs]);
+
+  const shouldSplitRows = mainTabsWithIndex.length >= 3 && breakdownTabsWithIndex.length > 0;
 
   const hasVideoTabs = effectiveVideoTabs.length > 1;
   const activeTabObj = effectiveVideoTabs.length > 0 ? (effectiveVideoTabs[activeVideo] || effectiveVideoTabs[0]) : null;
@@ -1006,24 +1045,63 @@ const AhmedFoodLayout = ({
             </p>
           )}
 
-          {/* Video Tabs Switcher Buttons (Mobile: exactly 3 on top row, 3 on bottom row; Tablet/Desktop: flex wrap) */}
+          {/* Video Tabs Switcher Buttons: Split into 2 rows only if 3+ main tabs with breakdowns; otherwise single row (e.g. 2 tabs like Malka Foods) */}
           {hasVideoTabs && effectiveVideoTabs.length > 1 && (
-            <div className="w-full max-w-4xl mx-auto px-1 sm:px-4 mb-4 sm:mb-6 z-20">
-              <div className="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5">
-                {effectiveVideoTabs.map((tab, idx) => (
-                  <button
-                    key={tab.id ?? tab.label ?? idx}
-                    type="button"
-                    onClick={() => setActiveVideo(idx)}
-                    className={`text-[10px] sm:text-xs font-semibold px-1.5 sm:px-5 py-2 sm:py-2.5 rounded-full border transition-all duration-200 cursor-pointer text-center flex items-center justify-center leading-tight active:scale-95 shadow-sm min-h-[40px] sm:min-h-0 ${activeVideo === idx
-                      ? (isLight ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-[#2563EB]/25' : 'bg-[#4169E1] text-white border-[#4169E1] shadow-md shadow-[#4169E1]/25')
-                      : (isLight ? 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:text-black' : 'bg-[#141414] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white')
-                      }`}
-                  >
-                    <span className="line-clamp-2 leading-tight">{tab.label || `Tab ${idx + 1}`}</span>
-                  </button>
-                ))}
-              </div>
+            <div className="w-full max-w-4xl mx-auto px-1 sm:px-4 mb-4 sm:mb-6 z-20 flex flex-col items-center justify-center gap-2 sm:gap-2.5">
+              {shouldSplitRows ? (
+                <>
+                  {/* Row 1: Main Video Tabs (3 tabs, centered) */}
+                  <div className="w-full grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5">
+                    {mainTabsWithIndex.map(({ tab, index }) => (
+                      <button
+                        key={tab.id ?? tab.label ?? index}
+                        type="button"
+                        onClick={() => setActiveVideo(index)}
+                        className={`text-[10px] sm:text-xs font-semibold px-2 sm:px-5 py-2 sm:py-2.5 rounded-full border transition-all duration-200 cursor-pointer text-center flex items-center justify-center leading-tight active:scale-95 shadow-sm min-h-[40px] sm:min-h-0 ${activeVideo === index
+                          ? (isLight ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-[#2563EB]/25' : 'bg-[#4169E1] text-white border-[#4169E1] shadow-md shadow-[#4169E1]/25')
+                          : (isLight ? 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:text-black' : 'bg-[#141414] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white')
+                          }`}
+                      >
+                        <span className="line-clamp-2 leading-tight">{tab.label || `Tab ${index + 1}`}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Row 2: Breakdown Tabs (3 tabs, centered below Main Video Tabs) */}
+                  <div className="w-full grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5">
+                    {breakdownTabsWithIndex.map(({ tab, index }) => (
+                      <button
+                        key={tab.id ?? tab.label ?? index}
+                        type="button"
+                        onClick={() => setActiveVideo(index)}
+                        className={`text-[10px] sm:text-xs font-semibold px-2 sm:px-5 py-2 sm:py-2.5 rounded-full border transition-all duration-200 cursor-pointer text-center flex items-center justify-center leading-tight active:scale-95 shadow-sm min-h-[40px] sm:min-h-0 ${activeVideo === index
+                          ? (isLight ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-[#2563EB]/25' : 'bg-[#4169E1] text-white border-[#4169E1] shadow-md shadow-[#4169E1]/25')
+                          : (isLight ? 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:text-black' : 'bg-[#141414] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white')
+                          }`}
+                      >
+                        <span className="line-clamp-2 leading-tight">{tab.label || `Tab ${index + 1}`}</span>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                /* Single Row for 2 tabs (e.g. Malka Foods) or any other standard tab count */
+                <div className={`w-full ${effectiveVideoTabs.length === 2 ? 'grid grid-cols-2 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5' : 'flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5'}`}>
+                  {effectiveVideoTabs.map((tab, idx) => (
+                    <button
+                      key={tab.id ?? tab.label ?? idx}
+                      type="button"
+                      onClick={() => setActiveVideo(idx)}
+                      className={`text-[10px] sm:text-xs font-semibold px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-full border transition-all duration-200 cursor-pointer text-center flex items-center justify-center leading-tight active:scale-95 shadow-sm min-h-[40px] sm:min-h-0 ${activeVideo === idx
+                        ? (isLight ? 'bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-[#2563EB]/25' : 'bg-[#4169E1] text-white border-[#4169E1] shadow-md shadow-[#4169E1]/25')
+                        : (isLight ? 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:text-black' : 'bg-[#141414] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white')
+                        }`}
+                    >
+                      <span className="line-clamp-2 leading-tight">{tab.label || `Tab ${idx + 1}`}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -1325,7 +1403,7 @@ const AhmedFoodLayout = ({
 
 
 
-      {/* ── 1. NEXT PROJECT LINK ── */}
+            {/* ── 1. NEXT PROJECT LINK ── */}
       {nextProject && (nextProject.path || nextProject.title || nextProject.name) && (
         <section className={`px-4 sm:px-6 md:px-8 pt-10 md:pt-16 pb-4 md:pb-6 transition-colors duration-300 ${isLight ? 'bg-white' : 'bg-black'}`}>
           <div className="w-full max-w-7xl mx-auto">
@@ -1433,7 +1511,7 @@ const AhmedFoodLayout = ({
         );
       })()}
 
-      {/* ── 3. CLEAN FOOTER ── */}
+{/* ── 3. CLEAN FOOTER ── */}
       <Footer />
     </div>
   );
