@@ -134,7 +134,7 @@ const teamData = [
   },
   {
     name: 'Asad Khan',
-    role: 'Co-Founder & Head of CG | Building 3D, AI Real-Time Visual ',
+    role: 'Co-Founder & Head of CG ',
     img: asadImg,
   },
   {
