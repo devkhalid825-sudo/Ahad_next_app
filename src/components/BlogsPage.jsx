@@ -45,8 +45,10 @@ import marineRaw from '../assets/About-page/marine.webp';
 import timBarthRaw from '../assets/About-page/tim-barth.webp';
 import modernVillaRaw from '../assets/About-page/Nevegan.jpg';
 import jetourRaw from '../assets/About-page/Jetour.webp';
+import roohafzaRaw from '../assets/About-page/roohafza.webp';
 
 const jetour = getImgSrc(jetourRaw);
+const roohafza = getImgSrc(roohafzaRaw);
 const modernVilla = getImgSrc(modernVillaRaw);
 const kia = getImgSrc(kiaRaw);
 const spatialCommerce = getImgSrc(spatialCommerceRaw);
@@ -82,6 +84,15 @@ const staticImages = {
 };
 
 const staticPosts = [
+    {
+        id: 'static-3d-anamorphic-billboards-2026',
+        title: 'High-Fidelity 3D Anamorphic Billboards: Creative Storyboarding, Forced-Perspective Mathematics & Production Pipeline in 2026',
+        excerpt: 'How we engineered the Rooh Afza 90° corner LED anamorphic billboard. Forced-perspective sweet spot geometry, pedestrian timing maps, 180GB Houdini FLIP fluid simulations, and 6,500+ nits outdoor daylight calibration.',
+        image: roohafza,
+        date: 'OCTOBER 30, 2026',
+        category: '3D Anamorphic & Outdoor LED',
+        url: '/blog/3d-anamorphic-billboards-forced-perspective-production-pipeline-2026',
+    },
     {
         id: 'static-commercial-cgi-vs-photography-2026',
         title: 'Commercial CGI vs Traditional Product Photography: Why High-Growth CPG Brands Cut Production Timelines by 70% with 3D Pipelines',

@@ -7,6 +7,10 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
+  '3d-anamorphic-billboards-forced-perspective-production-pipeline-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
+  '3d-anamorphic-billboards-production-pipeline-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
+  'anamorphic-billboards-pipeline-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
+  'high-fidelity-3d-anamorphic-billboards-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
   'commercial-cgi-vs-traditional-product-photography': dynamic(() => import('@/components/articles/CommercialCgiVsPhotographyArticle')),
   'commercial-cgi-vs-product-photography-2026': dynamic(() => import('@/components/articles/CommercialCgiVsPhotographyArticle')),
   'commercial-cgi-vs-traditional-product-photography-2026': dynamic(() => import('@/components/articles/CommercialCgiVsPhotographyArticle')),
@@ -47,6 +51,63 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  '3d-anamorphic-billboards-forced-perspective-production-pipeline-2026': {
+    title: 'High-Fidelity 3D Anamorphic Billboards: Creative Storyboarding, Forced-Perspective Mathematics & Production Pipeline in 2026 | Elipse Studio',
+    description: 'How we engineered the Rooh Afza 90° corner LED anamorphic billboard. Forced-perspective sweet spot geometry, pedestrian timing maps, 180GB Houdini FLIP fluid simulations, and 6,500+ nits outdoor daylight calibration.',
+    keywords: [
+      '3D anamorphic billboards',
+      'naked eye 3d billboard production',
+      'forced perspective sweet spot calculation',
+      'Rooh Afza anamorphic campaign',
+      'corner LED billboard 3D math',
+      'Houdini FLIP liquid simulation billboard',
+      'outdoor LED nits calibration',
+      'Helmholtz-Kohlrausch effect LED',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/3d-anamorphic-billboards-forced-perspective-production-pipeline-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/roohafza.webp`,
+  },
+  '3d-anamorphic-billboards-production-pipeline-2026': {
+    title: 'High-Fidelity 3D Anamorphic Billboards: Creative Storyboarding, Forced-Perspective Mathematics & Production Pipeline in 2026 | Elipse Studio',
+    description: 'How we engineered the Rooh Afza 90° corner LED anamorphic billboard. Forced-perspective sweet spot geometry, pedestrian timing maps, 180GB Houdini FLIP fluid simulations, and 6,500+ nits outdoor daylight calibration.',
+    keywords: [
+      '3D anamorphic billboards',
+      'naked eye 3d billboard production',
+      'Rooh Afza anamorphic campaign',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/3d-anamorphic-billboards-forced-perspective-production-pipeline-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/roohafza.webp`,
+  },
+  'anamorphic-billboards-pipeline-2026': {
+    title: 'High-Fidelity 3D Anamorphic Billboards: Creative Storyboarding, Forced-Perspective Mathematics & Production Pipeline in 2026 | Elipse Studio',
+    description: 'How we engineered the Rooh Afza 90° corner LED anamorphic billboard. Forced-perspective sweet spot geometry, pedestrian timing maps, 180GB Houdini FLIP fluid simulations, and 6,500+ nits outdoor daylight calibration.',
+    keywords: [
+      '3D anamorphic billboards',
+      'naked eye 3d billboard production',
+      'Rooh Afza anamorphic campaign',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/3d-anamorphic-billboards-forced-perspective-production-pipeline-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/roohafza.webp`,
+  },
+  'high-fidelity-3d-anamorphic-billboards-2026': {
+    title: 'High-Fidelity 3D Anamorphic Billboards: Creative Storyboarding, Forced-Perspective Mathematics & Production Pipeline in 2026 | Elipse Studio',
+    description: 'How we engineered the Rooh Afza 90° corner LED anamorphic billboard. Forced-perspective sweet spot geometry, pedestrian timing maps, 180GB Houdini FLIP fluid simulations, and 6,500+ nits outdoor daylight calibration.',
+    keywords: [
+      '3D anamorphic billboards',
+      'naked eye 3d billboard production',
+      'Rooh Afza anamorphic campaign',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/3d-anamorphic-billboards-forced-perspective-production-pipeline-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/roohafza.webp`,
+  },
   'commercial-cgi-vs-traditional-product-photography': {
     title: 'Commercial CGI vs Traditional Product Photography: Why CPG Brands Cut Turnaround by 70% | Elipse Studio',
     description: 'Commercial 3D CGI rendering vs physical studio photography for CPG brands. How master digital packaging twins cut turnaround times by 70% and reduce asset production costs by 50%.',
@@ -390,6 +451,7 @@ export async function generateStaticParams() {
 const slugFromParams = (slug) => (Array.isArray(slug) ? slug.join('/') : slug);
 
 function staticArticleSchemas(slugStr, meta) {
+  const isAnamorphicBillboard = slugStr.includes('3d-anamorphic-billboard') || slugStr.includes('anamorphic-billboard');
   const isCommercialCgi = slugStr.startsWith('commercial-cgi-vs');
   const isSpatialCommerce = slugStr.startsWith('spatial-commerce');
   const isArchvizPresales = slugStr === 'real-time-archviz-vr-luxury-real-estate-presales-2026';
@@ -403,12 +465,23 @@ function staticArticleSchemas(slugStr, meta) {
   const isAuProductConfigurator = slugStr === '3d-product-configurator-australia-2026';
   const isNewOctober = isInteractive3d || isUkArchViz || isArProduct || isCadToWebgl || isAutomotiveConfigurator || isAuProductConfigurator;
 
+  const getPublishedDate = () => {
+    if (isAnamorphicBillboard) return '2026-10-30';
+    if (isCommercialCgi) return '2026-10-29';
+    if (isSpatialCommerce) return '2026-10-26';
+    if (isArchvizPresales) return '2026-10-22';
+    if (isNewOctober) return '2026-10-14';
+    if (isWebGLVsUnreal) return '2026-03-01';
+    return '2026-02-12';
+  };
+  const articleDate = getPublishedDate();
+
   const schema = buildArticleSchema({
     title: meta.title,
     description: meta.description,
     image: meta.ogImage || `${SITE_URL}/assets/leap-2026/leap-hero.jpg`,
-    publishedAt: isCommercialCgi ? '2026-10-29' : (isSpatialCommerce ? '2026-10-26' : (isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12')))),
-    updatedAt: isCommercialCgi ? '2026-10-29' : (isSpatialCommerce ? '2026-10-26' : (isArchvizPresales ? '2026-10-22' : (isNewOctober ? '2026-10-14' : (isWebGLVsUnreal ? '2026-03-01' : '2026-02-12')))),
+    publishedAt: articleDate,
+    updatedAt: articleDate,
     slug: slugStr,
   });
 
@@ -619,6 +692,25 @@ function staticArticleSchemas(slugStr, meta) {
   ]);
 
   let extraSchemas = [];
+  const anamorphicBillboardFaq = buildFaqSchema([
+    {
+      q: 'How is the viewer sweet spot calculated for a 90-degree corner LED billboard?',
+      a: 'The sweet spot is calculated by projecting the geometric centre of the two screen faces toward street level along the 45-degree angle bisector of the corner, at a horizontal distance of 1.5× to 2.5× the screen’s total arc width W, calibrated to an average pedestrian eye level of 1.6–1.7 meters with upward tilt compensation.',
+    },
+    {
+      q: 'Why do outdoor LED anamorphic 3D animations require calibration for 6,500+ nits?',
+      a: 'Outdoor ambient daylight reaches 80,000 to 100,000 lux. Content rendered with standard monitor tonemapping (ACES filmic) clips highlights into washed-out white blobs. The pipeline uses 32-bit linear EXRs, display-referred LUTs matching screen nits curves, and Helmholtz-Kohlrausch compensation to retain specular glass and liquid shapes in sunlight.',
+    },
+    {
+      q: 'What is a 3D shadow box and why is it essential for naked-eye 3D?',
+      a: 'A shadow box is a virtual 3D model of the screen physical chassis (typically 12cm aluminum depth) and surrounding ledges. When CGI elements pop out of the screen, contact shadows are cast onto the visible chassis, tricking the brain into perceiving the digital content as physically real.',
+    },
+    {
+      q: 'How was the Rooh Afza fluid pour simulated in Houdini?',
+      a: 'Using Houdini’s FLIP solver to resolve Rayleigh-Taylor instabilities between low-viscosity water (0.001 Pa·s) and high-viscosity syrup (0.05–0.08 Pa·s), with Redshift dielectric glass shaders (IOR 1.52) and over 180GB of simulation cache data.',
+    },
+  ]);
+
   const commercialCgiFaq = buildFaqSchema([
     {
       q: 'Why are CPG and food brands replacing traditional product photography with commercial 3D CGI?',
@@ -634,6 +726,7 @@ function staticArticleSchemas(slugStr, meta) {
     },
   ]);
 
+  if (isAnamorphicBillboard) extraSchemas = [anamorphicBillboardFaq, authorSchema];
   if (isCommercialCgi) extraSchemas = [commercialCgiFaq, authorSchema];
   if (isSpatialCommerce) extraSchemas = [spatialCommerceFaq, authorSchema];
   if (isArchvizPresales) extraSchemas = [archvizPresalesFaq, authorSchema];
