@@ -7,6 +7,10 @@ import { MultiJsonLd } from '@/components/seo/JsonLd';
 import dynamic from 'next/dynamic';
 
 const staticArticles = {
+  'enterprise-3d-configurator-development-webgl-threejs-playcanvas-vs-pixel-streaming-2026': dynamic(() => import('@/components/articles/Enterprise3dConfiguratorArticle')),
+  'enterprise-3d-configurator-development': dynamic(() => import('@/components/articles/Enterprise3dConfiguratorArticle')),
+  'enterprise-3d-configurator-webgl-playcanvas-threejs-vs-pixel-streaming-2026': dynamic(() => import('@/components/articles/Enterprise3dConfiguratorArticle')),
+  'enterprise-3d-configurator-webgl-vs-pixel-streaming-2026': dynamic(() => import('@/components/articles/Enterprise3dConfiguratorArticle')),
   '3d-anamorphic-billboards-forced-perspective-production-pipeline-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
   '3d-anamorphic-billboards-production-pipeline-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
   'anamorphic-billboards-pipeline-2026': dynamic(() => import('@/components/articles/AnamorphicBillboardsPipelineArticle')),
@@ -51,6 +55,68 @@ const staticArticles = {
 };
 
 const staticArticleMetadata = {
+  'enterprise-3d-configurator-development-webgl-threejs-playcanvas-vs-pixel-streaming-2026': {
+    title: 'Enterprise 3D Configurator Development: WebGL, PlayCanvas and Three.js vs Cloud Pixel Streaming — The 2026 CTO Decision Matrix | Elipse Studio',
+    description: 'Should your enterprise 3D configurator render browser-native or stream via cloud GPUs? Complete architectural evaluation: Three.js and PlayCanvas vs UE5 Pixel Streaming. Memory budgets, Draco/KTX2 optimization, Shopify Cart Transform API, and 3-year TCO.',
+    keywords: [
+      'enterprise 3d configurator development',
+      'webgl vs pixel streaming',
+      'threejs product configurator',
+      'playcanvas ecommerce configurator',
+      'unreal engine 5 pixel streaming cost',
+      'shopify plus 3d configurator integration',
+      'shopify cart transform api 3d',
+      'draco ktx2 3d web optimization',
+      '3d configurator cto decision matrix',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/enterprise-3d-configurator-development-webgl-threejs-playcanvas-vs-pixel-streaming-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/Enterprise.png`,
+  },
+  'enterprise-3d-configurator-development': {
+    title: 'Enterprise 3D Configurator Development: WebGL, PlayCanvas and Three.js vs Cloud Pixel Streaming — The 2026 CTO Decision Matrix | Elipse Studio',
+    description: 'Should your enterprise 3D configurator render browser-native or stream via cloud GPUs? Complete architectural evaluation: Three.js and PlayCanvas vs UE5 Pixel Streaming. Memory budgets, Draco/KTX2 optimization, Shopify Cart Transform API, and 3-year TCO.',
+    keywords: [
+      'enterprise 3d configurator development',
+      'webgl vs pixel streaming',
+      'threejs product configurator',
+      'playcanvas ecommerce configurator',
+      'unreal engine 5 pixel streaming cost',
+      'Elipse Studio',
+      'Bilal Lania',
+    ],
+    canonical: `${SITE_URL}/blog/enterprise-3d-configurator-development-webgl-threejs-playcanvas-vs-pixel-streaming-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/Enterprise.png`,
+  },
+  'enterprise-3d-configurator-webgl-playcanvas-threejs-vs-pixel-streaming-2026': {
+    title: 'Enterprise 3D Configurator Development: WebGL, PlayCanvas and Three.js vs Cloud Pixel Streaming — The 2026 CTO Decision Matrix | Elipse Studio',
+    description: 'Should your enterprise 3D configurator render browser-native or stream via cloud GPUs? Complete architectural evaluation: Three.js and PlayCanvas vs UE5 Pixel Streaming. Memory budgets, Draco/KTX2 optimization, Shopify Cart Transform API, and 3-year TCO.',
+    keywords: [
+      'enterprise 3d configurator development',
+      'webgl vs pixel streaming',
+      'threejs product configurator',
+      'playcanvas ecommerce configurator',
+      'unreal engine 5 pixel streaming cost',
+      'Elipse Studio',
+    ],
+    canonical: `${SITE_URL}/blog/enterprise-3d-configurator-development-webgl-threejs-playcanvas-vs-pixel-streaming-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/Enterprise.png`,
+  },
+  'enterprise-3d-configurator-webgl-vs-pixel-streaming-2026': {
+    title: 'Enterprise 3D Configurator Development: WebGL, PlayCanvas and Three.js vs Cloud Pixel Streaming — The 2026 CTO Decision Matrix | Elipse Studio',
+    description: 'Should your enterprise 3D configurator render browser-native or stream via cloud GPUs? Complete architectural evaluation: Three.js and PlayCanvas vs UE5 Pixel Streaming. Memory budgets, Draco/KTX2 optimization, Shopify Cart Transform API, and 3-year TCO.',
+    keywords: [
+      'enterprise 3d configurator development',
+      'webgl vs pixel streaming',
+      'threejs product configurator',
+      'playcanvas ecommerce configurator',
+      'unreal engine 5 pixel streaming cost',
+      'Elipse Studio',
+    ],
+    canonical: `${SITE_URL}/blog/enterprise-3d-configurator-development-webgl-threejs-playcanvas-vs-pixel-streaming-2026`,
+    ogImage: `${SITE_URL}/assets/About-page/Enterprise.png`,
+  },
   '3d-anamorphic-billboards-forced-perspective-production-pipeline-2026': {
     title: 'High-Fidelity 3D Anamorphic Billboards: Creative Storyboarding, Forced-Perspective Mathematics & Production Pipeline in 2026 | Elipse Studio',
     description: 'How we engineered the Rooh Afza 90° corner LED anamorphic billboard. Forced-perspective sweet spot geometry, pedestrian timing maps, 180GB Houdini FLIP fluid simulations, and 6,500+ nits outdoor daylight calibration.',
