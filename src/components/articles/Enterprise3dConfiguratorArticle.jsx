@@ -21,7 +21,9 @@ import {
   FiActivity,
   FiDollarSign,
   FiChevronLeft,
-  FiChevronRight
+  FiChevronRight,
+  FiVolume2,
+  FiVolumeX
 } from 'react-icons/fi';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
@@ -99,7 +101,24 @@ const Frame = ({ src, cap, alt, actionLink, actionText }) => (
 const Enterprise3dConfiguratorArticle = () => {
   const [copied, setCopied] = useState(false);
   const [activeFactor, setActiveFactor] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+  const iframeRef = useRef(null);
   const matrixSliderRef = useRef(null);
+
+  const toggleSound = () => {
+    if (!iframeRef.current) return;
+    try {
+      const nextMuted = !isMuted;
+      setIsMuted(nextMuted);
+      const command = nextMuted ? 'mute' : 'unMute';
+      iframeRef.current.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: command, args: [] }),
+        '*'
+      );
+    } catch {
+      // ignore
+    }
+  };
 
   // Mobile decision-matrix slider: keep the counter/dots in sync with swipes
   const handleMatrixScroll = () => {
@@ -202,21 +221,20 @@ const Enterprise3dConfiguratorArticle = () => {
               By Elipse Studio | October 2026 · Enterprise 3D Architecture · WebGL · Three.js · PlayCanvas · UE5 Pixel Streaming
             </p>
 
-            {/* ── PROMINENT 9:16 VERTICAL REEL SIZE HERO IMAGE ── */}
-            <div className="w-full flex justify-center items-center px-4 sm:px-0 my-2 sm:my-6 relative">
-              {/* Circular subtle backdrop shape */}
-              <div className="hidden sm:flex absolute w-72 h-72 sm:w-[26rem] sm:h-[26rem] lg:w-[30rem] lg:h-[30rem] bg-neutral-100 rounded-full -z-10 border border-neutral-200 items-center justify-center pointer-events-none">
-                <span className="absolute bottom-4 sm:bottom-6 text-neutral-400 text-xl sm:text-2xl select-none">✦</span>
-              </div>
+            {/* ── PROMINENT HD 16:9 WIDESCREEN VIDEO SHOWCASE ── */}
+            <div className="w-full mx-auto px-0 mb-6 sm:mb-10 relative">
+              {/* Subtle backdrop glow — desktop only */}
+              <div className="hidden sm:block absolute inset-0 max-w-3xl mx-auto bg-blue-100/60 rounded-full blur-3xl -z-10 pointer-events-none" />
 
-              {/* Vertical Showcase Frame */}
-              <div className="relative w-[78%] sm:w-full max-w-[18rem] md:max-w-[20rem] lg:max-w-[22rem] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl border-4 border-white bg-white group z-10">
-                <img
-                  src={heroImg}
-                  alt="Enterprise 3D Configurator Development — Vertical Reel Showcase"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="block w-full aspect-[4/5] sm:aspect-auto h-auto object-cover object-center"
+              {/* Video Frame — no border, no controls, clean */}
+              <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-md sm:shadow-2xl bg-black z-10">
+                <iframe
+                  src="https://www.youtube.com/embed/A2I5KC5lepo?autoplay=1&mute=1&loop=1&playlist=A2I5KC5lepo&playsinline=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=0"
+                  title="Enterprise 3D Configurator Development | Elipse Studio"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full border-0"
                 />
               </div>
             </div>
